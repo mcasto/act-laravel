@@ -1,0 +1,5194 @@
+[
+    {
+        "last_name": "Anderson",
+        "first_name": "Beverly",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks 2 snacks",
+        "email_address": "sunni2018daze@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Apple",
+        "first_name": "Marilyn",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "r.m.appel65@gmail.com",
+        "door": 0,
+        "total_paid": 3,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Blanchard",
+        "first_name": "Melissa",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rotunda@live.ca",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bodoh",
+        "first_name": "Teresa",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "terrinv@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Carothers",
+        "first_name": "Jean",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "front row by left wall",
+        "email_address": "innerspaces007@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cothrun",
+        "first_name": "Sherri",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cuencasherri@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cumming",
+        "first_name": "Donna",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "donnacumming11@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cymerman",
+        "first_name": "Joyce",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cymerman@swbell.net",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hattaway",
+        "first_name": "Amanda",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "amandabfa@aol.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kayce",
+        "first_name": "Cameron",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cameronkayce@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lowell",
+        "first_name": "Susan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "isle seat please",
+        "email_address": "sglowell10@sbcglobal.net",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Morris",
+        "first_name": "Colleen",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "colleen7436@sbcglobal.net",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pearman",
+        "first_name": "Diana",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cdpearman.1@gmail.com",
+        "door": 0,
+        "total_paid": 3,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Phoebe",
+        "first_name": "Mimi",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mimi.phoebe@protonmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Reinoso",
+        "first_name": "Emilia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "emiliareinoso12@outlook.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Smith",
+        "first_name": "Shirley",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "randssmith@comcast.net",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Vee Dalrymple",
+        "first_name": "Bonnie",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bvdal3@gmail.com",
+        "door": 0,
+        "total_paid": 3,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Westlake",
+        "first_name": "Margaret",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "meg_westlake@yahoo.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wilson-Glah",
+        "first_name": "Jolene",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dragonflyexpat@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "van Asten",
+        "first_name": "Soraya",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sorayardq@proton.me",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Nielen",
+        "first_name": "Guy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "guynielen@hotmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Arond-Thomas",
+        "first_name": "Manya",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "veprjack@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Barnett",
+        "first_name": "Carolyn",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cbarnett328@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Basso",
+        "first_name": "Annette",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bassout@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bilsky",
+        "first_name": "Larry",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "larry@fastemail.us",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "CA",
+        "first_name": "Michel",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ann97520@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Carroll-Mathes",
+        "first_name": "Patricia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "carrollmathes@icloud.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Christiansen",
+        "first_name": "Leigh",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "luvleighdesigns@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cleary",
+        "first_name": "John",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "veprjack@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Coon",
+        "first_name": "Johnney",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jcoon0313@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Deckar",
+        "first_name": "Holly",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks",
+        "email_address": "nanahollyk@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fiore",
+        "first_name": "Kim",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kmf1925@aol.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fry \/ Metcalf ",
+        "first_name": "Bob& Tom ",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks 2 snacks",
+        "email_address": "otomandbob@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hamilton",
+        "first_name": "Michael",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cody_s_hamilton@hotmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Howe",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "unlimited snacks and drinks",
+        "email_address": "amscert@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "James\/Schmitz ",
+        "first_name": "Ryan&Ron",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks 2 snacks  front row the far two right side seats",
+        "email_address": "Veprjack@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lawrence-Howard",
+        "first_name": "Jamie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jamiehoward@me.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Leslie",
+        "first_name": "Bruce",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks",
+        "email_address": "bruceleslie@delta14h.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Leutner",
+        "first_name": "Carol",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "carolleutner@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 1
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Mallari",
+        "first_name": "Maria Thelma",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mtmallari@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Martin",
+        "first_name": "Jack",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "hermanopat@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Miney",
+        "first_name": "Denise",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "deeminey@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Molsbee",
+        "first_name": "Ronald",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ronmolsbee@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Osmachenko",
+        "first_name": "Judy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dalejudy@icloud.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Parsons",
+        "first_name": "Cheryl",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cpinords@gmail.com",
+        "door": 0,
+        "total_paid": 4,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Powers",
+        "first_name": "Edward",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "fuertes1@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Snyder",
+        "first_name": "Rick",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks, 2 snacks",
+        "email_address": "rick.snyder57@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": "",
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Baggenstos",
+        "first_name": "Eliane",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "elianebaggenstos@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Boger",
+        "first_name": "Brent",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "brent.boger@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Connelly",
+        "first_name": "Suzanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "suzanneeconnelly@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Davis",
+        "first_name": "Deb",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks",
+        "email_address": "debadavis59@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Erves",
+        "first_name": "Nikki",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "misserves15@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fonnesbeck",
+        "first_name": "Craig",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cfonnes@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Glenn",
+        "first_name": "Gano",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "muse.gdg@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Guadarrama",
+        "first_name": "Valeria",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "guadarramavaleria7@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hancock",
+        "first_name": "Lucy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lohancock@aol.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Holland",
+        "first_name": "Lori",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lori.holland@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jameson",
+        "first_name": "Brenda",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mizbjam@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kanner",
+        "first_name": "Dena Jo",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "denajo2@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 1
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kufner",
+        "first_name": "Debbie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks 2 snacks",
+        "email_address": "debkuf819@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lowe",
+        "first_name": "Tammy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "amaw_lowe@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "MacBryde",
+        "first_name": "Susan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "smacbryde@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Osburne",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "unlimited snacks, drinks",
+        "email_address": "kthsr8225@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Potter",
+        "first_name": "Richard&Chris",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "potterrichard49@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Prause",
+        "first_name": "Kristine",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "klprause@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rallo",
+        "first_name": "Julie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jrallo1@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Robertson",
+        "first_name": "Teena",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "teenaandron@msn.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Simmons",
+        "first_name": "Pat",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "simmonspp08@gmail.com",
+        "door": 0,
+        "total_paid": 3,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Stone",
+        "first_name": "Alexanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "alexanne13@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Stratton\/Sandquist",
+        "first_name": "Brian\/Jason",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks, 2 snacks",
+        "email_address": "bstratton@me.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wagner",
+        "first_name": "Erin",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "erin.h.wagner@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wohlfeld",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kathymarinwohlfeld@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Worl",
+        "first_name": "Brian",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "brianworl@hotmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Blumenfeld",
+        "first_name": "Sue",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "runaroundsuervft@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Brissen",
+        "first_name": "Ulrike",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ubrisson@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Chekaraou",
+        "first_name": "Danielle",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bonvoyagekadija@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Correa",
+        "first_name": "Juan",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "correajuan214@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Dusseault",
+        "first_name": "Cynthia",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cynthiadusseault@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Finn",
+        "first_name": "Mary",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mary_finn@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Frohling",
+        "first_name": "Mike",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks",
+        "email_address": "mikefrohling@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jiannotti",
+        "first_name": "Valerie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "valeriejiannotti@email.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kamber",
+        "first_name": "Valerie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "valka6817@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kish",
+        "first_name": "Stephen",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "tahoe1780@msn.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Laughlin",
+        "first_name": "Nancy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks",
+        "email_address": "batgrl2@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Laye",
+        "first_name": "Bradley",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bradleylaye@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lebrun",
+        "first_name": "Sandra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "uses wheelchair, and needs front-row seats for 4 people IF possible",
+        "email_address": "sleangel1@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Levine",
+        "first_name": "Scott",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "shlevine@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Martin",
+        "first_name": "Luke",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "haciendachanchan@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Martin",
+        "first_name": "Julie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "haciendachanchan@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "McBride",
+        "first_name": "Jim",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jgmcbride@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Montana",
+        "first_name": "Monte",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "monte.montana@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Nunkai",
+        "first_name": "Catalina ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sleangel1@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Olson",
+        "first_name": "John",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks",
+        "email_address": "olsonjohn01@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pandya",
+        "first_name": "Niyama",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "niyama777@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pruitt",
+        "first_name": "Elizabeth",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ecpruitt63@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Robinson",
+        "first_name": "Mark",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "robsrule@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rodenbeck",
+        "first_name": "Ingrid",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "isrodenbeck@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sleeman",
+        "first_name": "Sharon",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mcilveen7136@rogers.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Stallman",
+        "first_name": "Jane",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks",
+        "email_address": "jlstallman@aol.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Vallejo",
+        "first_name": "Maurice",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "olsonjohn01@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Waugh",
+        "first_name": "Cathie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "front row-part of Sandra Lebrun group",
+        "email_address": "cathieamw@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wirtz",
+        "first_name": "Jean",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "wirtz@msn.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "kalamazoo",
+        "performance_date": "2025-02-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    }
+]

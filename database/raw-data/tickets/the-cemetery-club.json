@@ -1,0 +1,5224 @@
+[
+    {
+        "date_of_purchase": {
+            "date": "2023-10-08 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Sheids",
+        "first_name": "Anthony",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "ashields@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Arteaga",
+        "first_name": "Magali ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "marteaga@uazuay.edu.ec",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Mogoll\u00f3n",
+        "first_name": "Grace ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "gracecaty@uazuay.edu.ec",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Reinoso",
+        "first_name": "Lorena",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "lorena.reinosoi@uazuay.edu.ec",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Bergholt",
+        "first_name": "Sharyn ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "slbbirder@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Rein",
+        "first_name": "Rosemary",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "Reinrosemary@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Lowe",
+        "first_name": "Tammy ",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "amaw_lowe@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Carothers",
+        "first_name": "Jean & Sam",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder \/ Front Row seating",
+        "email_address": "innerspaces007@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Adatto",
+        "first_name": "Marcia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "mdadatto@aol.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Fry",
+        "first_name": "Bob",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "otomandbob@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Post",
+        "first_name": "Frances",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "fpost@ogdenpost.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 4
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Karla (Jofannie)",
+        "first_name": "Jofannie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jofannie@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Smyth",
+        "first_name": "Nancy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Cancelled",
+        "email_address": "nancysmythotr@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Prause",
+        "first_name": "Kristin",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "klprause@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Montclare",
+        "first_name": "Dara",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "montclaredara@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Haskell",
+        "first_name": "eben",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ebenhaskell@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 3
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Ball",
+        "first_name": "Steve",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comps",
+        "email_address": "stevanball44@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 2
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Tays",
+        "first_name": "Starr",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "starrtays55@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Basso",
+        "first_name": "Annette",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bassout@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Laurich",
+        "first_name": "John",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jlaurich@comcast.net",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Johnson",
+        "first_name": "Katy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "johnsonkaty7@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Hiltbrand",
+        "first_name": "Jane",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "janeh32@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Weitzel",
+        "first_name": "Regina",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "gigiweit@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Callaway",
+        "first_name": "Liz",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lizcallaway75@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Noble",
+        "first_name": "Janie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jsnoble2@googlemail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Armstrong-Moore",
+        "first_name": "Cathie ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cathieamw@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2024-11-08",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-10-08 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Anderson",
+        "first_name": "Bev",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "2bandersen@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Anderson",
+        "first_name": "Marv",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "acct@pobox.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Barter",
+        "first_name": "Gary",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "gbarter@hotmail. com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Benson",
+        "first_name": "Cindy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cindyjanebenson@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Campbell",
+        "first_name": "Julie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "julie.s.campbell@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Donovan",
+        "first_name": "Gearge",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "georgedonov@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Edenmeyer",
+        "first_name": "Scott",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sedenfield930@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Elliot",
+        "first_name": "Wes",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rpsbob@icloud.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Fonnesbeck",
+        "first_name": "Craig",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cfonnes@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Gano",
+        "first_name": "Glen",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "glenngano@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Grullion (Diaz)",
+        "first_name": "Patricia",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Tickets",
+        "email_address": "p_grullion@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Helms",
+        "first_name": "Ben",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "benhelms2@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Holland",
+        "first_name": "Lori",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "lori.holland@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Jaffe",
+        "first_name": "Lisa",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lj@lisajaffe.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "James",
+        "first_name": "Ryan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "drryanjames@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Morris",
+        "first_name": "Ruth",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex ticket",
+        "email_address": "pinescrim@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 2
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Nelson",
+        "first_name": "Allison",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "nelson@parkwaylane.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Pratho",
+        "first_name": "Scott",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "pratho@flash.net",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Rodriguez",
+        "first_name": "Dario ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "joysings2@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Talreja",
+        "first_name": "Shammi",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Cancelled",
+        "email_address": "iamshammi775@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Wilson-Glah",
+        "first_name": "Jolen2",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dragonflyexpat@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Wohlfeld",
+        "first_name": "Kathy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kathymarinwohlfeld@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Worl",
+        "first_name": "Brian",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "brianworl@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Zambrano",
+        "first_name": "Andres",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "underalias@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-10",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-10-07 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Appel",
+        "first_name": "Marilyn",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "1 Comp",
+        "email_address": "r.m.appel65c@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Boardman",
+        "first_name": "Ron",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ronboardmn@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Brown",
+        "first_name": "Clarke",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "brownsincuenca@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Cecil",
+        "first_name": "Julie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "juliercecil@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Connelly",
+        "first_name": "Suzanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "suzanneeconnelly@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Crawford",
+        "first_name": "Kristen",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lakris10@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Cymerman",
+        "first_name": "Joyce",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cymerman@swbell.net",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Davis",
+        "first_name": "Debra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "debadavis59@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Edenmeyer",
+        "first_name": "L Jay",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp for L Jay",
+        "email_address": "ljayedenmeyer@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Erves",
+        "first_name": "Nikki ",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "misserves15@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Foulk",
+        "first_name": "Glynis",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "gfoulk56@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Guzman",
+        "first_name": "Tom",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "tguzmania@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Hamilton",
+        "first_name": "Mike",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cody_s_hamilton@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Hatzenbuehler",
+        "first_name": "Tina",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "hatzenbuehlertina@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Hynoski",
+        "first_name": "Patti ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "patti1cats2@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Jameson",
+        "first_name": "Brenda",
+        "num_tickets": 6,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mizbjam@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 6
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Jiannotti",
+        "first_name": "Valerie ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "valeriejiannotti@email.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Jungerberg",
+        "first_name": "Michelle",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mjberg2003@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Kyzer",
+        "first_name": "Ken",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "1 Comp",
+        "email_address": "hubbardcomm@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Leslie",
+        "first_name": "Bruce",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rbleslie@delta14h.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Levine",
+        "first_name": "Scott",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "shlevine@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Mackarness",
+        "first_name": "Susan",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "suerte2@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Osbourne",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "kthsr8225@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Picard",
+        "first_name": "Lawrence",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lpaulpicard@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Pruitt",
+        "first_name": "Elizabeth",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket Holder",
+        "email_address": "ecpruitt63@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Rimes",
+        "first_name": "Cheryl",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rimescheryl@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Roberts",
+        "first_name": "Diane",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "diane.rae.roberts@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Roberson",
+        "first_name": "Teena",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Tickets Holder",
+        "email_address": "teenaandron@msn.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Rose",
+        "first_name": "Debra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "debra.rose44@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Siquenca",
+        "first_name": "Lucia",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Friends of Mary Helfich",
+        "email_address": "lucia316@hotmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Zelasko",
+        "first_name": "Lynne",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lbzelasko@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-11",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Andreatta",
+        "first_name": "Andreatta",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kris.andreatta19@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Andrews",
+        "first_name": "Lois",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "andrews.lois@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Arond-Thomas",
+        "first_name": "Manya",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "manya@awakeintheandes.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Clark",
+        "first_name": "Christine",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cmclark1223@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Criollo",
+        "first_name": "Santiago",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "scriollo97@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 1
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Dale",
+        "first_name": "Angelyn",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "angelyndale@bostonavenue.org",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Douglas",
+        "first_name": "Maureen",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mo9719@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Freeman",
+        "first_name": "Karla",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "4karlafreeman@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Greene",
+        "first_name": "Ed",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ed-greene@live.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hanks",
+        "first_name": "Christine",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "1 comp, 1 Flex",
+        "email_address": "chrishanks1003@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Harrison",
+        "first_name": "Sumana",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sumanasanta@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hendriks",
+        "first_name": "Andrea",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "andnyk@aol.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Laye",
+        "first_name": "Bradley",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex Ticket holder",
+        "email_address": "bradleylaye@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "lebrun",
+        "first_name": "Sandra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sleangel1@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lewis ",
+        "first_name": "Ray & Linda",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Lifetime",
+        "email_address": "ray_lewis@me.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Magiera",
+        "first_name": "Kelly",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "brmagiera@icloud.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "McCafferty",
+        "first_name": "Jeanne",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jeanne.mccafferty@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Mctier",
+        "first_name": "David",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "davidmctier@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Olsen",
+        "first_name": "John",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "olsonjohn01@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Robinson",
+        "first_name": "Mark",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "robsrule@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sand",
+        "first_name": "Johana",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "johanasand@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Scott",
+        "first_name": "Jim",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp for Terry",
+        "email_address": "scottjimsam@reagan.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sitzman",
+        "first_name": "Jackie and Guy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "1 Comp, 1 pay at door",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sudders",
+        "first_name": "Lesley",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lsudders@yahoo.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Vayner",
+        "first_name": "Nelli",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "nvayner@sbcglobal.net",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wade",
+        "first_name": "Constance",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ccatwade@gmail.com",
+        "door": 0,
+        "show_name": "the-cemetery-club",
+        "performance_date": "2023-11-12",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    }
+]

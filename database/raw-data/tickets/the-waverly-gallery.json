@@ -1,0 +1,5465 @@
+[
+    {
+        "last_name": "Appling",
+        "first_name": "Tim",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "timotappl80@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Blumenfeld",
+        "first_name": "Sue",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "runaroundsuervft@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Braswell",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "greenwood267@icloud.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Clark",
+        "first_name": "Christine",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "christineclarkdec@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cymerman",
+        "first_name": "Joyce",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cymerman@swbell.net",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Frye",
+        "first_name": "Jay",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "vesselhead3@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Gassaway",
+        "first_name": "Pamela",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "pamlmt@hotmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Howe",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kaulitz",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kthkaulitz@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 2
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Keith",
+        "first_name": "Marion",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "marion.keith@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Peterson",
+        "first_name": "Maria",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "marieatpeterson@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Schachner",
+        "first_name": "Brenda",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Smokler",
+        "first_name": "Jan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jansmokler@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wall \/ Carothers",
+        "first_name": "Jean",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex (Front row left by wall)",
+        "email_address": "samcarothers7@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Smith ",
+        "first_name": "Shirley & Nancy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rmsvt@comcast.net",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Estrella",
+        "first_name": "Rodney",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "restrella1978@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Zhindon",
+        "first_name": "Martin",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-15",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Ackerman",
+        "first_name": "Frances",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "facker1980@aol.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Andersen",
+        "first_name": "Beverly",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "sunni2018daze@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cleary",
+        "first_name": "John",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "veprjack@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Farren",
+        "first_name": "Pauline",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "farrenpauline59@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Grullion",
+        "first_name": "Patrice",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "p_grullion@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 3
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hattaway",
+        "first_name": "Michael",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "ghattaway06@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hynoski",
+        "first_name": "Patti",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "patti1cats2@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "James",
+        "first_name": "Ryan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "drryanjames@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Janeson",
+        "first_name": "Brenda",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mizbjam@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Ledbetter",
+        "first_name": "Dawn",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dawn.ledbetter@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "McCafferty",
+        "first_name": "Jeanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "jeanne.mccafferty@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Morell",
+        "first_name": "Peggy",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "PayPal payment showing as Pending",
+        "email_address": "Pvmorell1971@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "O'Kane",
+        "first_name": "Kevin",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kmok1956@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Paternoster",
+        "first_name": "Laurie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "lpaternoster@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Prause",
+        "first_name": "Kristen",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "klprause@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Talreja",
+        "first_name": "Shammi",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "iamshammi775@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Moen",
+        "first_name": "Bill",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "billmoen@yahoo.com",
+        "door": 0,
+        "raffle": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Green",
+        "first_name": "Bill",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jay",
+        "first_name": "Darina",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kuhns",
+        "first_name": "Steve",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Amount collected",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-16",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Alami",
+        "first_name": "Fawzi",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "alami42@live.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Appel",
+        "first_name": "Marilyn",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "r.m.appel65@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Boger",
+        "first_name": "Brent",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "brent.boger@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Brown",
+        "first_name": "Liz",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bethobrown@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Castro",
+        "first_name": "Daira",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dairarcastro2@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Chekaraou",
+        "first_name": "Danielle",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bonvoyagekadija@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cleary",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "veprjack@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Connelly",
+        "first_name": "Suzanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "suzanneeconnelly@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Doren",
+        "first_name": "Sandra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "doren1750@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fonnesbeck",
+        "first_name": "Nancy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "pooty904@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hancock",
+        "first_name": "Lucy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lohancock@aol.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 1
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Holland ",
+        "first_name": "Lori",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "lannwhite2002@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Holland ",
+        "first_name": "Lori",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lahollandpdx@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Holland ",
+        "first_name": "Lori",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lahollandpdx@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jameson",
+        "first_name": "Brenda",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mizbjam@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jiannotti",
+        "first_name": "Valerie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Laughlin",
+        "first_name": "Nancy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "batgrl2@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "lebrun",
+        "first_name": "sandra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sleangel1@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Leslie",
+        "first_name": "Bruce",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "rbleslie@delta14h.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Levine",
+        "first_name": "Scott",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "shlevine@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Osbourne",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "kthsr8225@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pruitt",
+        "first_name": "Elizabeth",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "ecpcharlotte@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Reyna",
+        "first_name": "Gloria",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Raffle",
+        "email_address": "reynagloria781@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Riggs",
+        "first_name": "Erin",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "erin.riggsinmontana@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Robertson",
+        "first_name": "Teena",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "teenaandron@msn.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Waugh",
+        "first_name": "John",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "johnwugh@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Welch",
+        "first_name": "Laura",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lwelch1957@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Amount collected",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-17",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bennett.",
+        "first_name": "Brad",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "terrybennettlaw@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bilsky",
+        "first_name": "Larry",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "larry@fastemail.us",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Chase",
+        "first_name": "Jacky",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jackychase50@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cory",
+        "first_name": "Jennifer",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jenniferrosecory@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Darrah",
+        "first_name": "Marlin",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "marlindarrah@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Decker",
+        "first_name": "Holly",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "nanahollyk@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 4
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Easterling",
+        "first_name": "Elizabeth",
+        "num_tickets": 6,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "eliz.east22@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 6
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Freeman",
+        "first_name": "Karla",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "4karlafreeman@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kimmel",
+        "first_name": "Gary",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "gary1@kimmelmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kish",
+        "first_name": "Steven",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "tahoe1780@msn.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lawson",
+        "first_name": "Sally",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "naanga@sbcglobal.net",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Mtecalf",
+        "first_name": "Tom",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "otomandbob@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Olson",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "olsonjohn01@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rein ",
+        "first_name": "Barry",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "1bbrbarry@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 3
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rodr\u00edguez",
+        "first_name": "Dario",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "joysings2@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rose",
+        "first_name": "Debea",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "debra.rose44@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Roselli",
+        "first_name": "Mark",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mrroselli@yahoo.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sanquist",
+        "first_name": "Jason",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jsandquistnc@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 3
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Shearer",
+        "first_name": "Steve",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "shear89692@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Snyder",
+        "first_name": "Rick",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rick.snyder57@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sugarman",
+        "first_name": "Candy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Flex",
+        "email_address": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Torney",
+        "first_name": "Mick",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "micktorney749@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Vallejo",
+        "first_name": "Maurice",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Comp",
+        "email_address": "olsonjohn01@gmail.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Winters",
+        "first_name": "Carol",
+        "num_tickets": 6,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "carolj1214@gmail.com",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 6
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Zelasko",
+        "first_name": "Lynne",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lbzelasko@yahoo.com",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bellin",
+        "first_name": "Paula",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Foulk",
+        "first_name": "Glynis",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fulcher",
+        "first_name": "Sandra",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Amount collected",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "________________________________________________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "show_name": "the-waverly-gallery",
+        "performance_date": "2024-08-18",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    }
+]

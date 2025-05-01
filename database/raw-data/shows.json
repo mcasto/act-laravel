@@ -1,0 +1,395 @@
+[
+  {
+    "id": 1,
+    "name": "Trumbo: Red, White, and Blacklisted",
+    "writer": "Christopher Trumbo",
+    "tagline": "",
+    "director": "Rick Snyder",
+    "info": "",
+    "poster": "poster-trumbo-red-white-and-blacklisted-2023.jpg",
+    "ticket_sales_start": "2023-07-25",
+    "slug": "trumbo-red-white-and-blacklisted-2023",
+    "gallery": [
+      "gallery-trumbo-red-white-and-blacklisted-2023-67dc3219e93fd.jpg",
+      "gallery-trumbo-red-white-and-blacklisted-2023-67dc3219e94c5.jpg",
+      "gallery-trumbo-red-white-and-blacklisted-2023-67dc3219e951e.jpg",
+      "gallery-trumbo-red-white-and-blacklisted-2023-67dc3219e95c6.jpg"
+    ],
+    "performances": [
+      { "date": "2023-08-25", "start_time": "16:00:00" },
+      { "date": "2023-08-26", "start_time": "14:00:00" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "It Had to be You",
+    "writer": "Renee Taylor and Joseph Bologna",
+    "tagline": "A hilarious, no-holds-barred, knock-down, drag-out battle of the sexes!",
+    "director": "Rick Snyder",
+    "info": "",
+    "poster": "poster-it-had-to-be-you-2022.jpg",
+    "ticket_sales_start": "2022-08-15",
+    "slug": "it-had-to-be-you-2022",
+    "gallery": [
+      "gallery-it-had-to-be-you-2022-67dc3219e96a8.png",
+      "gallery-it-had-to-be-you-2022-67dc3219e9700.png",
+      "gallery-it-had-to-be-you-2022-67dc3219e974f.png",
+      "gallery-it-had-to-be-you-2022-67dc3219e97ab.png"
+    ],
+    "performances": [{ "date": "2022-09-15", "start_time": "14:00:00" }]
+  },
+  {
+    "id": 3,
+    "name": "It's a Wonderful Life",
+    "writer": "Philip Van Doren Stern (Adapted by Joe Landry)",
+    "tagline": "",
+    "director": "Paula Bailey",
+    "info": "",
+    "poster": "poster-.jpg",
+    "ticket_sales_start": "2022-11-15",
+    "slug": "",
+    "gallery": [
+      "gallery--67dc3219e98ca.png",
+      "gallery--67dc3219e9915.png",
+      "gallery--67dc3219e995f.png",
+      "gallery--67dc3219e99ab.png"
+    ],
+    "performances": [{ "date": "2022-12-15", "start_time": "14:00:00" }]
+  },
+  {
+    "id": 4,
+    "name": "Fundamentals of Stagecraft Workshop",
+    "writer": "Paula Bailey",
+    "tagline": "",
+    "director": "Paula Bailey",
+    "info": "",
+    "poster": "poster-fundamentals-of-stagecraft-workshop-2023.jpg",
+    "ticket_sales_start": "2022-12-14",
+    "slug": "fundamentals-of-stagecraft-workshop-2023",
+    "gallery": [],
+    "performances": [{ "date": "2023-01-14", "start_time": "14:00:00" }]
+  },
+  {
+    "id": 5,
+    "name": "The Last Romance",
+    "writer": "Joe Dipietro",
+    "tagline": "Is it ever too late for love?",
+    "director": "Rick Snyder",
+    "info": "",
+    "poster": "poster-the-last-romance-2023.jpg",
+    "ticket_sales_start": "2023-06-05",
+    "slug": "the-last-romance-2023",
+    "gallery": [
+      "gallery-the-last-romance-2023-67dc3219e9acd.png",
+      "gallery-the-last-romance-2023-67dc3219e9b6a.png",
+      "gallery-the-last-romance-2023-67dc3219e9be4.png",
+      "gallery-the-last-romance-2023-67dc3219e9c3a.png"
+    ],
+    "performances": [
+      { "date": "2023-07-05", "start_time": "16:00:00" },
+      { "date": "2023-07-06", "start_time": "14:00:00" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "An Evening of Short Plays",
+    "writer": "Tennesee Williams, Robert Anderson, Gert Hofmann, and Robert Scott",
+    "tagline": "",
+    "director": "Jeanne McCafferty, Markus Gabino, Bob Fry, and Rick Snyder",
+    "info": "",
+    "poster": "poster-.png",
+    "ticket_sales_start": "2023-01-17",
+    "slug": "",
+    "gallery": [
+      "gallery--67dc3219e9ce9.jpg",
+      "gallery--67dc3219e9d4e.jpg",
+      "gallery--67dc3219e9e2d.jpg",
+      "gallery--67dc3219e9e9a.jpg"
+    ],
+    "performances": [
+      { "date": "2023-02-17", "start_time": "14:00:00" },
+      { "date": "2023-02-18", "start_time": "14:00:00" },
+      { "date": "2023-02-19", "start_time": "14:00:00" },
+      { "date": "2023-02-24", "start_time": "14:00:00" },
+      { "date": "2023-02-25", "start_time": "14:00:00" },
+      { "date": "2023-02-26", "start_time": "14:00:00" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Funraiser 2023: Musical Review",
+    "writer": "",
+    "tagline": "",
+    "director": "",
+    "info": "",
+    "poster": "poster-funraiser-2023-musical-review-2023.jpg",
+    "ticket_sales_start": "2022-12-28",
+    "slug": "funraiser-2023-musical-review-2023",
+    "gallery": [],
+    "performances": [
+      { "date": "2023-01-28", "start_time": "14:00:00" },
+      { "date": "2023-01-29", "start_time": "14:00:00" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "The Cemetery Club",
+    "writer": "Ivan Menchell",
+    "tagline": "Love, laughter, and loss among the tombstones.",
+    "director": "Gerald Cole",
+    "info": "",
+    "poster": "poster-the-cemetery-club-2023.png",
+    "ticket_sales_start": "2023-10-08",
+    "slug": "the-cemetery-club-2023",
+    "gallery": [
+      "gallery-the-cemetery-club-2023-67dc3219ea059.jpeg",
+      "gallery-the-cemetery-club-2023-67dc3219ea116.jpeg",
+      "gallery-the-cemetery-club-2023-67dc3219ea17c.jpeg",
+      "gallery-the-cemetery-club-2023-67dc3219ea1e8.jpeg"
+    ],
+    "performances": [
+      { "date": "2023-11-08", "start_time": "14:00:00" },
+      { "date": "2023-11-10", "start_time": "14:00:00" },
+      { "date": "2023-11-11", "start_time": "16:00:00" },
+      { "date": "2023-11-12", "start_time": "16:00:00" }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Miracle on 34th Street",
+    "writer": "George Seaton",
+    "tagline": "Kris Kringle Christmas Classic",
+    "director": "Kit Thornton",
+    "info": "",
+    "poster": "poster-miracle-on-34th-street-2023.png",
+    "ticket_sales_start": "2023-11-06",
+    "slug": "miracle-on-34th-street-2023",
+    "gallery": [
+      "gallery-miracle-on-34th-street-2023-67dc3219ea2cd.jpeg",
+      "gallery-miracle-on-34th-street-2023-67dc3219ea338.jpeg",
+      "gallery-miracle-on-34th-street-2023-67dc3219ea39c.jpeg",
+      "gallery-miracle-on-34th-street-2023-67dc3219ea405.jpeg"
+    ],
+    "performances": [
+      { "date": "2023-12-06", "start_time": "14:00:00" },
+      { "date": "2023-12-08", "start_time": "14:00:00" },
+      { "date": "2023-12-09", "start_time": "16:00:00" },
+      { "date": "2023-12-10", "start_time": "16:00:00" }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "The Prisoner of 2nd Avenue",
+    "writer": "Neil Simon",
+    "tagline": "Nuisances, nerves, and New York nonsense.",
+    "director": "Rick Snyder",
+    "info": "",
+    "poster": "poster-the-prisoner-of-2nd-avenue-2024.png",
+    "ticket_sales_start": "2024-01-15",
+    "slug": "the-prisoner-of-2nd-avenue-2024",
+    "gallery": [
+      "gallery-the-prisoner-of-2nd-avenue-2024-67dc3219ea4cc.jpeg",
+      "gallery-the-prisoner-of-2nd-avenue-2024-67dc3219ea541.jpeg",
+      "gallery-the-prisoner-of-2nd-avenue-2024-67dc3219ea59d.jpeg",
+      "gallery-the-prisoner-of-2nd-avenue-2024-67dc3219ea5fb.jpeg"
+    ],
+    "performances": [
+      { "date": "2024-02-15", "start_time": "14:00:00" },
+      { "date": "2024-02-16", "start_time": "14:00:00" },
+      { "date": "2024-02-17", "start_time": "16:00:00" },
+      { "date": "2024-02-18", "start_time": "16:00:00" }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Blithe Spirit",
+    "writer": "Noel Coward",
+    "tagline": "Ghostly, high-society hilarity.",
+    "director": "Gerald Cole",
+    "info": "",
+    "poster": "poster-blithe-spirit-2024.png",
+    "ticket_sales_start": "2024-03-17",
+    "slug": "blithe-spirit-2024",
+    "gallery": [
+      "gallery-blithe-spirit-2024-67dc3219ea713.jpeg",
+      "gallery-blithe-spirit-2024-67dc3219ea778.jpeg",
+      "gallery-blithe-spirit-2024-67dc3219ea7e7.jpeg",
+      "gallery-blithe-spirit-2024-67dc3219ea864.jpeg"
+    ],
+    "performances": [
+      { "date": "2024-04-17", "start_time": "14:00:00" },
+      { "date": "2024-04-18", "start_time": "14:00:00" },
+      { "date": "2024-04-19", "start_time": "14:00:00" },
+      { "date": "2024-04-20", "start_time": "16:00:00" },
+      { "date": "2024-04-21", "start_time": "16:00:00" }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Murder at the Howard Johnson's",
+    "writer": "",
+    "tagline": "",
+    "director": "Rick Snyder",
+    "info": "",
+    "poster": "poster-murder-at-the-howard-johnsons-2024.jpeg",
+    "ticket_sales_start": "2024-05-15",
+    "slug": "murder-at-the-howard-johnsons-2024",
+    "gallery": [
+      "gallery-murder-at-the-howard-johnsons-2024-67dc3219ea92b.jpeg",
+      "gallery-murder-at-the-howard-johnsons-2024-67dc3219ea98d.jpeg",
+      "gallery-murder-at-the-howard-johnsons-2024-67dc3219ea9ec.jpeg",
+      "gallery-murder-at-the-howard-johnsons-2024-67dc3219eaa4b.jpeg"
+    ],
+    "performances": [
+      { "date": "2024-06-15", "start_time": "14:00:00" },
+      { "date": "2024-06-16", "start_time": "14:00:00" },
+      { "date": "2024-06-17", "start_time": "16:00:00" },
+      { "date": "2024-06-18", "start_time": "16:00:00" }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "The Waverly Gallery",
+    "writer": "",
+    "director": "",
+    "tagline": "",
+    "info": "",
+    "poster": "poster-the-waverly-gallery-2024.jpeg",
+    "ticket_sales_start": "2024-07-15",
+    "slug": "the-waverly-gallery-2024",
+    "gallery": [
+      "gallery-the-waverly-gallery-2024-67dc3219eab27.jpeg",
+      "gallery-the-waverly-gallery-2024-67dc3219eab97.jpeg",
+      "gallery-the-waverly-gallery-2024-67dc3219eabf8.jpeg",
+      "gallery-the-waverly-gallery-2024-67dc3219eac57.jpeg"
+    ],
+    "performances": [
+      { "date": "2024-08-15", "start_time": "14:00:00" },
+      { "date": "2024-08-16", "start_time": "14:00:00" },
+      { "date": "2024-08-17", "start_time": "16:00:00" },
+      { "date": "2024-08-18", "start_time": "16:00:00" }
+    ]
+  },
+  {
+    "id": 14,
+    "slug": "harvey-2024",
+    "name": "Harvey",
+    "poster": "poster-harvey-2024.jpeg",
+    "writer": "Mary Chase",
+    "director": "Gerald Cole",
+    "tagline": "The Pulitzer Prize-winning comedy",
+    "ticket_sales_start": "2024-09-17",
+    "info": "Elwood P. Dowd has a best friend named Harvey\u2014a six-foot-tall invisible rabbit. As his family scrambles to commit him to a sanitarium, mistaken identities and misunderstandings ensue in this classic comedy about kindness, acceptance, and the joy of seeing the world a little differently.",
+    "gallery": [
+      "gallery-harvey-2024-67dc3219ead74.jpeg",
+      "gallery-harvey-2024-67dc3219eaddc.jpeg",
+      "gallery-harvey-2024-67dc3219eae3a.jpeg"
+    ],
+    "performances": [
+      { "date": "2024-10-17", "start_time": "14:00:00" },
+      { "date": "2024-10-18", "start_time": "14:00:00" },
+      { "date": "2024-10-19", "start_time": "14:00:00" },
+      { "date": "2024-10-20", "start_time": "14:00:00" }
+    ]
+  },
+  {
+    "id": 15,
+    "slug": "a-christmas-carol-2024",
+    "name": "A Christmas Carol",
+    "poster": "poster-a-christmas-carol-2024.jpeg",
+    "writer": "Charles Dickens",
+    "director": "Cody Hamilton and Saralee Squires",
+    "tagline": "Adapted for radio by Anthony Palermo",
+    "ticket_sales_start": "2024-11-12",
+    "info": "Gather around the radio for a heartwarming retelling of Charles Dickens's timeless holiday classic! In this live radio play, voice actors, sound effects, and holiday cheer bring Ebenezer Scrooge's ghostly Christmas Eve journey to life. Can the spirits of Christmas Past, Present, and Future warm his icy heart before it's too late?",
+    "gallery": [
+      "gallery-a-christmas-carol-2024-67dc3219eaf07.jpeg",
+      "gallery-a-christmas-carol-2024-67dc3219eaf6b.jpeg",
+      "gallery-a-christmas-carol-2024-67dc3219eafd3.jpeg",
+      "gallery-a-christmas-carol-2024-67dc3219eb02c.jpeg"
+    ],
+    "performances": [
+      { "date": "2024-12-12", "start_time": "14:00:00" },
+      { "date": "2024-12-13", "start_time": "14:00:00" },
+      { "date": "2024-12-14", "start_time": "14:00:00" },
+      { "date": "2024-12-15", "start_time": "14:00:00" }
+    ]
+  },
+  {
+    "id": 16,
+    "slug": "kalamazoo-2025",
+    "name": "Kalamazoo",
+    "poster": "poster-kalamazoo-2025.jpeg",
+    "writer": "Michelle Kholos Brooks & Kelly Younger",
+    "director": "Jeanne McCafferty",
+    "tagline": "You're never too old to feel young again.",
+    "ticket_sales_start": "2025-01-13",
+    "info": "Peg and Irv, two quirky but lovable baby boomers, take a leap into the world of online dating. As their romance blossoms, they navigate generational gaps, personal baggage, and the unpredictable chaos of love in later life. A heartfelt and hilarious look at second chances and unexpected connections.",
+    "gallery": [
+      "gallery-kalamazoo-2025-67dc3219eb0ec.jpeg",
+      "gallery-kalamazoo-2025-67dc3219eb152.jpeg",
+      "gallery-kalamazoo-2025-67dc3219eb1b8.jpeg",
+      "gallery-kalamazoo-2025-67dc3219eb24a.jpeg"
+    ],
+    "performances": [
+      { "date": "2025-02-13", "start_time": "15:00:00" },
+      { "date": "2025-02-14", "start_time": "15:00:00" },
+      { "date": "2025-02-15", "start_time": "15:00:00" },
+      { "date": "2025-02-16", "start_time": "15:00:00" }
+    ]
+  },
+  {
+    "id": 17,
+    "slug": "the-tale-of-the-allergists-wife-2025",
+    "name": "The Tale of the Allergist's Wife",
+    "poster": "poster-the-tale-of-the-allergists-wife-2025.jpeg",
+    "writer": "Charles Busch",
+    "director": "Bob Fry",
+    "tagline": "A comedy of neuroses, midlife crises, and unexpected awakenings.",
+    "ticket_sales_start": "2025-03-10",
+    "info": "Marjorie Taub is a cultured but dissatisfied New York housewife on the brink of a breakdown\u2014until a glamorous childhood friend suddenly reappears. But is she a savior, a trickster, or something more? This witty and darkly comic play explores identity, midlife crises, and the search for meaning in an upscale Manhattan world.",
+    "performances": [
+      { "date": "2025-04-10", "start_time": "15:00:00" },
+      { "date": "2025-04-11", "start_time": "15:00:00" },
+      { "date": "2025-04-12", "start_time": "15:00:00" },
+      { "date": "2025-04-13", "start_time": "15:00:00" }
+    ],
+    "gallery": []
+  },
+  {
+    "id": 18,
+    "slug": "dial-m-for-murder-2025",
+    "name": "Dial \"M\" for Murder",
+    "poster": "poster-dial-m-for-murder-2025.jpeg",
+    "writer": "Frederick Knott (Adapted by Jeffrey Hatcher)",
+    "director": "Gerald Cole",
+    "tagline": "A new version of the murder mystery that inspired Hitchcock's masterpiece.",
+    "ticket_sales_start": "2025-05-12",
+    "info": "Tony Wendice has planned the perfect crime: the murder of his wealthy wife, Margot. But when the scheme goes awry, a game of cat and mouse ensues, filled with twists, betrayals, and dark secrets. Jeffrey Hatcher's fresh adaptation of the classic thriller sharpens the suspense and deepens the psychological intrigue, making for a stylish, edge-of-your-seat experience.",
+    "performances": [
+      { "date": "2025-06-12", "start_time": "15:00:00" },
+      { "date": "2025-06-13", "start_time": "15:00:00" },
+      { "date": "2025-06-14", "start_time": "15:00:00" },
+      { "date": "2025-06-15", "start_time": "15:00:00" }
+    ],
+    "gallery": []
+  },
+  {
+    "id": 19,
+    "slug": "moonlight-and-magnolias-2025",
+    "name": "Moonlight and Magnolias",
+    "poster": "poster-moonlight-and-magnolias-2025.jpeg",
+    "writer": "Ron Hutchinson",
+    "director": "Rick Snyder",
+    "tagline": "The (mostly) true story of the writing of the screenplay for \"Gone With the Wind\"",
+    "ticket_sales_start": "2025-07-14",
+    "info": "Hollywood, 1939. \"Gone with the Wind\" is in crisis, and screenwriter Ben Hecht has just five days to rewrite the script\u2014without ever having read the book! With producer David O. Selznick and director Victor Fleming acting out the novel in his office, chaos, comedy, and classic Hollywood magic unfold in this fast-paced, behind-the-scenes farce.",
+    "performances": [
+      { "date": "2025-08-14", "start_time": "15:00:00" },
+      { "date": "2025-08-15", "start_time": "15:00:00" },
+      { "date": "2025-08-16", "start_time": "15:00:00" },
+      { "date": "2025-08-17", "start_time": "15:00:00" }
+    ],
+    "gallery": []
+  }
+]

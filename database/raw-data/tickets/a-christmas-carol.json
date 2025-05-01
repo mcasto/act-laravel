@@ -1,0 +1,5590 @@
+[
+    {
+        "last_name": "Adatto",
+        "first_name": "Marcia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mdadatto@aol.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Albornoz",
+        "first_name": "Amy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "albornozamy@hotmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Blanchard",
+        "first_name": "Melissa",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rotunda@live.ca",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Boger",
+        "first_name": "Brent",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "brent.boger@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Caraway",
+        "first_name": "Richanne",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "richanne.caraway@icloud.com",
+        "door": 0,
+        "total_paid": 4,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Carothers",
+        "first_name": "Jean",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "front row by left wall",
+        "email_address": "innerspaces007@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Coon",
+        "first_name": "Johnney",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jcoon0313@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "D'Abreo ",
+        "first_name": "Myron ",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "myron.dabreo@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 2
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Davis",
+        "first_name": "Deb",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks ",
+        "email_address": "debadavis59@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 2
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Farren",
+        "first_name": "Pauline",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "farrenpauline59@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fiore",
+        "first_name": "Kim",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kmf1925@aol.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hudson",
+        "first_name": "Caroline",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "chudsondowney@outlook.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Landy",
+        "first_name": "Headley",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "landyheadley@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Levine",
+        "first_name": "Scott",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "shlevine@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Martin",
+        "first_name": "John",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "hermanopat@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Metcalf",
+        "first_name": "Tom",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks and 2 snacks",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Michelle",
+        "first_name": "Rita",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "richanne.caraway@icloud.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Moore",
+        "first_name": "Don",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "donmooredxer@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Naugle",
+        "first_name": "Stacy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "stacy@yourveganfamily.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Naugle",
+        "first_name": "Markus",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Nicco Naugle",
+        "email_address": "stacy@yourveganfamily.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "O'Kane",
+        "first_name": "Kevin",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kmok1956@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Olson",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks ",
+        "email_address": "olsonjohn01@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pfefferkorn",
+        "first_name": "Eric",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ericpfefferkorn777@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pierson",
+        "first_name": "Janet",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "janet.pierson@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pruitt",
+        "first_name": "Elizabeth",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ecpruitt63@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Smokler",
+        "first_name": "Jan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jansmokler@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Squires",
+        "first_name": "Chase",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks ",
+        "email_address": "saralee.squires@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Squires",
+        "first_name": "Chase",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "Chase.squires@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sullivan",
+        "first_name": "Lotis",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mslot23@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Vallejo",
+        "first_name": "Maurice",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Weitzel",
+        "first_name": "Gigi",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Westlake",
+        "first_name": "Margaret",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "castoware@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wilson-Glah",
+        "first_name": "Jolene",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dragonflyexpat@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Amount collected",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "________________________________________________________________",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "total_paid": "",
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "________________________________________________________________",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "total_paid": "",
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "________________________________________________________________",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "___________",
+        "email_address": "",
+        "door": 0,
+        "total_paid": "",
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-12",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Andersen",
+        "first_name": "Bev & Brad",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks and 2 snacks",
+        "email_address": "sunni2018daze@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Atkinson",
+        "first_name": "Patrick",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "budgvic@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Barnett",
+        "first_name": "Carolyn",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cbarnett328@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Basso",
+        "first_name": "Annette",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bassout@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bennett",
+        "first_name": "Brad",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "terrybennettlaw@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bradley",
+        "first_name": "Susan",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sjrgallery1@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bryant",
+        "first_name": "James",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jwb629@cccb.edu",
+        "door": 0,
+        "total_paid": 3,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bryant",
+        "first_name": "James",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jwb629@cccb.edu",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cleary",
+        "first_name": "Jack",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "veprjack@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cochran",
+        "first_name": "Larry",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lamaco713@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cooke",
+        "first_name": "Dan",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dansnews@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Eriksson",
+        "first_name": "Monica",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "monicaerik48@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Flottman",
+        "first_name": "Sharon",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 drinks and 2 snacks",
+        "email_address": "sharonflottman@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hall",
+        "first_name": "Ken",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kenhall6677@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hamilton",
+        "first_name": "Michael",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cody_s_hamilton@hotmail.com",
+        "door": 0,
+        "total_paid": 3,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hattaway",
+        "first_name": "Michael",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "amandabfa@aol.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 3
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hendrix",
+        "first_name": "Susan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "suehendrix2@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Howard-Larwence",
+        "first_name": "Jamie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jamiehoward@me.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Howe",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "unlimited snacks and drinks",
+        "email_address": "amscert@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hulmes",
+        "first_name": "Leita",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "leitajean48@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "James\/Schmitz ",
+        "first_name": "Ryan & Ron ",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "front row, the far two right side seats 4 drinks and 2 snacks",
+        "email_address": "(drryanjames@gmail.com)",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Johnson",
+        "first_name": "Ronny",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "noger59@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Landers",
+        "first_name": "Elizebeth",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "edawnlanders@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "McCafferty",
+        "first_name": "Jeanne.",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jeanne.mccafferty@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Molsbee",
+        "first_name": "Ronald",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ronmolsbee@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Morris",
+        "first_name": "Colleen",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "colleen7436@sbcglobal.net",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Ochoa",
+        "first_name": "Maria",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "marias.artdoll@gmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rodenbeck",
+        "first_name": "Ingrid",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "isrodenbeck@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Baggenstos",
+        "first_name": "Elaine",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "elianebaggenstos@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bellin",
+        "first_name": "Paula",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "pbellin88@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Coughlan",
+        "first_name": "Ellen",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "coughlan11@msn.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cullen",
+        "first_name": "Jennie",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jennie.cullen1@gmail.com",
+        "door": 0,
+        "total_paid": 4,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fonnesbeck",
+        "first_name": "Craig",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cfonnes@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Haaland",
+        "first_name": "Cynthia",
+        "num_tickets": 5,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "6 Free snack coupons",
+        "email_address": "cindihaaland@hotmail.com",
+        "door": 0,
+        "total_paid": 5,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 5
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hancock",
+        "first_name": "Lucy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lohancock@aol.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hendriks",
+        "first_name": "Andrea",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "andnyk@aol.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Holland",
+        "first_name": "Lori",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lori.holland@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jameson",
+        "first_name": "Brenda",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mizbjam@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jiannotti",
+        "first_name": "Valerie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "valeriejiannotti@email.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Keith",
+        "first_name": "Marion",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks and 2 snacks",
+        "email_address": "marion.keith@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kimmel",
+        "first_name": "Gary",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "gary@kimmelmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Leslie",
+        "first_name": "Bruce",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rbleslie@delta14h.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Luisa",
+        "first_name": "Ana",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "marion.keith@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Osbourne",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "unlimited snacks and drinks",
+        "email_address": "kthsr8225@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Potter",
+        "first_name": "Richard",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "potterrichard49@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rallo",
+        "first_name": "Julie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jrallo1@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Reinertsen",
+        "first_name": "Nanet",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "N_reinertsen@yahoo.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Reinertsen",
+        "first_name": "John",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "N_reinertsen@yahoo.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "ROBERTSON ",
+        "first_name": "TEENA ",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "<teenaandron@msn.com>",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Stone",
+        "first_name": "Alexanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "alexanne13@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Stratton",
+        "first_name": "Brian",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "4 drinks and 2 snacks",
+        "email_address": "bstratton@me.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Williams",
+        "first_name": "Synomon",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "synamonwilliams@gmail.com",
+        "door": 0,
+        "total_paid": 4,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Anderson",
+        "first_name": "David",
+        "num_tickets": 6,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mayadave09@gmail.com",
+        "door": 0,
+        "total_paid": 6,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 6
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bateman",
+        "first_name": "Brandon",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "fryboister@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Connelly",
+        "first_name": "Suzannee",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "suzanneeconnelly@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Diaz",
+        "first_name": "Leah",
+        "num_tickets": 6,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "diaz.leah@icloud.com",
+        "door": 0,
+        "total_paid": 6,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 6
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Erves",
+        "first_name": "Nikki",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "misserves15@gmail.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Howerton",
+        "first_name": "Sandra",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "showdolphin1@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Johnson",
+        "first_name": "Burt",
+        "num_tickets": 6,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "burt@mindstorm-inc.com",
+        "door": 0,
+        "total_paid": 6,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 6
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kish",
+        "first_name": "Steven",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "tahoe1780@msn.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Moen",
+        "first_name": "Kevin",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "drksmoen@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Naugle",
+        "first_name": "Stacy",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "stacy@yourveganfamily.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 3
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Ordonez",
+        "first_name": "Grace",
+        "num_tickets": 5,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "graceord13@hotmail.com",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 5
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Picard",
+        "first_name": "Lawrence",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lpaulpicard@gmail.com",
+        "door": 0,
+        "total_paid": 1,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pyka ",
+        "first_name": "Jamie",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jjpyka@yahoo.com",
+        "door": 0,
+        "total_paid": 4,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Robinson",
+        "first_name": "Mark",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "robsrule@gmail.com",
+        "door": 0,
+        "total_paid": 4,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Stallman",
+        "first_name": "Jane",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jlstallman@aol.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Weits",
+        "first_name": "Gerri",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "gerriweits@yahoo.com",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cole",
+        "first_name": "Gerald",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 2,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "total_paid": 0,
+        "no_show": 0,
+        "show_name": "a-christmas-carol",
+        "performance_date": "2024-12-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    }
+]

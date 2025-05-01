@@ -1,0 +1,5583 @@
+[
+    {
+        "last_name": "Adatto",
+        "first_name": "Marcia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mdadatto@aol.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Ann",
+        "first_name": "Paula",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sniggie1@hotmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Blumenfeld",
+        "first_name": "Sue",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "runaroundsuervft@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Carothers.",
+        "first_name": "Jean",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "(Front row left by wall)",
+        "email_address": "innerspaces007@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Curtis",
+        "first_name": "William",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "wecwec2@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Dailey",
+        "first_name": "Richard",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "doggone357@aol.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 4
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Gano",
+        "first_name": "Glen and Mara",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "per Email",
+        "email_address": "glenngano@hotmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jimenez",
+        "first_name": "Jonathan",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jimenezmezaj@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Moreno",
+        "first_name": "Diane",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dkmoreno@hotmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Wohlfeld",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kathymarinwohlfeld@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Belcher",
+        "first_name": "Maria",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Amount collected",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-13",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Anderson",
+        "first_name": "Beverly",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sunni2018daze@gmail.com",
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bergholt",
+        "first_name": "Shayrn",
+        "num_tickets": 0,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "slbbirder@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Blake",
+        "first_name": "Alison",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "apolarfly@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cleary",
+        "first_name": "John",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "veprjack@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cochran",
+        "first_name": "Marilyn",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lamaco713@gmail.com",
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Conway",
+        "first_name": "Candice",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "muffinlady01@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Cymerman",
+        "first_name": "Joyce",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cymerman@swbell.net",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Davis",
+        "first_name": "Deborah",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "debadavis59@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Estrella",
+        "first_name": "Rodney",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "restrella1978@yahoo.com",
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 1
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hanks",
+        "first_name": "Christine",
+        "num_tickets": 3,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "2 Flex; 1 Comp",
+        "email_address": "chrishanks1003@gmail.com",
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hill",
+        "first_name": "Deborah",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dhill5811@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hynoski",
+        "first_name": "Patti",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "patti1cats2@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "James",
+        "first_name": "Ryan",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "drryanjames@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kayce",
+        "first_name": "Cameron",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cameronkayce@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Laurich",
+        "first_name": "John",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jlaurich@comcast.net",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Noble",
+        "first_name": "Janie Sue",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jsnoble2@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Passman",
+        "first_name": "Kari",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "karijorn@sbcglobal.net",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Saitta",
+        "first_name": "Susan",
+        "num_tickets": 7,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Reserve Seats Together",
+        "email_address": "vsaitta@icloud.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 7
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Spencer",
+        "first_name": "Donald",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "spen2133@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Stinson-Smiley",
+        "first_name": "Rolanda",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "rolanda.stinson@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Talreja",
+        "first_name": "Shammi",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "iamshammi775@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Warren",
+        "first_name": "Robert",
+        "num_tickets": 3,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "robertntally@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Williams",
+        "first_name": "Kwame",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "scsu93@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Winters",
+        "first_name": "Carol",
+        "num_tickets": 2,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "carolj1214@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Norwood",
+        "first_name": "J",
+        "num_tickets": 1,
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jacinorwood@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "door": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-14",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Alami",
+        "first_name": "Fawzi",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "alami42@live.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Connelly",
+        "first_name": "Suzanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "suzanneeconnelly@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Leverett",
+        "first_name": "David",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "malexita0717@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Demers",
+        "first_name": "Michelle",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "coworkingclubs@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Erves",
+        "first_name": "Nikki",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "misserves15@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fonnesbeck",
+        "first_name": "Craig",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "cfonnes@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Galloway",
+        "first_name": "Nancy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "burtonwoodnlg@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Grullion (Diaz)",
+        "first_name": "Patricia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "p_grullion@yahoo.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hall",
+        "first_name": "Ken",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kenhall6677@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Holland",
+        "first_name": "Lori",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "lori.holland@yahoo.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Hubbard",
+        "first_name": "Carol",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Front Row",
+        "email_address": "hubbardcomm@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Krishnan",
+        "first_name": "Raghuraman",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "raghusha1988@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lawrence-Howard",
+        "first_name": "Kirk",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kirklawrence@me.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Ledbetter",
+        "first_name": "Dawn",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "dawn.ledbetter@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Levine",
+        "first_name": "Scott",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "shlevine@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 1
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "LUZOVICH",
+        "first_name": "STEVE",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "steve@luzovich.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Morell",
+        "first_name": "Peggy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Guest-Sheryl Goldin Strong",
+        "email_address": "pvmorell1971@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Osborne",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kthsr8225@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pruitt",
+        "first_name": "Elizabeth",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ecpcharlotte@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rallo",
+        "first_name": "Julie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jrallo1@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Riggs",
+        "first_name": "Erin",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "erin.riggsinmontana@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Robertson",
+        "first_name": "Teena",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "teenaandron@msn.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Schoett",
+        "first_name": "Annika",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ann.schoett@gmail.com",
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Schuler",
+        "first_name": "Martha",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "\nmes2206@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Weber",
+        "first_name": "Derek",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "bloated_refits_0a@icloud.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Zak",
+        "first_name": "James",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "jezak@hotmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Amount collected",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-15",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Avil",
+        "first_name": "Belen",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "m.belen.avila@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Bennett, ",
+        "first_name": "Brad",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mymrbennett@outlook.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Decker",
+        "first_name": "Mark",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "singindabluze@gmail.com",
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Dudar",
+        "first_name": "Peter",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mail@arlingtonwestfilm.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Fulcher",
+        "first_name": "Sandra",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sgfulcher1961@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 3
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Jiannotti",
+        "first_name": "Valerie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "valeriejiannotti@email.com",
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kaiser",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "kaifish35@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Kilinski",
+        "first_name": "Darlene",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "darrunning@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Lebrun",
+        "first_name": "Sandra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "sleangel1@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Marr",
+        "first_name": "Sally",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "mail@arlingtonwestfilm.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "McDevitt",
+        "first_name": "David",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "davidmcdevitt@hotmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Moen",
+        "first_name": "Bill",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "billmoen@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Nadeau",
+        "first_name": "Sherry",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "nadeausherry13@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pierson",
+        "first_name": "Janet",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "janet.pierson@gmail.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Pino ",
+        "first_name": "Norma",
+        "num_tickets": 0,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "One Comp - Rick & One pay @ door",
+        "email_address": "normichus22@hotmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Rodriguez",
+        "first_name": "Dario",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "joysings2@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Sheids",
+        "first_name": "Anthony",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "ashields@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 2
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Waugh",
+        "first_name": "John",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "johnwugh@yahoo.com",
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Frye",
+        "first_name": "Kendall",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "vesselhead3@gmail.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Germain",
+        "first_name": "Michael",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "miluigs@yahoo.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Momasa",
+        "first_name": "Dave",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "imiruu@yahoo.com",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Potter",
+        "first_name": "Richard",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Schaher",
+        "first_name": "Breddo",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": "",
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Walk-ins",
+        "first_name": "",
+        "num_tickets": "",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "num_tickets": "Email",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Amount collected",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "last_name": "___________",
+        "first_name": "___________",
+        "num_tickets": "_____________________________",
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "_____________________",
+        "email_address": null,
+        "paypal": null,
+        "flex": null,
+        "transfer": null,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "door": 0,
+        "no_show": 0,
+        "show_name": "murder-at-the-howard-johnsons",
+        "performance_date": "2024-06-16",
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    }
+]

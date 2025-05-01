@@ -1,0 +1,47 @@
+{
+  "ticketPrice": 15,
+  "ticketEmail": "actseats@gmail.com",
+  "contactEmail": "actseats@gmail.com",
+  "devEmail": "castoware@gmail.com",
+  "paymentMethods": [
+    {
+      "label": "PayPal",
+      "value": "paypal",
+      "instructions": "<h5>Pay via PayPal</h5><div><hr></div><div><br></div><div>Send {{price}} through 'Friends and Family' to PayPal account callanspappy@yahoo.com.</div><div><br></div><div>We will reply to confirm receipt of payment after we receive it (usually within 24 hours). Thanks for your patronage!</div>",
+      "userOption": true,
+      "id": "payment-method:m4iham229926"
+    },
+    {
+      "label": "Ecuadorian Bank Transfer",
+      "value": "transfer",
+      "instructions": "<h5>Pay via Ecuadorian Bank Transfer</h5><div><hr></div><div><br></div><div>Transfer {{price}} to:</div><div><br></div><div>Robert Kenneth Hay</div><div>JEP Savings Account (Ahorros)</div><div>Account number 406132006900</div><div>C\u00e9dula (CI) 0152265443</div><div><br></div><div>We will reply to confirm receipt of payment, usually within 48 hours after you submit the transfer. Thanks for your patronage!</div>",
+      "userOption": true,
+      "id": "payment-method:m4ihm4am4wp6"
+    },
+    {
+      "label": "Flex Ticket Reservation",
+      "value": "flex",
+      "instructions": "<h5>Your Flex Ticket reservation(s) have been submitted.</h5><div><hr></div><div><br></div><div>We will confirm your reservation within 24 hours. Thanks for being a loyal patron!</div>",
+      "userOption": true,
+      "id": "payment-method:m4ihp1eb6hbe"
+    },
+    {
+      "label": "Comp",
+      "value": "comp",
+      "instructions": "",
+      "userOption": false,
+      "id": "payment-method:m4ihp7ug6s8i"
+    },
+    {
+      "label": "Credit Card",
+      "value": "fixr",
+      "instructions": "",
+      "userOption": true,
+      "id": "payment-method:m4qnxj187fem"
+    }
+  ],
+  "soldOutTarget": 50,
+  "flexTickets": "<div class=\"q-pb-sm\">5 admissions to use as you wish to attend any of ACT's regular productions.</div><div>We will keep track of your Flex Ticket admissions usage for you.</div>",
+  "generalNote": "<h6>We have a generator</h6><div>All our performances are protected by a backup power supply.</div>",
+  "welcomeNote": "<h6>Welcome To Our Site</h6><div>ACTs theater is located in El Centro, Cuenca on Antonio Vega Mu\u00f1oz 1446 between Est\u00e9vez de Toral and Coronel Talbot.</div><div><a href=\"https://maps.app.goo.gl/aWQdWrLWhpgE8Zkk6\" target=\"_blank\" class=\"text-white\">View Location on Google Maps</a></div>"
+}

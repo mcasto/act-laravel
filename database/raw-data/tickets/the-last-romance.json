@@ -1,0 +1,3633 @@
+[
+    {
+        "date_of_purchase": {
+            "date": "2023-06-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Zevallos",
+        "first_name": "Pablo",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "meg_westlake@yahoo.com",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 3
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-06 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Scherwitz",
+        "first_name": "Larry",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Originally booked for July 6",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "debra.rose44@gmail.com",
+        "season": 2,
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-07 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "D'Abreo",
+        "first_name": "Valerie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "suzanneeconnelly@gmail.com",
+        "season": null,
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-07 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Espinosa",
+        "first_name": "Maria",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "misserves15@gmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-07 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Laughlin",
+        "first_name": "Nancy",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "It's Nancy's Birthday today",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "mh04kw@icloud.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-10 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Erves",
+        "first_name": "Nikki",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "jandynes1@gmail.com",
+        "season": null,
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-10 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Osborne",
+        "first_name": "Kathy",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "graceord13@hotmail.com",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-14 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Anderson",
+        "first_name": "Maya",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "mdadatto@aol.com",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-15 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Gary Barter",
+        "first_name": "Gary",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "gmgano@icloud.com",
+        "season": 1,
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-17 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Deckard",
+        "first_name": "Holly",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "tapetwhacker@gmail.com",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-18 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Davison",
+        "first_name": "Matthew",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "valerie.dabreo@gmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-18 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Phoenix",
+        "first_name": "Pamela",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "kthsr8225@gmail.com",
+        "season": 2,
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-19 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Rose",
+        "first_name": "Debra",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "teenaandron@msn.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-19 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Talreja",
+        "first_name": "Shammi",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "larry.scherwitz@gmail.com",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-20 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Dynes",
+        "first_name": "Jan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "nanahollyk@gmail.com",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-20 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Mcdevitt",
+        "first_name": "David",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "rbleslie@delta14h.com",
+        "season": 1,
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-21 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Westlake",
+        "first_name": "Margaret",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "renrutybba1@yahoo.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-24 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Pratho",
+        "first_name": "Scott",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "pamela33phoenix@gmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-27 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Brown",
+        "first_name": "Clarke",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "mayadave09@gmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-27 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Colosimo",
+        "first_name": "Roberto",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Reserved Seating, see Terry",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "brownsincuenca@gmail.com",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-27 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Connelly",
+        "first_name": "Suzanne",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "robertocolosimo153@gmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-27 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Hattaway",
+        "first_name": "Greg",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Guests of Mike & Terry",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "cody_s_hamilton@hotmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Gano",
+        "first_name": "Glenn",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "mikefrohling70-fixr@yahoo.com",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Leslie",
+        "first_name": "Bruce",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "batgrl2@yahoo.com",
+        "season": null,
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 1
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Norwood",
+        "first_name": "Jaci",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Guest of Tim Appling",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "davidmcdevitt@hotmail.com",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-01 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "ROBERTSON",
+        "first_name": "TEENA",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "pratho@flash.net",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 2
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-01 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Tripaldi",
+        "first_name": "Anna",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-02 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Frohling",
+        "first_name": "Mike",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "nana1001deleites@gmail.com",
+        "season": "",
+        "door": 0,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-03 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Ordo\u00f1ez",
+        "first_name": "Grace",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-03 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Carlos Ram\u00edrez and Mar\u00eda Arguello",
+        "first_name": "",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "",
+        "email_address": "zevallos_Pablo@hotmail.com",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 3
+            },
+            {
+                "method": "comp",
+                "num_tickets": 2
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Hamilton",
+        "first_name": "Cody",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "gbarter@hotmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Hooper",
+        "first_name": "Martha",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 2
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Thornton",
+        "first_name": "Kit",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Guest of Kathleen Thorton",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "iamshammi7@outlook.com",
+        "season": "",
+        "door": 0,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 1
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Turner",
+        "first_name": "Abby",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": "annatripaldi@gmail.com",
+        "season": "",
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": "",
+        "last_name": "Adatto",
+        "first_name": "Marcia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "email_address": null,
+        "paypal": null,
+        "season": null,
+        "door": 0,
+        "credit_card": null,
+        "raffle": null,
+        "comp": null,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-05",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Bergholt",
+        "first_name": "Sharyn",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": 1,
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Lewis",
+        "first_name": "Ray",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "O'Kane",
+        "first_name": "Kevin",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": 2,
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Paternoster",
+        "first_name": "Laurie",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": 2,
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-08 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Benson",
+        "first_name": "Cindy",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-14 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Young",
+        "first_name": "Stan",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-15 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Gassaway",
+        "first_name": "Pamela",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 2
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-16 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Fithian",
+        "first_name": "Janice",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-16 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Hubbert",
+        "first_name": "Rick",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-19 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Rux",
+        "first_name": "Julia",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-20 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Deckard",
+        "first_name": "Holly",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-20 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Kolodinski",
+        "first_name": "Walter",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-20 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "mccafferty",
+        "first_name": "jeanne.",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-23 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Holland",
+        "first_name": "Gary",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 2
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-23 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Lay",
+        "first_name": "Marcia",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-23 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Post",
+        "first_name": "Frances",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-24 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Hynoski",
+        "first_name": "Patti",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-26 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Saitta",
+        "first_name": "Susan",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-28 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Khakis",
+        "first_name": "Chuck",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-28 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Metcalf",
+        "first_name": "Tom",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-29 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Andersen",
+        "first_name": "Bev",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Dion",
+        "first_name": "Mary Ann",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Pennock",
+        "first_name": "Jack & Michelle",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Roselli",
+        "first_name": "Mark",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Singe",
+        "first_name": "Mateo",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Guest of Dorothy Peck",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-06-30 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Stiteler",
+        "first_name": "Donna",
+        "num_tickets": 3,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Birthday Gift for Sandy Dodger (guest)",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-01 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Weitzel",
+        "first_name": "Regina",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-02 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Carothers",
+        "first_name": "Jean",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Season Tickets",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": 2,
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-02 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Picard",
+        "first_name": "Larry",
+        "num_tickets": 2,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "One season ticket one pay at door",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": 1,
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-02 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Potenza",
+        "first_name": "Regina",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Guest of Linda Chase",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-02 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Raskind",
+        "first_name": "Linda",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-02 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Tripaldi",
+        "first_name": "",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "1 Guest and 3 pay at door, Reserved Seating",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-03 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Stutman",
+        "first_name": "Alexandra",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Cullen",
+        "first_name": "Jennie",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Johnson",
+        "first_name": "Warren",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "Guest of Steve Ball",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 1
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-04 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Moreno",
+        "first_name": "Diane",
+        "num_tickets": 4,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    },
+    {
+        "date_of_purchase": {
+            "date": "2023-07-06 00:00:00.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+        },
+        "last_name": "Hernandez",
+        "first_name": "Elina",
+        "num_tickets": 1,
+        "amount_due": 0,
+        "amount_collected": 0,
+        "comments": "",
+        "email_gringo_post_face_book_c_h_l_friend_yapa_tree_other": "E \/ G \/ FB \/ CHL \/ F \/ Y \/ O",
+        "season": "",
+        "door": 0,
+        "show_name": "the-last-romance",
+        "performance_date": "2023-07-06",
+        "no_show": 0,
+        "payments": [
+            {
+                "method": "paypal",
+                "num_tickets": 0
+            },
+            {
+                "method": "flex",
+                "num_tickets": 0
+            },
+            {
+                "method": "transfer",
+                "num_tickets": 0
+            },
+            {
+                "method": "credit_card",
+                "num_tickets": 0
+            },
+            {
+                "method": "raffle",
+                "num_tickets": 0
+            },
+            {
+                "method": "comp",
+                "num_tickets": 0
+            },
+            {
+                "method": "cash",
+                "num_tickets": 0
+            }
+        ]
+    }
+]
