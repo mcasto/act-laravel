@@ -29,7 +29,7 @@
 
 <script setup>
 import { useStore } from "src/stores/store";
-import { computed, ref } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 import AuditionForm from "src/components/AuditionForm.vue";
 import AuditionRoles from "src/components/AuditionRoles.vue";
 import AuditionSessions from "src/components/AuditionSessions.vue";

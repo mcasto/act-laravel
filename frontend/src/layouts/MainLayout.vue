@@ -38,12 +38,17 @@ import NavPartial from "components/NavPartial.vue";
 import AdminNav from "src/components/AdminNav.vue";
 import GlobalItems from "src/components/GlobalItems.vue";
 import { useStore } from "src/stores/store";
-import { computed, watch } from "vue";
+import { computed, onMounted } from "vue";
 import { Screen } from "quasar";
 
 const store = useStore();
 
 const adminPath = computed(() => {
   return store.router.currentRoute.value.path.includes("admin");
+});
+
+onMounted(async () => {
+  await store.currentAudition();
+  await store.getOpenClasses();
 });
 </script>

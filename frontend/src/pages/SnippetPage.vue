@@ -11,6 +11,7 @@ import { computed } from "vue";
 const store = useStore();
 const contents = computed(() => {
   const slug = store.router.currentRoute.value.meta.slug;
+
   return store.snippets[slug].html;
 });
 </script>

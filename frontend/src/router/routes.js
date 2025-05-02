@@ -31,12 +31,20 @@ const routes = [
         name: "Donate",
         path: "donate",
         component: () => import("pages/SnippetPage.vue"),
+        beforeEnter: async (to, from) => {
+          const store = useStore();
+          await store.getSnippet(to.meta.slug);
+        },
         meta: { nav: false, global: true, sortOrder: 1, slug: "donate" },
       },
       {
         name: "Audition",
         path: "audition",
         component: () => import("pages/AuditionPage.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          await store.currentAudition();
+        },
         meta: {
           nav: false,
           global: true,
@@ -57,8 +65,10 @@ const routes = [
         name: "Classes",
         path: "classes",
         component: () => import("pages/CoursesPage.vue"),
-        beforeEnter: (to, from, next) => {
+        beforeEnter: async (to, from, next) => {
           const store = useStore();
+          await store.getOpenClasses();
+
           if (store.courses.length === 1) {
             const route = `/class-details/${store.courses[0].slug}`;
             next(route);
