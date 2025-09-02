@@ -65,14 +65,15 @@
 <script setup>
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 
 const store = useStore();
-("");
 
 const name = ref(null);
 const email = ref(null);
 const phone = ref(null);
-const subject = ref(null);
+const subject = ref(route.query.subject || null);
 const body = ref("");
 
 const formRef = ref(null);

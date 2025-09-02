@@ -12,7 +12,6 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
-
           await store.seasonShows();
           await store.homeShows();
         },
@@ -24,7 +23,6 @@ const routes = [
         component: () => import("pages/SeasonPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
-
           await store.seasonShows();
         },
         meta: { nav: true },
