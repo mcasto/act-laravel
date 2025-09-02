@@ -64,6 +64,7 @@ const store = useStore();
 
 const displayDate = computed(() => {
   const performances = store.show.performances;
+
   if (performances.length == 0) {
     return {
       label: "Tickets On Sale",

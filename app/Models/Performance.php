@@ -1,51 +1,55 @@
 <?php
+
 namespace App\Models;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 
 class Performance extends Model
 {
- /** @use HasFactory<\Database\Factories\PerformanceFactory> */
- use HasFactory;
+    /** @use HasFactory<\Database\Factories\PerformanceFactory> */
+    use HasFactory;
 
- protected $fillable = [
-  'show_id',
-  'date',
-  'sold_out_target',
+    protected $fillable = [
+        'show_id',
+        'date',
+        'sold_out_target',
+        'fixr_link'
+    ];
 
- ];
+    public static function validate($data)
+    {
+        $validator = validator($data, [
+            'id'              => ['integer', 'min:1'],
+            'show_id'         => ['required', 'exists:shows,id'],
+            'date'            => ['required', 'date'],
+            'sold_out_target' => ['required', 'integer', 'min:1'],
+            'fixr_link' => ['sometimes', 'nullable', 'string']
 
- public static function validate($data)
- {
-  $validator = validator($data, [
-   'id'              => ['integer', 'min:1'],
-   'show_id'         => ['required', 'exists:shows,id'],
-   'date'            => ['required', 'date'],
-   'sold_out_target' => ['required', 'integer', 'min:1'],
+        ]);
 
-  ]);
+        if ($validator->fails()) {
+            return ['errors' => $validator->errors()->toArray()];
+        }
 
-  if ($validator->fails()) {
-   return ['errors' => $validator->errors()->toArray()];
-  }
+        return $validator->validated();
+    }
 
-  return $validator->validated();
- }
+    /**
+     * Relationship to shows
+     */
+    public function show()
+    {
+        return $this->belongsTo(Show::class);
+    }
 
- /**
-  * Relationship to shows
-  */
- public function show()
- {
-  return $this->belongsTo(Show::class);
- }
-
- /**
-  * relationship to tickets
-  */
- public function tickets()
- {
-  return $this->hasMany(Ticket::class);
- }
+    /**
+     * relationship to tickets
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

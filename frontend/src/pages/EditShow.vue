@@ -35,6 +35,16 @@
             @click="performancesDrawer = !performancesDrawer"
           ></q-btn>
         </div>
+        <q-separator class="q-my-md" v-if="store.admin.show.id"></q-separator>
+        <div class="text-center" v-if="store.admin.show.id">
+          <q-checkbox
+            v-model="store.admin.show.tentative"
+            :true-value="1"
+            :false-value="0"
+            label="Performance Dates are Tentative"
+            @update:model-value="store.updateTentative"
+          ></q-checkbox>
+        </div>
       </div>
     </template>
     <template #after>

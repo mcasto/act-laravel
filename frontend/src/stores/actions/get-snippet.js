@@ -9,7 +9,5 @@ export default async (slug) => {
     method: "get",
   });
 
-  console.log({ snippet });
-
   store.snippets[slug] = snippet;
 };

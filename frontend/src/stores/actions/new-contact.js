@@ -6,6 +6,4 @@ export default async (values) => {
     method: "post",
     payload: values,
   });
-
-  console.log({ response });
 };

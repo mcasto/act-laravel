@@ -8,7 +8,5 @@ export default async (slug) => {
     method: "get",
   });
 
-  console.log({ course });
-
   store.course = course;
 };

@@ -46,8 +46,8 @@
               </q-popup-edit>
             </div>
           </q-td>
-          <!-- <q-td class="text-center">
-            <q-btn icon="img:/api/storage/fixr-icon" flat round>
+          <q-td class="text-center">
+            <q-btn icon="img:/api/storage/fixr-icon" size="sm" flat round>
               <q-tooltip>Fixr Link</q-tooltip>
             </q-btn>
             <q-popup-edit
@@ -55,12 +55,15 @@
               v-slot="scope"
               buttons
               style="width: 55rem;"
+              @update:model-value="updateFixrLink(performance)"
             >
               <q-input
                 type="text"
                 v-model="scope.value"
                 label="Fixr Link"
                 dense
+                outlined
+                autofocus
               >
                 <template #append>
                   <q-btn icon="link" round flat @click="openLink(scope.value)">
@@ -69,7 +72,7 @@
                 </template>
               </q-input>
             </q-popup-edit>
-          </q-td> -->
+          </q-td>
           <q-td class="text-center">
             <q-btn icon="delete" flat round @click="performance.deleted = true">
               <q-tooltip>
@@ -94,6 +97,10 @@ const emits = defineEmits(["close", "update"]);
 
 const openLink = (link) => {
   window.open(link);
+};
+
+const updateFixrLink = (performance) => {
+  console.log({ performance });
 };
 
 const newPerformance = () => {

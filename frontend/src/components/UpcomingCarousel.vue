@@ -6,18 +6,51 @@
       </q-toolbar-title>
     </q-toolbar>
     <q-separator></q-separator>
+
+    <div class="text-center q-mt-md">
+      {{ performanceDates }}
+    </div>
+
     <q-carousel
       v-model="slide"
       swipeable
       animated
-      control-type="outline"
-      control-color="purple"
       navigation
       padding
       arrows
       height="52vh"
       class="rounded-borders"
+      ref="carousel"
     >
+      <template v-slot:control>
+        <q-carousel-control
+          position="bottom-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
+        >
+          <q-btn
+            push
+            round
+            dense
+            color="orange"
+            text-color="black"
+            icon="arrow_left"
+            @click="$refs.carousel.previous()"
+            :disable="firstSlide"
+          />
+          <q-btn
+            push
+            round
+            dense
+            color="orange"
+            text-color="black"
+            icon="arrow_right"
+            @click="$refs.carousel.next()"
+            :disable="lastSlide"
+          />
+        </q-carousel-control>
+      </template>
+
       <q-carousel-slide
         :name="show.id"
         v-for="show of shows"
@@ -34,7 +67,12 @@
     </q-carousel>
 
     <div class="text-center">
-      <span class="text-bold">Tickets on Sale:</span> {{ ticketsStart() }}
+      <div v-if="ticketsStart && !curShow?.tentative">
+        <span class="text-bold">
+          Tickets On Sale:
+        </span>
+        {{ ticketsStart() }}
+      </div>
     </div>
   </div>
 </template>
@@ -50,12 +88,53 @@ const shows = computed(() => {
   return store.home.upcomingShows;
 });
 
+const carousel = ref(null);
 const slide = ref(null);
+
+const curShow = computed(() => {
+  return store.home.upcomingShows.find(({ id }) => id == slide.value);
+});
+
+const firstSlide = computed(() => {
+  const first = [...store.home.upcomingShows].shift();
+  return first.id == slide.value;
+});
+
+const lastSlide = computed(() => {
+  const last = [...store.home.upcomingShows].pop();
+  return last.id == slide.value;
+});
+
+const performanceDates = computed(() => {
+  if (!curShow.value) {
+    return false;
+  }
+
+  const performances = curShow.value.performances
+    .map(({ date }) => date)
+    .sort();
+  if (performances.length == 0) {
+    return false;
+  }
+
+  let first = performances.shift();
+  let last = performances.length > 0 ? performances.pop() : first;
+
+  if (curShow.value.tentative) {
+    return format(parseISO(first), "MMM y");
+  }
+
+  first = format(parseISO(first), "PP");
+  last = format(parseISO(last), "PP");
+
+  return `${first} - ${last}`;
+});
 
 const ticketsStart = () => {
   if (!slide.value) return "";
 
-  const show = store.home.upcomingShows.find(({ id }) => id == slide.value);
+  const show = curShow.value;
+
   return format(parseISO(show.ticket_sales_start), "MMM y");
 };
 

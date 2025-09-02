@@ -25,6 +25,7 @@ import newContact from "./actions/new-contact";
 import currentAudition from "./actions/current-audition";
 import classDetails from "./actions/class-details";
 import getSkills from "./actions/get-skills";
+import updateTentative from "./actions/update-tentative";
 
 export const useStore = defineStore(
   "store",
@@ -67,6 +68,7 @@ export const useStore = defineStore(
       updateShow,
       upsertPerformances,
       updateSiteConfig,
+      updateTentative,
       updateUser,
     };
 

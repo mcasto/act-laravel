@@ -1,3 +1,8 @@
+☐ modify update performances so it will actually delete performances
+☐ modify so performances can be tentative (should only have 1 performance record & should only display the month/year)
+
+--- Legacy, not sure which of these are still valid ---
+
 ☐ Set up Join Mailing List
 
 ☐ add an "audition" button to admin/edit-show to allow admin to set audition information for that show

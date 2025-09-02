@@ -5,43 +5,44 @@
         :src="`/api/storage/images/${show.poster}`"
         fit="contain"
         style="max-height: 50vh;"
+        v-if="show?.poster"
       ></q-img>
     </div>
     <div class="col-12 col-md-7">
       <div class="text-h6 text-center">
-        {{ show.name }}
+        {{ show?.name }}
       </div>
       <div class="text-caption q-mb-sm text-center">
         {{ performanceDates }}
       </div>
 
       <div class="text-subtitle1 text-center text-bold q-mb-sm">
-        {{ show.tagline }}
+        {{ show?.tagline }}
       </div>
 
-      <div v-if="show.writer" class="text-center">
+      <div v-if="show?.writer" class="text-center">
         <span class="text-bold">
           Written By:
         </span>
-        {{ show.writer }}
+        {{ show?.writer }}
       </div>
 
       <div class="text-center">
         <span class="text-bold">
           Directed By:
         </span>
-        {{ show.director }}
+        {{ show?.director }}
       </div>
 
       <div class="text-center q-mt-md">
-        <div v-if="ticketsStart">
+        <div v-if="ticketsStart && !show?.tentative">
           <span class="text-bold">
             Tickets On Sale:
           </span>
           {{ ticketsStart }}
         </div>
 
-        <div v-else>
+        <div v-else v-if="!show?.tentative">
           <q-btn
             label="Reserve Tickets"
             color="primary"
@@ -54,7 +55,7 @@
     <div
       class="col-10 offset-1 q-pt-md"
       :class="Screen.lt.md ? 'q-mt-md q-mb-md' : ''"
-      v-html="show.info"
+      v-html="show?.info"
     ></div>
   </div>
 </template>
@@ -73,6 +74,10 @@ const show = computed(() => {
 });
 
 const performanceDates = computed(() => {
+  if (!show.value) {
+    return false;
+  }
+
   const performances = show.value.performances.map(({ date }) => date).sort();
   if (performances.length == 0) {
     return false;
@@ -81,6 +86,10 @@ const performanceDates = computed(() => {
   let first = performances.shift();
   let last = performances.length > 0 ? performances.pop() : first;
 
+  if (show.value.tentative) {
+    return format(parseISO(first), "MMM y");
+  }
+
   first = format(parseISO(first), "PP");
   last = format(parseISO(last), "PP");
 
@@ -88,6 +97,10 @@ const performanceDates = computed(() => {
 });
 
 const ticketsStart = computed(() => {
+  if (!show.value) {
+    return false;
+  }
+
   // if ticket sales have started, no need to display ticket start
   if (!isFuture(parseISO(show.value.ticket_sales_start))) {
     return false;

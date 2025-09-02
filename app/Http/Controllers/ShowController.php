@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Show;
@@ -10,196 +11,203 @@ use Illuminate\Http\Request;
 class ShowController extends Controller
 {
 
- /**
-  * Utility function to determine start and end of current season (runs from Oct 1 - August 31)
-  */
- private function getTheaterSeasonDates(): array
- {
-  $now = Carbon::now();
+    /**
+     * Utility function to determine start and end of current season (runs from Oct 1 - August 31)
+     */
+    private function getTheaterSeasonDates(): array
+    {
+        $now = Carbon::now();
 
-                          // Define season start and end months
-  $seasonStartMonth = 10; // October
-  $seasonEndMonth   = 8;  // August
+        // Define season start and end months
+        $seasonStartMonth = 10; // October
+        $seasonEndMonth   = 8;  // August
 
-  // Determine the season's start year
-  if ($now->month >= $seasonStartMonth) {
-   // If current month is October or later, we're in the current season
-   $startYear = $now->year;
-  } else {
-   // If we're in September or earlier, we're still in the previous season
-   $startYear = $now->year - 1;
-  }
+        // Determine the season's start year
+        if ($now->month >= $seasonStartMonth) {
+            // If current month is October or later, we're in the current season
+            $startYear = $now->year;
+        } else {
+            // If we're in September or earlier, we're still in the previous season
+            $startYear = $now->year - 1;
+        }
 
-  // Define the start and end dates of the season
-  $seasonStart = Carbon::create($startYear, $seasonStartMonth, 1, 0, 0, 0);
-  $seasonEnd   = Carbon::create($startYear + 1, $seasonEndMonth, 31, 23, 59, 59);
+        // Define the start and end dates of the season
+        $seasonStart = Carbon::create($startYear, $seasonStartMonth, 1, 0, 0, 0);
+        $seasonEnd   = Carbon::create($startYear + 1, $seasonEndMonth, 31, 23, 59, 59);
 
-  // If we're in September, return the next season
-  if ($now->month == 9) {
-   $seasonStart = $seasonStart->addYear();
-   $seasonEnd   = $seasonEnd->addYear();
-  }
+        // If we're in September, return the next season
+        if ($now->month == 9) {
+            $seasonStart = $seasonStart->addYear();
+            $seasonEnd   = $seasonEnd->addYear();
+        }
 
-  return [
-   'start' => $seasonStart->toDateString(),
-   'end'   => $seasonEnd->toDateString(),
-  ];
- }
+        return [
+            'start' => $seasonStart->toDateString(),
+            'end'   => $seasonEnd->toDateString(),
+        ];
+    }
 
-/**
- * Ensure poster & slug are unique for undeleted records
- */
- private function checkUniques($rec): array
- {
-  $poster = Show::where('poster', '=', $rec['poster'])->whereNull('deleted_at')->first();
-  $slug   = Show::where('slug', '=', $rec['slug'])->whereNull('deleted_at')->first();
+    /**
+     * Ensure poster & slug are unique for undeleted records
+     */
+    private function checkUniques($rec): array
+    {
+        $poster = Show::where('poster', '=', $rec['poster'])->whereNull('deleted_at')->first();
+        $slug   = Show::where('slug', '=', $rec['slug'])->whereNull('deleted_at')->first();
 
-  return [
-   'poster' => ! ! ! $poster,
-   'slug'   => ! ! ! $slug,
-  ];
- }
+        return [
+            'poster' => ! ! ! $poster,
+            'slug'   => ! ! ! $slug,
+        ];
+    }
 
- /**
-  * Delete a show
-  */
- public function destroy(int $id): JsonResponse
- {
-  $show = Show::find($id);
-  if (! $show) {
-   return response()->json(['status' => 'error', 'message' => 'No matching show found.']);
-  }
+    /**
+     * Delete a show
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        $show = Show::find($id);
+        if (! $show) {
+            return response()->json(['status' => 'error', 'message' => 'No matching show found.']);
+        }
 
-  $show->delete();
+        $show->delete();
 
-  return response()->json($show);
- }
+        return response()->json($show);
+    }
 
- /**
-  * Get shows in current season
-  */
- public function seasonShows(): JsonResponse
- {
-  $seasonDates = $this->getTheaterSeasonDates(); // Get season start & end dates
+    /**
+     * Get shows in current season
+     */
+    public function seasonShows(): JsonResponse
+    {
+        $seasonDates = $this->getTheaterSeasonDates(); // Get season start & end dates
 
-  $shows = Show::with("performances")->whereHas('performances', function ($query) use ($seasonDates) {
-   $query->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
-  })->get();
+        $shows = Show::with("performances")->whereHas('performances', function ($query) use ($seasonDates) {
+            $query->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
+        })->get();
 
-  return response()->json($shows);
- }
+        return response()->json($shows);
+    }
 
- /**
-  * Get shows for home page
-  */
- public function homeShows(): JsonResponse
- {
-  // get upcoming shows
-  $shows = Show::with("performances")->whereHas('performances', function ($query) {
-   $query->where('date', '>=', now());
-  })->get()->toArray();
+    /**
+     * Get shows for home page
+     */
+    public function homeShows(): JsonResponse
+    {
+        // get upcoming shows
+        $shows = Show::with("performances")->whereHas('performances', function ($query) {
+            $query->where('date', '>=', now());
+        })->get()->toArray();
 
-  // first show (current or next)
-  $currentShow = array_shift($shows);
+        // first show (current or next)
+        $currentShow = array_shift($shows);
 
-  return response()->json(['currentShow' => $currentShow, 'upcomingShows' => $shows]);
- }
+        return response()->json(['currentShow' => $currentShow, 'upcomingShows' => $shows]);
+    }
 
- /**
-  * Get all shows
-  */
- public function index(): JsonResponse
- {
-  return response()->json(Show::with('performances.tickets', 'galleryImages')->orderByDesc('ticket_sales_start')->get());
- }
+    public function updateTentative(int $id, Request $request)
+    {
+        $show = Show::find($id)->update(['tentative' => $request->tentative]);
 
- /**
-  * Get specific show by id
-  */
- public function show(int $id): JsonResponse
- {
-  return response()->json(Show::with(['performances.tickets', 'galleryImages'])->where('id', '=', $id)->first());
- }
+        return response()->json($request->all());
+    }
 
- /**
-  * Return template for new show record
-  */
- public function newShow(): JsonResponse
- {
-  $config = SiteConfig::orderByDesc('created_at')->first()->toArray();
+    /**
+     * Get all shows
+     */
+    public function index(): JsonResponse
+    {
+        return response()->json(Show::with('performances.tickets', 'galleryImages')->orderByDesc('ticket_sales_start')->get());
+    }
 
-  return response()->json([
-   'name'               => null,
-   'writer'             => null,
-   'tagline'            => null,
-   'director'           => null,
-   'info'               => '',
-   'poster'             => "poster-" . uniqid(),
-   'ticket_sales_start' => date("Y-m-d", strtotime("NOW + 6 weeks")),
-   'ticket_price'       => $config['ticket_price'],
-   'performances'       => [],
-  ]);
- }
+    /**
+     * Get specific show by id
+     */
+    public function show(int $id): JsonResponse
+    {
+        return response()->json(Show::with(['performances.tickets', 'galleryImages'])->where('id', '=', $id)->first());
+    }
 
- /**
-  * Create new show record
-  */
- public function create(Request $request): JsonResponse
- {
-  $validated = Show::validate($request->all());
-  $unique    = $this->checkUniques($validated);
-  if (! $unique['poster']) {
-   return response()->json([
-    'status'  => 'error',
-    'message' => 'Poster not unique',
-   ]);
-  }
+    /**
+     * Return template for new show record
+     */
+    public function newShow(): JsonResponse
+    {
+        $config = SiteConfig::orderByDesc('created_at')->first()->toArray();
 
-  if (! $unique['slug']) {
-   return response()->json([
-    'status'  => 'error',
-    'message' => 'Slug not unique',
-   ]);
-  }
+        return response()->json([
+            'name'               => null,
+            'writer'             => null,
+            'tagline'            => null,
+            'director'           => null,
+            'info'               => '',
+            'poster'             => "poster-" . uniqid(),
+            'ticket_sales_start' => date("Y-m-d", strtotime("NOW + 6 weeks")),
+            'ticket_price'       => $config['ticket_price'],
+            'performances'       => [],
+        ]);
+    }
 
-  if (! is_array($validated) || array_key_exists('errors', $validated)) {
-   return response()->json([
-    'status'  => 'error',
-    'message' => 'Validation failed.',
-    'errors'  => $validated['errors'],
-   ]);
-  }
+    /**
+     * Create new show record
+     */
+    public function create(Request $request): JsonResponse
+    {
+        $validated = Show::validate($request->all());
+        $unique    = $this->checkUniques($validated);
+        if (! $unique['poster']) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Poster not unique',
+            ]);
+        }
 
-  $show = Show::create($validated);
+        if (! $unique['slug']) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Slug not unique',
+            ]);
+        }
 
-  return response()->json($show);
- }
+        if (! is_array($validated) || array_key_exists('errors', $validated)) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Validation failed.',
+                'errors'  => $validated['errors'],
+            ]);
+        }
 
- /**
-  * Update show record
-  */
- public function update(Request $request): JsonResponse
- {
-  $show = Show::find($request->input('id'));
+        $show = Show::create($validated);
 
-  if (! $show) {
-   return response()->json([
-    'status'  => 'error',
-    'message' => 'Show not found.',
-   ], 404);
-  }
+        return response()->json($show);
+    }
 
-  $validated = Show::validate($request->all(), $request->input('id'));
-  if (! is_array($validated) || array_key_exists('errors', $validated)) {
-   return response()->json([
-    'status'  => 'error',
-    'message' => 'Validation failed.',
-    'errors'  => $validated,
-   ], 422);
-  }
+    /**
+     * Update show record
+     */
+    public function update(Request $request): JsonResponse
+    {
+        $show = Show::find($request->input('id'));
 
-  $updated = $show->update($validated);
+        if (! $show) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Show not found.',
+            ], 404);
+        }
 
-  return response()->json(['validated' => $validated, 'show' => $show, 'updated' => $updated]);
- }
+        $validated = Show::validate($request->all(), $request->input('id'));
+        if (! is_array($validated) || array_key_exists('errors', $validated)) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Validation failed.',
+                'errors'  => $validated,
+            ], 422);
+        }
+
+        $updated = $show->update($validated);
+
+        return response()->json(['validated' => $validated, 'show' => $show, 'updated' => $updated]);
+    }
 }

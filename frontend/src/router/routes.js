@@ -24,6 +24,8 @@ const routes = [
         component: () => import("pages/SeasonPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
+
+          await store.seasonShows();
         },
         meta: { nav: true },
       },

@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 /**
  * Auth Routes
  */
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // Protected route (requires auth)
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser']);
@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->post('/update-show', [ShowController::class, 
 Route::middleware('auth:sanctum')->get('show/{id}', [ShowController::class, 'show']);
 Route::middleware('auth:sanctum')->post('delete-show/{id}', [ShowController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('new-show-template', [ShowController::class, 'newShow']);
+Route::middleware('auth:sanctum')->put('update-tentative/{id}', [ShowController::class, 'updateTentative']);
 
 /**
  * Fixr Icon
@@ -88,6 +89,8 @@ Route::middleware('auth:sanctum')->post('/update-image', [ImageController::class
  * Performance-related Routes
  */
 Route::middleware('auth:sanctum')->post('/upsert-performances', [PerformanceController::class, 'upsert']);
+
+Route::middleware('auth:sanctum')->post('/update-fixr-link', [PerformanceController::class, 'updateFixrLink']);
 
 /**
  * Site Config

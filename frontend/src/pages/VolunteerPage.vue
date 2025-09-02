@@ -117,8 +117,6 @@ const volunteerContact = async () => {
     payload,
   });
 
-  console.log({ response });
-
   Notify.create({
     type: "positive",
     message: "Volunteer Coordinator contacted and will reach out to you soon",
