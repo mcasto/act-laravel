@@ -12,6 +12,8 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
+
+          await store.announcementBanner();
           await store.seasonShows();
           await store.homeShows();
         },

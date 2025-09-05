@@ -1,5 +1,20 @@
 <template>
-  <div class="row q-gutter-x-sm q-pa-md">
+  <div v-if="!show">
+    <q-img src="/images/empty-theater.jpg">
+      <div>
+        <div class="text-h6 q-px-md q-mb-sm">
+          Next Show: Coming Soon!
+        </div>
+        <div class="q-px-md">
+          Thank you for visiting! We are currently in our pre-production phase
+          for our next show. Please check back soon for exciting announcements,
+          or better yet, join our email list to get updates delivered straight
+          to your inbox.
+        </div>
+      </div>
+    </q-img>
+  </div>
+  <div class="row q-gutter-x-sm q-pa-md" v-else>
     <div class="col-12 col-md-4">
       <q-img
         :src="`/api/storage/images/${show.poster}`"

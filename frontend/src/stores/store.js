@@ -26,12 +26,14 @@ import currentAudition from "./actions/current-audition";
 import classDetails from "./actions/class-details";
 import getSkills from "./actions/get-skills";
 import updateTentative from "./actions/update-tentative";
+import announcementBanner from "./actions/announcement-banner";
 
 export const useStore = defineStore(
   "store",
   () => {
     const state = {
       admin: ref({}),
+      announcement: ref(false),
       audition: ref(null),
       config: ref(null),
       course: ref(null),
@@ -45,6 +47,7 @@ export const useStore = defineStore(
     };
     const getters = { adminRoute: computed(adminRoute) };
     const actions = {
+      announcementBanner,
       classDetails,
       createShow,
       createUser,

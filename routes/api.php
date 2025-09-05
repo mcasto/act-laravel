@@ -18,6 +18,7 @@ use App\Http\Controllers\VolunteerController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -33,6 +34,20 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
  * Fixr Webhook Handler
  */
 Route::post('/fixr-webhooks', [FixrWebhooksController::class, 'create']);
+
+/**
+ * Announcement Banner
+ */
+Route::get('/announcement-banner', function () {
+    if (Storage::disk('local')
+        ->exists('announcement-banner.md')
+    ) {
+        return ['status' => true, 'contents' => Storage::disk('local')
+            ->get('announcement-banner.md')];
+    } else {
+        return ['status' => false];
+    }
+});
 
 /**
  * Show-related Routes

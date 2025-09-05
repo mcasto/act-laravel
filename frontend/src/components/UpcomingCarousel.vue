@@ -7,71 +7,82 @@
     </q-toolbar>
     <q-separator></q-separator>
 
-    <div class="text-center q-mt-md">
-      {{ performanceDates }}
+    <div v-if="shows.length == 0">
+      <q-img src="/images/logo-home.png" height="40vh" fit="contain">
+        <div class="flex full-width absolute-center flex-center text-h4">
+          Curtain Rising Soon <br />
+          On Our Next Season ...
+        </div>
+      </q-img>
     </div>
 
-    <q-carousel
-      v-model="slide"
-      swipeable
-      animated
-      navigation
-      padding
-      arrows
-      height="52vh"
-      class="rounded-borders"
-      ref="carousel"
-    >
-      <template v-slot:control>
-        <q-carousel-control
-          position="bottom-right"
-          :offset="[18, 18]"
-          class="q-gutter-xs"
-        >
-          <q-btn
-            push
-            round
-            dense
-            color="orange"
-            text-color="black"
-            icon="arrow_left"
-            @click="$refs.carousel.previous()"
-            :disable="firstSlide"
-          />
-          <q-btn
-            push
-            round
-            dense
-            color="orange"
-            text-color="black"
-            icon="arrow_right"
-            @click="$refs.carousel.next()"
-            :disable="lastSlide"
-          />
-        </q-carousel-control>
-      </template>
+    <div v-else>
+      <div class="text-center q-mt-md">
+        {{ performanceDates }}
+      </div>
 
-      <q-carousel-slide
-        :name="show.id"
-        v-for="show of shows"
-        :key="`upcoming-show-${show.id}`"
+      <q-carousel
+        v-model="slide"
+        swipeable
+        animated
+        navigation
+        padding
+        arrows
+        height="52vh"
+        class="rounded-borders"
+        ref="carousel"
       >
-        <router-link :to="`/show-details/${show.slug}`">
-          <q-img
-            :src="`/api/storage/images/${show.poster}`"
-            fit="contain"
-            height="40vh"
-          ></q-img>
-        </router-link>
-      </q-carousel-slide>
-    </q-carousel>
+        <template v-slot:control>
+          <q-carousel-control
+            position="bottom-right"
+            :offset="[18, 18]"
+            class="q-gutter-xs"
+          >
+            <q-btn
+              push
+              round
+              dense
+              color="orange"
+              text-color="black"
+              icon="arrow_left"
+              @click="$refs.carousel.previous()"
+              :disable="firstSlide"
+            />
+            <q-btn
+              push
+              round
+              dense
+              color="orange"
+              text-color="black"
+              icon="arrow_right"
+              @click="$refs.carousel.next()"
+              :disable="lastSlide"
+            />
+          </q-carousel-control>
+        </template>
 
-    <div class="text-center">
-      <div v-if="ticketsStart && !curShow?.tentative">
-        <span class="text-bold">
-          Tickets On Sale:
-        </span>
-        {{ ticketsStart() }}
+        <q-carousel-slide
+          :name="show.id"
+          v-for="show of shows"
+          :key="`upcoming-show-${show.id}`"
+        >
+          <router-link :to="`/show-details/${show.slug}`">
+            <q-img
+              :src="`/api/storage/images/${show.poster}`"
+              fit="contain"
+              height="40vh"
+            ></q-img>
+          </router-link>
+        </q-carousel-slide>
+      </q-carousel>
+
+      <div class="text-center">
+        <div v-if="ticketsStart && !curShow?.tentative">
+          <span class="text-bold">
+            Tickets On Sale:
+          </span>
+          {{ ticketsStart() }}
+        </div>
       </div>
     </div>
   </div>

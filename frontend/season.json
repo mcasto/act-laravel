@@ -1,0 +1,63 @@
+{
+  "title": "Join us for our 2024-25 Season of Plays",
+  "article": {
+    "title": "",
+    "link": ""
+  },
+  "shows": [
+    {
+      "id": "8841954c-866f-4be8-9bfb-b93e63382d9d",
+      "dates": "October",
+      "poster": "/site-data/images/uploaded/25-26-season/jukebox.jpg",
+      "title": "A Jukebox for the Algonquin",
+      "writtenBy": "By Paul Storili",
+      "directedBy": "Directed by Terry Ross",
+      "tagline": "A story about sex, drugs, and Rock'n Chairs"
+    },
+    {
+      "id": "9771fac8-0964-4a30-b567-72c339389ef9",
+      "dates": "December",
+      "poster": "/site-data/images/uploaded/25-26-season/sherlock.jpg",
+      "title": "Sherlock Holmes and the Case of the Christmas Goos",
+      "writtenBy": "By Sir Arthur Conan Doyle",
+      "tagline": "Adapted by Michael Menendian and John Weagly",
+      "directedBy": "Directed by Cody Hamilton"
+    },
+    {
+      "id": "f3ec3153-61cb-49c3-9e37-31a8055f113b",
+      "dates": "February",
+      "poster": "/site-data/images/uploaded/25-26-season/steel-magnolias.jpg",
+      "title": "Steel Magnolias",
+      "writtenBy": "By Robert Harling",
+      "directedBy": "Directed by Saralee Squires",
+      "tagline": ""
+    },
+    {
+      "id": "2d032edb-1d3e-4662-bddf-3e017fe49fca",
+      "dates": "April",
+      "poster": "/site-data/images/uploaded/25-26-season/outsider.jpg",
+      "title": "The Outsider",
+      "writtenBy": "By Paul Slade Smith",
+      "directedBy": "Directed by Rick Snyder",
+      "tagline": ""
+    },
+    {
+      "id": "14a1a3f3-4f41-430d-a9cb-3e47304d9222",
+      "dates": "June",
+      "poster": "/site-data/images/uploaded/25-26-season/outgoing-tide.jpeg",
+      "title": "The Outgoing Tide",
+      "writtenBy": "Bruce Graham",
+      "directedBy": "Directed by Bob Fry",
+      "tagline": ""
+    },
+    {
+      "id": "13e4c0f7-deea-4d9d-ae5b-ddf075ae05a4",
+      "dates": "August",
+      "poster": "/site-data/images/uploaded/25-26-season/nightingales.jpeg",
+      "title": "The Nightingales",
+      "writtenBy": "By Peter Quilter",
+      "directedBy": "Directed by Mark Deckard",
+      "tagline": ""
+    }
+  ]
+}
