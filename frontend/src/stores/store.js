@@ -27,6 +27,7 @@ import classDetails from "./actions/class-details";
 import getSkills from "./actions/get-skills";
 import updateTentative from "./actions/update-tentative";
 import announcementBanner from "./actions/announcement-banner";
+import flexPurchaseConfig from "./actions/flex-purchase-config";
 
 export const useStore = defineStore(
   "store",
@@ -38,6 +39,7 @@ export const useStore = defineStore(
       config: ref(null),
       course: ref(null),
       courses: ref([]),
+      flex: ref(null),
       gallery: ref(null),
       home: ref({}),
       show: ref(null),
@@ -55,6 +57,7 @@ export const useStore = defineStore(
       deleteShow,
       deleteUser,
       editShow,
+      flexPurchaseConfig,
       getAllShows,
       getGallery,
       getOpenClasses,

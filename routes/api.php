@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FixrWebhooksController;
+use App\Http\Controllers\FlexPurchaseController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PerformanceController;
@@ -154,3 +155,8 @@ Route::post('/audition-contact', [AuditionContactController::class, 'create']);
  */
 Route::get('/skills', [SkillController::class, 'list']);
 Route::post('/volunteer-contact', [VolunteerController::class, 'create']);
+
+/**
+ * Flex Purchase
+ */
+Route::get('/flex-purchase-config', [FlexPurchaseController::class, 'show']);

@@ -1,16 +1,17 @@
 <template>
-  <div class="flex justify-beetween banner items-center">
+  <div class="flex justify-beetween banner">
     <q-img
-      src="/images/logo-home.png"
-      :height="Screen.lt.sm ? '8vh' : '15vh'"
-      width="10vw"
-      class="q-ma-sm"
-      fit="contain"
+      src="/images/logo-home-2025.jpeg"
+      height="200px"
+      width="215px"
+      class="q-ml-sm"
+      fit="cover"
+      v-if="Screen.gt.xs"
     ></q-img>
 
     <div
-      class="absolute-center text-no-wrap q-pb-xl"
-      :class="Screen.lt.sm ? 'text-h6' : 'text-h4 '"
+      class="absolute-center text-no-wrap q-pb-xl text-black"
+      :class="Screen.lt.sm ? 'text-h6 ' : 'text-h4 '"
     >
       Azuay Community Theater
     </div>
@@ -20,15 +21,3 @@
 <script setup>
 import { Screen } from "quasar";
 </script>
-
-<style lang="scss" scoped>
-.banner {
-  background-image: url(/images/background.jpeg);
-}
-
-@media screen and (max-width: 600px) {
-  .banner {
-    height: 10vh;
-  }
-}
-</style>

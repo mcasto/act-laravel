@@ -21,9 +21,10 @@
         fit="contain"
         style="max-height: 50vh;"
         v-if="show?.poster"
+        :class="Screen.gt.xs ? 'q-ml-xl' : ''"
       ></q-img>
     </div>
-    <div class="col-12 col-md-7">
+    <div class="col-12 col-md-7" :class="Screen.gt.xs ? 'q-mx-lg' : ''">
       <div class="text-h6 text-center">
         {{ show?.name }}
       </div>

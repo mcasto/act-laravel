@@ -3,3 +3,15 @@
 .announcement-banner {
     border: 8px $primary solid;
 }
+
+.banner {
+    background-image: url(/images/banner-background.jpeg);
+    background-repeat: repeat-x;
+    height: 200px;
+}
+
+@media screen and (max-width: 600px) {
+    .banner {
+        height: 100px;
+    }
+}

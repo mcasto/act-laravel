@@ -167,9 +167,19 @@ const routes = [
         name: "Class Details",
         path: "class-details/:slug",
         component: () => import("pages/CourseInfo.vue"),
-        beforeEnter: async (to, from) => {
+        beforeEnter: async (to) => {
           const store = useStore();
           await store.classDetails(to.params.slug);
+        },
+        meta: { nav: false },
+      },
+      {
+        name: "Flex Purchase",
+        path: "flex-purchase",
+        component: () => import("pages/FlexPurchase.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          store.flexPurchaseConfig();
         },
         meta: { nav: false },
       },
