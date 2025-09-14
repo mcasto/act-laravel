@@ -102,6 +102,8 @@ class ShowController extends Controller
 
         // first show (current or next)
         $currentShow = array_shift($shows);
+        $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
+        $currentShow['buttons'] = config('standard-buttons');
 
         return response()->json(['currentShow' => $currentShow, 'upcomingShows' => $shows]);
     }

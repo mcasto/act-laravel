@@ -164,6 +164,16 @@ const routes = [
         meta: { nav: false },
       },
       {
+        name: "Purchase Tickets",
+        path: "purchase-tickets",
+        component: () => import("pages/PurchaseTickets.vue"),
+        beforeEnter: async (to, from) => {
+          const store = useStore();
+          await store.homeShows();
+        },
+        meta: { nav: false },
+      },
+      {
         name: "Class Details",
         path: "class-details/:slug",
         component: () => import("pages/CourseInfo.vue"),
@@ -179,7 +189,7 @@ const routes = [
         component: () => import("pages/FlexPurchase.vue"),
         beforeEnter: async () => {
           const store = useStore();
-          store.flexPurchaseConfig();
+          store.flexshowPurchaseConfig();
         },
         meta: { nav: false },
       },

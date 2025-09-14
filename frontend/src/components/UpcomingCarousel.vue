@@ -7,7 +7,7 @@
     </q-toolbar>
     <q-separator></q-separator>
 
-    <div v-if="shows.length == 0">
+    <div v-if="shows?.length == 0">
       <q-img src="/images/logo-home.png" height="40vh" fit="contain">
         <div class="flex full-width absolute-center flex-center text-h4">
           Curtain Rising Soon <br />

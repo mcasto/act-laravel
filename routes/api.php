@@ -11,6 +11,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\ShowController;
+use App\Http\Controllers\ShowPurchaseController;
 use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\SnippetController;

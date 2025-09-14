@@ -36,7 +36,7 @@
       </svg>
     </div>
     <q-btn
-      label="Continue to FIXR to complete your purchase"
+      label="Open FIXR"
       color="primary"
       @click="store.openFixr(id)"
     ></q-btn>

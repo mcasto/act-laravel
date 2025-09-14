@@ -9,16 +9,15 @@
 
 ✔ set up an announcement banner on home page @done(25-09-05 15:23)
 ☐ setup admin for announcement banner
-☐ need /flex-purchase page
+✔ need /flex-purchase page @done(25-09-14 05:36)
 
 ☐ Set up Join Mailing List
 
 ☐ add an "audition" button to admin/edit-show to allow admin to set audition information for that show
 
-☐ fixr setup
-    - no need to set up a separate fixr event for each performance ... we'll know which performance(s) they're paying for based on the info we collect on our site (shopping cart)
+✔ fixr setup @done(25-09-14 05:36)
 
-☐ add fixr link to show record
+✔ add fixr link to show record @done(25-09-14 05:37)
 
 ☐ audition roster in admin area
 

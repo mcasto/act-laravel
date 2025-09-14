@@ -63,6 +63,7 @@
             label="Reserve Tickets"
             color="primary"
             icon="fa-solid fa-ticket"
+            to="/purchase-tickets"
           ></q-btn>
         </div>
       </div>
