@@ -28,6 +28,8 @@ import getSkills from "./actions/get-skills";
 import updateTentative from "./actions/update-tentative";
 import announcementBanner from "./actions/announcement-banner";
 import flexPurchaseConfig from "./actions/flex-purchase-config";
+import apiLoaded from "./actions/api-loaded";
+import openFixr from "./actions/open-fixr";
 
 export const useStore = defineStore(
   "store",
@@ -50,6 +52,7 @@ export const useStore = defineStore(
     const getters = { adminRoute: computed(adminRoute) };
     const actions = {
       announcementBanner,
+      apiLoaded,
       classDetails,
       createShow,
       createUser,
@@ -68,6 +71,7 @@ export const useStore = defineStore(
       homeShows,
       newContact,
       newShow,
+      openFixr,
       seasonShows,
       signIn,
       signOut,

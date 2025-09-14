@@ -38,10 +38,14 @@
     <q-btn
       label="Continue to FIXR to complete your purchase"
       color="primary"
+      @click="store.openFixr(id)"
     ></q-btn>
   </div>
 </template>
 
 <script setup>
+import { useStore } from "src/stores/store";
+
 const props = defineProps(["id"]);
+const store = useStore();
 </script>
