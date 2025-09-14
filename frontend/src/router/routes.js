@@ -216,6 +216,17 @@ const routes = [
             meta: { requireAuth: true, admin: true, nav: true },
           },
           {
+            name: "Announcement",
+            path: "announcement-banner",
+            alias: "",
+            component: () => import("src/pages/AdminAnnouncementBanner.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              store.announcementBanner();
+            },
+            meta: { requireAuth: true, admin: true, nav: true },
+          },
+          {
             name: "Site Config",
             path: "site-config",
             component: () => import("src/pages/AdminSiteConfig.vue"),

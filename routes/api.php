@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementBannerController;
 use App\Http\Controllers\AuditionContactController;
 use App\Http\Controllers\AuditionController;
 use App\Http\Controllers\AuthController;
@@ -40,16 +41,9 @@ Route::post('/fixr-webhooks', [FixrWebhooksController::class, 'create']);
 /**
  * Announcement Banner
  */
-Route::get('/announcement-banner', function () {
-    if (Storage::disk('local')
-        ->exists('announcement-banner.md')
-    ) {
-        return ['status' => true, 'contents' => Storage::disk('local')
-            ->get('announcement-banner.md')];
-    } else {
-        return ['status' => false];
-    }
-});
+Route::get('/announcement-banner', [AnnouncementBannerController::class, 'show']);
+Route::put('/announcement-banner', [AnnouncementBannerController::class, 'update'])
+    ->middleware(('auth:sanctum'));
 
 /**
  * Show-related Routes

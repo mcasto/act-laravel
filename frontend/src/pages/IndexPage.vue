@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="store.announcement">
-      <div v-html="store.announcement"></div>
+    <div v-if="store.announcement?.status">
+      <div v-html="store.announcement?.html"></div>
     </div>
     <q-separator class="q-mt-sm" v-if="store.announcement"></q-separator>
 

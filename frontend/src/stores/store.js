@@ -31,6 +31,7 @@ import flexshowPurchaseConfig from "./actions/flex-purchase-config";
 import apiLoaded from "./actions/api-loaded";
 import openFixr from "./actions/open-fixr";
 import showPurchaseConfig from "./actions/show-purchase-config";
+import updateAnnouncementBanner from "./actions/update-announcement-banner";
 
 export const useStore = defineStore(
   "store",
@@ -77,6 +78,7 @@ export const useStore = defineStore(
       showPurchaseConfig,
       signIn,
       signOut,
+      updateAnnouncementBanner,
       updateShow,
       upsertPerformances,
       updateSiteConfig,

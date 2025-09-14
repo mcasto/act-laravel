@@ -12,6 +12,8 @@
         v-model="email"
         :style="Screen.gt.xs ? 'width: 50vw' : 'width: 80vw'"
         autocomplete="off"
+        dense
+        outlined
       ></q-input>
       <q-input
         class="q-mt-md"
@@ -20,6 +22,8 @@
         v-model="password"
         :style="Screen.gt.xs ? 'width: 50vw' : 'width: 80vw'"
         autocomplete="off"
+        dense
+        outlined
       >
         <template #append>
           <q-btn
