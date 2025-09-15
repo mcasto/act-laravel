@@ -22,15 +22,25 @@
           flat
           :to="classLink.url"
         />
-        <q-btn
-          v-for="item in alwaysVisibleLinks"
-          :key="item.label"
-          :color="item.color"
-          :icon="item.icon"
-          :label="item.label"
-          flat
-          :to="item.url"
-        />
+        <template v-for="item in alwaysVisibleLinks" :key="item.label">
+          <q-btn
+            :color="item.color"
+            :icon="item.icon"
+            :label="item.label"
+            flat
+            :to="item.url"
+            v-if="!item.external"
+          />
+
+          <q-btn
+            v-else
+            :color="item.color"
+            :icon="item.icon"
+            :label="item.label"
+            flat
+            @click="openExternal(item.url)"
+          ></q-btn>
+        </template>
       </div>
     </q-banner>
   </div>
@@ -81,7 +91,9 @@ const alwaysVisibleLinks = [
   },
   {
     label: "Join Mailing List",
-    url: "/join-mailing-list",
+    url:
+      "https://actseats.us20.list-manage.com/subscribe?u=0022128dcf342c7a58eb81790&id=dff3d650cc",
+    external: true,
     icon: "mail",
     color: "deep-orange",
   },
@@ -90,6 +102,10 @@ const alwaysVisibleLinks = [
 const displayActionButtons = computed(() => {
   return auditionLink.value || classLink.value || alwaysVisibleLinks.length;
 });
+
+const openExternal = (url) => {
+  window.open(url);
+};
 </script>
 
 <style scoped>
