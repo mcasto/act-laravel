@@ -1,5 +1,23 @@
 <template>
-  <q-toolbar class="bg-primary text-white shadow-4">
+  <div>
+    <q-separator></q-separator>
+    <q-list dense separator class="admin-nav">
+      <q-item
+        v-for="item of routes"
+        :key="item.path"
+        clickable
+        :to="item.path"
+        active-class="bg-blue-grey-2 "
+      >
+        <q-item-section>
+          <q-item-label>
+            {{ item.name }}
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
+    <!-- <q-toolbar class="bg-primary text-white shadow-4">
     <q-tabs>
       <q-route-tab
         v-for="tab of routes"
@@ -8,7 +26,8 @@
         :label="tab.name"
       ></q-route-tab>
     </q-tabs>
-  </q-toolbar>
+  </q-toolbar> -->
+  </div>
 </template>
 
 <script setup>

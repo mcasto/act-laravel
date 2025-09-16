@@ -4,7 +4,6 @@
       <q-header>
         <header-partial></header-partial>
         <nav-partial v-if="!store.adminRoute"></nav-partial>
-        <admin-nav v-else></admin-nav>
       </q-header>
       <q-page>
         <router-view />

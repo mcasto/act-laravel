@@ -253,6 +253,40 @@ const routes = [
             meta: { requireAuth: true, admin: true, nav: true },
           },
           {
+            name: "Volunteers",
+            path: "volunteers",
+            component: () => import("src/pages/AdminVolunteers.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              await store.getVolunteers();
+            },
+            meta: { requireAuth: true, admin: true, nav: true },
+          },
+          {
+            name: "Patrons",
+            path: "patrons",
+            component: () => import("src/pages/AdminPatrons.vue"),
+            meta: { requireAuth: true, admin: true, nav: true },
+          },
+          {
+            name: "Donations",
+            path: "donations",
+            component: () => import("src/pages/AdminDonations.vue"),
+            meta: { requireAuth: true, admin: true, nav: true },
+          },
+          {
+            name: "Payments",
+            path: "payments",
+            component: () => import("src/pages/AdminPayments.vue"),
+            meta: { requireAuth: true, admin: true, nav: true },
+          },
+          {
+            name: "Contacts",
+            path: "contacts",
+            component: () => import("src/pages/AdminContacts.vue"),
+            meta: { requireAuth: true, admin: true, nav: true },
+          },
+          {
             name: "Users",
             path: "users",
             component: () => import("src/pages/AdminUsers.vue"),

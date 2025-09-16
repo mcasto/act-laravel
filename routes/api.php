@@ -149,7 +149,8 @@ Route::post('/audition-contact', [AuditionContactController::class, 'create']);
  * Volunteer Routes
  */
 Route::get('/skills', [SkillController::class, 'list']);
-Route::post('/volunteer-contact', [VolunteerController::class, 'create']);
+Route::post('/volunteer-contact', [VolunteerController::class, 'contactCreate']);
+Route::get('/volunteers', [VolunteerController::class, 'index']);
 
 /**
  * Flex Purchase

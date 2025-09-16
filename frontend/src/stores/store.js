@@ -32,6 +32,7 @@ import apiLoaded from "./actions/api-loaded";
 import openFixr from "./actions/open-fixr";
 import showPurchaseConfig from "./actions/show-purchase-config";
 import updateAnnouncementBanner from "./actions/update-announcement-banner";
+import getVolunteers from "./actions/get-volunteers";
 
 export const useStore = defineStore(
   "store",
@@ -69,6 +70,7 @@ export const useStore = defineStore(
       getSkills,
       getSiteConfig,
       getSnippet,
+      getVolunteers,
       getUsers,
       homeShows,
       newContact,

@@ -8,7 +8,51 @@
 
 ✔ Set up Join Mailing List @done(25-09-14 21:56)
 
+Admin Section needs:
+    ✔ announcement-banner @done(25-09-15 12:10)
+    ☐ volunteers
+    ☐ tickets
+    ✔ shows @done(25-09-15 12:10)
+    ☐ patrons
+    ☐ donations
+    ✔ users @done(25-09-15 12:10)
+    ☐ contacts
+    ✔ site config @done(25-09-15 12:10)
+    ☐ payments
+
 ☐ add an "audition" button to admin/edit-show to allow admin to set audition information for that show
+
+Auditions Table:
+    ☐ show_id
+    ☐ display_date: date
+    ☐ script: file
+    ☐ director_email: email for people to contact director about audition
+    ☐ first_read
+    ☐ rehearsals_start
+    ☐ about
+Audition Sessions:
+    ☐ audition_id
+    ☐ session
+    ☐ location_name
+    ☐ location_address
+    ☐ location_map_link
+    ☐ notes
+Audition Roles:
+    ☐ audition_id
+    ☐ sex
+    ☐ name
+    ☐ info
+    ☐ side
+Audition Contacts:
+    ☐ audition_id
+    ☐ name
+    ☐ role
+    ☐ email
+    ☐ phone
+    ☐ body
+    ☐ sendgrid_response
+
+
 
 ✔ fixr setup @done(25-09-14 05:36)
 
