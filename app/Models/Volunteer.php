@@ -38,6 +38,9 @@ class Volunteer extends Model
      */
     public function volunteerSkills()
     {
-        return $this->hasMany(VolunteerSkill::class);
+        return $this->hasMany(VolunteerSkill::class)
+            ->join('skills', 'volunteer_skills.skill_id', '=', 'skills.id')
+            ->orderBy('skills.name')
+            ->select('volunteer_skills.*');
     }
 }

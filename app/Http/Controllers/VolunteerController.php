@@ -16,6 +16,7 @@ class VolunteerController extends Controller
     public function index()
     {
         return Volunteer::with('volunteerSkills.skill')
+            // orderBy('volunterSkills.skill.name')
             ->get();
     }
 }

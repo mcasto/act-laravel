@@ -8,6 +8,12 @@
 
 ✔ Set up Join Mailing List @done(25-09-14 21:56)
 
+Admin Volunteers:
+    ☐ get all skills in beforeEnter
+    ✔ add search for skills to table @done(25-09-16 07:22)
+    ☐ need CRUD for each volunteer
+    ☐ need active/inactive method
+
 Admin Section needs:
     ✔ announcement-banner @done(25-09-15 12:10)
     ☐ volunteers

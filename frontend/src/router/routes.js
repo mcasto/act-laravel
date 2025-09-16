@@ -258,6 +258,7 @@ const routes = [
             component: () => import("src/pages/AdminVolunteers.vue"),
             beforeEnter: async () => {
               const store = useStore();
+              await store.getSkills();
               await store.getVolunteers();
             },
             meta: { requireAuth: true, admin: true, nav: true },
