@@ -90,7 +90,13 @@
             ></q-btn>
           </q-td>
           <q-td>
-            <q-btn icon="delete" flat round color="negative"></q-btn>
+            <q-btn
+              icon="delete"
+              flat
+              round
+              color="negative"
+              @click="deleteVolunteer(row)"
+            ></q-btn>
             <q-btn
               icon="edit"
               flat
@@ -113,6 +119,9 @@ import { useStore } from "src/stores/store";
 import VolunteerExperience from "src/components/VolunteerExperience.vue";
 import { computed, ref } from "vue";
 import { intersection } from "lodash-es";
+import { Notify } from "quasar";
+import callApi from "src/assets/call-api";
+import { remove } from "lodash-es";
 
 const store = useStore();
 
@@ -137,4 +146,39 @@ const filteredSkills = computed(() => {
     return hasSkill;
   });
 });
+
+const deleteVolunteer = async (volunteer) => {
+  Notify.create({
+    type: "warning",
+    message: `Are you sure you want to delete ${volunteer.name}?`,
+    actions: [
+      {
+        label: "No",
+      },
+      {
+        label: "Yes",
+        handler: async () => {
+          const response = await callApi({
+            path: `/volunteers/${volunteer.id}`,
+            method: "delete",
+            useAuth: true,
+          });
+
+          if (response.status == "error") {
+            Notify.create({
+              type: "negative",
+              message: response.message,
+            });
+
+            return;
+          }
+
+          remove(store.admin.volunteers, ({ id }) => id == volunteer.id);
+
+          Notify.create({ type: "positive", message: "Volutneer deleted" });
+        },
+      },
+    ],
+  });
+};
 </script>

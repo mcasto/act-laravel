@@ -19,4 +19,15 @@ class VolunteerController extends Controller
             // orderBy('volunterSkills.skill.name')
             ->get();
     }
+
+    public function destroy(int $id)
+    {
+        $volunteer = Volunteer::find($id);
+        if (!$volunteer) {
+            return ['status' => 'error', 'message' => 'Volunteer not found'];
+        }
+        $volunteer->delete();
+
+        return [['status' => 'success', 'volunteer' => $volunteer]];
+    }
 }

@@ -157,6 +157,8 @@ Route::post('/audition-contact', [AuditionContactController::class, 'create']);
 Route::get('/skills', [SkillController::class, 'list']);
 Route::post('/volunteer-contact', [VolunteerController::class, 'contactCreate']);
 Route::get('/volunteers', [VolunteerController::class, 'index']);
+Route::delete('/volunteers/{id}', [VolunteerController::class, 'destroy'])
+    ->middleware('auth:sanctum');
 
 /**
  * Flex Purchase
