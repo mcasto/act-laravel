@@ -49,6 +49,7 @@
               v-for="skill of store.skills"
               :key="`skill-${skill.id}`"
               class="col-6"
+              :class="Screen.lt.md ? 'q-pa-xs' : ''"
             >
               <q-checkbox
                 v-model="volunteerForm.skills"
@@ -90,7 +91,7 @@
 
 <script setup>
 import { cloneDeep } from "lodash-es";
-import { Loading, Notify } from "quasar";
+import { Loading, Notify, Screen } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { ref } from "vue";

@@ -62,7 +62,7 @@
               <div
                 v-for="skill of store.skills"
                 :key="`skill-${skill.id}`"
-                class="col-6"
+                class="col-6 q-pa-sm"
               >
                 <q-checkbox
                   v-model="skills"
@@ -85,6 +85,8 @@
 </template>
 
 <script setup>
+import { Notify } from "quasar";
+import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -103,14 +105,24 @@ const volunteer = ref(
   }
 );
 
-const skills = ref(volunteer.value.volunteer_skills.map(({ id }) => id));
-
-console.log({ volunteer: volunteer.value });
+const skills = ref(
+  volunteer.value.volunteer_skills.map(({ skill_id }) => skill_id)
+);
 
 const saveVolunteer = async () => {
-  // mc-todo: update volunteer.value.volunteer_skills with skills
-  // mc-todo: post/put (based on volunteer.value.id) to update database
+  const method = volunteer.value.id ? "put" : "post";
+  const path = `/volunteers${
+    volunteer.value.id ? `/${volunteer.value.id}` : ""
+  }`;
+  const payload = { volunteer: volunteer.value, skills: skills.value };
 
-  console.log({ save: volunteer.value, skills: skills.value });
+  const response = await callApi({ path, method, payload, useAuth: true });
+
+  if (response.status == "success") {
+    Notify.create({ type: "positive", message: "Volunteer saved" });
+    return;
+  }
+
+  Notify.create({ type: "negative", message: "Unable to save volunteer" });
 };
 </script>

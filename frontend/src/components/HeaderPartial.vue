@@ -6,7 +6,7 @@
       width="215px"
       class="q-ml-sm"
       fit="cover"
-      v-if="Screen.gt.xs"
+      v-if="Screen.gt.sm"
     ></q-img>
 
     <div

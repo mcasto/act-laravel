@@ -159,6 +159,10 @@ Route::post('/volunteer-contact', [VolunteerController::class, 'contactCreate'])
 Route::get('/volunteers', [VolunteerController::class, 'index']);
 Route::delete('/volunteers/{id}', [VolunteerController::class, 'destroy'])
     ->middleware('auth:sanctum');
+Route::post('/volunteers', [VolunteerController::class, 'store'])
+    ->middleware('auth:sanctum');
+Route::put('/volunteers/{id}', [VolunteerController::class, 'update'])
+    ->middleware('auth:sanctum');
 
 /**
  * Flex Purchase
