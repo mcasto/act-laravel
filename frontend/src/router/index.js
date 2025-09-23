@@ -37,9 +37,21 @@ export default defineRouter(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const store = useStore();
 
-    if (to.meta.requireAuth && !store.admin?.user) {
-      next("/sign-in");
-      return;
+    if (
+      (to.meta.requireAuth && !store.admin?.user) ||
+      store.admin?.user?.status == "need-sign-in"
+    ) {
+      if (to.path != "/sign-in") {
+        next("/sign-in");
+        return;
+      } else {
+        next();
+        return;
+      }
+    }
+
+    if (store.admin?.user) {
+      store.refreshPermissions();
     }
 
     next();

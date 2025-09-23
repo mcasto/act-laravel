@@ -4,45 +4,55 @@
       :rows="filteredSkills"
       :pagination="{ rowsPerPage: 0 }"
       :hide-bottom="filteredSkills.length > 0"
+      dense
     >
       <template #top>
-        <q-select
-          type="text"
-          label="Search Skills"
-          v-model="skillFilter"
-          dense
-          outlined
-          :options="skillList"
-          multiple
-          use-chips
-          style="min-width: 20rem;"
-          hint="This is an 'OR' search"
-        >
-          <template #prepend> <q-icon name="mdi-magnify"></q-icon> </template
-        ></q-select>
+        <q-toolbar class="justify-between items-center">
+          <q-select
+            type="text"
+            label="Search Skills"
+            v-model="skillFilter"
+            dense
+            outlined
+            :options="skillList"
+            multiple
+            use-chips
+            style="min-width: 20rem;"
+            hint="This is an 'OR' search"
+          >
+            <template #prepend> <q-icon name="mdi-magnify"></q-icon> </template
+          ></q-select>
+
+          <q-btn
+            icon="add"
+            round
+            color="primary"
+            to="/admin/edit-volunteer/new"
+          ></q-btn>
+        </q-toolbar>
       </template>
 
       <template #header>
         <q-tr>
-          <q-td>
+          <q-th class="text-left">
             Name
-          </q-td>
-          <q-td>
+          </q-th>
+          <q-th class="text-left">
             Phone
-          </q-td>
-          <q-td>
+          </q-th>
+          <q-th class="text-left">
             Email
-          </q-td>
-          <q-td class="text-center">
+          </q-th>
+          <q-th class="text-center">
             Skills
-          </q-td>
-          <q-td class="text-center">
+          </q-th>
+          <q-th class="text-center">
             Experience
-          </q-td>
+          </q-th>
         </q-tr>
       </template>
       <template #body="{row}">
-        <q-tr>
+        <q-tr :class="`bg-${row.active ? 'green-2' : 'red-2'}`">
           <q-td>
             {{ row.name }}
           </q-td>
@@ -77,6 +87,15 @@
               @click="
                 showDialog = { visible: true, experience: row.experience }
               "
+            ></q-btn>
+          </q-td>
+          <q-td>
+            <q-btn icon="delete" flat round color="negative"></q-btn>
+            <q-btn
+              icon="edit"
+              flat
+              round
+              :to="`/admin/edit-volunteer/${row.id}`"
             ></q-btn>
           </q-td>
         </q-tr>

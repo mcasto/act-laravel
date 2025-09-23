@@ -33,6 +33,7 @@ import openFixr from "./actions/open-fixr";
 import showPurchaseConfig from "./actions/show-purchase-config";
 import updateAnnouncementBanner from "./actions/update-announcement-banner";
 import getVolunteers from "./actions/get-volunteers";
+import refreshPermissions from "./actions/refresh-permissions";
 
 export const useStore = defineStore(
   "store",
@@ -76,6 +77,7 @@ export const useStore = defineStore(
       newContact,
       newShow,
       openFixr,
+      refreshPermissions,
       seasonShows,
       showPurchaseConfig,
       signIn,

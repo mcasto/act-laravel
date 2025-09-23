@@ -35,6 +35,12 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    public function refreshPermissions(Request $request)
+    {
+        $user = User::with('permissions.permissionLevel')->find($request->user()->id);
+        return $user->permissions;
+    }
+
     /**
      * Handle user logout and revoke tokens.
      */

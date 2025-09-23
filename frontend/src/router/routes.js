@@ -264,6 +264,17 @@ const routes = [
             meta: { requireAuth: true, admin: true, nav: true },
           },
           {
+            name: "Edit Volunteer",
+            path: "edit-volunteer/:id",
+            component: () => import("src/pages/AdminEditVolunteer.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              await store.getSkills();
+              await store.getVolunteers();
+            },
+            meta: { requireAuth: true, admin: true },
+          },
+          {
             name: "Patrons",
             path: "patrons",
             component: () => import("src/pages/AdminPatrons.vue"),

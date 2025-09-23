@@ -8,6 +8,9 @@
 
 ✔ Set up Join Mailing List @done(25-09-14 21:56)
 
+Read Only:
+    ☐ add read only handler to all admin pages (except dashboard)
+
 Admin Volunteers:
     ☐ get all skills in beforeEnter
     ✔ add search for skills to table @done(25-09-16 07:22)

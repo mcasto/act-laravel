@@ -11,7 +11,7 @@ export default ({ email, password }) => {
   }).then((response) => {
     if (response) {
       store.admin.user = response;
-      store.router.push("/admin");
+      store.router.push("/admin/dashboard");
     }
   });
 };

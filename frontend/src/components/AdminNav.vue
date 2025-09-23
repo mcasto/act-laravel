@@ -7,26 +7,19 @@
         :key="item.path"
         clickable
         :to="item.path"
-        active-class="bg-blue-grey-2 "
+        active-class="bg-blue-grey-2"
+        :disable="!item.permissionLevel"
       >
         <q-item-section>
           <q-item-label>
             {{ item.name }}
           </q-item-label>
         </q-item-section>
+        <q-item-section side v-if="item.permissionLevel == 'read'">
+          <q-icon name="mdi-eye-lock"></q-icon>
+        </q-item-section>
       </q-item>
     </q-list>
-
-    <!-- <q-toolbar class="bg-primary text-white shadow-4">
-    <q-tabs>
-      <q-route-tab
-        v-for="tab of routes"
-        :key="tab.path"
-        :to="tab.path"
-        :label="tab.name"
-      ></q-route-tab>
-    </q-tabs>
-  </q-toolbar> -->
   </div>
 </template>
 
@@ -39,9 +32,20 @@ const routes = store.router
   .getRoutes()
   .filter(({ meta, aliasOf }) => meta.nav && meta.admin && !aliasOf)
   .map(({ name, path }) => {
+    const permissionLevelRequired = path.replace("/admin/", "");
+    let permissionLevel = store.admin.user.permissions.find(
+      ({ permission_level }) =>
+        permission_level.value == permissionLevelRequired
+    )?.access;
+
+    if (permissionLevelRequired == "dashboard") {
+      permissionLevel = "full";
+    }
+
     return {
       name,
       path,
+      permissionLevel,
     };
   });
 </script>

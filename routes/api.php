@@ -27,7 +27,13 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 /**
  * Auth Routes
  */
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/login', function () {
+    return response()->json(['status' => 'need-sign-in']);
+})->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('sign-in');
+Route::get('/refresh-permissions', [AuthController::class, 'refreshPermissions'])
+    ->middleware('auth:sanctum')
+    ->name('refresh-permissions');
 
 // Protected route (requires auth)
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser']);
