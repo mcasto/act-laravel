@@ -168,3 +168,11 @@ Route::put('/volunteers/{id}', [VolunteerController::class, 'update'])
  * Flex Purchase
  */
 Route::get('/flex-purchase-config', [FlexPurchaseController::class, 'show']);
+
+/**
+ * Contact Routes
+ */
+Route::get('/contacts', [ContactController::class, 'index'])
+    ->middleware('auth:sanctum');
+Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
+    ->middleware('auth:sanctum');

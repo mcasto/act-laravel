@@ -1,4 +1,5 @@
 import { store } from "quasar/wrappers";
+import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 
 const routes = [
@@ -296,6 +297,15 @@ const routes = [
             name: "Contacts",
             path: "contacts",
             component: () => import("src/pages/AdminContacts.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+
+              store.admin.contacts = await callApi({
+                path: "/contacts",
+                method: "get",
+                useAuth: true,
+              });
+            },
             meta: { requireAuth: true, admin: true, nav: true },
           },
           {

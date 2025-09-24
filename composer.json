@@ -15,7 +15,6 @@
     "laravel/tinker": "^2.10.1",
     "league/html-to-markdown": "^5.1",
     "nyholm/psr7": "^1.8",
-    "sendgrid/sendgrid": "^8.1",
     "symfony/http-client": "^7.2"
   },
   "require-dev": {
