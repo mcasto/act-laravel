@@ -33,7 +33,10 @@
           :class="Screen.gt.xs ? 'q-ml-xl' : ''"
         ></q-img>
       </div>
-      <div class="col-12 col-md-7" :class="Screen.gt.xs ? 'q-mx-lg' : ''">
+      <div
+        class="col-12 col-md-7 q-px-xl"
+        :class="Screen.gt.xs ? 'q-mx-lg' : ''"
+      >
         <div class="text-h6 text-center">
           {{ show?.name }}
         </div>
@@ -74,6 +77,22 @@
               icon="fa-solid fa-ticket"
               to="/purchase-tickets"
             ></q-btn>
+          </div>
+
+          <div v-if="show?.audition">
+            <q-separator spaced></q-separator>
+            <div class="bg-grey-3 q-pa-md">
+              <div>
+                Have you ever thought about acting?
+              </div>
+              <div>
+                <q-btn
+                  label="Audition For This Show"
+                  to="/audition"
+                  color="primary"
+                ></q-btn>
+              </div>
+            </div>
           </div>
         </div>
       </div>

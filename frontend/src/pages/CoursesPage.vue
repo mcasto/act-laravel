@@ -22,26 +22,6 @@
             quiet now, but behind the scenes, we're preparing transformative
             experiences where skills take center stage.
           </p>
-          <div class="q-mt-xl">
-            <q-btn
-              color="primary"
-              icon="fas fa-envelope"
-              label="Notify Me About Upcoming Classes"
-              unelevated
-              size="lg"
-              class="q-px-xl"
-              to="/contact?subject=RE: Class Notification"
-            />
-          </div>
-          <div class="q-mt-lg">
-            <q-btn
-              flat
-              color="grey"
-              icon="help"
-              label="What kinds of classes do you offer?"
-              size="md"
-            />
-          </div>
         </div>
       </div>
     </div>

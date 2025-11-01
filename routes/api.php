@@ -16,8 +16,10 @@ use App\Http\Controllers\ShowPurchaseController;
 use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\SnippetController;
+use App\Http\Controllers\StandardButtonController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
+use App\Models\PermissionLevel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -122,6 +124,10 @@ Route::middleware('auth:sanctum')->get('/get-users', [UserController::class, 'in
 Route::middleware('auth:sanctum')->post('/update-user/{id}', [UserController::class, 'update']);
 Route::middleware('auth:sanctum')->post('/create-user', [UserController::class, 'store']);
 Route::middleware('auth:sanctum')->post('/delete-user/{id}', [UserController::class, 'destroy']);
+Route::middleware('auth:sanctum')->get('/users/{id}', [UserController::class, 'show']);
+Route::middleware('auth:sanctum')->get('/permission-levels', function () {
+    return PermissionLevel::orderBy('label')->get();
+});
 
 /**
  * Snippet Routes
@@ -143,12 +149,18 @@ Route::get('/gallery', [GalleryController::class, 'index']);
 /**
  * Contact Routes
  */
-Route::post('/create-contact', [ContactController::class, 'create']);
+Route::post('/create-contact', [ContactController::class, 'store']);
 
 /**
  * Audition Routes
  */
-Route::get('/current-audition', [AuditionController::class, 'show']);
+Route::get('/current-audition', [AuditionController::class, 'current']);
+Route::get('/audition/{id}', [AuditionController::class, 'show'])
+    ->middleware('auth:sanctum');
+Route::post('/audition', [AuditionController::class, 'store'])
+    ->middleware('auth:sanctum');
+Route::put('/audition/{id}', [AuditionController::class, 'update'])
+    ->middleware('auth:sanctum');
 Route::post('/audition-contact', [AuditionContactController::class, 'create']);
 
 /**

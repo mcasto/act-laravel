@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StandardButton;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +19,7 @@ class FlexPurchaseController extends Controller
                 'id' => '87475505',
                 'label' => 'Pay with Credit / Debit Card'
             ],
-            'buttons' => config('standard-buttons')
+            'buttons' => StandardButton::orderBy('sort_order')->get()
         ];
     }
 }

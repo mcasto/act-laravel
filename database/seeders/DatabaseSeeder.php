@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             UserPermissionSeeder::class,
             AuditionSeeder::class,
             CourseSeeder::class,
+            StandardButtonSeeder::class
         ]);
     }
 }

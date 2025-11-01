@@ -71,7 +71,7 @@ export default defineConfig((/* ctx */) => {
       },
       proxy: {
         "/api": {
-          target: "http://act.test",
+          target: "http://act_overhaul.test",
           changeOrigin: true,
         },
       },

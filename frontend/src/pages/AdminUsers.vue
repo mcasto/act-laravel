@@ -37,35 +37,18 @@
           &nbsp;
         </q-th>
       </template>
-      <template #body-cell-name="{row}">
-        <q-td class="cursor-pointer">
-          {{ row.name }}
-          <q-popup-edit
-            v-model="row.name"
-            v-slot="scope"
-            @update:model-value="store.updateUser(row)"
-            buttons
-          >
-            <q-input type="text" label="Name" v-model="scope.value"></q-input>
-          </q-popup-edit>
-        </q-td>
-      </template>
-      <template #body-cell-email="{row}">
-        <q-td class="cursor-pointer">
-          {{ row.email }}
-          <q-popup-edit
-            v-model="row.email"
-            v-slot="scope"
-            @update:model-value="store.updateUser(row)"
-            buttons
-          >
-            <q-input type="text" label="Name" v-model="scope.value"></q-input>
-          </q-popup-edit>
-        </q-td>
-      </template>
 
       <template #body-cell-tools="{row}">
         <q-td class="text-right">
+          <q-btn
+            icon="edit"
+            flat
+            round
+            color="primary"
+            size="small"
+            :disable="row.id == 1 && store.admin.user.id != 1"
+            :to="`/admin/edit-user/${row.id}`"
+          ></q-btn>
           <q-btn
             icon="delete"
             flat
@@ -73,6 +56,7 @@
             color="primary"
             size="small"
             @click="store.deleteUser(row)"
+            :disable="row.id == 1 || row.id == store.admin.user.id"
           ></q-btn>
         </q-td>
       </template>

@@ -13,7 +13,7 @@ import createShow from "./actions/create-show";
 import getSiteConfig from "./actions/get-site-config";
 import updateSiteConfig from "./actions/update-site-config";
 import getUsers from "./actions/get-users";
-import updateUser from "./actions/updateUser";
+import updateUser from "./actions/update-user";
 import createUser from "./actions/create-user";
 import deleteUser from "./actions/delete-user";
 import homeShows from "./actions/home-shows";
@@ -34,6 +34,10 @@ import showPurchaseConfig from "./actions/show-purchase-config";
 import updateAnnouncementBanner from "./actions/update-announcement-banner";
 import getVolunteers from "./actions/get-volunteers";
 import refreshPermissions from "./actions/refresh-permissions";
+import editUser from "./actions/edit-user";
+import getAuditionConfig from "./actions/get-audition-config";
+import saveAuditionConfig from "./actions/save-audition-config";
+import openCourses from "./actions/open-courses";
 
 export const useStore = defineStore(
   "store",
@@ -42,6 +46,7 @@ export const useStore = defineStore(
       admin: ref({}),
       announcement: ref(false),
       audition: ref(null),
+      buttons: ref(null),
       config: ref(null),
       course: ref(null),
       courses: ref([]),
@@ -64,8 +69,10 @@ export const useStore = defineStore(
       deleteShow,
       deleteUser,
       editShow,
+      editUser,
       flexshowPurchaseConfig,
       getAllShows,
+      getAuditionConfig,
       getGallery,
       getOpenClasses,
       getSkills,
@@ -76,8 +83,10 @@ export const useStore = defineStore(
       homeShows,
       newContact,
       newShow,
+      openCourses,
       openFixr,
       refreshPermissions,
+      saveAuditionConfig,
       seasonShows,
       showPurchaseConfig,
       signIn,

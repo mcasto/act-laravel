@@ -10,7 +10,7 @@
         </q-toolbar>
       </template>
       <template #item="props">
-        <q-card bordered class="q-ma-sm">
+        <q-card bordered class="q-ma-sm" style="width: 30%;">
           <q-toolbar>
             <q-toolbar-title
               class="text-subtitle2"
@@ -29,8 +29,7 @@
           </q-card-section>
           <q-card-section>
             <div class="flex justify-between items-center">
-              <div></div>
-              <div>
+              <div class="ellipsis" style="width: 80%;">
                 {{ props.row.name }}
               </div>
               <div>

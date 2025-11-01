@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Show;
 use App\Models\SiteConfig;
+use App\Models\StandardButton;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ShowController extends Controller
 {
-
     /**
      * Utility function to determine start and end of current season (runs from Oct 1 - August 31)
      */
@@ -96,14 +96,20 @@ class ShowController extends Controller
     public function homeShows(): JsonResponse
     {
         // get upcoming shows
-        $shows = Show::with("performances")->whereHas('performances', function ($query) {
-            $query->where('date', '>=', now());
-        })->get()->toArray();
+        $shows = Show::with('audition')
+            ->with("performances")
+            ->whereHas('performances', function ($query) {
+                $query->where('date', '>=', now());
+            })
+            ->get()
+            ->toArray();
 
         // first show (current or next)
         $currentShow = array_shift($shows);
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
-        $currentShow['buttons'] = config('standard-buttons');
+        $currentShow['buttons'] = StandardButton::orderBy('sort_order')->get();
+
+        logger()->info('current', $currentShow);
 
         return response()->json(['currentShow' => $currentShow, 'upcomingShows' => $shows]);
     }
@@ -120,7 +126,9 @@ class ShowController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(Show::with('performances.tickets', 'galleryImages')->orderByDesc('ticket_sales_start')->get());
+        return response()->json(Show::with('performances.tickets', 'galleryImages')
+            ->orderByDesc('ticket_sales_start')
+            ->get());
     }
 
     /**

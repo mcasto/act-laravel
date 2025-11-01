@@ -48,24 +48,24 @@
 
 <script setup>
 // Props or imports based on your original
+import { useStore } from "src/stores/store";
 import { computed } from "vue";
+const store = useStore();
 
 const auditionLink = computed(() => {
-  // logic from your original code
   const audition = {
     label: "Audition",
     url: "/audition",
-    open: true, // Replace this with your real logic
+    open: store.home.currentShow.audition,
   };
   return audition.open ? audition : null;
 });
 
 const classLink = computed(() => {
-  // logic from your original code
   const cls = {
     label: "Classes",
     url: "/classes",
-    enrolling: true, // Replace this with your real logic
+    enrolling: store.courses.length > 0,
   };
   return cls.enrolling ? cls : null;
 });

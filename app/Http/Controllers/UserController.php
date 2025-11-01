@@ -34,7 +34,7 @@ class UserController extends Controller
     /**
      * Update user
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
         $validator = validator($request->all(), [
             'name'  => ['required', 'string', 'max:255'],
@@ -62,7 +62,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $user = User::find($id);
         if (! $user) {

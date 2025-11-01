@@ -3,5 +3,8 @@ import { useStore } from "../store";
 
 export default async () => {
   const store = useStore();
-  store.config = await callApi({ path: "/site-config", method: "get" });
+  const response = await callApi({ path: "/site-config", method: "get" });
+
+  store.config = response.config;
+  store.buttons = response.buttons;
 };

@@ -65,4 +65,14 @@ class Show extends Model
     {
         return $this->hasMany(Performance::class)->orderBy('date');
     }
+
+    /**
+     * Relationship to audition
+     */
+    public function audition()
+    {
+        return $this->hasOne(Audition::class)
+            ->where('display_date', '<=', now()->toDateString())
+            ->where('end_display_date', '>=', now()->toDateString());
+    }
 }

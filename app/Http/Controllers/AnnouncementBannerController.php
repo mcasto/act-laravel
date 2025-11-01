@@ -23,5 +23,7 @@ class AnnouncementBannerController extends Controller
     {
         Storage::disk('local')
             ->put('announcement-banner.json', json_encode($request->all()));
+
+        return ['status' => 'success'];
     }
 }

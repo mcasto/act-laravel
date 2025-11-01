@@ -30,6 +30,9 @@ const store = useStore();
 
 const routes = store.router
   .getRoutes()
+  .sort((a, b) => {
+    return a.meta.order - b.meta.order;
+  })
   .filter(({ meta, aliasOf }) => meta.nav && meta.admin && !aliasOf)
   .map(({ name, path }) => {
     const permissionLevelRequired = path.replace("/admin/", "");

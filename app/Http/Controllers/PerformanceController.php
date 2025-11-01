@@ -59,6 +59,6 @@ class PerformanceController extends Controller
 
     public function updateFixrLink(int $id, Request $request)
     {
-        logger()->info(['update-fixr-link' => ['id' => $id, 'request' => $request->all()]]);
+        logger()->info('update-fixr-link', ['id' => $id, 'request' => $request->all()]);
     }
 }

@@ -1,6 +1,7 @@
 import callApi from "src/assets/call-api";
 import { useStore } from "../store";
 import { clone } from "lodash-es";
+import { Notify } from "quasar";
 
 export default () => {
   const store = useStore();
@@ -8,7 +9,13 @@ export default () => {
   callApi({
     path: "/update-site-config",
     method: "post",
-    payload: clone(store.config),
+    payload: { config: clone(store.config), buttons: clone(store.buttons) },
     useAuth: true,
-  }).then(console.log);
+  }).then(
+    Notify.create({
+      type: "positive",
+      message: "Config updated.",
+      group: false,
+    })
+  );
 };

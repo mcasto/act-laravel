@@ -39,8 +39,8 @@ const details = computed(() => {
     return { label: "", value: "" };
   }
 
-  const config = props.buttons.find(({ title }) => {
-    return title == paymentMethod.value.value;
+  const config = props.buttons.find(({ id }) => {
+    return id == paymentMethod.value.value;
   });
 
   return config;

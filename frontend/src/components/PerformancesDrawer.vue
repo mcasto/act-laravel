@@ -28,12 +28,18 @@
           </q-td>
           <q-td class="text-center">
             <div class="cursor-pointer">
-              {{ performance.sold_out_target }}
+              <q-checkbox
+                v-model="performance.sold_out"
+                size="xs"
+                :true-value="1"
+                :false-value="0"
+              ></q-checkbox>
+
               <q-tooltip>
-                Sold Out Target
+                Sold Out
               </q-tooltip>
-              <q-popup-edit
-                v-model="performance.sold_out_target"
+              <!-- <q-popup-edit
+                v-model="performance.sold_out"
                 v-slot="scope"
                 buttons
               >
@@ -43,7 +49,7 @@
                   label="Sold Out Target"
                   dense
                 ></q-input>
-              </q-popup-edit>
+              </q-popup-edit> -->
             </div>
           </q-td>
           <q-td class="text-center">
@@ -125,7 +131,7 @@ const newPerformance = () => {
   store.admin.show.performances.push({
     show_id: store.admin.show.id,
     date: newDate,
-    sold_out_target: 50,
+    sold_out: false,
     fixr_link: "",
   });
 };

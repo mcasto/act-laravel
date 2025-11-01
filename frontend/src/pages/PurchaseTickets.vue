@@ -37,6 +37,7 @@
           :options="performances"
           v-model="performance"
           option-label="displayDate"
+          :option-disable="(opt) => opt.soldOut"
           dense
           outlined
         ></q-select>
@@ -88,10 +89,22 @@ const performanceDates = computed(() => {
 const performances = computed(() => {
   return sortBy(
     show.value.performances.map((performance) => {
+      const fixrId = performance.fixr_link
+        ? new URL(performance.fixr_link).pathname.split("/").pop()
+        : "";
+
+      let displayDate = format(parseISO(performance.date), "PP");
+      const soldOut = performance.sold_out == 1;
+
+      if (soldOut) {
+        displayDate = `${displayDate} (Sold Out)`;
+      }
+
       return {
         ...performance,
-        displayDate: format(parseISO(performance.date), "PP"),
-        fixrId: new URL(performance.fixr_link).pathname.split("/").pop(),
+        displayDate,
+        fixrId,
+        soldOut,
       };
     }),
     "date"
@@ -107,14 +120,18 @@ const paymentMethods = computed(() => {
     ...show.value.buttons.map((button) => {
       return {
         label: button.label,
-        value: button.title,
+        value: button.id,
       };
     }),
   ];
 });
 
 onMounted(() => {
-  performance.value = [...performances.value].shift();
+  const firstPerformance = (performance.value = performances.value.find(
+    ({ sold_out }) => sold_out == 0
+  ));
+
+  performance.value = firstPerformance || [...performances.value].shift();
 
   paymentMethod.value = {
     id: performance.value.fixrId,

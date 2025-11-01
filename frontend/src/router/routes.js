@@ -6,18 +6,20 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
+    beforeEnter: async (to, from) => {
+      const store = useStore();
+
+      await store.announcementBanner();
+      await store.seasonShows();
+      await store.homeShows();
+      await store.openCourses();
+    },
     children: [
       {
         name: "Home",
         path: "",
         component: () => import("pages/IndexPage.vue"),
-        beforeEnter: async (to, from) => {
-          const store = useStore();
 
-          await store.announcementBanner();
-          await store.seasonShows();
-          await store.homeShows();
-        },
         meta: { nav: true },
       },
       {
@@ -214,28 +216,7 @@ const routes = [
             path: "dashboard",
             alias: "",
             component: () => import("src/pages/AdminDashboard.vue"),
-            meta: { requireAuth: true, admin: true, nav: true },
-          },
-          {
-            name: "Announcement",
-            path: "announcement-banner",
-            alias: "",
-            component: () => import("src/pages/AdminAnnouncementBanner.vue"),
-            beforeEnter: async () => {
-              const store = useStore();
-              store.announcementBanner();
-            },
-            meta: { requireAuth: true, admin: true, nav: true },
-          },
-          {
-            name: "Site Config",
-            path: "site-config",
-            component: () => import("src/pages/AdminSiteConfig.vue"),
-            beforeEnter: async (to, from) => {
-              const store = useStore();
-              await store.getSiteConfig();
-            },
-            meta: { requireAuth: true, admin: true, nav: true },
+            meta: { requireAuth: true, admin: true, nav: true, order: 10 },
           },
           {
             name: "Shows",
@@ -245,53 +226,58 @@ const routes = [
               const store = useStore();
               store.getAllShows();
             },
-            meta: { requireAuth: true, admin: true, nav: true },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 15,
+            },
           },
           {
-            name: "Tickets",
-            path: "tickets",
-            component: () => import("src/pages/AdminTickets.vue"),
-            meta: { requireAuth: true, admin: true, nav: true },
+            name: "Classes",
+            path: "classes",
+            component: () => import("src/pages/AdminClasses.vue"),
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 15,
+            },
           },
           {
-            name: "Volunteers",
-            path: "volunteers",
-            component: () => import("src/pages/AdminVolunteers.vue"),
+            name: "Announcement Banner",
+            path: "announcement-banner",
+            alias: "",
+            component: () => import("src/pages/AdminAnnouncementBanner.vue"),
             beforeEnter: async () => {
               const store = useStore();
-              await store.getSkills();
-              await store.getVolunteers();
+              store.announcementBanner();
             },
-            meta: { requireAuth: true, admin: true, nav: true },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 20,
+            },
           },
           {
-            name: "Edit Volunteer",
-            path: "edit-volunteer/:id",
-            component: () => import("src/pages/AdminEditVolunteer.vue"),
-            beforeEnter: async () => {
+            name: "Site Config",
+            path: "site-config",
+            component: () => import("src/pages/AdminSiteConfig.vue"),
+            beforeEnter: async (to, from) => {
               const store = useStore();
-              await store.getSkills();
-              await store.getVolunteers();
+              await store.getSiteConfig();
             },
-            meta: { requireAuth: true, admin: true },
-          },
-          {
-            name: "Patrons",
-            path: "patrons",
-            component: () => import("src/pages/AdminPatrons.vue"),
-            meta: { requireAuth: true, admin: true, nav: true },
-          },
-          {
-            name: "Donations",
-            path: "donations",
-            component: () => import("src/pages/AdminDonations.vue"),
-            meta: { requireAuth: true, admin: true, nav: true },
-          },
-          {
-            name: "Payments",
-            path: "payments",
-            component: () => import("src/pages/AdminPayments.vue"),
-            meta: { requireAuth: true, admin: true, nav: true },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 30,
+            },
           },
           {
             name: "Contacts",
@@ -306,13 +292,25 @@ const routes = [
                 useAuth: true,
               });
             },
-            meta: { requireAuth: true, admin: true, nav: true },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 50,
+            },
           },
           {
             name: "Users",
             path: "users",
             component: () => import("src/pages/AdminUsers.vue"),
-            meta: { requireAuth: true, admin: true, nav: true },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 60,
+            },
             beforeEnter: async (to, from) => {
               const store = useStore();
               await store.getUsers();
@@ -321,23 +319,89 @@ const routes = [
           {
             name: "Edit Show",
             path: "edit-show/:id",
-            component: () => import("src/pages/EditShow.vue"),
-            beforeEnter: async (to, from) => {
+            component: () => import("src/pages/AdminEditShow.vue"),
+            beforeEnter: async (to) => {
               const store = useStore();
               await store.editShow(to.params.id);
             },
             meta: { requireAuth: true, admin: true, nav: false },
           },
           {
+            name: "Audition Config",
+            path: "audition-config",
+            component: () => import("src/pages/AdminAuditionConfig.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              await store.getAuditionConfig();
+            },
+            meta: { requireAuth: true, admin: true, nav: false },
+          },
+          {
             name: "New Show",
             path: "new-show",
-            component: () => import("src/pages/EditShow.vue"),
-            beforeEnter: async (to, from) => {
+            component: () => import("src/pages/AdminEditShow.vue"),
+            beforeEnter: async () => {
               const store = useStore();
               await store.newShow();
             },
             meta: { requireAuth: true, admin: true, nav: false },
           },
+          {
+            name: "Edit User",
+            path: "edit-user/:id",
+            component: () => import("src/pages/AdminEditUser.vue"),
+            beforeEnter: async (to) => {
+              const store = useStore();
+              await store.editUser(to.params.id);
+            },
+            meta: { requireAuth: true, admin: true, nav: false },
+          },
+          // {
+          //   name: "Tickets",
+          //   path: "tickets",
+          //   component: () => import("src/pages/AdminTickets.vue"),
+          //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
+          // },
+          // {
+          //   name: "Volunteers",
+          //   path: "volunteers",
+          //   component: () => import("src/pages/AdminVolunteers.vue"),
+          //   beforeEnter: async () => {
+          //     const store = useStore();
+          //     await store.getSkills();
+          //     await store.getVolunteers();
+          //   },
+          //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
+          // },
+          // {
+          //   name: "Edit Volunteer",
+          //   path: "edit-volunteer/:id",
+          //   component: () => import("src/pages/AdminEditVolunteer.vue"),
+          //   beforeEnter: async () => {
+          //     const store = useStore();
+          //     await store.getSkills();
+          //     await store.getVolunteers();
+          //   },
+          //   meta: { requireAuth: true, admin: true },
+          // },
+          // {
+          //   name: "Patrons",
+          //   path: "patrons",
+          //   component: () => import("src/pages/AdminPatrons.vue"),
+          //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
+          // },
+          // {
+          //   name: "Donations",
+          //   path: "donations",
+          //   component: () => import("src/pages/AdminDonations.vue"),
+          //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
+          // },
+          // {
+          //   name: "Payments",
+          //   path: "payments",
+          //   component: () => import("src/pages/AdminPayments.vue"),
+          //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
+          // },
         ],
       },
     ],

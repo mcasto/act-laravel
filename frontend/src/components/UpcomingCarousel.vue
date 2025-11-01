@@ -31,36 +31,8 @@
         height="52vh"
         class="rounded-borders"
         ref="carousel"
+        control-color="black"
       >
-        <template v-slot:control>
-          <q-carousel-control
-            position="bottom-right"
-            :offset="[18, 18]"
-            class="q-gutter-xs"
-          >
-            <q-btn
-              push
-              round
-              dense
-              color="orange"
-              text-color="black"
-              icon="arrow_left"
-              @click="$refs.carousel.previous()"
-              :disable="firstSlide"
-            />
-            <q-btn
-              push
-              round
-              dense
-              color="orange"
-              text-color="black"
-              icon="arrow_right"
-              @click="$refs.carousel.next()"
-              :disable="lastSlide"
-            />
-          </q-carousel-control>
-        </template>
-
         <q-carousel-slide
           :name="show.id"
           v-for="show of shows"
@@ -90,6 +62,7 @@
 
 <script setup>
 import { format, parseISO } from "date-fns";
+import { Screen } from "quasar";
 import { useStore } from "src/stores/store";
 import { computed, onMounted, ref } from "vue";
 

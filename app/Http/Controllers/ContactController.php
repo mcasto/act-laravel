@@ -2,14 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMailer;
 use App\Models\Contact;
 use App\Models\SiteConfig;
 use App\Util\SendGridUtil;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'string|required',
+            'email' => 'email|required',
+            'subject' => 'string|required',
+            'body' => 'string|required',
+        ]);
+
+        if ($validator->fails()) {
+            return ['status' => 'error', 'message' => 'Invalid contact information'];
+        }
+
+        $contact = Contact::create($validator->valid());
+
+        // send email about contact
+        try {
+            Mail::to(config('mail.to.address'))
+                ->send(new ContactMailer($contact));
+            return ['status' => 'success'];
+        } catch (Exception $e) {
+            logger()->error($e);
+            return ['status' => 'error', 'message' => 'Unable to send contact email'];
+        }
+    }
+
     public function create(Request $request): JsonResponse
     {
         $config    = SiteConfig::orderByDesc('created_at')->first()->toArray();
