@@ -21,8 +21,6 @@ class AuditionController extends Controller
 
     public function store(Request $request)
     {
-        logger()->info('store audition');
-
         $validator = Validator::make($request->all(), [
             'display_date' => 'required|date',
             'end_display_date' => 'required|date',

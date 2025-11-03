@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <q-img :src="`/api/storage/images/${course.poster}`"></q-img>
+    <q-img :src="`/api/storage/posters/${course.poster}`"></q-img>
     <q-card-section>
       <div class="text-h6">
         {{ course.name }}

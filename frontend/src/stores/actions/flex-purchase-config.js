@@ -3,5 +3,10 @@ import { useStore } from "../store";
 
 export default async () => {
   const store = useStore();
-  store.flex = await callApi({ path: "/flex-purchase-config", method: "get" });
+  const config = await callApi({
+    path: "/flex-purchase-config",
+    method: "get",
+  });
+
+  store.flex = config;
 };

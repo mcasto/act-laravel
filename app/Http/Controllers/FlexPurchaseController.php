@@ -10,16 +10,16 @@ class FlexPurchaseController extends Controller
 {
     public function show()
     {
-        return [
-            'title' => 'Purchase Flex Tickets',
-            'subtitle' => '6 admissions for the price of 5',
-            'image' => '/images/uploaded/2025-26-season.jpg',
-            'body' => "6 admissions to use as you wish to attend any of ACT's 6 regular 2025-26 season productions (<a href='/season'>SEASON DETAILS</a>). After you purchase your Flex Ticket, simply contact <a href='mailto:actseats@gmail.com'>actseats@gmail.com</a> with your reservation requests prior to any the performance(s) you wish to attend. We will keep track of your Flex Ticket admissions usage for you.",
-            'fixr' => [
-                'id' => '87475505',
-                'label' => 'Pay with Credit / Debit Card'
-            ],
-            'buttons' => StandardButton::orderBy('sort_order')->get()
-        ];
+        $config = json_decode(Storage::disk('local')
+            ->get('flex-purchase-config.json'), true);
+
+        $config['buttons'] = StandardButton::orderBy('sort_order')->get();
+
+        return $config;
+    }
+
+    public function update(Request $request)
+    {
+        logger()->info('update flex purchase config', $request->all());
     }
 }

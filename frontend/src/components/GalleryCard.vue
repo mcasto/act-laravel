@@ -8,7 +8,7 @@
         {{ date }}
       </div>
       <q-img
-        :src="`/api/storage/images/${show.poster}`"
+        :src="`/api/storage/posters/${show.poster}`"
         :width="Screen.lt.md ? '85vw' : '25vw'"
         height="40vh"
         fit="contain"

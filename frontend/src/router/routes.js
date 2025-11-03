@@ -235,21 +235,9 @@ const routes = [
             },
           },
           {
-            name: "Classes",
-            path: "classes",
-            component: () => import("src/pages/AdminClasses.vue"),
-            meta: {
-              requireAuth: true,
-              admin: true,
-              nav: true,
-              dash: true,
-              order: 15,
-            },
-          },
-          {
             name: "Announcement Banner",
             path: "announcement-banner",
-            alias: "",
+
             component: () => import("src/pages/AdminAnnouncementBanner.vue"),
             beforeEnter: async () => {
               const store = useStore();
@@ -263,6 +251,35 @@ const routes = [
               order: 20,
             },
           },
+          {
+            name: "Flex Purchase Config",
+            path: "flex-purchase-config",
+            component: () => import("src/pages/AdminFlexPurchase.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              store.flexshowPurchaseConfig();
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 21,
+            },
+          },
+          {
+            name: "Classes",
+            path: "classes",
+            component: () => import("src/pages/AdminClasses.vue"),
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 25,
+            },
+          },
+
           {
             name: "Site Config",
             path: "site-config",
@@ -336,6 +353,16 @@ const routes = [
             },
             meta: { requireAuth: true, admin: true, nav: false },
           },
+          {
+            name: "Show Gallery",
+            path: "gallery",
+            component: () => import("src/pages/AdminGallery.vue"),
+            beforeEnter: async (to) => {
+              const store = useStore();
+            },
+            meta: { requireAuth: true, admin: true, nav: false },
+          },
+
           {
             name: "New Show",
             path: "new-show",

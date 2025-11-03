@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-img
-      :src="`/api/storage/images/${show.poster}`"
+      :src="`/api/storage/posters/${show.poster}`"
       :width="width"
       :height="height"
       fit="contain"

@@ -79,8 +79,8 @@ Route::get('/storage/fixr-icon', function () {
 /**
  * Image-related Routes
  */
-Route::get('/storage/images/{filename}', function ($filename): BinaryFileResponse {
-    $path = storage_path("app/public/images/{$filename}");
+Route::get('/storage/{path}/{filename}', function ($path, $filename): BinaryFileResponse {
+    $path = storage_path("app/public/{$path}/{$filename}");
 
     if (! file_exists($path)) {
         $path = storage_path('app/private/image-not-found.jpeg');
@@ -145,6 +145,13 @@ Route::post('/course-contact', [CourseController::class, 'courseContact']);
  * Gallery Routes
  */
 Route::get('/gallery', [GalleryController::class, 'index']);
+Route::post('/gallery', [GalleryController::class, 'store'])
+    ->middleware('auth:sanctum');
+Route::delete('/gallery/{id}', [GalleryController::class, 'delete'])
+    ->middleware('auth:sanctum');
+Route::put('/gallery', [GalleryController::class, 'update'])
+    ->middleware('auth:sanctum');
+
 
 /**
  * Contact Routes
@@ -180,6 +187,8 @@ Route::put('/volunteers/{id}', [VolunteerController::class, 'update'])
  * Flex Purchase
  */
 Route::get('/flex-purchase-config', [FlexPurchaseController::class, 'show']);
+Route::put('/flex-purchase-config', [FlexPurchaseController::class, 'update'])
+    ->middleware('auth:sanctum');
 
 /**
  * Contact Routes

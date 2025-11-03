@@ -8,7 +8,7 @@
     <div class="col-12 col-sm-6">
       <!-- Poster image with tagline overlay -->
       <q-img
-        :src="`/api/storage/images/${course.poster}`"
+        :src="`/api/storage/posters/${course.poster}`"
         class="rounded-borders"
       >
         <div

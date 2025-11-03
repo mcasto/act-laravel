@@ -26,7 +26,7 @@
     <div class="row q-gutter-x-sm q-pa-md">
       <div class="col-12 col-md-4">
         <q-img
-          :src="`/api/storage/images/${show.poster}`"
+          :src="`/api/storage/posters/${show.poster}`"
           fit="contain"
           style="max-height: 50vh;"
           v-if="show?.poster"

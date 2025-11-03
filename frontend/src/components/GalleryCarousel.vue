@@ -16,8 +16,10 @@
         transition-next="slide-left"
         animated
         control-color="primary"
-        class="rounded-borders"
         style="height: 70vh;"
+        swipeable
+        arrows
+        class="custom-carousel"
       >
         <q-carousel-slide
           v-for="image of show.gallery_images"
@@ -25,16 +27,12 @@
           :name="image.id"
         >
           <q-img
-            :src="`/api/storage/images/${image.image}`"
+            :src="`/api/storage/${image.image}`"
             fit="contain"
             height="65vh"
           ></q-img>
         </q-carousel-slide>
       </q-carousel>
-
-      <div class="row justify-center">
-        <q-btn-toggle glossy v-model="slide" :options="options" />
-      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -60,3 +58,24 @@ const date = computed(() => {
   return format(parseISO(performance.date), "MMM y");
 });
 </script>
+
+<style scoped>
+.custom-carousel :deep(.q-carousel__arrow) {
+  background-color: var(--q-primary);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Make icon white to contrast with primary background */
+.custom-carousel :deep(.q-carousel__arrow .q-icon) {
+  color: white;
+}
+</style>

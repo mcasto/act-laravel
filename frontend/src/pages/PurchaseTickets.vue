@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <div class="row q-gutter-y-md">
       <div class="col-12 col-md-3">
-        <q-img :src="`/api/storage/images/${show.poster}`"></q-img>
+        <q-img :src="`/api/storage/posters/${show.poster}`"></q-img>
       </div>
       <div class="col-12 col-md-8 offset-md-1">
         <div class="text-h6 text-center">

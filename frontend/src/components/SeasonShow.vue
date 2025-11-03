@@ -2,7 +2,7 @@
   <q-card bordered flat class="bg-grey-2">
     <router-link :to="`/show-details/${show.slug}`">
       <q-img
-        :src="`/api/storage/images/${show.poster}`"
+        :src="`/api/storage/posters/${show.poster}`"
         fit="contain"
         height="40vh"
         :alt="`Poster for ${show.name}`"

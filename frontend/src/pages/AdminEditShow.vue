@@ -29,21 +29,42 @@
             </q-btn>
           </div>
           <q-separator class="q-my-md" v-if="store.admin.show.id"></q-separator>
-          <div class="text-center" v-if="store.admin.show.id">
-            <q-btn
-              label="Performances"
-              color="secondary"
-              @click="performancesDrawer = !performancesDrawer"
-            ></q-btn>
-          </div>
 
-          <q-separator class="q-my-md" v-if="store.admin.show.id"></q-separator>
-          <div class="text-center" v-if="store.admin.show.id">
-            <q-btn
-              label="Audition Config"
-              color="secondary"
-              to="/admin/audition-config"
-            ></q-btn>
+          <div class="text-center">
+            <q-btn icon="settings" color="secondary">
+              <q-menu auto-close>
+                <q-list
+                  dense
+                  separator
+                  class="bg-secondary text-white text-uppercase"
+                >
+                  <q-item
+                    clickable
+                    @click="performancesDrawer = !performancesDrawer"
+                  >
+                    <q-item-section>
+                      <q-item-label>
+                        Performances
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable to="/admin/audition-config">
+                    <q-item-section>
+                      <q-item-label>
+                        Audition Config
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable to="/admin/gallery">
+                    <q-item-section>
+                      <q-item-label>
+                        Gallery
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </div>
 
           <q-separator class="q-my-md" v-if="store.admin.show.id"></q-separator>

@@ -1,5 +1,13 @@
+✔ gallery admin - add ordering to the gallery images @done(25-11-02 22:39)
+☐ flex purchase admin
+☐ set up users to automatically have full priveleges for each level
+☐ PerformanceController::updateFixrLink
+
 ☐ class management
 ☐ class page
+☐ fix class `/images` calls
+
+☐ modify the gallery carousel controls
 
 ---
 

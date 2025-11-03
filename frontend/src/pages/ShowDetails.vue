@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-12 col-md-4">
         <q-img
-          :src="`/api/storage/images/${store.show.poster}`"
+          :src="`/api/storage/posters/${store.show.poster}`"
           height="60vh"
           fit="contain"
         ></q-img>

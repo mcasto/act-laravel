@@ -109,8 +109,6 @@ class ShowController extends Controller
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
         $currentShow['buttons'] = StandardButton::orderBy('sort_order')->get();
 
-        logger()->info('current', $currentShow);
-
         return response()->json(['currentShow' => $currentShow, 'upcomingShows' => $shows]);
     }
 
@@ -152,7 +150,7 @@ class ShowController extends Controller
             'tagline'            => null,
             'director'           => null,
             'info'               => '',
-            'poster'             => "poster-" . uniqid(),
+            'poster'             => uniqid(),
             'ticket_sales_start' => date("Y-m-d", strtotime("NOW + 6 weeks")),
             'ticket_price'       => $config['ticket_price'],
             'performances'       => [],

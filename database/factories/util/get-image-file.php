@@ -2,31 +2,23 @@
 
 function getImageFile($imagePath)
 {
- $imageList = glob($imagePath . "/*.{jpg,jpeg,png}", GLOB_BRACE);
+    $imageList = glob($imagePath . "/*.{jpg,jpeg,png}", GLOB_BRACE);
 
- $imageList = array_filter($imageList, function ($image) {
-  return ! preg_match("/(gallery-)|(poster-)/", $image);
- });
 
- if (count($imageList) == 0) {
-  $fileList = glob($imagePath . "/*{png,jpg,jpeg}", GLOB_BRACE);
+    if (count($imageList) == 0) {
+        $fileList = glob($imagePath . "/*{png,jpg,jpeg}", GLOB_BRACE);
 
-  foreach ($fileList as $file) {
-   $newName = $imagePath . "/" . uniqid() . "." . pathinfo($file, PATHINFO_EXTENSION);
+        foreach ($fileList as $file) {
+            $newName = $imagePath . "/" . uniqid() . "." . pathinfo($file, PATHINFO_EXTENSION);
 
-   rename($file, $newName);
-  }
+            rename($file, $newName);
+        }
 
-  $imageList = glob($imagePath . "/*.{jpg,jpeg,png}", GLOB_BRACE);
+        $imageList = glob($imagePath . "/*.{jpg,jpeg,png}", GLOB_BRACE);
+    }
 
-  $imageList = array_filter($imageList, function ($image) {
-   return ! preg_match("/(gallery-)|(poster-)/", $image);
-  });
+    shuffle($imageList);
+    $imageFile = array_shift($imageList);
 
- }
-
- shuffle($imageList);
- $imageFile = array_shift($imageList);
-
- return $imageFile;
+    return $imageFile;
 }
