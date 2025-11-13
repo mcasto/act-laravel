@@ -44,7 +44,7 @@
         <purchase-options
           class="q-mt-md"
           v-if="performance"
-          :fixr-id="performance.fixrId"
+          :fixr-link="performance.fixr_link"
           :payment-methods="paymentMethods"
           :buttons="show.buttons"
           v-model="paymentMethod"
@@ -89,10 +89,6 @@ const performanceDates = computed(() => {
 const performances = computed(() => {
   return sortBy(
     show.value.performances.map((performance) => {
-      const fixrId = performance.fixr_link
-        ? new URL(performance.fixr_link).pathname.split("/").pop()
-        : "";
-
       let displayDate = format(parseISO(performance.date), "PP");
       const soldOut = performance.sold_out == 1;
 
@@ -103,7 +99,7 @@ const performances = computed(() => {
       return {
         ...performance,
         displayDate,
-        fixrId,
+
         soldOut,
       };
     }),
@@ -134,7 +130,7 @@ onMounted(() => {
   performance.value = firstPerformance || [...performances.value].shift();
 
   paymentMethod.value = {
-    id: performance.value.fixrId,
+    id: performance.value.fixr_link,
     label: show.value.fixrLabel,
     value: "fixr",
   };

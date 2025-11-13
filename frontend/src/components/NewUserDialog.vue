@@ -42,6 +42,7 @@
                   round
                   :icon="showPass ? 'visibility_off' : 'visibility'"
                   @click="showPass = !showPass"
+                  tabindex="-1"
                 ></q-btn>
               </template>
             </q-input>

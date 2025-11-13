@@ -373,16 +373,6 @@ const routes = [
             },
             meta: { requireAuth: true, admin: true, nav: false },
           },
-          {
-            name: "Edit User",
-            path: "edit-user/:id",
-            component: () => import("src/pages/AdminEditUser.vue"),
-            beforeEnter: async (to) => {
-              const store = useStore();
-              await store.editUser(to.params.id);
-            },
-            meta: { requireAuth: true, admin: true, nav: false },
-          },
           // {
           //   name: "Tickets",
           //   path: "tickets",

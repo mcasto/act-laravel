@@ -61,7 +61,6 @@
               v-slot="scope"
               buttons
               style="width: 55rem;"
-              @update:model-value="updateFixrLink(performance)"
             >
               <q-input
                 type="text"
@@ -105,10 +104,6 @@ const openLink = (link) => {
   window.open(link);
 };
 
-const updateFixrLink = (performance) => {
-  console.log({ performance });
-};
-
 const newPerformance = () => {
   // get date of last performance
   const lastPerformance = clone(
@@ -131,7 +126,7 @@ const newPerformance = () => {
   store.admin.show.performances.push({
     show_id: store.admin.show.id,
     date: newDate,
-    sold_out: false,
+    sold_out: 0,
     fixr_link: "",
   });
 };

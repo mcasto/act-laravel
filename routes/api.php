@@ -77,6 +77,14 @@ Route::get('/storage/fixr-icon', function () {
 });
 
 /**
+ * Flex Image
+ */
+Route::get('/storage/flex-image', function () {
+    $path = storage_path("app/public/flex-image.jpg");
+    return Response::file($path);
+});
+
+/**
  * Image-related Routes
  */
 Route::get('/storage/{path}/{filename}', function ($path, $filename): BinaryFileResponse {
@@ -121,7 +129,8 @@ Route::middleware('auth:sanctum')->post('/update-site-config', [SiteConfigContro
  * User Routes
  */
 Route::middleware('auth:sanctum')->get('/get-users', [UserController::class, 'index']);
-Route::middleware('auth:sanctum')->post('/update-user/{id}', [UserController::class, 'update']);
+Route::middleware('auth:sanctum')->put('/users/{id}', [UserController::class, 'update']);
+Route::middleware('auth:sanctum')->put('/change-password/{id}', [UserController::class, 'changePassword']);
 Route::middleware('auth:sanctum')->post('/create-user', [UserController::class, 'store']);
 Route::middleware('auth:sanctum')->post('/delete-user/{id}', [UserController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('/users/{id}', [UserController::class, 'show']);
@@ -188,6 +197,8 @@ Route::put('/volunteers/{id}', [VolunteerController::class, 'update'])
  */
 Route::get('/flex-purchase-config', [FlexPurchaseController::class, 'show']);
 Route::put('/flex-purchase-config', [FlexPurchaseController::class, 'update'])
+    ->middleware('auth:sanctum');
+Route::post('/flex-purchase-config/image', [FlexPurchaseController::class, 'image'])
     ->middleware('auth:sanctum');
 
 /**

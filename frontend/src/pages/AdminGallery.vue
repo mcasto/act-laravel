@@ -68,18 +68,21 @@
               color="negative"
               size="lg"
               @click="deleteImage"
+              v-if="photo"
             ></q-btn>
             <q-btn
               icon="mdi-arrow-up"
               color="primary"
               @click="reorder(-1)"
               :disable="photo.idx == 0"
+              v-if="photo"
             ></q-btn>
             <q-btn
               icon="mdi-arrow-down"
               color="primary"
               @click="reorder(1)"
               :disable="(photo.idx == gallery.length - 1)"
+              v-if="photo"
             ></q-btn>
           </q-toolbar>
           <q-img

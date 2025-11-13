@@ -16,7 +16,7 @@
     ></q-select>
 
     <purchase-credit
-      :id="fixrId"
+      :id="fixrLink"
       v-if="paymentMethod.value == 'fixr'"
     ></purchase-credit>
 
@@ -30,7 +30,12 @@
 import { computed } from "vue";
 import PurchaseCredit from "./PurchaseCredit.vue";
 
-const props = defineProps(["fixrId", "paymentMethods", "buttons", "separator"]);
+const props = defineProps([
+  "fixrLink",
+  "paymentMethods",
+  "buttons",
+  "separator",
+]);
 
 const paymentMethod = defineModel();
 

@@ -16,7 +16,7 @@
         <div v-html="store.flex.body" class="q-mt-md text-subtitle1"></div>
 
         <purchase-options
-          :fixr-id="store.flex.fixr.id"
+          :fixr-link="store.flex.fixr.link"
           :payment-methods="paymentMethods"
           :buttons="store.flex.buttons"
           :separator="true"
@@ -33,6 +33,8 @@ import { computed, onMounted, ref } from "vue";
 import PurchaseOptions from "src/components/PurchaseOptions.vue";
 
 const store = useStore();
+
+console.log({ flex: store.flex });
 
 const paymentMethod = ref(null);
 

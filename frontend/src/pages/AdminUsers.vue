@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div
-      class="bg-warning flex justify-center items-center"
-      style="height: 3rem;"
-    >
-      In order to change a user's password, you must delete their current record
-      and create a new one with the new password.
-    </div>
     <q-table
       :rows="store.admin.users"
       :columns="columns"
@@ -14,14 +7,13 @@
       hide-bottom
       dense
     >
-      <template #header-cell-name>
-        <q-th class="text-left" style="height: 3rem;">
-          Name
+      <template #header-cell-tools>
+        <q-th class="text-right">
           <q-btn
-            icon="add"
+            icon="mdi-plus-circle"
+            flat
             round
             color="primary"
-            size="xs"
             class="q-ml-md"
             @click="
               createUserDialog = {
@@ -32,31 +24,50 @@
           ></q-btn>
         </q-th>
       </template>
-      <template #header-cell-tools>
-        <q-th class="text-left items-center flex" style="height: 3rem;">
-          &nbsp;
-        </q-th>
+
+      <template v-slot:body-cell="props">
+        <q-td v-if="props.row.id == 1 || props.row.id == store.admin.user.id">
+          {{ props.row[props.col.name] }}
+        </q-td>
+        <q-td :props="props" class="text-left" v-else>
+          <q-input
+            v-model="props.row[props.col.name]"
+            type="text"
+            dense
+            outlined
+          />
+        </q-td>
+      </template>
+
+      <template #body-cell-password="{row}">
+        <q-td class="text-center">
+          <q-btn
+            label="Change Password"
+            color="primary"
+            size="sm"
+            :disable="row.id == 1 || row.id == store.admin.user.id"
+            @click="changePasswordDialog = { visible: true, row }"
+          ></q-btn>
+        </q-td>
       </template>
 
       <template #body-cell-tools="{row}">
         <q-td class="text-right">
           <q-btn
-            icon="edit"
-            flat
-            round
-            color="primary"
-            size="small"
-            :disable="row.id == 1 && store.admin.user.id != 1"
-            :to="`/admin/edit-user/${row.id}`"
-          ></q-btn>
-          <q-btn
             icon="delete"
             flat
             round
-            color="primary"
-            size="small"
+            color="negative"
             @click="store.deleteUser(row)"
             :disable="row.id == 1 || row.id == store.admin.user.id"
+          ></q-btn>
+          <q-btn
+            icon="mdi-content-save"
+            color="primary"
+            flat
+            round
+            :disable="row.id == 1 || row.id == store.admin.user.id"
+            @click="onSave(row)"
           ></q-btn>
         </q-td>
       </template>
@@ -67,6 +78,11 @@
       :user="createUserDialog.user"
       @create="store.createUser"
     ></new-user-dialog>
+
+    <admin-user-change-password
+      v-model="changePasswordDialog.visible"
+      :row="changePasswordDialog.row"
+    ></admin-user-change-password>
   </div>
 </template>
 
@@ -74,10 +90,18 @@
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
 import NewUserDialog from "src/components/NewUserDialog.vue";
+import callApi from "src/assets/call-api";
+import { cloneDeep } from "lodash-es";
+import { Loading, Notify } from "quasar";
+import AdminUserChangePassword from "src/components/AdminUserChangePassword.vue";
 
 const store = useStore();
 
 const createUserDialog = ref({ visible: false, user: null });
+const changePasswordDialog = ref({
+  visible: false,
+  row: null,
+});
 
 const columns = [
   {
@@ -93,9 +117,34 @@ const columns = [
     align: "left",
   },
   {
+    label: "Password",
+    name: "password",
+    align: "center",
+  },
+  {
     label: "Tools",
     name: "tools",
     align: "left",
   },
 ];
+
+const onSave = async (row) => {
+  Loading.show({ delay: 300 });
+
+  const response = await callApi({
+    path: `/users/${row.id}`,
+    method: "put",
+    payload: cloneDeep(row),
+    useAuth: true,
+  });
+
+  if (response.status != "success") {
+    Loading.hide();
+    Notify.create({ type: "negative", message: response.message });
+    return;
+  }
+
+  Notify.create({ type: "positive", message: "User updated" });
+  Loading.hide();
+};
 </script>
