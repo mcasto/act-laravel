@@ -8,8 +8,7 @@
 ## AngelLevelController
 | Method | Type | Source |
 |--------|------|--------|
-| `index()` | **Database** | Model: `AngelLevel` |
-| `index()` | **File** | `storage/app/angels.config.json` |
+| `index()` | **Both** | Models: `Angel`, `AngelLevel` (with `angels` relationship) + File: `storage/app/angels.config.json` |
 
 ## AnnouncementBannerController
 | Method | Type | Source |
