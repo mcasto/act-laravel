@@ -1,0 +1,70 @@
+{
+  "logo": "/images/logo-home-2025.png",
+  "title": "Thank you to our 2025-2026 Angel Donors!",
+  "levels": [
+    {
+      "label": "Seraphim ($1,000+)",
+      "donors": [
+        "Brad and Bev Andersen*",
+        "Bob Hay and John Howe*",
+        "Karyn Mucklow",
+        "Kathy and Tim Osbourne*"
+      ]
+    },
+    {
+      "label": "Guardian Angel ($500+)",
+      "donors": [
+        "Deana Culp",
+        "Holly and Mark Deckard*",
+        "Bob Fry and Tom Metcalf*",
+        "Ryan James and Ron Schmitz*",
+        "Jamie Lawrence-Howard*",
+        "Alexanne Stone"
+      ]
+    },
+    {
+      "label": "Archangel ($250+)",
+      "donors": [
+        "Susan Blumenfeld",
+        "Sam Carothers and Jean Walls",
+        "Kim and Mike Fiore*",
+        "Nancy Fonnesbeck",
+        "Cody and Michael Hamilton*",
+        "Laura Jessup*",
+        "John Olson and Maurice Vallejo*",
+        "Rick Snyder*",
+        "Margaret Westlake and Mike Casto"
+      ]
+    },
+    {
+      "label": "Angel ($100+)",
+      "donors": [
+        "Anonymous",
+        "Alex Amby and Bradley Laye*",
+        "Cathleen Brethauer",
+        "Mike Churchman",
+        "William Curtis*",
+        "Deb Davis and John Barr*",
+        "Ray and Terry Drake",
+        "Mike Frohling*",
+        "Nancy Elle Laughlin*",
+        "Bruce Leslie",
+        "Scott Levine",
+        "Kate Marin and Wes Elliott",
+        "Laurie Paternoster",
+        "Rosemary and Barry Rein*",
+        "Sharon Sample",
+        "Nancy Sharif*",
+        "Rick Snyder",
+        "Saralee Squires*",
+        "Jane Stallman*",
+        "Erin and Nick Wagner"
+      ]
+    }
+  ],
+  "footer": {
+    "note": "*Founding Angels",
+    "current": "List current as of November 2025",
+    "errors": "Please <a href='mailto:actseats@gmail.com'>contact us</a> if there are errors or omissions so we can make corrections."
+  }
+}

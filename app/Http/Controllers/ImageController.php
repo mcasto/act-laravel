@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Storage;
 class ImageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
+     *
+     * @return void
+     * @source None (empty method)
      */
     public function index()
     {
@@ -17,7 +20,10 @@ class ImageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource
+     *
+     * @return void
+     * @source None (empty method)
      */
     public function create()
     {
@@ -25,7 +31,11 @@ class ImageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
+     *
+     * @param Request $request
+     * @return void
+     * @source None (empty method)
      */
     public function store(Request $request)
     {
@@ -33,7 +43,11 @@ class ImageController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource
+     *
+     * @param int $id
+     * @return void
+     * @source None (empty method)
      */
     public function edit(int $id)
     {
@@ -41,7 +55,19 @@ class ImageController extends Controller
     }
 
     /**
-     * Update image in storage (or create a new one if it doesn't exist)
+     * Update or create an image in storage
+     *
+     * Accepts an uploaded image file and a target filename. The image is stored
+     * in the public images directory with the specified filename. If an image
+     * with that filename already exists, it will be replaced.
+     *
+     * The filename parameter may include timestamp query strings (for cache busting)
+     * which are stripped before saving.
+     *
+     * @param Request $request Contains image file and filename
+     * @return JsonResponse The saved filename
+     *
+     * @source File: storage/app/public/images/{filename} (writes)
      */
     public function update(Request $request): JsonResponse
     {
@@ -63,7 +89,11 @@ class ImageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage
+     *
+     * @param int $id
+     * @return void
+     * @source None (empty method)
      */
     public function destroy(int $id)
     {

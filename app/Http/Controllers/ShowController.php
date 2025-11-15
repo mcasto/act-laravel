@@ -12,7 +12,15 @@ use Illuminate\Http\Request;
 class ShowController extends Controller
 {
     /**
-     * Utility function to determine start and end of current season (runs from Oct 1 - August 31)
+     * Determine start and end dates of current theater season
+     *
+     * Theater seasons run from October 1 to August 31. This method calculates
+     * which season we're currently in based on the current date and returns
+     * the start and end dates of that season.
+     *
+     * @return array Start and end dates as strings ['start' => 'Y-m-d', 'end' => 'Y-m-d']
+     *
+     * @source None (utility method)
      */
     private function getTheaterSeasonDates(): array
     {
@@ -48,7 +56,15 @@ class ShowController extends Controller
     }
 
     /**
-     * Ensure poster & slug are unique for undeleted records
+     * Check if poster and slug are unique among non-deleted records
+     *
+     * Validates that the poster and slug values don't already exist
+     * in the database for records that haven't been soft-deleted.
+     *
+     * @param array $rec Record data containing 'poster' and 'slug'
+     * @return array Boolean values for uniqueness ['poster' => bool, 'slug' => bool]
+     *
+     * @source Database Model: Show (reads for uniqueness check)
      */
     private function checkUniques($rec): array
     {
@@ -63,6 +79,13 @@ class ShowController extends Controller
 
     /**
      * Delete a show
+     *
+     * Soft-deletes a show record by ID.
+     *
+     * @param int $id The show ID to delete
+     * @return JsonResponse The deleted show data or error message
+     *
+     * @source Database Model: Show (deletes)
      */
     public function destroy(int $id): JsonResponse
     {
@@ -77,7 +100,14 @@ class ShowController extends Controller
     }
 
     /**
-     * Get shows in current season
+     * Get shows in the current theater season
+     *
+     * Retrieves all shows that have performances scheduled within the
+     * current theater season (October 1 - August 31).
+     *
+     * @return JsonResponse Shows with performances in current season
+     *
+     * @source Database Model: Show (reads with performances relationship)
      */
     public function seasonShows(): JsonResponse
     {
@@ -91,7 +121,17 @@ class ShowController extends Controller
     }
 
     /**
-     * Get shows for home page
+     * Get shows for home page display
+     *
+     * Retrieves the current/next show with full details and buttons,
+     * plus a list of all other upcoming shows. The current show includes
+     * audition data, performances, and standard buttons for ticket purchase.
+     *
+     * @return JsonResponse Current show and array of upcoming shows
+     *
+     * @source Database Models:
+     *   - Show (reads with audition and performances relationships)
+     *   - StandardButton (reads for 'show' type)
      */
     public function homeShows(): JsonResponse
     {
@@ -107,11 +147,24 @@ class ShowController extends Controller
         // first show (current or next)
         $currentShow = array_shift($shows);
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
-        $currentShow['buttons'] = StandardButton::orderBy('sort_order')->get();
+        $currentShow['buttons'] = StandardButton::where('type', 'show')
+            ->orderBy('sort_order')
+            ->get();
 
         return response()->json(['currentShow' => $currentShow, 'upcomingShows' => $shows]);
     }
 
+    /**
+     * Update tentative status for a show
+     *
+     * Updates whether a show is marked as tentative (not yet confirmed).
+     *
+     * @param int $id The show ID to update
+     * @param Request $request Contains 'tentative' boolean value
+     * @return JsonResponse The request data
+     *
+     * @source Database Model: Show (updates)
+     */
     public function updateTentative(int $id, Request $request)
     {
         $show = Show::find($id)->update(['tentative' => $request->tentative]);
@@ -121,6 +174,13 @@ class ShowController extends Controller
 
     /**
      * Get all shows
+     *
+     * Retrieves all shows with their performances (including ticket data)
+     * and gallery images, ordered by ticket sales start date (most recent first).
+     *
+     * @return JsonResponse All shows with related data
+     *
+     * @source Database Model: Show (reads with performances.tickets and galleryImages relationships)
      */
     public function index(): JsonResponse
     {
@@ -130,7 +190,15 @@ class ShowController extends Controller
     }
 
     /**
-     * Get specific show by id
+     * Get specific show by ID
+     *
+     * Retrieves detailed information for a single show including performances
+     * with ticket data and gallery images.
+     *
+     * @param int $id The show ID to retrieve
+     * @return JsonResponse Show data with relationships
+     *
+     * @source Database Model: Show (reads with performances.tickets and galleryImages relationships)
      */
     public function show(int $id): JsonResponse
     {
@@ -138,7 +206,15 @@ class ShowController extends Controller
     }
 
     /**
-     * Return template for new show record
+     * Return template data for creating a new show
+     *
+     * Provides default values for creating a new show record, including
+     * the current ticket price from site configuration and calculated
+     * default ticket sales start date (6 weeks from now).
+     *
+     * @return JsonResponse Template object with default values
+     *
+     * @source Database Model: SiteConfig (reads latest config for ticket_price)
      */
     public function newShow(): JsonResponse
     {
@@ -158,7 +234,15 @@ class ShowController extends Controller
     }
 
     /**
-     * Create new show record
+     * Create a new show record
+     *
+     * Validates show data, checks that poster and slug are unique,
+     * and creates a new show record.
+     *
+     * @param Request $request Contains show data to validate and create
+     * @return JsonResponse Created show or validation errors
+     *
+     * @source Database Model: Show (creates)
      */
     public function create(Request $request): JsonResponse
     {
@@ -192,7 +276,15 @@ class ShowController extends Controller
     }
 
     /**
-     * Update show record
+     * Update an existing show record
+     *
+     * Validates show data and updates the specified show.
+     * Validates the show ID exists before attempting update.
+     *
+     * @param Request $request Contains show data including 'id'
+     * @return JsonResponse Updated show data or validation/error messages
+     *
+     * @source Database Model: Show (updates)
      */
     public function update(Request $request): JsonResponse
     {

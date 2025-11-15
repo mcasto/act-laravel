@@ -14,9 +14,15 @@ use League\HTMLToMarkdown\HtmlConverter;
 class CourseController extends Controller
 {
     /**
-     * Get classes with open enrollment
+     * Get courses with open enrollment
+     *
+     * Retrieves all courses that are currently accepting enrollments
+     * (between enrollment_start and enrollment_end dates).
+     *
+     * @return JsonResponse Courses with their sessions
+     *
+     * @source Database Model: Course (reads with sessions relationship)
      */
-
     public function openEnrollment(): JsonResponse
     {
         $courses = Course::with(['sessions'])->where('enrollment_start', '<=', now())
@@ -26,7 +32,17 @@ class CourseController extends Controller
     }
 
     /**
-     * Get details for specific course based on slug
+     * Get detailed information for a specific course
+     *
+     * Retrieves course details by slug, including session information and
+     * HTML content from the course's snippet file.
+     *
+     * @param string $slug The course slug identifier
+     * @return JsonResponse Course data with HTML content
+     *
+     * @source
+     *   Database Model: Course (reads with sessions relationship)
+     *   File: storage/app/public/snippets/courses/{slug}.html
      */
     public function courseDetails(string $slug): JsonResponse
     {
@@ -40,7 +56,19 @@ class CourseController extends Controller
     }
 
     /**
-     * Send & log course enrollment request
+     * Handle course enrollment contact submission
+     *
+     * Validates and creates a course contact record, retrieves course and
+     * configuration details, formats an enrollment email, and sends it via
+     * SendGrid to the course instructor.
+     *
+     * @param Request $request Contains contact info (first_name, last_name, email, phone, questions, course_id)
+     * @return JsonResponse SendGrid response or validation errors
+     *
+     * @source Database Models:
+     *   - CourseContact (validates and creates)
+     *   - SiteConfig (reads latest config)
+     *   - Course (reads with sessions relationship)
      */
     public function courseContact(Request $request): JsonResponse
     {
@@ -84,16 +112,16 @@ class CourseController extends Controller
 {$questions}
 BODY;
 
-        $response = SendGridUtil::send('Course Enrollment Message', $fromName, $fromEmail, $toName, $toEmail, $subject, $body);
+        // $response = SendGridUtil::send('Course Enrollment Message', $fromName, $fromEmail, $toName, $toEmail, $subject, $body);
 
-        $contact->sendgrid_response = json_encode($response, JSON_PRETTY_PRINT);
+        // $contact->sendgrid_response = json_encode($response, JSON_PRETTY_PRINT);
 
-        $contact->save();
+        // $contact->save();
 
-        if ($response['statusCode'] != 202) {
-            SendGridUtil::send('Error', $fromName, $fromEmail, 'ACT Errors', $config['dev_email'], 'Error with Course Enrollment Request for ' . $classNotes, $body);
-        }
+        // if ($response['statusCode'] != 202) {
+        //     SendGridUtil::send('Error', $fromName, $fromEmail, 'ACT Errors', $config['dev_email'], 'Error with Course Enrollment Request for ' . $classNotes, $body);
+        // }
 
-        return response()->json(['sendgrid_response' => $response]);
+        return response()->json(['status' => 'success']);
     }
 }

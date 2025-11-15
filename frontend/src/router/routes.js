@@ -33,14 +33,26 @@ const routes = [
         meta: { nav: true },
       },
       {
-        name: "Donate",
-        path: "donate",
-        component: () => import("pages/SnippetPage.vue"),
+        name: "angel",
+        path: "angel",
+        component: () => import("pages/AngelPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
-          await store.getSnippet(to.meta.slug);
+          store.angelConfig = await callApi({ path: "/angel", method: "get" });
         },
         meta: { nav: false, global: true, sortOrder: 1, slug: "donate" },
+      },
+      {
+        name: "support-us",
+        path: "support-us",
+        component: () => import("pages/SupportUs.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          store.supportUsConfig = await callApi({
+            path: "/standard-buttons/support-us",
+            method: "get",
+          });
+        },
       },
       {
         name: "Audition",
@@ -154,6 +166,17 @@ const routes = [
           await store.getGallery();
         },
       },
+      {
+        name: "Our ACT Angels",
+        path: "our-act-angels",
+        component: () => import("pages/OurAngels.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          store.ourAngels = await callApi({ path: "/angels", method: "get" });
+        },
+        meta: { nav: true },
+      },
+
       {
         name: "Show Details",
         path: "show-details/:slug",

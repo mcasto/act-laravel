@@ -12,7 +12,15 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Display the user's profile form
+     *
+     * Returns a view with the authenticated user's profile data
+     * for editing purposes.
+     *
+     * @param Request $request The authenticated request
+     * @return View The profile edit view
+     *
+     * @source None (returns view with authenticated user)
      */
     public function edit(Request $request): View
     {
@@ -22,7 +30,16 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's profile information
+     *
+     * Validates and updates the authenticated user's profile data.
+     * If the email is changed, the email_verified_at field is reset to null
+     * to require re-verification.
+     *
+     * @param ProfileUpdateRequest $request Contains validated profile data
+     * @return RedirectResponse Redirects back to profile edit page with success status
+     *
+     * @source Database: Authenticated User (updates)
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -38,7 +55,15 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Delete the user's account
+     *
+     * Validates the user's password, logs them out, deletes their account,
+     * invalidates their session, and regenerates the CSRF token.
+     *
+     * @param Request $request The authenticated request with password confirmation
+     * @return RedirectResponse Redirects to home page after account deletion
+     *
+     * @source Database: Authenticated User (deletes)
      */
     public function destroy(Request $request): RedirectResponse
     {

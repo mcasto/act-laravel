@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Storage;
 class SnippetController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
+     *
+     * @return void
+     * @source None (empty method)
      */
     public function index()
     {
@@ -17,7 +20,11 @@ class SnippetController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
+     *
+     * @param Request $request
+     * @return void
+     * @source None (empty method)
      */
     public function store(Request $request)
     {
@@ -25,7 +32,15 @@ class SnippetController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified HTML snippet
+     *
+     * Retrieves an HTML snippet file by slug from the snippets directory.
+     * Snippets are reusable HTML content blocks stored as individual files.
+     *
+     * @param string $slug The snippet identifier (filename without .html extension)
+     * @return JsonResponse Object containing the HTML content
+     *
+     * @source File: storage/app/public/snippets/{slug}.html
      */
     public function show(string $slug): JsonResponse
     {
@@ -34,7 +49,12 @@ class SnippetController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     * @source None (empty method)
      */
     public function update(Request $request, int $id)
     {
@@ -42,7 +62,11 @@ class SnippetController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage
+     *
+     * @param int $id
+     * @return void
+     * @source None (empty method)
      */
     public function destroy(int $id)
     {

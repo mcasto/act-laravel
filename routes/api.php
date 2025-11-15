@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AngelController;
+use App\Http\Controllers\AngelLevelController;
 use App\Http\Controllers\AnnouncementBannerController;
 use App\Http\Controllers\AuditionContactController;
 use App\Http\Controllers\AuditionController;
@@ -12,18 +14,16 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\ShowController;
-use App\Http\Controllers\ShowPurchaseController;
 use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\SnippetController;
-use App\Http\Controllers\StandardButtonController;
+use App\Http\Controllers\StandardButtonsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
 use App\Models\PermissionLevel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -208,3 +208,15 @@ Route::get('/contacts', [ContactController::class, 'index'])
     ->middleware('auth:sanctum');
 Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
     ->middleware('auth:sanctum');
+
+/**
+ * Standard Button Routes
+ */
+Route::get('/standard-buttons/{type}', [StandardButtonsController::class, 'index']);
+
+
+/**
+ * Angel Routes
+ */
+Route::get('/angel', [AngelController::class, 'index']);
+Route::get('/angels', [AngelLevelController::class, 'index']);

@@ -13,7 +13,21 @@ use Illuminate\Http\Request;
 class AuditionContactController extends Controller
 {
     /**
-     * Create audition contact
+     * Create an audition contact submission
+     *
+     * Validates and creates a contact record for someone interested in auditioning
+     * for a specific role. Retrieves related audition and show information,
+     * prepares an email notification to the director, and stores the contact
+     * with the SendGrid response.
+     *
+     * @param Request $request Contains contact info (name, email, phone) and role details
+     * @return JsonResponse The created audition contact record or validation errors
+     *
+     * @source Database Models:
+     *   - Audition (reads)
+     *   - Show (reads)
+     *   - SiteConfig (reads latest config)
+     *   - AuditionContact (creates)
      */
     public function create(Request $request): JsonResponse
     {

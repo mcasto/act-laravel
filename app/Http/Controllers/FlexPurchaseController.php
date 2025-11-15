@@ -9,6 +9,18 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class FlexPurchaseController extends Controller
 {
+    /**
+     * Get flex purchase configuration
+     *
+     * Retrieves the flex purchase configuration from JSON file storage
+     * and includes all standard buttons ordered by sort_order.
+     *
+     * @return array Configuration data with buttons
+     *
+     * @source
+     *   File: storage/app/flex-purchase-config.json
+     *   Database Model: StandardButton (reads ordered by sort_order)
+     */
     public function show()
     {
         $config = json_decode(Storage::disk('local')
@@ -19,6 +31,22 @@ class FlexPurchaseController extends Controller
         return $config;
     }
 
+    /**
+     * Update flex purchase configuration
+     *
+     * Performs multiple operations:
+     * 1. Cleans up temporary image files older than 24 hours
+     * 2. Processes and stores a new image if provided
+     * 3. Updates the configuration JSON file
+     *
+     * @param Request $request Contains config data and optional image path
+     * @return array Status and updated configuration
+     *
+     * @source Files:
+     *   - storage/app/public/flex-image-temp/* (reads and deletes old files)
+     *   - storage/app/public/flex-image.jpg (writes)
+     *   - storage/app/flex-purchase-config.json (writes)
+     */
     public function update(Request $request)
     {
         // Clean up flex-image-temp directory by removing files that are older than 24 hours
@@ -54,6 +82,18 @@ class FlexPurchaseController extends Controller
         return ['status' => 'success', 'config' => $config];
     }
 
+    /**
+     * Upload temporary image for flex purchase
+     *
+     * Accepts an uploaded image file, validates it, and stores it
+     * in a temporary location. The path is returned to be used
+     * in a subsequent update() call.
+     *
+     * @param Request $request Contains the image file
+     * @return array Status and temporary file path or error message
+     *
+     * @source File: storage/app/public/flex-image-temp/{filename} (writes)
+     */
     public function image(Request $request)
     {
         // Get the file

@@ -72,9 +72,15 @@ const classLink = computed(() => {
 
 const alwaysVisibleLinks = [
   {
-    label: "Donate",
-    url: "/donate",
+    label: "Support Us",
+    url: "/support-us",
     icon: "favorite",
+    color: "green-10",
+  },
+  {
+    label: "Be An Angel",
+    url: "/angel",
+    icon: "img:/images/angel.png",
     color: "positive",
   },
   {

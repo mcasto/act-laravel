@@ -44,6 +44,7 @@ export const useStore = defineStore(
   () => {
     const state = {
       admin: ref({}),
+      angelConfig: ref(null),
       announcement: ref(false),
       audition: ref(null),
       buttons: ref(null),
@@ -53,9 +54,11 @@ export const useStore = defineStore(
       flex: ref(null),
       gallery: ref(null),
       home: ref(null),
+      ourAngels: ref(null),
       show: ref(null),
       skills: ref([]),
       snippets: ref({}),
+      supportUsConfig: ref(null),
       users: ref(null),
     };
     const getters = { adminRoute: computed(adminRoute) };

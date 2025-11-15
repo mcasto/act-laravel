@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Log;
 class PerformanceController extends Controller
 {
     /**
-     * $request->input('performances') = an array of performances
+     * Upsert multiple performance records
      *
-     * In the frontend, since the user might delete an existing record *or* add one then delete it before submitting, I just wrote it so it adds a "deleted" property to the record object.
+     * Handles batch creation, updates, and deletions of performance records.
+     * Records marked with 'deleted' property are removed from the database.
+     * Records without 'deleted' property are created or updated based on
+     * whether they have an 'id' field.
+     *
+     * In the frontend, users can delete existing records or add new ones and
+     * then delete them before submitting. The 'deleted' property tracks these
+     * operations without immediately affecting the database.
+     *
+     * @param Request $request Contains 'performances' array with performance data
+     * @return JsonResponse Count of deleted and upserted records
+     *
+     * @source Database Model: Performance (creates, updates, deletes)
      */
     public function upsert(Request $request): JsonResponse
     {
@@ -57,6 +69,19 @@ class PerformanceController extends Controller
         return response()->json(['deleted' => count($deleteRecs), 'upserted' => count($upserts)]);
     }
 
+    /**
+     * Update Fixr link for a performance
+     *
+     * Placeholder method that currently only logs the request.
+     * Intended for updating the Fixr ticketing link associated with a performance.
+     *
+     * @param int $id The performance ID
+     * @param Request $request Contains the Fixr link data
+     * @return void
+     *
+     * @source None (only logs)
+     * @todo Implement actual Fixr link update functionality
+     */
     public function updateFixrLink(int $id, Request $request)
     {
         logger()->info('update-fixr-link', ['id' => $id, 'request' => $request->all()]);

@@ -108,6 +108,7 @@ const performances = computed(() => {
 });
 
 const paymentMethods = computed(() => {
+  console.log({ show: show.value });
   return [
     {
       label: show.value.fixrLabel,

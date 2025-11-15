@@ -11,7 +11,15 @@ use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
     /**
-     * Handle user login and return API token.
+     * Handle user login and return API token
+     *
+     * Validates user credentials, generates a Sanctum API token,
+     * and returns the user data with permissions and token.
+     *
+     * @param Request $request Contains email and password
+     * @return JsonResponse User data with token or error message
+     *
+     * @source Database Model: User (reads with permissions.permissionLevel relationship)
      */
     public function login(Request $request): JsonResponse
     {
@@ -35,6 +43,17 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    /**
+     * Refresh user permissions
+     *
+     * Retrieves the latest permission data for the authenticated user.
+     * Useful when permissions have been updated and need to be reloaded.
+     *
+     * @param Request $request The authenticated request
+     * @return \Illuminate\Database\Eloquent\Collection User's current permissions
+     *
+     * @source Database Model: User (reads with permissions.permissionLevel relationship)
+     */
     public function refreshPermissions(Request $request)
     {
         $user = User::with('permissions.permissionLevel')->find($request->user()->id);
@@ -42,7 +61,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle user logout and revoke tokens.
+     * Handle user logout and revoke tokens
+     *
+     * Deletes all API tokens for the authenticated user, effectively
+     * logging them out from all sessions.
+     *
+     * @param Request $request The authenticated request
+     * @return JsonResponse Success message
+     *
+     * @source Database: User tokens (deletes)
      */
     public function logout(Request $request): JsonResponse
     {
@@ -51,7 +78,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Return logged-in user
+     * Return the authenticated user
+     *
+     * Simple passthrough that returns the currently authenticated user
+     * from the request object.
+     *
+     * @param Request $request The authenticated request
+     * @return JsonResponse The authenticated user
+     *
+     * @source None (returns authenticated user from request)
      */
     public function getUser(Request $request): JsonResponse
     {

@@ -13,7 +13,14 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get all users with their permissions
+     *
+     * Retrieves all user records including their permission relationships
+     * and permission level details.
+     *
+     * @return JsonResponse All users with permissions
+     *
+     * @source Database Model: User (reads with permissions.permissionlevel relationship)
      */
     public function index(): JsonResponse
     {
@@ -21,7 +28,19 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new user with full permissions
+     *
+     * Validates and creates a new user record, then automatically creates
+     * UserPermission records granting 'full' access for all existing
+     * permission levels.
+     *
+     * @param Request $request Contains user data (name, email, password)
+     * @return JsonResponse The created user data or validation errors
+     *
+     * @source Database Models:
+     *   - User (creates)
+     *   - PermissionLevel (reads all)
+     *   - UserPermission (creates for each permission level)
      */
     public function store(Request $request): JsonResponse
     {
@@ -44,7 +63,16 @@ class UserController extends Controller
     }
 
     /**
-     * Change password
+     * Change a user's password
+     *
+     * Validates the new password and updates it for the specified user.
+     * The password is automatically hashed before storage.
+     *
+     * @param Request $request Contains 'password' field
+     * @param int $id The user ID to update
+     * @return array Status and message
+     *
+     * @source Database Model: User (updates password)
      */
     public function changePassword(Request $request, int $id)
     {
@@ -70,7 +98,16 @@ class UserController extends Controller
     }
 
     /**
-     * Update user
+     * Update user information
+     *
+     * Validates and updates a user's name and email. The email uniqueness
+     * check excludes the current user's existing email.
+     *
+     * @param Request $request Contains 'name' and 'email'
+     * @param int $id The user ID to update
+     * @return JsonResponse Status message or validation errors
+     *
+     * @source Database Model: User (updates)
      */
     public function update(Request $request, int $id): JsonResponse
     {
@@ -98,7 +135,14 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a user
+     *
+     * Removes a user record from the database by ID.
+     *
+     * @param int $id The user ID to delete
+     * @return JsonResponse The deleted user ID or error message
+     *
+     * @source Database Model: User (deletes)
      */
     public function destroy(int $id): JsonResponse
     {

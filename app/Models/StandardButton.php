@@ -26,13 +26,14 @@ class StandardButton extends Model
     public function getPopupTextAttribute()
     {
         $key = $this->attributes['key'] ?? null;
+        $type = $this->attributes['type'] ?? null;
 
         if (!$key) {
             return null;
         }
 
         try {
-            return Storage::disk('local')->get("standard-buttons/{$key}.html") ?: null;
+            return Storage::disk('local')->get("standard-buttons/{$key}-{$type}.html") ?: null;
         } catch (\Exception $e) {
             return null;
         }
@@ -44,17 +45,18 @@ class StandardButton extends Model
     public function setPopupTextAttribute($value)
     {
         $key = $this->attributes['key'] ?? $this->key;
+        $type = $this->attributes['type'] ?? $this->type;
 
         if (!$key) {
             return;
         }
 
         if ($value !== null) {
-            Storage::disk('local')->put("standard-buttons/{$key}.html", $value);
+            Storage::disk('local')->put("standard-buttons/{$key}-{$type}.html", $value);
         } else {
             // Delete the file if popupText is set to null
             try {
-                Storage::disk('local')->delete("standard-buttons/{$key}.html");
+                Storage::disk('local')->delete("standard-buttons/{$key}-{$type}.html");
             } catch (\Exception $e) {
                 // File doesn't exist or can't be deleted, ignore
             }
@@ -87,9 +89,10 @@ class StandardButton extends Model
         // Delete file when model is deleted
         static::deleting(function ($model) {
             $key = $model->key;
+            $type = $model->type;
             if ($key) {
                 try {
-                    Storage::disk('local')->delete("standard-buttons/{$key}.html");
+                    Storage::disk('local')->delete("standard-buttons/{$key}->{$type}.html");
                 } catch (\Exception $e) {
                     // Ignore if file doesn't exist
                 }

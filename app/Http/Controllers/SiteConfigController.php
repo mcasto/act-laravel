@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Validator;
 class SiteConfigController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
+     *
+     * @return void
+     * @source None (empty method)
      */
     public function index()
     {
@@ -20,7 +23,10 @@ class SiteConfigController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource
+     *
+     * @return void
+     * @source None (empty method)
      */
     public function create()
     {
@@ -28,7 +34,19 @@ class SiteConfigController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new site configuration
+     *
+     * Creates a new site configuration record with ticket email, contact email,
+     * dev email, sold out target, and ticket price. Also updates associated
+     * standard buttons if provided. The configuration table is insert-only,
+     * so this creates a new version rather than updating existing records.
+     *
+     * @param Request $request Contains 'config' object and optional 'buttons' array
+     * @return JsonResponse Created config and count of updated buttons, or validation errors
+     *
+     * @source Database Models:
+     *   - SiteConfig (creates)
+     *   - StandardButton (updates via updateButtons method)
      */
     public function store(Request $request): JsonResponse
     {
@@ -75,7 +93,16 @@ class SiteConfigController extends Controller
     }
 
     /**
-     * Update multiple buttons
+     * Update multiple standard buttons
+     *
+     * Protected helper method that updates button records including their
+     * popup text. Handles the popupText field specially as it may involve
+     * file operations through the model's mutator.
+     *
+     * @param array $buttons Array of button data with id, label, key, sort_order, popupText
+     * @return void
+     *
+     * @source Database Model: StandardButton (updates)
      */
     protected function updateButtons(array $buttons): void
     {
@@ -101,9 +128,17 @@ class SiteConfigController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     * Retrieves the most recent config
-     * Table is insert-only, so historical configurations are retained
+     * Display the most recent site configuration
+     *
+     * Retrieves the latest site configuration record along with all
+     * standard buttons ordered by their sort order. The configuration
+     * table is insert-only, so historical configurations are retained.
+     *
+     * @return JsonResponse Latest config and all buttons
+     *
+     * @source Database Models:
+     *   - SiteConfig (reads latest)
+     *   - StandardButton (reads all ordered by sort_order)
      */
     public function show(): JsonResponse
     {
@@ -114,7 +149,11 @@ class SiteConfigController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource
+     *
+     * @param int $id
+     * @return void
+     * @source None (empty method)
      */
     public function edit(int $id)
     {
@@ -122,12 +161,20 @@ class SiteConfigController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage
+     *
+     * @param Request $request
+     * @return void
+     * @source None (empty method)
      */
     public function update(Request $request) {}
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage
+     *
+     * @param int $id
+     * @return void
+     * @source None (empty method)
      */
     public function destroy(int $id)
     {

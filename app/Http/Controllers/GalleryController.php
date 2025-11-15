@@ -10,6 +10,17 @@ use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
+    /**
+     * Get all shows with gallery images
+     *
+     * Retrieves shows that have at least one gallery image, ordered by
+     * ticket sales start date (most recent first), including performances
+     * and gallery image data.
+     *
+     * @return JsonResponse Shows with performances and gallery images
+     *
+     * @source Database Model: Show (reads with performances and galleryImages relationships)
+     */
     public function index(): JsonResponse
     {
         $shows = Show::with('performances', 'galleryImages')
@@ -21,7 +32,17 @@ class GalleryController extends Controller
     }
 
     /**
-     * Store iamges for a show
+     * Store gallery images for a show
+     *
+     * Accepts one or more image uploads, stores them in temporary storage,
+     * and creates gallery image records associated with a show.
+     *
+     * @param Request $request Contains galleryUpload file(s) and show_id
+     * @return JsonResponse Status and array of created image records
+     *
+     * @source
+     *   Database Model: GalleryImage (creates)
+     *   File: storage/app/public/gallery-temp/{filename} (writes)
      */
     public function store(Request $request)
     {
@@ -55,6 +76,18 @@ class GalleryController extends Controller
         ]);
     }
 
+    /**
+     * Delete a gallery image
+     *
+     * Removes a specific gallery image record from the database.
+     * The actual image file is not deleted by this method.
+     *
+     * @param Request $request The request object (unused)
+     * @param int $id The gallery image ID to delete
+     * @return array Status message
+     *
+     * @source Database Model: GalleryImage (deletes)
+     */
     public function delete(Request $request, int $id)
     {
         try {
@@ -69,6 +102,17 @@ class GalleryController extends Controller
         }
     }
 
+    /**
+     * Update gallery image sort order
+     *
+     * Updates the sort_order field for multiple gallery images.
+     * Used for reordering images in the gallery display.
+     *
+     * @param Request $request Contains array of image objects with id and sort_order
+     * @return array Status message
+     *
+     * @source Database Model: GalleryImage (updates)
+     */
     public function update(Request $request)
     {
         foreach ($request->all() as $rec) {

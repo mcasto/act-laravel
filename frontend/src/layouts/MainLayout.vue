@@ -34,7 +34,6 @@
 <script setup>
 import HeaderPartial from "components/HeaderPartial.vue";
 import NavPartial from "components/NavPartial.vue";
-import AdminNav from "src/components/AdminNav.vue";
 import GlobalItems from "src/components/GlobalItems.vue";
 import { useStore } from "src/stores/store";
 import { computed, onMounted } from "vue";

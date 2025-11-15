@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
+    /**
+     * Store a contact form submission
+     *
+     * Validates contact form data, creates a contact record in the database,
+     * and sends an email notification to the configured contact address.
+     *
+     * @param Request $request Contains name, email, subject, body
+     * @return array Status and message
+     *
+     * @source Database Model: Contact (creates)
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -40,6 +51,20 @@ class ContactController extends Controller
         }
     }
 
+    /**
+     * Create a contact submission (legacy method)
+     *
+     * Alternative contact creation method that uses SendGrid for email delivery
+     * instead of Laravel's mail system. Validates data, creates contact record,
+     * and sends email using SendGrid utility.
+     *
+     * @param Request $request Contains name, email, subject, body
+     * @return JsonResponse Contact details and email recipients or validation errors
+     *
+     * @source Database Models:
+     *   - SiteConfig (reads latest config)
+     *   - Contact (creates)
+     */
     public function create(Request $request): JsonResponse
     {
         $config    = SiteConfig::orderByDesc('created_at')->first()->toArray();
@@ -65,11 +90,30 @@ class ContactController extends Controller
         return response()->json($validated);
     }
 
+    /**
+     * Get all contact submissions
+     *
+     * Retrieves all contact form submissions from the database.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection All contact records
+     *
+     * @source Database Model: Contact (reads all)
+     */
     public function index()
     {
         return Contact::all();
     }
 
+    /**
+     * Delete a contact submission
+     *
+     * Removes a specific contact record from the database by ID.
+     *
+     * @param int $id The contact ID to delete
+     * @return array Status and message
+     *
+     * @source Database Model: Contact (deletes)
+     */
     public function destroy(int $id)
     {
         $contact = Contact::find($id);
