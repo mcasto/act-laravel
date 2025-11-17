@@ -8,6 +8,7 @@ use App\Models\StandardButton;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ShowController extends Controller
 {
@@ -135,6 +136,10 @@ class ShowController extends Controller
      */
     public function homeShows(): JsonResponse
     {
+        // get site config
+        $siteConfig = SiteConfig::latest()->first();
+        $price = $siteConfig->ticket_price;
+
         // get upcoming shows
         $shows = Show::with('audition')
             ->with("performances")
@@ -147,9 +152,15 @@ class ShowController extends Controller
         // first show (current or next)
         $currentShow = array_shift($shows);
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
-        $currentShow['buttons'] = StandardButton::where('type', 'show')
-            ->orderBy('sort_order')
-            ->get();
+        $currentShow['buttons'] = StandardButton::orderBy('sort_order')
+            ->get()
+            ->map(function ($rec) use ($price) {
+                $rec->popupText = view("standard-buttons.{$rec->key}", [
+                    'price' =>  "$" . $price
+                ])->render();
+
+                return $rec;
+            });
 
         return response()->json(['currentShow' => $currentShow, 'upcomingShows' => $shows]);
     }

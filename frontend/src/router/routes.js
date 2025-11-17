@@ -38,7 +38,7 @@ const routes = [
         component: () => import("pages/AngelPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
-          store.angelConfig = await callApi({ path: "/angel", method: "get" });
+          store.angelConfig = await callApi({ path: "/angels", method: "get" });
         },
         meta: { nav: false, global: true, sortOrder: 1, slug: "donate" },
       },
@@ -49,7 +49,7 @@ const routes = [
         beforeEnter: async () => {
           const store = useStore();
           store.supportUsConfig = await callApi({
-            path: "/standard-buttons/support-us",
+            path: "/support-us",
             method: "get",
           });
         },
@@ -255,6 +255,22 @@ const routes = [
               nav: true,
               dash: true,
               order: 15,
+            },
+          },
+          {
+            name: "Our Angels",
+            path: "our-angels",
+            component: () => import("src/pages/AdminOurAngels.vue"),
+            beforeEnter: (to, from) => {
+              // const store = useStore();
+              // store.getAllShows();
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 55,
             },
           },
           {

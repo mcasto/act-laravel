@@ -12,28 +12,6 @@ use Illuminate\Support\Facades\Validator;
 class SiteConfigController extends Controller
 {
     /**
-     * Display a listing of the resource
-     *
-     * @return void
-     * @source None (empty method)
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource
-     *
-     * @return void
-     * @source None (empty method)
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a new site configuration
      *
      * Creates a new site configuration record with ticket email, contact email,
@@ -106,6 +84,8 @@ class SiteConfigController extends Controller
      */
     protected function updateButtons(array $buttons): void
     {
+        // mc-todo: make sure this works properly (probably needs fixed)
+
         foreach ($buttons as $buttonData) {
             // Find the button by ID
             $button = StandardButton::find($buttonData['id']);

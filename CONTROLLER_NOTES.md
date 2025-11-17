@@ -5,11 +5,6 @@
 |--------|------|--------|
 | `index()` | **File** | `storage/app/angel.config.json` |
 
-## AngelLevelController
-| Method | Type | Source |
-|--------|------|--------|
-| `index()` | **Both** | Models: `Angel`, `AngelLevel` (with `angels` relationship) + File: `storage/app/angels.config.json` |
-
 ## AnnouncementBannerController
 | Method | Type | Source |
 |--------|------|--------|
@@ -76,7 +71,7 @@
 ## FlexPurchaseController
 | Method | Type | Source |
 |--------|------|--------|
-| `show()` | **Both** | File: `storage/app/flex-purchase-config.json` + Model: `StandardButton` |
+| `show()` | **Both** | File: `storage/app/flex-purchase-config.json` + Model: `StandardButton` + Views: `resources/views/standard-buttons/{key}.blade.php` |
 | `update()` | **File** | Files: `storage/app/public/flex-image-temp/*`, `storage/app/public/flex-image.jpg`, `storage/app/flex-purchase-config.json` |
 | `image()` | **File** | File: `storage/app/public/flex-image-temp/{filename}` (writes) |
 
@@ -116,7 +111,7 @@
 |--------|------|--------|
 | `destroy()` | **Database** | Model: `Show` (deletes) |
 | `seasonShows()` | **Database** | Model: `Show` (with `performances` relationship) |
-| `homeShows()` | **Database** | Models: `Show` (with `audition`, `performances` relationships), `StandardButton` |
+| `homeShows()` | **Both** | Models: `Show` (with `audition`, `performances` relationships), `SiteConfig`, `StandardButton` + Views: `resources/views/standard-buttons/{key}.blade.php` |
 | `updateTentative()` | **Database** | Model: `Show` (updates) |
 | `index()` | **Database** | Model: `Show` (with `performances.tickets`, `galleryImages` relationships) |
 | `show()` | **Database** | Model: `Show` (with `performances.tickets`, `galleryImages` relationships) |
@@ -152,7 +147,12 @@
 ## StandardButtonsController
 | Method | Type | Source |
 |--------|------|--------|
-| `index()` | **Database** | Model: `StandardButton` |
+| `index()` | **Both** | Model: `StandardButton` (reads ordered by sort_order) + File: `storage/app/standard-buttons/{key}-{type}.html` (reads for each button) |
+
+## SupportUsController
+| Method | Type | Source |
+|--------|------|--------|
+| `index()` | **Both** | File: `storage/app/support-us.config.json` + Model: `StandardButton` + Views: `resources/views/standard-buttons/{key}.blade.php` |
 
 ## UserController
 | Method | Type | Source |
@@ -173,16 +173,17 @@
 | `update()` | **Database** | Models: `Volunteer`, `VolunteerSkill` (updates, deletes, creates) |
 
 ## Summary Statistics
-- **Total Methods**: 72 active methods (excluding empty methods)
-- **Database Operations**: 53 methods
+- **Total Methods**: 73 active methods (excluding empty methods)
+- **Database Operations**: 51 methods
 - **File Operations**: 13 methods
-- **Both Database & File**: 2 methods
+- **Both Database & File**: 5 methods
 - **Neither/Passthrough/Empty**: 4 methods
 
 ### Database Access Breakdown
 - **Models Used**: `User`, `Audition`, `Show`, `SiteConfig`, `Contact`, `Course`, `Patron`, `FixrWebhookResponse`, `StandardButton`, `GalleryImage`, `Performance`, `Skill`, `Volunteer`, `VolunteerSkill`, `PermissionLevel`, `UserPermission`, `CourseContact`, `AuditionContact`
 
 ### File Access Breakdown
-- **Configuration Files**: `angel.config.json`, `announcement-banner.json`, `flex-purchase-config.json`
-- **Content Files**: `snippets/courses/{slug}.html`, `snippets/{slug}.html`
+- **Configuration Files**: `angel.config.json`, `announcement-banner.json`, `flex-purchase-config.json`, `support-us.config.json`
+- **Content Files**: `snippets/courses/{slug}.html`, `snippets/{slug}.html`, `standard-buttons/{key}-{type}.html`
 - **Image Files**: `gallery-temp/*`, `flex-image-temp/*`, `flex-image.jpg`, `images/{filename}`
+- **View Templates**: `resources/views/standard-buttons/{key}.blade.php` (rendered dynamically)

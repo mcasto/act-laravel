@@ -12,7 +12,9 @@
       v-for="level of config.levels"
       :key="level.id"
     >
-      <div class="text-bold q-mt-lg" v-html="level.label"></div>
+      <div class="text-bold q-mt-lg">
+        {{ level.label }} ({{ level.min_amount_formatted }})
+      </div>
 
       <q-list dense bordered separator class="q-mx-lg">
         <q-item

@@ -42,8 +42,13 @@
         enter the number of $25.00 donations you’d like to make.
       </p>
 
-      <div class="q-mt-md text-red-10 text-h6">
-        <purchase-options :buttons="store.supportUsConfig"></purchase-options>
+      <div class="q-mt-md">
+        <purchase-options
+          :fixr-link="config.fixr_link"
+          :payment-methods="paymentMethods"
+          :buttons="config.buttons"
+          v-model="paymentMethod"
+        ></purchase-options>
       </div>
 
       <p class="note">
@@ -60,10 +65,34 @@
 <script setup>
 import PurchaseOptions from "src/components/PurchaseOptions.vue";
 import { useStore } from "src/stores/store";
+import { computed, onMounted, ref } from "vue";
 
 const store = useStore();
 
 const config = store.supportUsConfig;
 
-console.log({ config });
+const paymentMethod = ref(null);
+
+const paymentMethods = computed(() => {
+  return [
+    {
+      label: config.fixr_label,
+      value: "fixr",
+    },
+    ...config.buttons.map((button) => {
+      return {
+        label: button.label,
+        value: button.id,
+      };
+    }),
+  ];
+});
+
+onMounted(() => {
+  paymentMethod.value = {
+    id: config.fixr_link,
+    label: config.fixr_label,
+    value: "fixr",
+  };
+});
 </script>

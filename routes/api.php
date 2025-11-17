@@ -18,6 +18,7 @@ use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\SnippetController;
 use App\Http\Controllers\StandardButtonsController;
+use App\Http\Controllers\SupportUsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
 use App\Models\PermissionLevel;
@@ -214,9 +215,24 @@ Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
  */
 Route::get('/standard-buttons/{type}', [StandardButtonsController::class, 'index']);
 
-
 /**
- * Angel Routes
+ * Angel Routes - Add these to your existing api.php
  */
-Route::get('/angel', [AngelController::class, 'index']);
+
+// Public routes
 Route::get('/angels', [AngelLevelController::class, 'index']);
+
+// Protected routes (requires auth)
+Route::middleware('auth:sanctum')->group(function () {
+    // Angel Levels
+    Route::post('/angel-levels', [AngelLevelController::class, 'store']);
+    Route::put('/angel-levels/{id}', [AngelLevelController::class, 'update']);
+    Route::delete('/angel-levels/{id}', [AngelLevelController::class, 'destroy']);
+
+    // Angels
+    Route::post('/angels', [AngelController::class, 'store']);
+    Route::put('/angels/{id}', [AngelController::class, 'update']);
+    Route::delete('/angels/{id}', [AngelController::class, 'destroy']);
+});
+
+Route::get('/support-us', [SupportUsController::class, 'index']);

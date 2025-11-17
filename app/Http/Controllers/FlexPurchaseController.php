@@ -26,7 +26,15 @@ class FlexPurchaseController extends Controller
         $config = json_decode(Storage::disk('local')
             ->get('flex-purchase-config.json'), true);
 
-        $config['buttons'] = StandardButton::orderBy('sort_order')->get();
+        $config['buttons'] = StandardButton::orderBy('sort_order')
+            ->get()
+            ->map(function ($rec) use ($config) {
+                $rec->popupText = view("standard-buttons.{$rec->key}", [
+                    'price' => $config['price']
+                ])->render();
+
+                return $rec;
+            });
 
         return $config;
     }

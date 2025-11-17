@@ -8,8 +8,8 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-md-4 text-center q-mt-md">
-        <q-img :src="store.flex.image" fit="contain"></q-img>
+      <div class="col-12 col-md-4 text-center">
+        <q-img :src="store.flex.image" fit="contain" width="300px"></q-img>
       </div>
 
       <div class="col-12 col-md-7 offset-md-1">
@@ -47,7 +47,7 @@ const paymentMethods = computed(() => {
     ...store.flex.buttons.map((button) => {
       return {
         label: button.label,
-        value: button.title,
+        value: button.id,
       };
     }),
   ];

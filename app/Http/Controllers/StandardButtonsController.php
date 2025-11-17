@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StandardButton;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StandardButtonsController extends Controller
 {
@@ -21,8 +22,15 @@ class StandardButtonsController extends Controller
      */
     public function index(string $type)
     {
-        return StandardButton::where('type', $type)
-            ->orderBy('sort_order')
-            ->get();
+        $buttons = StandardButton::orderBy('sort_order')
+            ->get()
+            ->map(function ($rec) use ($type) {
+                $rec->popupText = Storage::disk('local')
+                    ->get("standard-buttons/{$rec->key}-{$type}.html");
+                return $rec;
+            });
+
+
+        return $buttons;
     }
 }
