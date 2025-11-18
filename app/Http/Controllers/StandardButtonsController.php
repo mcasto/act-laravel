@@ -20,16 +20,17 @@ class StandardButtonsController extends Controller
      *
      * @source Database Model: StandardButton (reads filtered by type)
      */
-    public function index(string $type)
+    public function index(int $amount)
     {
         $buttons = StandardButton::orderBy('sort_order')
             ->get()
-            ->map(function ($rec) use ($type) {
-                $rec->popupText = Storage::disk('local')
-                    ->get("standard-buttons/{$rec->key}-{$type}.html");
+            ->map(function ($rec) use ($amount) {
+                $rec->popupText = view("standard-buttons.{$rec->key}", [
+                    'price' => $amount['price']
+                ])->render();
+
                 return $rec;
             });
-
 
         return $buttons;
     }

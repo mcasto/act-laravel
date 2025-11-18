@@ -213,7 +213,7 @@ Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
 /**
  * Standard Button Routes
  */
-Route::get('/standard-buttons/{type}', [StandardButtonsController::class, 'index']);
+Route::get('/standard-buttons/{amount}', [StandardButtonsController::class, 'index']);
 
 /**
  * Angel Routes - Add these to your existing api.php

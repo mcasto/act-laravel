@@ -40,16 +40,23 @@
         </div>
       </div>
 
-      <fieldset class="q-ma-md">
+      <!-- <fieldset class="q-ma-md">
         <legend>Payment Options</legend>
         <div class="text-h6" v-for="option of store.buttons" :key="option.key">
           {{ option.label }}
           <q-editor v-model="option.popupText"></q-editor>
         </div>
-      </fieldset>
+      </fieldset> -->
 
       <div class="flex justify-end q-mt-md q-mr-md">
         <q-btn type="submit" label="Update" color="primary"></q-btn>
+      </div>
+
+      <div class="bg-warning q-mt-xl q-pa-md">
+        <div>
+          For now, the text for the payment options must be manually edited in
+          "/resources/views/standard-buttons"
+        </div>
       </div>
     </q-form>
   </div>

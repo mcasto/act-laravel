@@ -1,6 +1,8 @@
 ✔ fix the per ticket price (it's currently set for flex tix) @done(25-11-13 15:26)
-☐ /angel: payment options
-☐ /support-us: payment options
+✔ /angel: payment options @done(25-11-18 09:37)
+✔ /support-us: payment options @done(25-11-18 09:37)
+
+☐ add editors to `admin/site-config` for standard button text
 
 ☐ class management
 ☐ class page

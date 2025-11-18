@@ -78,7 +78,7 @@ const alwaysVisibleLinks = [
     color: "green-10",
   },
   {
-    label: "Be An Angel",
+    label: "Be An ACT Angel",
     url: "/angel",
     icon: "img:/images/angel.png",
     color: "positive",

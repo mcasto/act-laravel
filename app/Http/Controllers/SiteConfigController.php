@@ -84,8 +84,6 @@ class SiteConfigController extends Controller
      */
     protected function updateButtons(array $buttons): void
     {
-        // mc-todo: make sure this works properly (probably needs fixed)
-
         foreach ($buttons as $buttonData) {
             // Find the button by ID
             $button = StandardButton::find($buttonData['id']);

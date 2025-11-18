@@ -14,7 +14,7 @@ class AngelLevel extends Model
         'min_amount'
     ];
 
-    protected $appends = ['min_amount_formatted', 'benefits'];
+    protected $appends = ['min_amount_formatted', 'benefits', 'buttons'];
 
     public function angels(): HasMany
     {
@@ -25,6 +25,23 @@ class AngelLevel extends Model
     {
         return Attribute::make(
             get: fn() => '$' . number_format($this->attributes['min_amount'], 2, '.', ',')
+        );
+    }
+
+    protected function buttons(): Attribute
+    {
+        $buttons = StandardButton::orderBy('sort_order')
+            ->get()
+            ->map(function ($rec) {
+                $rec->popupText = view("standard-buttons.{$rec->key}", [
+                    'price' => $this->min_amount_formatted
+                ])->render();
+
+                return $rec;
+            });
+
+        return Attribute::make(
+            get: fn() => $buttons
         );
     }
 
