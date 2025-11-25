@@ -87,7 +87,7 @@ const routes = [
         name: "Volunteer",
         path: "volunteer",
         component: () => import("pages/VolunteerPage.vue"),
-        meta: { nav: true, global: true, sortOrder: 1, slug: "volunteer" },
+        meta: { nav: false, global: true, sortOrder: 1, slug: "volunteer" },
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.getSkills();

@@ -72,6 +72,12 @@ const classLink = computed(() => {
 
 const alwaysVisibleLinks = [
   {
+    label: "Volunteer",
+    url: "/volunteer",
+    icon: "volunteer_activism",
+    color: "accent",
+  },
+  {
     label: "Find Us",
     url: "/find-us",
     icon: "map",
