@@ -72,24 +72,6 @@ const classLink = computed(() => {
 
 const alwaysVisibleLinks = [
   {
-    label: "Support Us",
-    url: "/support-us",
-    icon: "favorite",
-    color: "green-10",
-  },
-  {
-    label: "Be An ACT Angel",
-    url: "/angel",
-    icon: "img:/images/angel.png",
-    color: "positive",
-  },
-  {
-    label: "Volunteer",
-    url: "/volunteer",
-    icon: "volunteer_activism",
-    color: "accent",
-  },
-  {
     label: "Find Us",
     url: "/find-us",
     icon: "map",

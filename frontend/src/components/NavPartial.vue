@@ -1,6 +1,6 @@
 <template>
   <q-toolbar class="bg-primary text-white shadow-4">
-    <q-tabs v-if="Screen.gt.xs">
+    <q-tabs v-if="Screen.gt.md">
       <q-route-tab
         v-for="route of routes"
         :key="route.path"
@@ -14,21 +14,30 @@
       icon="menu"
       v-else
       size="md"
-      label="More Info"
+      label="Navigation Menu"
       flat
       @click="drawer = !drawer"
     ></q-btn>
   </q-toolbar>
 
-  <q-drawer v-if="Screen.xs" v-model="drawer" class="bg-primary text-white">
-    Drawer
+  <q-drawer
+    v-if="Screen.lt.lg"
+    v-model="drawer"
+    class="bg-primary text-white"
+    overlay
+  >
+    <nav-drawer :routes="routes"></nav-drawer>
   </q-drawer>
 </template>
 
 <script setup>
 import { Screen } from "quasar";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import NavDrawer from "./NavDrawer.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const store = useStore();
 const routes = store.router
@@ -42,4 +51,8 @@ const routes = store.router
   });
 
 const drawer = ref(false);
+
+watch(route, () => {
+  drawer.value = false;
+});
 </script>

@@ -33,28 +33,6 @@ const routes = [
         meta: { nav: true },
       },
       {
-        name: "angel",
-        path: "angel",
-        component: () => import("pages/AngelPage.vue"),
-        beforeEnter: async (to, from) => {
-          const store = useStore();
-          store.angelConfig = await callApi({ path: "/angels", method: "get" });
-        },
-        meta: { nav: false, global: true, sortOrder: 1, slug: "donate" },
-      },
-      {
-        name: "support-us",
-        path: "support-us",
-        component: () => import("pages/SupportUs.vue"),
-        beforeEnter: async () => {
-          const store = useStore();
-          store.supportUsConfig = await callApi({
-            path: "/support-us",
-            method: "get",
-          });
-        },
-      },
-      {
         name: "Audition",
         path: "audition",
         component: () => import("pages/AuditionPage.vue"),
@@ -109,7 +87,7 @@ const routes = [
         name: "Volunteer",
         path: "volunteer",
         component: () => import("pages/VolunteerPage.vue"),
-        meta: { nav: false, global: true, sortOrder: 1, slug: "volunteer" },
+        meta: { nav: true, global: true, sortOrder: 1, slug: "volunteer" },
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.getSkills();
@@ -142,6 +120,39 @@ const routes = [
         meta: { nav: true, slug: "about-us" },
       },
       {
+        name: "Support Us",
+        path: "support-us",
+        component: () => import("pages/SupportUs.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          store.supportUsConfig = await callApi({
+            path: "/support-us",
+            method: "get",
+          });
+        },
+        meta: { nav: true },
+      },
+      {
+        name: "Be An Angel",
+        path: "angel",
+        component: () => import("pages/AngelPage.vue"),
+        beforeEnter: async (to, from) => {
+          const store = useStore();
+          store.angelConfig = await callApi({ path: "/angels", method: "get" });
+        },
+        meta: { nav: true, global: true, sortOrder: 1, slug: "donate" },
+      },
+      {
+        name: "Our ACT Angels",
+        path: "our-act-angels",
+        component: () => import("pages/OurAngels.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          store.ourAngels = await callApi({ path: "/angels", method: "get" });
+        },
+        meta: { nav: true },
+      },
+      {
         name: "News",
         path: "news",
         meta: { nav: true, external: true },
@@ -165,16 +176,6 @@ const routes = [
           const store = useStore();
           await store.getGallery();
         },
-      },
-      {
-        name: "Our ACT Angels",
-        path: "our-act-angels",
-        component: () => import("pages/OurAngels.vue"),
-        beforeEnter: async () => {
-          const store = useStore();
-          store.ourAngels = await callApi({ path: "/angels", method: "get" });
-        },
-        meta: { nav: true },
       },
 
       {
