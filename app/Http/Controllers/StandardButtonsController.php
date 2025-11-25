@@ -22,11 +22,13 @@ class StandardButtonsController extends Controller
      */
     public function index(int $amount)
     {
+        logger()->info(__FILE__);
+        logger()->info(__LINE__);
         $buttons = StandardButton::orderBy('sort_order')
             ->get()
             ->map(function ($rec) use ($amount) {
                 $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'price' => $amount['price']
+                    'price' => $amount['price'],
                 ])->render();
 
                 return $rec;

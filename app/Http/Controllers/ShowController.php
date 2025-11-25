@@ -155,8 +155,11 @@ class ShowController extends Controller
         $currentShow['buttons'] = StandardButton::orderBy('sort_order')
             ->get()
             ->map(function ($rec) use ($price) {
+                $price = "$" . $price;
+
                 $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'price' =>  "$" . $price
+                    'param' => "{$price} per ticket",
+                    'subject' => "purchased tickets"
                 ])->render();
 
                 return $rec;

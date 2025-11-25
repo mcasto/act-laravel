@@ -16,8 +16,10 @@ class SupportUsController extends Controller
         $config->buttons = StandardButton::orderBy('sort_order')
             ->get()
             ->map(function ($rec) use ($config) {
+                $price = $config->price;
                 $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'price' => $config->price
+                    'param' => "{$price}",
+                    'subject' => 'Support Us'
                 ])->render();
 
                 return $rec;

@@ -1,5 +1,5 @@
 <div>
-    <p>Transfer {{ $price }}:
+    <p>Transfer {{ $param }}:
     <ul>
         <li>Laura Smith Jessup</li>
         <li>JEP Savings Account (Ahorros)</li>
@@ -10,7 +10,8 @@
     <p>
         Then click to email us
         <a href='mailto:actseats@gmail.com'>actseats@gmail.com</a>
-        confirming you donated $25 to Support Us by bank transfer and the transfer date. Also include your name and
+        confirming you sent {{ $param }} by bank transfer and the transfer date. Also
+        include your name and
         phone number. We will reply to confirm receipt of payment.
     </p>
 

@@ -15,6 +15,7 @@ class Performance extends Model
     protected $fillable = [
         'show_id',
         'date',
+        'start_time',
         'sold_out',
         'sold_out_target',
         'fixr_link'
@@ -26,6 +27,7 @@ class Performance extends Model
             'id'              => ['integer', 'min:1'],
             'show_id'         => ['required', 'exists:shows,id'],
             'date'            => ['required', 'date'],
+            'start_time'      => ['required', 'date_format:H:i:s'],
             'sold_out'        => ['required', 'boolean'],
             'sold_out_target' => ['required', 'integer', 'min:1'],
             'fixr_link' => ['sometimes', 'nullable', 'string']

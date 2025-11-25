@@ -48,6 +48,16 @@ class PerformanceController extends Controller
             return ! isset($performance['deleted']);
         });
 
+        $upserts = collect($performances)
+            ->filter(function ($performance) {
+                return ! isset($performance['deleted']);
+            })
+            ->map(function ($performance) {
+                $performance['sold_out_target'] = $performance['sold_out_target'] ?? 50;
+
+                return $performance;
+            });
+
         foreach ($upserts as $upsert) {
             $validatedData = Performance::validate($upsert);
 
@@ -60,6 +70,7 @@ class PerformanceController extends Controller
                 }
 
                 $performance->fill($validatedData);
+
                 $performance->save(); // Laravel handles updated_at automatically
             } else {
                 Log::warning('Performance validation failed', ['errors' => $validatedData, 'record' => $upsert]);

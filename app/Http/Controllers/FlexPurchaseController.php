@@ -30,7 +30,8 @@ class FlexPurchaseController extends Controller
             ->get()
             ->map(function ($rec) use ($config) {
                 $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'price' => $config['price']
+                    'param' => "{$config['price']} per ticket",
+                    'subject' => "you purchased Flex Tickets"
                 ])->render();
 
                 return $rec;

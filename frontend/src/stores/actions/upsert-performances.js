@@ -1,6 +1,7 @@
 import callApi from "src/assets/call-api";
 import { useStore } from "../store";
 import { Notify } from "quasar";
+import { sortBy } from "lodash-es";
 
 export default () => {
   const store = useStore();
@@ -16,4 +17,9 @@ export default () => {
       message: "Performances Updated",
     });
   });
+
+  store.admin.show.performances = sortBy(store.admin.show.performances, [
+    "date",
+    "start_time",
+  ]);
 };

@@ -89,7 +89,10 @@ const performanceDates = computed(() => {
 const performances = computed(() => {
   return sortBy(
     show.value.performances.map((performance) => {
-      let displayDate = format(parseISO(performance.date), "PP");
+      let displayDate = format(
+        parseISO(`${performance.date} ${performance.start_time}`),
+        "PPp"
+      );
       const soldOut = performance.sold_out == 1;
 
       if (soldOut) {

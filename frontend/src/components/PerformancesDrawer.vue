@@ -11,6 +11,25 @@
     </q-toolbar>
 
     <q-markup-table separator="cell">
+      <thead>
+        <q-tr>
+          <q-th>
+            Date
+          </q-th>
+          <q-th>
+            Time
+          </q-th>
+          <q-th>
+            Sold Out
+          </q-th>
+          <q-th>
+            Fixr
+          </q-th>
+          <q-th>
+            &nbsp;
+          </q-th>
+        </q-tr>
+      </thead>
       <tbody>
         <q-tr
           v-for="performance of store.admin.show.performances.filter(
@@ -23,6 +42,23 @@
               {{ format(parseISO(performance.date), "PP") }}
               <q-popup-edit v-model="performance.date" v-slot="scope" buttons>
                 <q-date v-model="scope.value" mask="YYYY-MM-DD"></q-date>
+              </q-popup-edit>
+            </div>
+          </q-td>
+          <q-td class="text-center">
+            <div class="cursor-pointer">
+              {{
+                format(
+                  parseISO(`${performance.date} ${performance.start_time}`),
+                  "pp"
+                )
+              }}
+              <q-popup-edit
+                v-model="performance.start_time"
+                v-slot="scope"
+                buttons
+              >
+                <q-time v-model="scope.value" mask="HH:mm:00"></q-time>
               </q-popup-edit>
             </div>
           </q-td>
@@ -112,6 +148,7 @@ const newPerformance = () => {
     date: formatISO9075(sub(new Date(), { days: 1 }), {
       representation: "date",
     }),
+    start_time: "15:00:00",
   }; // defaults to yesterday if there are no performances
 
   // set date for new performance
@@ -122,10 +159,14 @@ const newPerformance = () => {
     }
   );
 
+  // set time for new performance
+  const newTime = lastPerformance.start_time;
+
   // create new date (defaults to the day after the final performance or today if there are no performances)
   store.admin.show.performances.push({
     show_id: store.admin.show.id,
     date: newDate,
+    start_time: newTime,
     sold_out: 0,
     fixr_link: "",
   });

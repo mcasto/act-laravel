@@ -33,8 +33,11 @@ class AngelLevel extends Model
         $buttons = StandardButton::orderBy('sort_order')
             ->get()
             ->map(function ($rec) {
+                $price = $this->min_amount_formatted;
+
                 $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'price' => $this->min_amount_formatted
+                    'param' => $price,
+                    'subject' => "{$price} Angel Donation"
                 ])->render();
 
                 return $rec;

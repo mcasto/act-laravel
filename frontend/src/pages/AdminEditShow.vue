@@ -86,7 +86,7 @@
       </template>
     </q-splitter>
 
-    <q-drawer v-model="performancesDrawer" bordered>
+    <q-drawer v-model="performancesDrawer" bordered :width="500">
       <performances-drawer
         @close="performancesDrawer = false"
         @update="store.upsertPerformances"
