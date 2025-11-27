@@ -54,68 +54,141 @@ class FixrWebhooksController extends Controller
      *
      * @todo Send email to SiteConfig->ticketEmail if the event is a ticket sale
      */
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'payload' => 'required|array',
-            'payload.event_name' => 'required|string',
-            'payload.event_url' => 'required|url',
-            'payload.sold_at' => 'required|date',
-            'payload.ticket_holders' => 'required|array|min:1',
-            'payload.ticket_holders.*.first_name' => 'required|string',
-            'payload.ticket_holders.*.last_name' => 'required|string',
-            'payload.ticket_holders.*.email' => 'required|email',
-            'payload.ticket_holders.*.mobile_number' => 'required|string',
-            'payload.ticket_holders.*.contact_preferences_user_response' => 'required|string',
-        ]);
+        logger()->info('=== FIXR WEBHOOK RECEIVED ===', ['payload' => $request->all()]);
 
-        // Fetch and extract event date from Fixr page
-        $response = Http::withHeaders([
-            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        ])->get($validated['payload']['event_url']);
+        try {
+            $validated = $request->validate([
+                'payload' => 'required|array',
+                'payload.event_name' => 'required|string',
+                'payload.event_url' => 'required|url',
+                'payload.sold_at' => 'required|date',
+                'payload.ticket_holders' => 'required|array|min:1',
+                'payload.ticket_holders.*.first_name' => 'required|string',
+                'payload.ticket_holders.*.last_name' => 'required|string',
+                'payload.ticket_holders.*.email' => 'required|email',
+                'payload.ticket_holders.*.mobile_number' => 'required|string',
+                'payload.ticket_holders.*.contact_preferences_user_response' => 'required|string',
+            ]);
 
-        $html = $response->body();
-        $performanceDateTime = null;
+            logger()->info('Validation passed');
 
-        if (preg_match('/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/', $html, $matches)) {
-            $jsonData = json_decode($matches[1], true);
-            $eventData = $jsonData['props']['pageProps']['meta'] ?? null;
+            // Fetch and extract event date from Fixr page
+            logger()->info('Fetching event page', ['url' => $validated['payload']['event_url']]);
 
-            if ($eventData && isset($eventData['openTimeVenueLocalised'])) {
-                $performanceDateTime = $eventData['openTimeVenueLocalised']; // Keep raw format
+            $response = Http::withHeaders([
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            ])->get($validated['payload']['event_url']);
+
+            $html = $response->body();
+            $performanceDateTime = null;
+
+            if (preg_match('/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/', $html, $matches)) {
+                $jsonData = json_decode($matches[1], true);
+                $eventData = $jsonData['props']['pageProps']['meta'] ?? null;
+
+                if ($eventData && isset($eventData['openTimeVenueLocalised'])) {
+                    $performanceDateTime = $eventData['openTimeVenueLocalised'];
+                    logger()->info('Performance date extracted', ['datetime' => $performanceDateTime]);
+                } else {
+                    logger()->warning('No openTimeVenueLocalised found in event data');
+                }
+            } else {
+                logger()->warning('Could not extract __NEXT_DATA__ from HTML');
             }
-        }
 
-        // Build records for each ticket holder
-        $records = [];
-        foreach ($validated['payload']['ticket_holders'] as $holder) {
-            $rec = [
-                'show' => $validated['payload']['event_name'],
-                'sold_at' => Carbon::parse($validated['payload']['sold_at'])->format('Y-m-d H:i:s'),
-                'first_name' => $holder['first_name'],
-                'last_name' => $holder['last_name'],
-                'email' => $holder['email'],
-                'mobile_number' => $holder['mobile_number'],
-                'contact_preferences_user_response' => $holder['contact_preferences_user_response'],
-                'performance' => $performanceDateTime ? Carbon::parse($performanceDateTime)->format('Y-m-d H:i:s') : null,
-            ];
+            // Build records for each ticket holder
+            $records = [];
+            foreach ($validated['payload']['ticket_holders'] as $holder) {
+                $rec = [
+                    'show' => $validated['payload']['event_name'],
+                    'sold_at' => Carbon::parse($validated['payload']['sold_at'])->format('Y-m-d H:i:s'),
+                    'first_name' => $holder['first_name'],
+                    'last_name' => $holder['last_name'],
+                    'email' => $holder['email'],
+                    'mobile_number' => $holder['mobile_number'],
+                    'contact_preferences_user_response' => $holder['contact_preferences_user_response'],
+                    'performance' => $performanceDateTime ? Carbon::parse($performanceDateTime)->format('Y-m-d H:i:s') : null,
+                ];
 
-            $records[] = $rec;
-        }
-
-        // Now insert into database
-        foreach ($records as $rec) {
-            TicketSale::create($rec);
-
-            // Send notification email
-            try {
-                Mail::to(config('mail.to.address'))
-                    ->send(new TicketSaleMailer($rec));
-            } catch (Exception $e) {
-                logger()->error('Failed to send ticket sale email', ['error' => $e->getMessage(), 'rec' => $rec]);
+                $records[] = $rec;
             }
-        }
 
-        return ['records' => $records];
+            logger()->info('Records prepared for insertion', ['count' => count($records)]);
+
+            // Insert into database and send emails
+            $insertedCount = 0;
+            $emailsSent = 0;
+            $emailsFailed = 0;
+
+            foreach ($records as $rec) {
+                try {
+                    TicketSale::create($rec);
+                    $insertedCount++;
+                    logger()->info('Ticket sale record created', ['email' => $rec['email']]);
+
+                    // Send notification email
+                    try {
+                        Mail::to(config('mail.to.address'))
+                            ->send(new TicketSaleMailer($rec));
+                        $emailsSent++;
+                        logger()->info('Notification email sent', ['to' => config('mail.to.address')]);
+                    } catch (Exception $e) {
+                        $emailsFailed++;
+                        logger()->error('Failed to send ticket sale email', [
+                            'error' => $e->getMessage(),
+                            'trace' => $e->getTraceAsString(),
+                            'rec' => $rec
+                        ]);
+                    }
+                } catch (Exception $e) {
+                    logger()->error('Failed to insert ticket sale record', [
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString(),
+                        'rec' => $rec
+                    ]);
+
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Failed to insert ticket sale record'
+                    ], 500);
+                }
+            }
+
+            logger()->info('Webhook processing complete', [
+                'records_inserted' => $insertedCount,
+                'emails_sent' => $emailsSent,
+                'emails_failed' => $emailsFailed
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'records_inserted' => $insertedCount,
+                'emails_sent' => $emailsSent
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            logger()->error('Webhook validation failed', [
+                'errors' => $e->errors(),
+                'payload' => $request->all()
+            ]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (Exception $e) {
+            logger()->error('Webhook processing failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'payload' => $request->all()
+            ]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Internal server error'
+            ], 500);
+        }
     }
 }
