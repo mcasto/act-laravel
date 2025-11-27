@@ -11,33 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketSaleMailer;
+use App\Models\Show;
 
 class FixrWebhooksController extends Controller
 {
-    /**
-     * Find patron ID if necessary and it exists
-     *
-     * For ticket_sold events, attempts to find the patron by email
-     * from the ticket holder information. Returns null for other event types
-     * or if patron is not found.
-     *
-     * @param array $data The webhook data containing event type and payload
-     * @return int|null The patron ID or null
-     *
-     * @source Database Model: Patron (reads)
-     */
-    private function findPatronId(array $data): ?int
-    {
-        if ($data['event'] !== 'ticket_sold') {
-            // patron_id is unneeded
-            return null;
-        }
-
-        $patron = Patron::where('email', $data['payload']['ticket_holders'][0]['email'])->first();
-
-        return $patron?->id; // Uses null-safe operator (PHP 8+)
-    }
-
     /**
      * Receive and log Fixr webhook data
      *
@@ -54,12 +31,13 @@ class FixrWebhooksController extends Controller
      *
      * @todo Send email to SiteConfig->ticketEmail if the event is a ticket sale
      */
-    public function create(Request $request): JsonResponse
+    public function create(Request $request)
     {
         try {
             $validated = $request->validate([
                 'payload' => 'required|array',
                 'payload.event_name' => 'required|string',
+                'payload.quantity' => 'nullable|integer',
                 'payload.event_url' => 'required|url',
                 'payload.sold_at' => 'required|date',
                 'payload.ticket_holders' => 'required|array|min:1',
@@ -90,18 +68,39 @@ class FixrWebhooksController extends Controller
                 logger()->warning('Could not extract __NEXT_DATA__ from HTML');
             }
 
+            if ($performanceDateTime) {
+                // Get show based on event_name
+                $showName = strtolower($validated['payload']['event_name']);
+                $show = Show::whereRaw('LOWER(name) = ?', [$showName])->first();
+
+                if ($show) {
+                    // Parse the performance datetime
+                    $performanceDate = Carbon::parse($performanceDateTime);
+
+                    // Find the matching performance
+                    $performance = $show->performances()
+                        ->whereDate('date', $performanceDate->toDateString())
+                        ->whereTime('start_time', $performanceDate->toTimeString())
+                        ->first();
+
+                    $performanceId = $performance?->id;
+                }
+            }
+
             // Build records for each ticket holder
             $records = [];
             foreach ($validated['payload']['ticket_holders'] as $holder) {
                 $rec = [
                     'show' => $validated['payload']['event_name'],
-                    'sold_at' => Carbon::parse($validated['payload']['sold_at'])->format('Y-m-d H:i:s'),
+                    'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil')->format('Y-m-d H:i:s'),
                     'first_name' => $holder['first_name'],
                     'last_name' => $holder['last_name'],
                     'email' => $holder['email'],
                     'mobile_number' => $holder['mobile_number'],
                     'contact_preferences_user_response' => $holder['contact_preferences_user_response'],
                     'performance' => $performanceDateTime ? Carbon::parse($performanceDateTime)->format('Y-m-d H:i:s') : null,
+                    'performance_id' => $performanceId ?? null,
+                    'quantity' => $validated['payload']['quantity']
                 ];
 
                 $records[] = $rec;

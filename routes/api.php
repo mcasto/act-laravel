@@ -19,6 +19,7 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\SnippetController;
 use App\Http\Controllers\StandardButtonsController;
 use App\Http\Controllers\SupportUsController;
+use App\Http\Controllers\TicketSaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
 use App\Models\PermissionLevel;
@@ -236,3 +237,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/support-us', [SupportUsController::class, 'index']);
+
+Route::controller(TicketSaleController::class)
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::get('/ticket-sales', 'index');
+    });

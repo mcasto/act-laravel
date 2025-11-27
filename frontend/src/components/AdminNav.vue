@@ -8,7 +8,6 @@
         clickable
         :to="item.path"
         active-class="bg-blue-grey-2"
-        :disable="!item.permissionLevel"
       >
         <q-item-section>
           <q-item-label>
@@ -19,6 +18,23 @@
           <q-icon name="mdi-eye-lock"></q-icon>
         </q-item-section>
       </q-item>
+      <!-- <q-item
+        v-for="item of routes"
+        :key="item.path"
+        clickable
+        :to="item.path"
+        active-class="bg-blue-grey-2"
+        :disable="!item.permissionLevel"
+      >
+        <q-item-section>
+          <q-item-label>
+            {{ item.name }}
+          </q-item-label>
+        </q-item-section>
+        <q-item-section side v-if="item.permissionLevel == 'read'">
+          <q-icon name="mdi-eye-lock"></q-icon>
+        </q-item-section>
+      </q-item> -->
     </q-list>
   </div>
 </template>

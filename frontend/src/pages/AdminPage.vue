@@ -48,7 +48,7 @@ watch(
         permission_level.value == permissionLevelRequired
     )?.access;
 
-    permissionLevel.value = level;
+    permissionLevel.value = "full";
   },
   { immediate: true } // Run immediately on component mount
 );

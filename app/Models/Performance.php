@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
+use Carbon\Carbon;
 
 class Performance extends Model
 {
@@ -19,6 +19,11 @@ class Performance extends Model
         'sold_out',
         'sold_out_target',
         'fixr_link'
+    ];
+
+    protected $appends = [
+        'formatted_date',
+        'formatted_time'
     ];
 
     public static function validate($data)
@@ -42,6 +47,22 @@ class Performance extends Model
     }
 
     /**
+     * Get the formatted date attribute
+     */
+    public function getFormattedDateAttribute()
+    {
+        return Carbon::parse($this->date)->format('M d, Y');
+    }
+
+    /**
+     * Get the formatted time attribute
+     */
+    public function getFormattedTimeAttribute()
+    {
+        return Carbon::parse($this->start_time)->format('g:i A');
+    }
+
+    /**
      * Relationship to shows
      */
     public function show()
@@ -55,5 +76,13 @@ class Performance extends Model
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * relationship to ticket sales
+     */
+    public function ticket_sales()
+    {
+        return $this->hasMany(TicketSale::class);
     }
 }

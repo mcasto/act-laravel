@@ -259,6 +259,26 @@ const routes = [
             },
           },
           {
+            name: "Ticket Sales",
+            path: "ticket-sales",
+            component: () => import("src/pages/AdminTicketSales.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              store.admin.tickets = await callApi({
+                path: "/ticket-sales",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 18,
+            },
+          },
+          {
             name: "Our Angels",
             path: "our-angels",
             component: () => import("src/pages/AdminOurAngels.vue"),

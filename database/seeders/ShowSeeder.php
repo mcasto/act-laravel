@@ -44,6 +44,7 @@ class ShowSeeder extends Seeder
                     'date'            => $performance['date'],
                     'start_time'      => $performance['start_time'],
                     'sold_out_target' => 50,
+                    'sold_out'        => false
                 ];
 
                 Performance::create($rec);

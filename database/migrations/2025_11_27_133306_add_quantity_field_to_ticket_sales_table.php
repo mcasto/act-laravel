@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('audition_roles', function (Blueprint $table) {
-            $table->string('cast')->nullable()->after('side');
-            $table->string('cast_phone')->nullable()->after('cast');
-            $table->string('cast_email')->nullable()->after('cast_phone');
+        Schema::table('ticket_sales', function (Blueprint $table) {
+            $table->integer('quantity')->nullable()->after('sold_at');
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('ticket_sales', function (Blueprint $table) {
+            //
+        });
     }
 };
