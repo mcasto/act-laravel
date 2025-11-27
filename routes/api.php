@@ -46,10 +46,7 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
  * Fixr Webhook Handler
  */
 Route::post('/fixr-webhooks', [FixrWebhooksController::class, 'create']);
-Route::post('/test-webhook', function () {
-    logger()->info('TEST ROUTE HIT');
-    return response()->json(['test' => 'success']);
-});
+
 /**
  * Announcement Banner
  */
