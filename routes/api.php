@@ -45,7 +45,9 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 /**
  * Fixr Webhook Handler
  */
-Route::post('/fixr-webhooks', [FixrWebhooksController::class, 'create']);
+Route::post('/fixr-webhooks', [FixrWebhooksController::class, 'create'])
+    ->middleware('webhook.verify')
+    ->withoutMiddleware('api'); // Explicitly exclude api middleware group if needed
 
 /**
  * Announcement Banner

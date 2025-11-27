@@ -35,4 +35,7 @@ return [
         ],
     ],
 
+    'payment_processor' => [
+        'webhook_token' => env('PAYMENT_PROCESSOR_WEBHOOK_TOKEN'),
+    ],
 ];

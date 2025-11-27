@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Contact;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -10,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactMailer extends Mailable
+class TicketSaleMailer extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,7 +17,7 @@ class ContactMailer extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        public Contact $contact,
+        public array $ticketData,
     ) {}
 
     /**
@@ -28,20 +27,19 @@ class ContactMailer extends Mailable
     {
         return new Envelope(
             from: new Address(
-                config('mail.contact_from.address'),
-                config('mail.contact_from.name')
+                config('mail.ticket_sale_from.address'),
+                config('mail.ticket_sale_from.name')
             ),
-            subject: 'Website Contact',
+            subject: 'Ticket Sale Notification - ' . $this->ticketData['show'],
         );
     }
-
     /**
      * Get the message content definition.
      */
     public function content(): Content
     {
         return new Content(
-            view: 'contact-mailer-template',
+            view: 'ticket-sale-mailer-template',
         );
     }
 

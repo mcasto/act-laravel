@@ -112,14 +112,14 @@ return [
     |
     */
 
-    'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+    'contact_from' => [
+        'address' => env('CONTACT_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('CONTACT_FROM_NAME', 'Example'),
     ],
 
-    'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+    'ticket_sale_from' => [
+        'address' => env('TICKET_SALE_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('TICKET_SALE_FROM_NAME', 'Example'),
     ],
 
     'to' => [

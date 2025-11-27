@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FixrWebhookResponse;
 use App\Models\Patron;
+use App\Models\TicketSale;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketSaleMailer;
 
 class FixrWebhooksController extends Controller
 {
@@ -50,29 +54,68 @@ class FixrWebhooksController extends Controller
      *
      * @todo Send email to SiteConfig->ticketEmail if the event is a ticket sale
      */
-    public function create(Request $request): JsonResponse
+    public function create(Request $request)
     {
-        $expectedToken = env('FIXR_AUTH_TOKEN');
-        $token         = $request->header('Authorization');
-        if ($token != $expectedToken) {
-            return response()->json(['error' => 'Invalid Authorization', 'message' => 'Auth token not recognized']);
+        $validated = $request->validate([
+            'payload' => 'required|array',
+            'payload.event_name' => 'required|string',
+            'payload.event_url' => 'required|url',
+            'payload.sold_at' => 'required|date',
+            'payload.ticket_holders' => 'required|array|min:1',
+            'payload.ticket_holders.*.first_name' => 'required|string',
+            'payload.ticket_holders.*.last_name' => 'required|string',
+            'payload.ticket_holders.*.email' => 'required|email',
+            'payload.ticket_holders.*.mobile_number' => 'required|string',
+            'payload.ticket_holders.*.contact_preferences_user_response' => 'required|string',
+        ]);
+
+        // Fetch and extract event date from Fixr page
+        $response = Http::withHeaders([
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        ])->get($validated['payload']['event_url']);
+
+        $html = $response->body();
+        $performanceDateTime = null;
+
+        if (preg_match('/<script id="__NEXT_DATA__" type="application\/json">(.*?)<\/script>/', $html, $matches)) {
+            $jsonData = json_decode($matches[1], true);
+            $eventData = $jsonData['props']['pageProps']['meta'] ?? null;
+
+            if ($eventData && isset($eventData['openTimeVenueLocalised'])) {
+                $performanceDateTime = $eventData['openTimeVenueLocalised']; // Keep raw format
+            }
         }
 
-        $data = $request->all();
+        // Build records for each ticket holder
+        $records = [];
+        foreach ($validated['payload']['ticket_holders'] as $holder) {
+            $rec = [
+                'show' => $validated['payload']['event_name'],
+                'sold_at' => Carbon::parse($validated['payload']['sold_at'])->format('Y-m-d H:i:s'),
+                'first_name' => $holder['first_name'],
+                'last_name' => $holder['last_name'],
+                'email' => $holder['email'],
+                'mobile_number' => $holder['mobile_number'],
+                'contact_preferences_user_response' => $holder['contact_preferences_user_response'],
+                'performance' => $performanceDateTime ? Carbon::parse($performanceDateTime)->format('Y-m-d H:i:s') : null,
+            ];
 
-        $payload = json_encode($data['payload']);
+            $records[] = $rec;
+        }
 
-        $rec = [
-            'patron_id'  => $this->findPatronId($data),
-            'event'      => $data['event'],
-            'payload'    => $payload,
-            'message_id' => $data['message_id'],
-        ];
+        // Now insert into database
+        foreach ($records as $rec) {
+            TicketSale::create($rec);
 
-        FixrWebhookResponse::create($rec);
+            // Send notification email
+            try {
+                Mail::to(config('mail.to.address'))
+                    ->send(new TicketSaleMailer($rec));
+            } catch (Exception $e) {
+                logger()->error('Failed to send ticket sale email', ['error' => $e->getMessage(), 'rec' => $rec]);
+            }
+        }
 
-        // mc-todo: send e-mail to SiteConfig->ticketEmail if event is ticket sale
-
-        return response()->json(['message' => 'Webhook received'], 201);
+        return ['records' => $records];
     }
 }
