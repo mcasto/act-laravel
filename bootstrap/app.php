@@ -15,12 +15,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Comment out ALL of this temporarily
+        // RateLimiter::for('api', function (Request $request) {
+        //     return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        // });
+
         $middleware->group('api', [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            'throttle:api',
+            // 'throttle:api',  // ← REMOVE THIS
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
-        // Disable CSRF for API routes
+
         $middleware->validateCsrfTokens(except: [
             'api/*',
         ]);
@@ -28,11 +33,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'webhook.verify' => \App\Http\Middleware\VerifyWebhookToken::class,
         ]);
-
-        // Define rate limiters
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
