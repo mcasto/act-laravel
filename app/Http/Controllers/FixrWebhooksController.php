@@ -56,8 +56,6 @@ class FixrWebhooksController extends Controller
      */
     public function create(Request $request): JsonResponse
     {
-        logger()->info('=== FIXR WEBHOOK RECEIVED ===', ['payload' => $request->all()]);
-
         try {
             $validated = $request->validate([
                 'payload' => 'required|array',
@@ -72,11 +70,6 @@ class FixrWebhooksController extends Controller
                 'payload.ticket_holders.*.contact_preferences_user_response' => 'required|string',
             ]);
 
-            logger()->info('Validation passed');
-
-            // Fetch and extract event date from Fixr page
-            logger()->info('Fetching event page', ['url' => $validated['payload']['event_url']]);
-
             $response = Http::withHeaders([
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
             ])->get($validated['payload']['event_url']);
@@ -90,7 +83,6 @@ class FixrWebhooksController extends Controller
 
                 if ($eventData && isset($eventData['openTimeVenueLocalised'])) {
                     $performanceDateTime = $eventData['openTimeVenueLocalised'];
-                    logger()->info('Performance date extracted', ['datetime' => $performanceDateTime]);
                 } else {
                     logger()->warning('No openTimeVenueLocalised found in event data');
                 }
@@ -115,8 +107,6 @@ class FixrWebhooksController extends Controller
                 $records[] = $rec;
             }
 
-            logger()->info('Records prepared for insertion', ['count' => count($records)]);
-
             // Insert into database and send emails
             $insertedCount = 0;
             $emailsSent = 0;
@@ -126,14 +116,12 @@ class FixrWebhooksController extends Controller
                 try {
                     TicketSale::create($rec);
                     $insertedCount++;
-                    logger()->info('Ticket sale record created', ['email' => $rec['email']]);
 
                     // Send notification email
                     try {
                         Mail::to(config('mail.to.address'))
                             ->send(new TicketSaleMailer($rec));
                         $emailsSent++;
-                        logger()->info('Notification email sent', ['to' => config('mail.to.address')]);
                     } catch (Exception $e) {
                         $emailsFailed++;
                         logger()->error('Failed to send ticket sale email', [
@@ -155,12 +143,6 @@ class FixrWebhooksController extends Controller
                     ], 500);
                 }
             }
-
-            logger()->info('Webhook processing complete', [
-                'records_inserted' => $insertedCount,
-                'emails_sent' => $emailsSent,
-                'emails_failed' => $emailsFailed
-            ]);
 
             return response()->json([
                 'status' => 'success',
