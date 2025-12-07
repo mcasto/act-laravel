@@ -13,6 +13,15 @@ use League\HTMLToMarkdown\HtmlConverter;
 
 class CourseController extends Controller
 {
+    public function adminIndex(): JsonResponse
+    {
+        $courses = Course::with(['sessions', 'contacts'])
+            ->orderBy('enrollment_start', 'desc')
+            ->get();
+
+        return response()->json($courses);
+    }
+
     /**
      * Get courses with open enrollment
      *

@@ -153,6 +153,12 @@ Route::get('/course-details/{slug}', [CourseController::class, 'courseDetails'])
 Route::post('/course-contact', [CourseController::class, 'courseContact']);
 
 /**
+ * Protected Course Routes
+ */
+Route::middleware('auth:sanctum')
+    ->get('/admin/courses', [CourseController::class, 'adminIndex']);
+
+/**
  * Gallery Routes
  */
 Route::get('/gallery', [GalleryController::class, 'index']);

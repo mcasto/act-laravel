@@ -331,6 +331,15 @@ const routes = [
             name: "Classes",
             path: "classes",
             component: () => import("src/pages/AdminClasses.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+
+              store.admin.courses = await callApi({
+                path: "/admin/courses",
+                method: "get",
+                useAuth: true,
+              });
+            },
             meta: {
               requireAuth: true,
               admin: true,
