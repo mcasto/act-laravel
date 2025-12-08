@@ -156,7 +156,15 @@ Route::post('/course-contact', [CourseController::class, 'courseContact']);
  * Protected Course Routes
  */
 Route::middleware('auth:sanctum')
-    ->get('/admin/courses', [CourseController::class, 'adminIndex']);
+    ->get('/admin/courses', [CourseController::class, 'index']);
+Route::middleware('auth:sanctum')
+    ->get('admin/courses/{id}', [CourseController::class, 'show']);
+Route::middleware('auth:sanctum')
+    ->post('/admin/courses/poster/{id}', [CourseController::class, 'uploadPoster']);
+Route::middleware('auth:sanctum')
+    ->post('/admin/courses/instructor/{id}', [CourseController::class, 'uploadInstructorPhoto']);
+Route::middleware('auth:sanctum')
+    ->post('/admin/courses', [CourseController::class, 'store']);
 
 /**
  * Gallery Routes

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Mail\ContactMailer;
 use App\Models\Contact;
 use App\Models\SiteConfig;
-use App\Util\SendGridUtil;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,6 +50,8 @@ class ContactController extends Controller
         }
     }
 
+
+// mc-todo: update to MailerSend
     /**
      * Create a contact submission (legacy method)
      *

@@ -5,21 +5,159 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseContact;
 use App\Models\SiteConfig;
-use App\Util\SendGridUtil;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use League\HTMLToMarkdown\HtmlConverter;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
-    public function adminIndex(): JsonResponse
+    public function index(): JsonResponse
     {
         $courses = Course::with(['sessions', 'contacts'])
             ->orderBy('enrollment_start', 'desc')
-            ->get();
+            ->get()
+            ->each(function ($course) {
+                $course->append('message');
+            });
 
         return response()->json($courses);
+    }
+
+    public function show(string|int $id): JsonResponse
+    {
+        if ($id == 'new') {
+            return response()->json([
+                'cost' => 0,
+                'name' => null,
+                'instructor_name' => null,
+                'enrollment_start' => null,
+                'enrollment_end' => null,
+                'fixr' => null,
+                'instructor_email' => null,
+                'instructor_info' => "",
+                'instructor_photo' => null,
+                'location' => "Azuay Community Theater, 14-46 Atonio Vega Muñoz between Estevez de Toral and Coronel Talbot",
+                'message' => "",
+                'poster' => null,
+                'sessions' => [],
+                'contacts' => [],
+                'tagline' => null,
+            ]);
+        }
+
+        $course = Course::with(['sessions', 'contacts'])
+            ->where('id', '=', $id)
+            ->first();
+
+        $course->append('message');
+
+        return response()->json($course);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'name'             => 'required|string|max:255',
+            'instructor_name'  => 'required|string|max:255',
+            'instructor_email' => 'required|email|max:255',
+            'enrollment_start' => 'required|date',
+            'enrollment_end'   => 'required|date|after_or_equal:enrollment_start',
+            'cost'             => 'required|numeric|min:0',
+            'poster'           => 'required|string|max:255',
+            'tagline'          => 'required|string|max:255',
+            'location'         => 'required|string|max:255',
+            'fixr'             => 'nullable|string|max:255',
+            'instructor_photo' => 'required|string|max:255',
+            'instructor_info'  => 'required|string',
+            'message'         => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        $rec = $validator->validated();
+        $baseSlug = Str::slug($rec['name'], '-') . '-' . date("Y");
+        $rec['slug'] = $baseSlug;
+
+        // Check if slug exists and append incremented number if needed
+        if (Course::where('slug', $rec['slug'])->exists()) {
+            // Find the highest number suffix for this slug
+            $existingSlugs = Course::where('slug', 'like', $baseSlug . '%')
+                ->pluck('slug')
+                ->map(function ($slug) use ($baseSlug) {
+                    // Extract the number suffix if it exists
+                    if (preg_match('/^' . preg_quote($baseSlug, '/') . '-(\d+)$/', $slug, $matches)) {
+                        return (int) $matches[1];
+                    }
+                    return 0;
+                })
+                ->max();
+
+            $nextNumber = $existingSlugs ? $existingSlugs + 1 : 1;
+            $rec['slug'] = $baseSlug . '-' . sprintf('%03s', $nextNumber);
+        }
+
+        $course = Course::create($rec);
+        $rec['id'] = $course->id;
+
+        // Create the blade template view file
+        $viewPath = resource_path("views/courses/{$rec['slug']}.blade.php");
+        $viewDir = dirname($viewPath);
+
+        // Ensure the directory exists
+        if (!file_exists($viewDir)) {
+            mkdir($viewDir, 0755, true);
+        }
+
+        // Write the message content to the blade view file
+        file_put_contents($viewPath, $rec['message']);
+
+        return response()->json($course);
+    }
+
+    public function uploadPoster(Request $request, int|string $id)
+    {
+        if ($request->hasFile('poster')) {
+            $file     = $request->file('poster');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('uploads', $filename);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No file uploaded',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'poster' => $filename
+        ]);
+    }
+
+    public function uploadInstructorPhoto(Request $request, int|string $id)
+    {
+        if ($request->hasFile('instructor_photo')) {
+            $file     = $request->file('instructor_photo');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('uploads', $filename);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No file uploaded',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'instructor_photo' => $filename
+        ]);
     }
 
     /**

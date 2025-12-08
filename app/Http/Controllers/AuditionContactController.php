@@ -6,7 +6,6 @@ use App\Models\Audition;
 use App\Models\AuditionContact;
 use App\Models\Show;
 use App\Models\SiteConfig;
-use App\Util\SendGridUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,7 +17,6 @@ class AuditionContactController extends Controller
      * Validates and creates a contact record for someone interested in auditioning
      * for a specific role. Retrieves related audition and show information,
      * prepares an email notification to the director, and stores the contact
-     * with the SendGrid response.
      *
      * @param Request $request Contains contact info (name, email, phone) and role details
      * @return JsonResponse The created audition contact record or validation errors
@@ -74,15 +72,9 @@ class AuditionContactController extends Controller
             . "<br /><br />"
             . $auditionContact['body'];
 
-        //   $response = SendGridUtil::send('Audition Contact', $auditionContact['name'], $auditionContact['email'], $toName, $toEmail, 'Audition Request for ' . $show->name, $body);
-
-        //   $auditionContact->sendgrid_response = json_encode($response, JSON_PRETTY_PRINT);
+        // mc-todo: send email using MailerSend
 
         $auditionContact->save();
-
-        // if ($response['statusCode'] != 202) {
-        //     SendGridUtil::send('Error', $auditionContact['name'], $auditionContact['email'], 'ACT Errors', $config['dev_email'], 'Error with Audition Request for ' . $show->name, $body);
-        // }
 
         return response()->json(['response' => $auditionContact]);
     }

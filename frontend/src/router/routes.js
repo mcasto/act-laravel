@@ -348,7 +348,26 @@ const routes = [
               order: 25,
             },
           },
+          {
+            name: "Edit Course",
+            path: "edit-course/:id",
+            component: () => import("src/pages/AdminEditCourse.vue"),
+            beforeEnter: async (to) => {
+              const store = useStore();
 
+              store.admin.editCourse = await callApi({
+                path: `/admin/courses/${to.params.id}`,
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              dash: false,
+            },
+          },
           {
             name: "Site Config",
             path: "site-config",
