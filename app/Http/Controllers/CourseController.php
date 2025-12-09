@@ -122,6 +122,54 @@ class CourseController extends Controller
         return response()->json($course);
     }
 
+    public function update(int $id, Request $request): JsonResponse
+    {
+        $course = Course::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'name'             => 'required|string|max:255',
+            'instructor_name'  => 'required|string|max:255',
+            'instructor_email' => 'required|email|max:255',
+            'enrollment_start' => 'required|date',
+            'enrollment_end'   => 'required|date|after_or_equal:enrollment_start',
+            'cost'             => 'required|numeric|min:0',
+            'poster'           => 'required|string|max:255',
+            'tagline'          => 'required|string|max:255',
+            'location'         => 'required|string|max:255',
+            'fixr'             => 'nullable|string|max:255',
+            'instructor_photo' => 'required|string|max:255',
+            'instructor_info'  => 'required|string',
+            'message'         => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        $rec = $validator->validated();
+
+        $course->update($rec);
+
+        // Update the blade template view file
+        $viewPath = resource_path("views/courses/{$course->slug}.blade.php");
+
+        // Write the message content to the blade view file
+        file_put_contents($viewPath, $rec['message']);
+
+        return response()->json($course);
+    }
+
+    public function destroy(int $id)
+    {
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return response()->json(['status' => 'success']);
+    }
+
     public function uploadPoster(Request $request, int|string $id)
     {
         if ($request->hasFile('poster')) {

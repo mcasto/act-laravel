@@ -165,6 +165,10 @@ Route::middleware('auth:sanctum')
     ->post('/admin/courses/instructor/{id}', [CourseController::class, 'uploadInstructorPhoto']);
 Route::middleware('auth:sanctum')
     ->post('/admin/courses', [CourseController::class, 'store']);
+Route::middleware('auth:sanctum')
+    ->put('/admin/courses/{id}', [CourseController::class, 'update']);
+Route::middleware('auth:sanctum')
+    ->delete('/admin/courses/{id}', [CourseController::class, 'destroy']);
 
 /**
  * Gallery Routes

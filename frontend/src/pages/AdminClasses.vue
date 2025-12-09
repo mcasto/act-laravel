@@ -26,7 +26,13 @@
       </template>
       <template #body-cell-actions="props">
         <q-td align="right">
-          <q-btn color="negative" icon="delete" round flat />
+          <q-btn
+            color="negative"
+            icon="delete"
+            round
+            flat
+            @click="onDelete(props.row)"
+          />
           <q-btn color="primary" icon="edit" round flat />
         </q-td>
       </template>
@@ -36,6 +42,8 @@
 
 <script setup>
 import { format } from "date-fns";
+import { Notify } from "quasar";
+import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
 
@@ -75,5 +83,45 @@ const columns = [
 
 const editing = ref(null);
 
-console.log(store.admin.courses);
+const onDelete = (course) => {
+  Notify.create({
+    type: "warning",
+    position: "center",
+    html: true,
+    message: `Are you sure you want to delete <em>${course.name}</em>? This action cannot be undone.`,
+    actions: [
+      {
+        label: "No",
+        color: "negative",
+      },
+      {
+        color: "positive",
+        label: "Yes",
+        handler: async () => {
+          const response = await callApi({
+            path: `/admin/courses/${course.id}`,
+            method: "delete",
+            useAuth: true,
+          });
+          if (response.status == "success") {
+            store.admin.courses = store.admin.courses.filter(
+              (c) => c.id !== course.id
+            );
+            Notify.create({
+              type: "positive",
+              message: `Course <em>${course.name}</em> has been deleted.`,
+              html: true,
+            });
+          } else {
+            Notify.create({
+              type: "negative",
+              message: `Failed to delete course <em>${course.name}</em>.`,
+              html: true,
+            });
+          }
+        },
+      },
+    ],
+  });
+};
 </script>
