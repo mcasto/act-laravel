@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketSaleMailer;
 use App\Models\Show;
+use Illuminate\Support\Facades\Storage;
 
 class FixrWebhooksController extends Controller
 {
@@ -33,6 +34,9 @@ class FixrWebhooksController extends Controller
      */
     public function create(Request $request)
     {
+        $filename = "logs/fixr_webhook_" . date('Y_m_d_H_i_s') . ".log";
+        Storage::put($filename, print_r($request->all(), true));
+
         try {
             $validated = $request->validate([
                 'payload' => 'required|array',
