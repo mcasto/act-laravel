@@ -75,12 +75,12 @@ class ImageController extends Controller
         $extension = $image->guessExtension();
 
         $filename = $request->input('filename');
+
         $filename = basename(parse_url($filename, PHP_URL_PATH)); // strip any timestamps generated to refresh the image in the frontend
         $filename = pathinfo($filename, PATHINFO_FILENAME) . '.' . $extension;
 
-        $pathName = storage_path('public/images/' . $filename);
         $path     = $request->file('image')->storeAs(
-            'images',
+            'posters',
             $filename,
             'public'
         );

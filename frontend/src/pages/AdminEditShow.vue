@@ -17,7 +17,7 @@
                   :form-fields="[
                     {
                       name: 'filename',
-                      value: `${store.admin.show.poster}.jpeg`,
+                      value: `${store.admin.show.poster}`,
                     },
                   ]"
                   field-name="image"
