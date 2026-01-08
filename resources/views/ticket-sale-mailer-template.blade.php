@@ -27,6 +27,9 @@
     </div>
 
     <div>
+        <strong>Quantity:</strong> {{ $ticketData['quantity'] ?? 1 }}
+    </div>
+    <div>
         <strong>Sold At:</strong> {{ \Carbon\Carbon::parse($ticketData['sold_at'])->format('M j, Y g:i A') }}
     </div>
 </div>

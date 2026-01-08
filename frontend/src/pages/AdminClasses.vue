@@ -33,7 +33,13 @@
             flat
             @click="onDelete(props.row)"
           />
-          <q-btn color="primary" icon="edit" round flat />
+          <q-btn
+            color="primary"
+            icon="edit"
+            round
+            flat
+            :to="{ name: 'admin-edit-course', params: { id: props.row.id } }"
+          />
         </q-td>
       </template>
     </q-table>

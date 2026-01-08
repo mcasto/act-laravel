@@ -27,7 +27,6 @@
         animated
         navigation
         padding
-        arrows
         height="52vh"
         class="rounded-borders"
         ref="carousel"
@@ -46,6 +45,31 @@
             ></q-img>
           </router-link>
         </q-carousel-slide>
+
+        <template v-slot:control>
+          <q-carousel-control position="bottom-left" :offset="[18, 18]">
+            <q-btn
+              push
+              rounded
+              color="primary"
+              text-color="white"
+              label="Previous"
+              @click="carousel.previous()"
+              :disable="firstSlide"
+            />
+          </q-carousel-control>
+          <q-carousel-control position="bottom-right" :offset="[18, 18]">
+            <q-btn
+              push
+              rounded
+              color="primary"
+              text-color="white"
+              label="Next"
+              @click="carousel.next()"
+              :disable="lastSlide"
+            />
+          </q-carousel-control>
+        </template>
       </q-carousel>
 
       <div class="text-center">

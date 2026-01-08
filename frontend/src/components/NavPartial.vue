@@ -43,9 +43,9 @@ const store = useStore();
 const routes = store.router
   .getRoutes()
   .filter(({ meta }) => meta.nav && !meta.admin)
-  .map(({ name, path }) => {
+  .map(({ meta, path }) => {
     return {
-      name,
+      name: meta.label,
       path,
     };
   });

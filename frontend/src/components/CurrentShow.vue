@@ -18,7 +18,7 @@
   <div v-else>
     <q-toolbar class="q-py-none">
       <q-toolbar-title class="text-center">
-        {{ show.active ? "Currently Playing!" : "In Production" }}
+        {{ show.active ? "Currently Playing!" : "Up Next" }}
       </q-toolbar-title>
     </q-toolbar>
     <q-separator></q-separator>

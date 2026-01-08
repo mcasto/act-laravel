@@ -11,11 +11,9 @@
 
     <div
       class="absolute-center text-no-wrap q-pb-xl text-blue-grey-2 text-center"
-      :class="Screen.lt.sm ? 'text-h5' : 'text-h2'"
+      :class="Screen.lt.sm ? 'text-h5' : 'text-h3'"
     >
-      Azuay Community
-      <div class="q-my-xs" />
-      Theater
+      Azuay Community Theater
     </div>
   </div>
 </template>

@@ -50,7 +50,7 @@ const routes = store.router
   })
   .filter(({ meta, aliasOf }) => meta.nav && meta.admin && !aliasOf)
   .filter(({ meta }) => meta.dash)
-  .map(({ name, path }) => {
+  .map(({ meta, path }) => {
     const permissionLevelRequired = path.replace("/admin/", "");
     let permissionLevel = store.admin.user.permissions.find(
       ({ permission_level }) =>
@@ -64,7 +64,7 @@ const routes = store.router
     const icon = path.split("/").pop();
 
     return {
-      name,
+      name: meta.label,
       path,
       permissionLevel,
       icon: `/images/admin-dashboard/${icon}.png`,

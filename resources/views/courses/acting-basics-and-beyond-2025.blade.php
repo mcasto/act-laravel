@@ -1,5 +1,5 @@
 <div>
-    <p>
+    <p><b>Minimum Age: 21</b></p><p>
         So, you want to act?
     </p>
 

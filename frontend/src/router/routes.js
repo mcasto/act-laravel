@@ -16,24 +16,24 @@ const routes = [
     },
     children: [
       {
-        name: "Home",
+        name: "home",
         path: "",
         component: () => import("pages/IndexPage.vue"),
 
-        meta: { nav: true },
+        meta: { nav: true, label: "Home" },
       },
       {
-        name: "Season",
+        name: "season",
         path: "season",
         component: () => import("pages/SeasonPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.seasonShows();
         },
-        meta: { nav: true },
+        meta: { nav: true, label: "Season" },
       },
       {
-        name: "Audition",
+        name: "audition",
         path: "audition",
         component: () => import("pages/AuditionPage.vue"),
         beforeEnter: async () => {
@@ -46,6 +46,7 @@ const routes = [
           sortOrder: 1,
           slug: "audition",
           conditional: "audition",
+          label: "Audition",
           get display() {
             const store = useStore();
             if (!store.audition) {
@@ -57,7 +58,7 @@ const routes = [
         },
       },
       {
-        name: "Classes",
+        name: "classes",
         path: "classes",
         component: () => import("pages/CoursesPage.vue"),
         beforeEnter: async (to, from, next) => {
@@ -77,6 +78,7 @@ const routes = [
           sortOrder: 1,
           slug: "classes",
           conditional: "courses",
+          label: "Classes",
           get display() {
             const store = useStore();
             return store.courses.length > 0;
@@ -84,43 +86,60 @@ const routes = [
         },
       },
       {
-        name: "Volunteer",
+        name: "volunteer",
         path: "volunteer",
         component: () => import("pages/VolunteerPage.vue"),
-        meta: { nav: false, global: true, sortOrder: 1, slug: "volunteer" },
+        meta: {
+          nav: false,
+          global: true,
+          sortOrder: 1,
+          slug: "volunteer",
+          label: "Volunteer",
+        },
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.getSkills();
         },
       },
       {
-        name: "Find Us",
+        name: "find-us",
         path: "find-us",
         component: () => import("pages/SnippetPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.getSnippet(to.meta.slug);
         },
-        meta: { nav: false, global: true, sortOrder: 1, slug: "find-us" },
+        meta: {
+          nav: false,
+          global: true,
+          sortOrder: 1,
+          slug: "find-us",
+          label: "Find Us",
+        },
       },
       {
-        name: "Join Mailing List",
+        name: "join-mailing-list",
         path: "join-mailing-list",
         component: () => import("pages/JoinMailingList.vue"),
-        meta: { nav: false, global: true, sortOrder: 1 },
+        meta: {
+          nav: false,
+          global: true,
+          sortOrder: 1,
+          label: "Join Mailing List",
+        },
       },
       {
-        name: "About us",
+        name: "about-us",
         path: "about-us",
         component: () => import("pages/SnippetPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.getSnippet(to.meta.slug);
         },
-        meta: { nav: true, slug: "about-us" },
+        meta: { nav: true, slug: "about-us", label: "About us" },
       },
       {
-        name: "Support Us",
+        name: "support-us",
         path: "support-us",
         component: () => import("pages/SupportUs.vue"),
         beforeEnter: async () => {
@@ -130,48 +149,54 @@ const routes = [
             method: "get",
           });
         },
-        meta: { nav: true },
+        meta: { nav: true, label: "Support Us" },
       },
       {
-        name: "Be An Angel",
+        name: "be-an-angel",
         path: "angel",
         component: () => import("pages/AngelPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
           store.angelConfig = await callApi({ path: "/angels", method: "get" });
         },
-        meta: { nav: true, global: true, sortOrder: 1, slug: "donate" },
+        meta: {
+          nav: true,
+          global: true,
+          sortOrder: 1,
+          slug: "donate",
+          label: "Be An Angel",
+        },
       },
       {
-        name: "Our ACT Angels",
+        name: "our-act-angels",
         path: "our-act-angels",
         component: () => import("pages/OurAngels.vue"),
         beforeEnter: async () => {
           const store = useStore();
           store.ourAngels = await callApi({ path: "/angels", method: "get" });
         },
-        meta: { nav: true },
+        meta: { nav: true, label: "Our ACT Angels" },
       },
       {
-        name: "News",
+        name: "news",
         path: "news",
-        meta: { nav: true, external: true },
+        meta: { nav: true, external: true, label: "News" },
         beforeEnter: (to, from) => {
           window.open("https://www.facebook.com/cuencacommunitytheater");
           return false;
         },
       },
       {
-        name: "Contact Us",
+        name: "contact-us",
         path: "contact",
         component: () => import("pages/ContactPage.vue"),
-        meta: { nav: true },
+        meta: { nav: true, label: "Contact Us" },
       },
       {
-        name: "Gallery",
+        name: "gallery",
         path: "gallery",
         component: () => import("pages/GalleryPage.vue"),
-        meta: { nav: true },
+        meta: { nav: true, label: "Gallery" },
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.getGallery();
@@ -179,7 +204,7 @@ const routes = [
       },
 
       {
-        name: "Show Details",
+        name: "show-details",
         path: "show-details/:slug",
         component: () => import("pages/ShowDetails.vue"),
         beforeEnter: async (to, from) => {
@@ -188,62 +213,69 @@ const routes = [
             ({ slug }) => slug == to.params.slug
           );
         },
-        meta: { nav: false },
+        meta: { nav: false, label: "Show Details" },
       },
       {
-        name: "Purchase Tickets",
+        name: "purchase-tickets",
         path: "purchase-tickets",
         component: () => import("pages/PurchaseTickets.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
           await store.homeShows();
         },
-        meta: { nav: false },
+        meta: { nav: false, label: "Purchase Tickets" },
       },
       {
-        name: "Class Details",
+        name: "class-details",
         path: "class-details/:slug",
         component: () => import("pages/CourseInfo.vue"),
         beforeEnter: async (to) => {
           const store = useStore();
           await store.classDetails(to.params.slug);
         },
-        meta: { nav: false },
+        meta: { nav: false, label: "Class Details" },
       },
       {
-        name: "Flex Purchase",
+        name: "flex-purchase",
         path: "flex-purchase",
         component: () => import("pages/FlexPurchase.vue"),
         beforeEnter: async () => {
           const store = useStore();
           store.flexshowPurchaseConfig();
         },
-        meta: { nav: false },
+        meta: { nav: false, label: "Flex Purchase" },
       },
       {
-        name: "Login",
+        name: "login",
         path: "sign-in",
         component: () => import("pages/SignIn.vue"),
+        meta: { label: "Login" },
       },
 
       /**
        * Admin Routes
        */
       {
-        name: "Admin",
+        name: "admin",
         path: "admin",
         component: () => import("src/pages/AdminPage.vue"),
-        meta: { requireAuth: true, admin: true, nav: false },
+        meta: { requireAuth: true, admin: true, nav: false, label: "Admin" },
         children: [
           {
-            name: "Dashboard",
+            name: "admin-dashboard",
             path: "dashboard",
             alias: "",
             component: () => import("src/pages/AdminDashboard.vue"),
-            meta: { requireAuth: true, admin: true, nav: true, order: 10 },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              order: 10,
+              label: "Dashboard",
+            },
           },
           {
-            name: "Shows",
+            name: "admin-shows",
             path: "shows",
             component: () => import("src/pages/AdminShows.vue"),
             beforeEnter: (to, from) => {
@@ -256,10 +288,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 15,
+              label: "Shows",
             },
           },
           {
-            name: "Ticket Sales",
+            name: "admin-ticket-sales",
             path: "ticket-sales",
             component: () => import("src/pages/AdminTicketSales.vue"),
             beforeEnter: async () => {
@@ -276,10 +309,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 18,
+              label: "Ticket Sales",
             },
           },
           {
-            name: "Our Angels",
+            name: "admin-our-angels",
             path: "our-angels",
             component: () => import("src/pages/AdminOurAngels.vue"),
             beforeEnter: (to, from) => {
@@ -292,10 +326,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 55,
+              label: "Our Angels",
             },
           },
           {
-            name: "Announcement Banner",
+            name: "admin-announcement-banner",
             path: "announcement-banner",
 
             component: () => import("src/pages/AdminAnnouncementBanner.vue"),
@@ -309,10 +344,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 20,
+              label: "Announcement Banner",
             },
           },
           {
-            name: "Flex Purchase Config",
+            name: "admin-flex-purchase-config",
             path: "flex-purchase-config",
             component: () => import("src/pages/AdminFlexPurchase.vue"),
             beforeEnter: async () => {
@@ -325,10 +361,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 21,
+              label: "Flex Purchase Config",
             },
           },
           {
-            name: "Classes",
+            name: "admin-classes",
             path: "classes",
             component: () => import("src/pages/AdminClasses.vue"),
             beforeEnter: async () => {
@@ -346,10 +383,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 25,
+              label: "Classes",
             },
           },
           {
-            name: "Edit Course",
+            name: "admin-edit-course",
             path: "edit-course/:id",
             component: () => import("src/pages/AdminEditCourse.vue"),
             beforeEnter: async (to) => {
@@ -366,10 +404,11 @@ const routes = [
               admin: true,
               nav: false,
               dash: false,
+              label: "Edit Course",
             },
           },
           {
-            name: "Site Config",
+            name: "admin-site-config",
             path: "site-config",
             component: () => import("src/pages/AdminSiteConfig.vue"),
             beforeEnter: async (to, from) => {
@@ -382,10 +421,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 30,
+              label: "Site Config",
             },
           },
           {
-            name: "Contacts",
+            name: "admin-contacts",
             path: "contacts",
             component: () => import("src/pages/AdminContacts.vue"),
             beforeEnter: async () => {
@@ -403,10 +443,11 @@ const routes = [
               nav: true,
               dash: true,
               order: 50,
+              label: "Contacts",
             },
           },
           {
-            name: "Users",
+            name: "admin-users",
             path: "users",
             component: () => import("src/pages/AdminUsers.vue"),
             meta: {
@@ -415,6 +456,7 @@ const routes = [
               nav: true,
               dash: true,
               order: 60,
+              label: "Users",
             },
             beforeEnter: async (to, from) => {
               const store = useStore();
@@ -422,44 +464,64 @@ const routes = [
             },
           },
           {
-            name: "Edit Show",
+            name: "admin-edit-show",
             path: "edit-show/:id",
             component: () => import("src/pages/AdminEditShow.vue"),
             beforeEnter: async (to) => {
               const store = useStore();
               await store.editShow(to.params.id);
             },
-            meta: { requireAuth: true, admin: true, nav: false },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              label: "Edit Show",
+            },
           },
           {
-            name: "Audition Config",
+            name: "admin-audition-config",
             path: "audition-config",
             component: () => import("src/pages/AdminAuditionConfig.vue"),
             beforeEnter: async () => {
               const store = useStore();
               await store.getAuditionConfig();
             },
-            meta: { requireAuth: true, admin: true, nav: false },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              label: "Audition Config",
+            },
           },
           {
-            name: "Show Gallery",
+            name: "admin-show-gallery",
             path: "gallery",
             component: () => import("src/pages/AdminGallery.vue"),
             beforeEnter: async (to) => {
               const store = useStore();
             },
-            meta: { requireAuth: true, admin: true, nav: false },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              label: "Show Gallery",
+            },
           },
 
           {
-            name: "New Show",
+            name: "admin-new-show",
             path: "new-show",
             component: () => import("src/pages/AdminEditShow.vue"),
             beforeEnter: async () => {
               const store = useStore();
               await store.newShow();
             },
-            meta: { requireAuth: true, admin: true, nav: false },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              label: "New Show",
+            },
           },
           // {
           //   name: "Tickets",

@@ -230,22 +230,20 @@ class CourseController extends Controller
      * Get detailed information for a specific course
      *
      * Retrieves course details by slug, including session information and
-     * HTML content from the course's snippet file.
+     * HTML content rendered from the course's blade view.
      *
      * @param string $slug The course slug identifier
      * @return JsonResponse Course data with HTML content
      *
      * @source
      *   Database Model: Course (reads with sessions relationship)
-     *   File: storage/app/public/snippets/courses/{slug}.html
+     *   View: resources/views/courses/{slug}.blade.php
      */
     public function courseDetails(string $slug): JsonResponse
     {
         $course = Course::with(['sessions'])->where('slug', '=', $slug)->first()->toArray();
 
-        $snippetPath = storage_path("app/public/snippets/courses/{$course['slug']}.html");
-
-        $course['html'] = file_get_contents($snippetPath);
+        $course['html'] = view("courses.{$slug}")->render();
 
         return response()->json($course);
     }

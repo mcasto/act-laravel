@@ -50,7 +50,7 @@ const routes = store.router
     return a.meta.order - b.meta.order;
   })
   .filter(({ meta, aliasOf }) => meta.nav && meta.admin && !aliasOf)
-  .map(({ name, path }) => {
+  .map(({ meta, path }) => {
     const permissionLevelRequired = path.replace("/admin/", "");
     let permissionLevel = store.admin.user.permissions.find(
       ({ permission_level }) =>
@@ -62,7 +62,7 @@ const routes = store.router
     }
 
     return {
-      name,
+      name: meta.label,
       path,
       permissionLevel,
     };

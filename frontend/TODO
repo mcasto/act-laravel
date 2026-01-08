@@ -1,7 +1,8 @@
 ☐ add editors to `admin/site-config` for standard button text
 
 ☐ class management
-☐ class page
+☐ add "course poster" handler to AdminEditCourse.vue
+✔ class page @done(25-12-18 08:57)
 ☐ fix class `/images` calls (Crap. I'm not sure what this means)
 
 ---
