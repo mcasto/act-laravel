@@ -169,16 +169,6 @@ const routes = [
         },
       },
       {
-        name: "our-act-angels",
-        path: "our-act-angels",
-        component: () => import("pages/OurAngels.vue"),
-        beforeEnter: async () => {
-          const store = useStore();
-          store.ourAngels = await callApi({ path: "/angels", method: "get" });
-        },
-        meta: { nav: true, label: "Our ACT Angels" },
-      },
-      {
         name: "news",
         path: "news",
         meta: { nav: true, external: true, label: "News" },

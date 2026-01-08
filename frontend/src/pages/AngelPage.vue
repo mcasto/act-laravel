@@ -56,7 +56,7 @@
 <script setup>
 import { useStore } from "src/stores/store";
 import AngelDonateDialog from "src/components/AngelDonateDialog.vue";
-import OurAngels from "./OurAngels.vue";
+import OurAngels from "../components/OurAngels.vue";
 import { ref } from "vue";
 
 const store = useStore();

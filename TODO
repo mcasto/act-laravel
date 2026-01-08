@@ -1,10 +1,1 @@
-Questions for Rick:
-    ☐ Do the fields in site config make sense?
-        - ticket_price
-        - ticket_email
-        - contact_email
-        - dev_email
-        - sold_out_target
-        - snippets
 
-☐ add instructor photo & poster to Course model to append/delete automatically

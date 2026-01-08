@@ -86,12 +86,19 @@
       </template>
     </q-splitter>
 
-    <q-drawer v-model="performancesDrawer" bordered :width="500">
-      <performances-drawer
-        @close="performancesDrawer = false"
-        @update="store.upsertPerformances"
-      ></performances-drawer>
-    </q-drawer>
+    <q-dialog
+      v-model="performancesDrawer"
+      :maximized="false"
+      transition-show="slide-left"
+      transition-hide="slide-right"
+    >
+      <q-card style="width: 500px; max-width: 90vw;">
+        <performances-drawer
+          @close="performancesDrawer = false"
+          @update="store.upsertPerformances"
+        ></performances-drawer>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
