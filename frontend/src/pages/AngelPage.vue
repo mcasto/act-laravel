@@ -1,54 +1,62 @@
 <template>
-  <div class="q-px-xl q-mt-md">
-    <div class="text-h6" v-html="config.title"></div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="q-px-xl q-mt-md">
+        <div class="text-h6" v-html="config.title"></div>
 
-    <p v-html="config.header"></p>
+        <p v-html="config.header"></p>
 
-    <div class="q-mb-md" v-html="config.thanks"></div>
+        <div class="q-mb-md" v-html="config.thanks"></div>
 
-    <div
-      class="angel-level"
-      id="act-angel"
-      v-for="level of config.levels"
-      :key="level.id"
-    >
-      <div class="text-bold q-mt-lg q-mb-xs">
-        <span class="q-mr-md">
-          {{ level.label }}
-        </span>
-        <q-btn
-          :label="`Donate ${level.min_amount_formatted}`"
-          color="primary"
-          @click="onDonateClick(level)"
-        ></q-btn>
-      </div>
-
-      <q-list dense bordered separator class="q-mx-lg">
-        <q-item
-          v-for="(item, index) of level.benefits"
-          :key="`${level.id}-benefit-${index}`"
+        <div
+          class="angel-level"
+          id="act-angel"
+          v-for="level of config.levels"
+          :key="level.id"
         >
-          <q-item-section>
-            <q-item-label v-html="item"> </q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </div>
+          <div class="text-bold q-mt-lg q-mb-xs">
+            <span class="q-mr-md">
+              {{ level.label }}
+            </span>
+            <q-btn
+              :label="`Donate ${level.min_amount_formatted}`"
+              color="primary"
+              @click="onDonateClick(level)"
+            ></q-btn>
+          </div>
 
-    <angel-donate-dialog
-      v-model="dialog.visible"
-      :buttons="dialog.buttons"
-      :fixr-link="dialog.fixrLink"
-      v-model:paymentMethod="dialog.paymentMethod"
-      :payment-methods="dialog.paymentMethods"
-      :title="dialog.title"
-    ></angel-donate-dialog>
+          <q-list dense bordered separator class="q-mx-lg">
+            <q-item
+              v-for="(item, index) of level.benefits"
+              :key="`${level.id}-benefit-${index}`"
+            >
+              <q-item-section>
+                <q-item-label v-html="item"> </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+
+        <angel-donate-dialog
+          v-model="dialog.visible"
+          :buttons="dialog.buttons"
+          :fixr-link="dialog.fixrLink"
+          v-model:paymentMethod="dialog.paymentMethod"
+          :payment-methods="dialog.paymentMethods"
+          :title="dialog.title"
+        ></angel-donate-dialog>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <our-angels></our-angels>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useStore } from "src/stores/store";
 import AngelDonateDialog from "src/components/AngelDonateDialog.vue";
+import OurAngels from "./OurAngels.vue";
 import { ref } from "vue";
 
 const store = useStore();

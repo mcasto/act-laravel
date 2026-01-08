@@ -114,7 +114,7 @@ class ShowController extends Controller
     {
         $seasonDates = $this->getTheaterSeasonDates(); // Get season start & end dates
 
-        $shows = Show::with("performances")->whereHas('performances', function ($query) use ($seasonDates) {
+        $shows = Show::with(["performances", 'galleryImages'])->whereHas('performances', function ($query) use ($seasonDates) {
             $query->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
         })->get();
 

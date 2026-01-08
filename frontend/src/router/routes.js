@@ -157,6 +157,7 @@ const routes = [
         component: () => import("pages/AngelPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
+          store.ourAngels = await callApi({ path: "/angels", method: "get" });
           store.angelConfig = await callApi({ path: "/angels", method: "get" });
         },
         meta: {

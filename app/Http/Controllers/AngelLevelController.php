@@ -18,6 +18,7 @@ class AngelLevelController extends Controller
             : null;
 
         return [
+            'header' => view('angel-header')->render(),
             'levels' => AngelLevel::orderBy('min_amount', 'desc')
                 ->with('angels')
                 ->get(),

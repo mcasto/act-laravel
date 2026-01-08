@@ -84,7 +84,7 @@ const alwaysVisibleLinks = [
     color: "secondary",
   },
   {
-    label: "Join Mailing List",
+    label: "Join Our Mailing List",
     url:
       "https://actseats.us20.list-manage.com/subscribe?u=0022128dcf342c7a58eb81790&id=dff3d650cc",
     external: true,

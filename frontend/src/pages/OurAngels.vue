@@ -1,11 +1,11 @@
 <template>
   <div class="flex justify-center q-mt-md">
     <div class="text-center">
-      <q-img
+      <!-- <q-img
         src="/images/logo-home-2025.png"
         width="180px"
         class="q-mb-md"
-      ></q-img>
+      ></q-img> -->
       <div class="text-h5 text-bold">
         {{ store.ourAngels.config.title }}
       </div>
