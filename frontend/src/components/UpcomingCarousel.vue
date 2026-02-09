@@ -79,6 +79,15 @@
           </span>
           {{ ticketsStart() }}
         </div>
+        <div v-if="curShow?.audition" class="q-mt-sm">
+          <q-btn
+            color="primary"
+            label="Audition for this Show!"
+            to="/audition"
+            rounded
+            push
+          />
+        </div>
       </div>
     </div>
   </div>

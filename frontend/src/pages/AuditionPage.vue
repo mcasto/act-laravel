@@ -61,7 +61,7 @@ const store = useStore();
 console.log({ audition: store.audition });
 
 const audition = computed(() => {
-  return store.home.currentShow.audition;
+  return store.audition;
 });
 
 const show = computed(() => {
