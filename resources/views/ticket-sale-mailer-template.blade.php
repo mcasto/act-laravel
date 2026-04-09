@@ -27,6 +27,9 @@
     </div>
 
     <div>
+        <strong>Payment Method:</strong> {{ $ticketData['payment_method'] ?? 'N/A' }}
+    </div>
+    <div>
         <strong>Quantity:</strong> {{ $ticketData['quantity'] ?? 1 }}
     </div>
     <div>

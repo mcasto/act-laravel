@@ -11,8 +11,14 @@ class Angel extends Model
 {
     protected $fillable = [
         'angel_level_id',
-        'name',
-        'founding_angel'
+        'recognition_name',
+        'last_name',
+        'first_name',
+        'benefit',
+        'donation_amount',
+        'payment_method_id',
+        'founding_angel',
+        'season',
     ];
 
     public function angelLevel(): BelongsTo

@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TicketSale;
 
 class FixrWebhookResponse extends Model
 {
@@ -33,11 +34,11 @@ class FixrWebhookResponse extends Model
  }
 
  /**
-  * Relationship to tickets
+  * Relationship to ticket sales
   */
- public function tickets()
+ public function ticketSales()
  {
-  return $this->hasMany(Ticket::class);
+  return $this->hasMany(TicketSale::class);
  }
 
  /**

@@ -1,5 +1,34 @@
-☐ In `Upcoming Shows`, display an `audition` link if audition is available
-☐ For reserve tix, add form with name, email, perf date for paypal & transfer options
+✔ In `Upcoming Shows`, display an `audition` link if audition is available @done(26-02-09 17:54)
+
+☐ For reserve tix, add form with name, email, perf date for paypal & bank transfer options
+
+☐ Add flex purchase option (when they enter email address, determine how many flex tix they have remaining & provide a link to send an email detailing their flex usages)
+
+☐ Add an admin section for comp tix--allows admin to add emails to comp for current show, email those people a URL with a unique id and they have to enter name of person picking up ticket and the performance they're going to attend.
+
+☐ Build flex purch page
+
+Ticket fields (paypal, transfer, flex):
+    - name
+    - whatsapp
+    - email address
+    - performance date
+    - subject = "purchased tickets (paypal)"
+
+angel:
+    - last_name
+    - first_name
+    - benefit (text)
+    - email
+    - angel_level (fk)
+    - payment_type
+
+Ticket Sales:
+    ☐ Email templates
+    Tables:
+        ☐ flex
+        ☐ angel_levels
+
 
 ---
 

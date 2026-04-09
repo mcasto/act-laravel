@@ -12,6 +12,7 @@ use App\Http\Controllers\FixrWebhooksController;
 use App\Http\Controllers\FlexPurchaseController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\PatronController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SiteConfigController;
@@ -260,4 +261,14 @@ Route::controller(TicketSaleController::class)
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/ticket-sales', 'index');
+    });
+
+/**
+ * Patron Routes
+ */
+Route::get('/patrons/lookup', [PatronController::class, 'lookup']);
+
+Route::controller(TicketSaleController::class)
+    ->group(function () {
+        Route::post('/ticket-sales', 'store');
     });

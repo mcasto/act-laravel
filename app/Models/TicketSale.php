@@ -2,28 +2,35 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TicketSale extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'show',
-        'performance',
+        'patron_id',
+        'payment_method_id',
+        'transaction_id',
         'performance_id',
         'sold_at',
         'quantity',
-        'first_name',
-        'last_name',
-        'email',
-        'mobile_number',
-        'contact_preferences_user_response'
     ];
 
-    /**
-     * relationship to performance
-     */
-    public function performance()
+    public function patron(): BelongsTo
+    {
+        return $this->belongsTo(Patron::class);
+    }
+
+    public function performance(): BelongsTo
     {
         return $this->belongsTo(Performance::class);
+    }
+
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 }

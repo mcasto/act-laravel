@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
-            //
+        Schema::create('angel_flex', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+
+            // mc-todo: build this
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('courses', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('angel_flex');
     }
 };

@@ -23,19 +23,25 @@
     </q-toolbar>
     <q-separator></q-separator>
 
-    <div class="row q-gutter-x-sm q-pa-md">
-      <div class="col-12 col-md-4">
+    <div id="show-details" class="row q-gutter-x-sm q-pa-md">
+      <div class="col-12 col-lg-4 text-center">
         <q-img
+          id="poster"
           :src="`/api/storage/posters/${show.poster}`"
           fit="contain"
-          style="max-height: 50vh;"
           v-if="show?.poster"
-          :class="Screen.gt.xs ? 'q-ml-xl' : ''"
+          :style="
+            Screen.lt.lg
+              ? 'max-height: 50vh; max-width: 60%; margin: 0 auto;'
+              : 'max-height: 50vh;'
+          "
+          :class="Screen.gt.md ? 'q-ml-xl' : ''"
         ></q-img>
       </div>
       <div
-        class="col-12 col-md-7 q-px-xl"
-        :class="Screen.gt.xs ? 'q-mx-lg' : ''"
+        class="col-12 col-lg-7 q-px-xl"
+        :class="Screen.gt.md ? 'q-mx-lg' : ''"
+        id="show-overview"
       >
         <div class="text-h6 text-center">
           {{ show?.name }}
@@ -117,33 +123,56 @@ const store = useStore();
 // saves some typing
 const show = computed(() => {
   const active = store.home.currentShow.performances.find(
-    ({ date }) => date == formatISO(new Date(), { representation: "date" })
+    ({ date }) => date == formatISO(new Date(), { representation: "date" }),
   );
 
   return { ...store.home.currentShow, active };
 });
 
 const performanceDates = computed(() => {
-  if (!show.value) {
-    return false;
-  }
+  if (!show.value) return false;
 
-  const performances = show.value.performances.map(({ date }) => date).sort();
-  if (performances.length == 0) {
-    return false;
-  }
+  const dates = show.value.performances
+    .map(({ date }) => parseISO(date))
+    .sort((a, b) => a - b);
 
-  let first = performances.shift();
-  let last = performances.length > 0 ? performances.pop() : first;
+  if (dates.length === 0) return false;
 
   if (show.value.tentative) {
-    return format(parseISO(first), "MMM y");
+    return format(dates[0], "MMM y");
   }
 
-  first = format(parseISO(first), "PP");
-  last = format(parseISO(last), "PP");
+  // Group into consecutive runs
+  const runs = [];
+  let run = [dates[0]];
 
-  return `${first} - ${last}`;
+  for (let i = 1; i < dates.length; i++) {
+    const diffMs = dates[i] - dates[i - 1];
+    const diffDays = Math.round(diffMs / 86400000);
+    if (diffDays === 1) {
+      run.push(dates[i]);
+    } else {
+      runs.push(run);
+      run = [dates[i]];
+    }
+  }
+  runs.push(run);
+
+  // Format each run as "Apr 17 - 19" or "Apr 17" or "Mar 29 - Apr 2"
+  const formatted = runs.map((run) => {
+    const first = run[0];
+    const last = run[run.length - 1];
+
+    if (run.length === 1) return format(first, "MMM d");
+
+    if (format(first, "MMM") === format(last, "MMM")) {
+      return `${format(first, "MMM d")} - ${format(last, "d")}`;
+    }
+
+    return `${format(first, "MMM d")} - ${format(last, "MMM d")}`;
+  });
+
+  return formatted.join(" & ");
 });
 
 const ticketsStart = computed(() => {

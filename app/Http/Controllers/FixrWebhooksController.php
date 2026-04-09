@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patron;
+use App\Models\PaymentMethod;
 use App\Models\TicketSale;
 use Carbon\Carbon;
 use Exception;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketSaleMailer;
 use App\Models\Show;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FixrWebhooksController extends Controller
 {
@@ -91,17 +93,26 @@ class FixrWebhooksController extends Controller
                 }
             }
 
+            $creditCardMethod = PaymentMethod::where('value', 'credit_card')->first();
+
             // Build records for each ticket holder
             $records = [];
             foreach ($validated['payload']['ticket_holders'] as $holder) {
+                $patron = Patron::firstOrCreate(
+                    ['email' => $holder['email']],
+                    [
+                        'first_name' => $holder['first_name'],
+                        'last_name' => $holder['last_name'],
+                        'phone' => $holder['mobile_number'],
+                    ]
+                );
+
                 $rec = [
-                    'show' => $validated['payload']['event_name'],
+                    'patron_id' => $patron->id,
+                    'payment_method_id' => $creditCardMethod?->id,
+                    'payment_method' => $creditCardMethod?->label,
+                    'transaction_id' => Str::uuid(),
                     'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil')->format('Y-m-d H:i:s'),
-                    'first_name' => $holder['first_name'],
-                    'last_name' => $holder['last_name'],
-                    'email' => $holder['email'],
-                    'mobile_number' => $holder['mobile_number'],
-                    'contact_preferences_user_response' => $holder['contact_preferences_user_response'],
                     'performance' => $performanceDateTime ? Carbon::parse($performanceDateTime)->format('Y-m-d H:i:s') : null,
                     'performance_id' => $performanceId ?? null,
                     'quantity' => $validated['payload']['quantity']

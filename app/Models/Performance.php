@@ -71,14 +71,6 @@ class Performance extends Model
     }
 
     /**
-     * relationship to tickets
-     */
-    public function tickets()
-    {
-        return $this->hasMany(Ticket::class);
-    }
-
-    /**
      * relationship to ticket sales
      */
     public function ticket_sales()

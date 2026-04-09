@@ -1,8 +1,11 @@
 <template>
   <div class="q-pa-md">
     <div class="row q-gutter-y-md">
-      <div class="col-12 col-md-3">
-        <q-img :src="`/api/storage/posters/${show.poster}`"></q-img>
+      <div class="col-12 col-md-3 text-center">
+        <q-img
+          :src="`/api/storage/posters/${show.poster}`"
+          style="max-width: 400px;"
+        ></q-img>
       </div>
       <div class="col-12 col-md-8 offset-md-1">
         <div class="text-h6 text-center">
@@ -32,6 +35,7 @@
 
         <div v-html="show.info" class="q-mt-md"></div>
 
+        <q-separator spaced></q-separator>
         <q-select
           label="Purchase Tickets For:"
           :options="performances"
@@ -47,6 +51,7 @@
           :fixr-link="performance.fixr_link"
           :payment-methods="paymentMethods"
           :buttons="show.buttons"
+          :performance="performance"
           v-model="paymentMethod"
         ></purchase-options>
       </div>
@@ -91,7 +96,7 @@ const performances = computed(() => {
     show.value.performances.map((performance) => {
       let displayDate = format(
         parseISO(`${performance.date} ${performance.start_time}`),
-        "PPp"
+        "PPp",
       );
       const soldOut = performance.sold_out == 1;
 
@@ -106,7 +111,7 @@ const performances = computed(() => {
         soldOut,
       };
     }),
-    "date"
+    "date",
   );
 });
 
@@ -127,7 +132,7 @@ const paymentMethods = computed(() => {
 
 onMounted(() => {
   const firstPerformance = (performance.value = performances.value.find(
-    ({ sold_out }) => sold_out == 0
+    ({ sold_out }) => sold_out == 0,
   ));
 
   performance.value = firstPerformance || [...performances.value].shift();

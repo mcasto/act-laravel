@@ -2,17 +2,14 @@
   <div v-if="paymentMethod">
     <q-separator spaced v-if="separator"></q-separator>
 
-    <q-toolbar flat>
-      <q-toolbar-title>
-        Purchase Options
-      </q-toolbar-title>
-    </q-toolbar>
     <q-select
       :options="paymentMethods"
       v-model="paymentMethod"
       dense
       outlined
       v-if="paymentMethods.length > 0"
+      label="Payment Method"
+      stack-label
     ></q-select>
 
     <purchase-credit
@@ -27,7 +24,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, nextTick, watch } from "vue";
 import PurchaseCredit from "./PurchaseCredit.vue";
 
 const props = defineProps([
@@ -35,6 +32,7 @@ const props = defineProps([
   "paymentMethods",
   "buttons",
   "separator",
+  "performance",
 ]);
 
 const paymentMethod = defineModel();
@@ -49,5 +47,13 @@ const details = computed(() => {
   });
 
   return config;
+});
+
+watch([paymentMethod, () => props.performance], async () => {
+  await nextTick();
+  const field = document.querySelector('[name="performance_id"]');
+  if (field && props.performance) {
+    field.value = props.performance.id;
+  }
 });
 </script>

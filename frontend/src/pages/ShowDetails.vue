@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar class="justify-end fixed">
+  <q-toolbar class="justify-end fixed z-max">
     <q-btn
       icon="fa-regular fa-circle-left"
       dense

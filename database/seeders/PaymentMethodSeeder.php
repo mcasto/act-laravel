@@ -53,5 +53,11 @@ class PaymentMethodSeeder extends Seeder
             'value'       => 'raffle',
             'user_option' => false,
         ]);
+
+        PaymentMethod::create([
+            'label'       => 'Trade',
+            'value'       => 'trade',
+            'user_option' => false,
+        ]);
     }
 }

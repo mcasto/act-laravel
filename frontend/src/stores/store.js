@@ -108,5 +108,5 @@ export const useStore = defineStore(
     persist: {
       key: "azuay-community-theater",
     },
-  }
+  },
 );

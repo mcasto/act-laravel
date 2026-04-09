@@ -67,6 +67,14 @@ class Show extends Model
     }
 
     /**
+     * Relationship to comp tickets
+     */
+    public function compTickets()
+    {
+        return $this->hasMany(CompTicket::class);
+    }
+
+    /**
      * Relationship to audition
      */
     public function audition()

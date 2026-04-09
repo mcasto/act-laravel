@@ -217,6 +217,12 @@ const routes = [
         meta: { nav: false, label: "Purchase Tickets" },
       },
       {
+        name: "ticket-confirmation",
+        path: "ticket-confirmation/:uuid",
+        component: () => import("pages/TicketConfirmation.vue"),
+        meta: { nav: false, label: "Ticket Confirmation" },
+      },
+      {
         name: "class-details",
         path: "class-details/:slug",
         component: () => import("pages/CourseInfo.vue"),
@@ -288,7 +294,7 @@ const routes = [
             component: () => import("src/pages/AdminTicketSales.vue"),
             beforeEnter: async () => {
               const store = useStore();
-              store.admin.tickets = await callApi({
+              store.admin.ticket_sales = await callApi({
                 path: "/ticket-sales",
                 method: "get",
                 useAuth: true,

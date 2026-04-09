@@ -99,14 +99,14 @@ const show = ref(null);
 const recs = computed(() => {
   if (!show.value) return [];
 
-  return store.admin.tickets.filter(
+  return store.admin.ticket_sales.filter(
     (rec) => rec.performance.show.name == show.value
   );
 });
 
 const shows = computed(() => {
   return uniq(
-    store.admin.tickets.map((rec) => {
+    store.admin.ticket_sales.map((rec) => {
       return rec.performance.show.name;
     })
   );

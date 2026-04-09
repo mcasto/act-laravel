@@ -1,15 +1,3 @@
-{{-- <div>
-    <p>PayPal requires a two-step process:
-    <ol>
-        <li>Send {{ $param }} to callanspappy@yahoo.com using the Friends and Family
-            option.</li>
-        <li><a href='actseats@gmail.com'>Email us</a> with your name, WhatsApp, and email address and the subject line
-            "{{ $subject }}." We'll email acknowledgement of receipt.</li>
-    </ol>
-    </p>
-
-</div> --}}
-
 <style>
     .q-field {
         display: flex;
@@ -51,18 +39,12 @@
 </style>
 
 <div>
-    <ol>
-        <li>Send {{ $param }} to callanspappy@yahoo.com using the Friends and Family
-            option.</li>
-    </ol>
-
-
     <fieldset style='border: 1px solid rgba(0,0,0,0.24); border-radius: 4px; padding: 12px 16px;'>
-        <legend style='font-size: 13px; color: rgba(0,0,0,0.6); padding: 0 4px;'>2. Submit this form</legend>
+        <legend style='font-size: 13px; color: rgba(0,0,0,0.6); padding: 0 4px;'>Submit this form</legend>
         <form method='post' action='/api/ticket-sales'
             onsubmit="event.preventDefault();
                 const form = event.target;
-                const errEl = document.getElementById('paypal-error');
+                const errEl = document.getElementById('flex-error');
                 errEl.textContent = '';
                 fetch('/api/ticket-sales', { method: 'POST', body: new FormData(form) })
                     .then(r => r.json().then(data => ({ ok: r.ok, data })))
@@ -77,34 +59,33 @@
                     })
                     .catch(() => { errEl.textContent = 'Network error. Please try again.'; });"
         >
-            <input type='hidden' name='type' value='paypal' />
+            <input type='hidden' name='type' value='flex' />
             <input type='hidden' name='performance_id' />
             <div class='q-field'>
-                <label for='paypal-email'>Email</label>
-                <input type='email' id='paypal-email' name='email' required
+                <label for='flex-email'>Email</label>
+                <input type='email' id='flex-email' name='email' required
                     onblur="fetch('/api/patrons/lookup?email=' + encodeURIComponent(this.value))
                         .then(r => r.ok ? r.json() : null)
-                        .then(p => { if (p) { document.getElementById('paypal-first-name').value = p.first_name; document.getElementById('paypal-last-name').value = p.last_name; document.getElementById('paypal-phone').value = p.phone; } })" />
+                        .then(p => { if (p) { document.getElementById('flex-first-name').value = p.first_name; document.getElementById('flex-last-name').value = p.last_name; document.getElementById('flex-phone').value = p.phone; } })" />
             </div>
             <div class='q-field'>
-                <label for='paypal-first-name'>First Name</label>
-                <input type='text' id='paypal-first-name' name='first_name' required />
+                <label for='flex-first-name'>First Name</label>
+                <input type='text' id='flex-first-name' name='first_name' required />
             </div>
             <div class='q-field'>
-                <label for='paypal-last-name'>Last Name</label>
-                <input type='text' id='paypal-last-name' name='last_name' required />
+                <label for='flex-last-name'>Last Name</label>
+                <input type='text' id='flex-last-name' name='last_name' required />
             </div>
             <div class='q-field'>
-                <label for='paypal-phone'>Phone</label>
-                <input type='tel' id='paypal-phone' name='phone' required />
+                <label for='flex-phone'>Phone</label>
+                <input type='tel' id='flex-phone' name='phone' required />
+            </div>
+            <div class='q-field'>
+                <label for='flex-quantity'>Number of Tickets</label>
+                <input type='number' id='flex-quantity' name='quantity' min='1' required />
             </div>
 
-            <div class='q-field'>
-                <label for='paypal-quantity'>Number of Tickets</label>
-                <input type='number' id='paypal-quantity' name='quantity' min='1' required />
-            </div>
-
-            <div id='paypal-error' style='color: #c10015; font-size: 13px; margin-bottom: 8px;'></div>
+            <div id='flex-error' style='color: #c10015; font-size: 13px; margin-bottom: 8px;'></div>
             <div class='flex justify-end'>
                 <button type='submit' class='cursor-pointer bg-primary text-white q-pa-sm'
                     style='border:none;'>PURCHASE</button>

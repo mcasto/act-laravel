@@ -198,7 +198,7 @@ class ShowController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(Show::with('performances.tickets', 'galleryImages')
+        return response()->json(Show::with('performances.ticket_sales', 'galleryImages')
             ->orderByDesc('ticket_sales_start')
             ->get());
     }
@@ -216,7 +216,7 @@ class ShowController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        return response()->json(Show::with(['performances.tickets', 'galleryImages'])->where('id', '=', $id)->first());
+        return response()->json(Show::with(['performances.ticket_sales', 'galleryImages'])->where('id', '=', $id)->first());
     }
 
     /**
