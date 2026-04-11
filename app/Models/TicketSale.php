@@ -14,6 +14,7 @@ class TicketSale extends Model
         'patron_id',
         'payment_method_id',
         'transaction_id',
+        'transfer_date',
         'performance_id',
         'sold_at',
         'quantity',

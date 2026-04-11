@@ -33,7 +33,8 @@ class TicketSaleController extends Controller
             'last_name'  => 'required|string',
             'email'      => 'required|email',
             'phone'      => 'required|string',
-            'quantity' => 'required|integer'
+            'quantity' => 'required|integer',
+            'transfer_date' => 'sometimes|nullable|date'
         ]);
 
         $patron = Patron::firstOrCreate(
@@ -49,12 +50,13 @@ class TicketSaleController extends Controller
             ->first();
 
         $rec = [
-            'patron_id' => $patron->id,
-            'transaction_id' => Str::uuid(),
-            'performance_id' => $validated['performance_id'],
-            'sold_at' => now(),
-            'quantity' => $validated['quantity'],
-            'payment_method_id' => $paymentMethod->id
+            'patron_id'         => $patron->id,
+            'transaction_id'    => Str::uuid(),
+            'transfer_date'     => $validated['transfer_date'] ?? null,
+            'performance_id'    => $validated['performance_id'],
+            'sold_at'           => now(),
+            'quantity'          => $validated['quantity'],
+            'payment_method_id' => $paymentMethod->id,
         ];
 
         TicketSale::create($rec);

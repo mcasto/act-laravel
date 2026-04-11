@@ -44,6 +44,10 @@ export default ({
         return;
       }
 
-      console.log(error);
+      if (showError) {
+        console.log(error);
+      }
+
+      throw error;
     });
 };

@@ -14,6 +14,7 @@ class SupportUsController extends Controller
             ->get('support-us.config.json'));
 
         $config->buttons = StandardButton::orderBy('sort_order')
+            ->whereIn('key', ['paypal', 'transfer'])
             ->get()
             ->map(function ($rec) use ($config) {
                 $price = $config->price;
