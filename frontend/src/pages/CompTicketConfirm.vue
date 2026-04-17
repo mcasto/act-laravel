@@ -78,12 +78,17 @@ const form = ref({
 
 const options = computed(() => {
   const now = new Date();
-  return store.admin.compConfirm.show.performances
-    .filter((p) => new Date(`${p.date}T${p.start_time}`) >= now)
-    .map((p) => ({
-      label: `${p.formatted_date} ${p.formatted_time}`,
+  return store.admin.compConfirm.show.performances.map((p) => {
+    const isPast = new Date(`${p.date}T${p.start_time}`) < now;
+    const isSoldOut = !!p.sold_out;
+    return {
+      label: `${p.formatted_date} ${p.formatted_time}${
+        isSoldOut ? " — Sold Out" : ""
+      }`,
       value: p.id,
-    }));
+      disable: isPast || isSoldOut,
+    };
+  });
 });
 
 const onSubmit = async () => {

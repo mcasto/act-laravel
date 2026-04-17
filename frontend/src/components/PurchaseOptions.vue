@@ -23,6 +23,7 @@
         :is="paymentMethodForm"
         v-if="paymentMethodForm"
         :performance="performance"
+        :is-flex="isFlex"
       ></component>
     </div>
   </div>
@@ -41,7 +42,10 @@ const props = defineProps([
   "buttons",
   "separator",
   "performance",
+  "isFlex",
 ]);
+
+console.log({ isFlex: props.isFlex });
 
 const paymentMethod = defineModel();
 

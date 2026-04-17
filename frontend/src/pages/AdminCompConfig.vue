@@ -9,7 +9,7 @@
     <q-separator></q-separator>
 
     <div class="row">
-      <div class="col-6 q-mt-sm">
+      <div class="col-5 q-mt-sm">
         <q-card flat>
           <q-form
             ref="formRef"
@@ -40,7 +40,7 @@
             <q-card-actions class="justify-end">
               <q-btn
                 type="submit"
-                label="Send"
+                label="Add"
                 color="primary"
                 :loading="loading"
               ></q-btn>
@@ -50,11 +50,44 @@
       </div>
       <div class="col q-ml-sm q-mt-sm">
         <q-table
+          dense
+          bordered
+          flat
           :columns="columns"
           :rows="store.admin.compList"
           :pagination="{ rowsPerPage: 0 }"
           :hide-bottom="store.admin.compList.length > 0"
-        ></q-table>
+        >
+          <template #header-cell-tools>
+            <q-th>
+              <q-btn
+                label="Send Bulk"
+                color="primary"
+                @click="sendBulk"
+              ></q-btn>
+            </q-th>
+          </template>
+          <template #body-cell-tools="{row}">
+            <q-td class="text-center">
+              <q-btn
+                icon="delete"
+                round
+                size="sm"
+                color="negative"
+                @click="onDelete(row)"
+              ></q-btn>
+              <q-btn
+                icon="send"
+                size="sm"
+                round
+                color="positive"
+                class="q-ml-sm"
+                :disabled="row.sent_at"
+                @click="onSend(row)"
+              ></q-btn>
+            </q-td>
+          </template>
+        </q-table>
       </div>
     </div>
   </div>
@@ -62,13 +95,16 @@
 
 <script setup>
 import { format, parseISO } from "date-fns";
-import { Notify } from "quasar";
+import { remove } from "lodash-es";
+import { Dialog, Notify } from "quasar";
+import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
 
 const store = useStore();
 
 const loading = ref(false);
+const formRef = ref(null);
 
 const columns = [
   {
@@ -79,13 +115,16 @@ const columns = [
   {
     label: "Sent",
     name: "sent_at",
-    field: (row) => format(parseISO(row.sent_at), "PP"),
+    field: (row) => (row.sent_at ? format(parseISO(row.sent_at), "PP") : "N/A"),
   },
   {
     label: "Redeemed",
     name: "redeemed_at",
     field: (row) =>
       row.redeemed_at ? format(parseISO(row.redeemed_at), "PP") : "N/A",
+  },
+  {
+    name: "tools",
   },
 ];
 
@@ -94,16 +133,29 @@ const form = ref({
   email: null,
 });
 
-const formRef = ref(null);
+const onDelete = async (row) => {
+  Dialog.create({
+    title: "Remove Comp Ticket Assignment",
+    html: true,
+    message: `Are you sure you want to remove the assignment for <br /><br /> ${row.name} &lt;${row.email}&gt;`,
+    ok: "Yes",
+    cancel: "No",
+  }).onOk(async () => {
+    if (!row.sent_at) {
+      remove(store.admin.compList, ({ email }) => email == row.email);
 
-const performances = computed(() => {
-  return store.admin.show.performances.map((performance) => {
-    return {
-      label: `${performance.formatted_date} ${performance.formatted_time}`,
-      value: performance.id,
-    };
+      return;
+    } else {
+      const response = await callApi({
+        path: `/comp/${row.uid}`,
+        method: "delete",
+        useAuth: true,
+      });
+
+      remove(store.admin.compList, ({ id }) => id == response.id);
+    }
   });
-});
+};
 
 const onSubmit = async () => {
   loading.value = true;
@@ -121,6 +173,24 @@ const onSubmit = async () => {
     formRef.value.reset();
 
     store.admin.compList = response.list;
+  }
+};
+
+const onSend = async (row) => {
+  const response = await callApi({
+    path: `/comp/send/${row.uid}`,
+    method: "post",
+    useAuth: true,
+  });
+
+  store.admin.compList = response.list;
+};
+
+const sendBulk = async () => {
+  const rows = store.admin.compList.filter((rec) => !rec.sent_at);
+
+  for (const row of rows) {
+    await onSend(row);
   }
 };
 </script>

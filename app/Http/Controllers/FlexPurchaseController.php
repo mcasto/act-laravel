@@ -27,10 +27,11 @@ class FlexPurchaseController extends Controller
             ->get('flex-purchase-config.json'), true);
 
         $config['buttons'] = StandardButton::orderBy('sort_order')
+            ->whereNotIn('key', ['questions', 'flex'])
             ->get()
             ->map(function ($rec) use ($config) {
                 $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'param' => "{$config['price']} per ticket",
+                    'param' => "{$config['price']}",
                     'subject' => "you purchased Flex Tickets"
                 ])->render();
 
@@ -69,21 +70,22 @@ class FlexPurchaseController extends Controller
         }
 
         // Check for image update
-        $tempPath = $request->image ?? false;
+        $tempPath = $request->uploadedImage ?? false;
 
         // Update flex-image & delete temp file
-        if ($tempPath) {
+        if ($tempPath && Storage::disk('public')->exists($tempPath)) {
             $image = Image::read(Storage::disk('public')->path($tempPath));
             $encoded = $image->toJpeg(90);
 
-            Storage::disk('public')->put('flex-image.jpg', $encoded);
+            Storage::disk('public')->put('images/flex-image.jpeg', $encoded);
             Storage::disk('public')->delete($tempPath);
         }
 
         // Set up config
         $config = $request->all();
+        logger()->info($config['image']);
         unset($config['buttons']);
-        unset($config['image']);
+        unset($config['uploadedImage']);
 
         Storage::disk('local')
             ->put('flex-purchase-config.json', json_encode($config));

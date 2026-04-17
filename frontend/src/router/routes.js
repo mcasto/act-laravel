@@ -1,4 +1,3 @@
-import { store } from "quasar/wrappers";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 
@@ -13,6 +12,7 @@ const routes = [
       await store.seasonShows();
       await store.homeShows();
       await store.openCourses();
+      await store.flexshowPurchaseConfig();
     },
     children: [
       {
@@ -255,7 +255,21 @@ const routes = [
           const store = useStore();
           store.flexshowPurchaseConfig();
         },
-        meta: { nav: false, label: "Flex Purchase" },
+        meta: {
+          nav: false,
+          global: true,
+          sortOrder: 1,
+          label: "Flex Purchase",
+          get display() {
+            const store = useStore();
+            if (!store.flex?.start_date || !store.flex?.end_date) return false;
+            const now = new Date();
+            return (
+              now >= new Date(store.flex.start_date) &&
+              now <= new Date(store.flex.end_date)
+            );
+          },
+        },
       },
       {
         name: "login",

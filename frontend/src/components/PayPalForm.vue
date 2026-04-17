@@ -21,6 +21,7 @@
               dense
               outlined
               v-model.number="form.quantity"
+              v-if="!isFlex"
             ></q-input>
             <q-input
               type="email"
@@ -72,7 +73,7 @@ import callApi from "src/assets/call-api";
 import { ref } from "vue";
 import { useStore } from "src/stores/store";
 
-const props = defineProps(["performance"]);
+const props = defineProps(["performance", "isFlex"]);
 const store = useStore();
 
 const form = ref({
@@ -81,7 +82,7 @@ const form = ref({
   first_name: store.patron?.first_name || null,
   last_name: store.patron?.last_name || null,
   phone: store.patron?.phone || null,
-  quantity: null,
+  quantity: props.isFlex ? store.flex.num_tickets : null,
 });
 
 const getPatron = async () => {

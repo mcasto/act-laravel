@@ -21,6 +21,7 @@
           :buttons="store.flex.buttons"
           :separator="true"
           v-model="paymentMethod"
+          :is-flex="true"
         ></purchase-options>
       </div>
     </div>

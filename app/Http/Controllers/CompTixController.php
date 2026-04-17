@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\CompTicketMailer;
 use App\Models\CompTicket;
+use App\Models\TicketSale;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -47,15 +50,10 @@ class CompTixController extends Controller
 
         $rec = $validated;
         $rec['uid'] = Str::uuid();
-        $rec['sent_at'] = now();
 
         CompTicket::create($rec);
 
-        Mail::to($rec['email'])->send(new CompTicketMailer([
-            'view'  => 'comp-ticket-notice',
-            'name'  => $rec['name'],
-            'uid'   => $rec['uid'],
-        ]));
+
 
         return response()->json(
             [
@@ -67,6 +65,26 @@ class CompTixController extends Controller
         );
     }
 
+    public function send(string $id)
+    {
+        $rec = CompTicket::where('uid', $id)->firstOrFail();
+
+        Mail::to($rec['email'])->send(new CompTicketMailer([
+            'view'  => 'comp-ticket-notice',
+            'name'  => $rec['name'],
+            'uid'   => $rec['uid'],
+        ]));
+
+        $rec->sent_at = Carbon::now();
+        $rec->update();
+
+        return response()->json([
+            'list' =>
+            CompTicket::where('show_id', $rec->show_id)
+                ->get()
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
@@ -75,6 +93,26 @@ class CompTixController extends Controller
         $compTicket = CompTicket::with(['show.performances'])
             ->where('uid', $id)
             ->firstOrFail();
+
+        $performanceIds = $compTicket->show->performances->pluck('id');
+
+        $ticketSaleTotals = TicketSale::whereIn('performance_id', $performanceIds)
+            ->groupBy('performance_id')
+            ->select('performance_id', DB::raw('SUM(quantity) as total'))
+            ->pluck('total', 'performance_id');
+
+        $compTotals = CompTicket::whereIn('performance_id', $performanceIds)
+            ->groupBy('performance_id')
+            ->select('performance_id', DB::raw('COUNT(*) as total'))
+            ->pluck('total', 'performance_id');
+
+        $today = Carbon::today();
+
+        $compTicket->show->performances->each(function ($performance) use ($ticketSaleTotals, $compTotals, $today) {
+            $sold = ($ticketSaleTotals[$performance->id] ?? 0) + ($compTotals[$performance->id] ?? 0);
+            $performance->past     = Carbon::parse($performance->date)->lt($today);
+            $performance->sold_out = $sold >= $performance->sold_out_target;
+        });
 
         return response()->json($compTicket);
     }
@@ -108,6 +146,9 @@ class CompTixController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $rec = CompTicket::where('uid', $id)->firstOrFail();
+        $rec->delete();
+
+        return response()->json(['id' => $rec->id]);
     }
 }

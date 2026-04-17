@@ -9,7 +9,7 @@
             outlined
             label="Header"
             v-model="form.title"
-            class="col-12 col-md-5"
+            class="col-12 col-md-4"
           ></q-input>
 
           <q-input
@@ -19,6 +19,36 @@
             label="Subheader"
             v-model="form.subtitle"
             class="col-12 col-md-5"
+          ></q-input>
+
+          <q-input
+            type="number"
+            dense
+            outlined
+            label="# Tickets"
+            v-model.number="form.num_tickets"
+            class="col-12 col-md-1"
+          ></q-input>
+        </div>
+
+        <div class="row q-gutter-x-sm">
+          <q-input
+            type="date"
+            v-model="form.start_date"
+            label="Enrollment Start"
+            class="col-12 col-md-5"
+            dense
+            outlined
+            stack-label
+          ></q-input>
+          <q-input
+            type="date"
+            v-model="form.end_date"
+            label="Enrollment End"
+            class="col-12 col-md-5"
+            dense
+            outlined
+            stack-label
           ></q-input>
         </div>
 
@@ -101,8 +131,9 @@ import { ref } from "vue";
 const store = useStore();
 
 const form = ref(store.flex);
+
 const uploaderMenu = ref(false);
-const imagePath = ref("/api/storage/flex-image");
+const imagePath = ref(store.flex.image);
 
 const openLink = () => {
   window.open(form.value.fixr.link);
@@ -119,7 +150,7 @@ const onUploaded = ({ files, xhr }) => {
     return;
   }
 
-  form.value.image = response.path;
+  form.value.uploadedImage = response.path;
   imagePath.value = `/api/storage/${response.path}`;
 
   uploaderMenu.value = false;
@@ -133,5 +164,6 @@ const onSubmit = async () => {
     payload: form.value,
   });
 
+  console.log({ response });
 };
 </script>

@@ -281,6 +281,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/comp/{id}', [CompTixController::class, 'index']);
 
     Route::post('/comp', [CompTixController::class, 'store']);
+
+    Route::delete('/comp/{uid}', [CompTixController::class, 'destroy']);
+
+    Route::post('/comp/send/{id}', [CompTixController::class, 'send']);
 });
 
 Route::get('/comp/redeem/{uid}', [CompTixController::class, 'show']);

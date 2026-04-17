@@ -33,22 +33,24 @@
 <script setup>
 import { Screen } from "quasar";
 import { useStore } from "src/stores/store";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import NavDrawer from "./NavDrawer.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 
 const store = useStore();
-const routes = store.router
-  .getRoutes()
-  .filter(({ meta }) => meta.nav && !meta.admin)
-  .map(({ meta, path }) => {
-    return {
-      name: meta.label,
-      path,
-    };
-  });
+const routes = computed(() =>
+  store.router
+    .getRoutes()
+    .filter(({ meta }) => {
+      if (meta.admin) return false;
+      if (meta.nav) return true;
+      if (meta.global) return meta.display;
+      return false;
+    })
+    .map(({ meta, path }) => ({ name: meta.label, path }))
+);
 
 const drawer = ref(false);
 

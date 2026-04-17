@@ -74,6 +74,10 @@ export default defineConfig((/* ctx */) => {
           target: "http://act_overhaul.test",
           changeOrigin: true,
         },
+        "/storage": {
+          target: "http://act_overhaul.test",
+          changeOrigin: true,
+        },
       },
     },
 
@@ -92,7 +96,7 @@ export default defineConfig((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Notify", "Meta", "Loading"],
+      plugins: ["Dialog", "Notify", "Meta", "Loading"],
     },
 
     // animations: 'all', // --- includes all animations
