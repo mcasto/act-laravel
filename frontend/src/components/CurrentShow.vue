@@ -27,7 +27,7 @@
       <div class="col-12 col-lg-4 text-center">
         <q-img
           id="poster"
-          :src="`/api/storage/posters/${show.poster}`"
+          :src="POSTER_BASE_URL + show.poster"
           fit="contain"
           v-if="show?.poster"
           :style="
@@ -114,6 +114,7 @@
 
 <script setup>
 import { Screen } from "quasar";
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, formatISO, isFuture, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed } from "vue";

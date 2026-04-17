@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMailer;
 use App\Models\Contact;
-use App\Models\SiteConfig;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -50,46 +49,6 @@ class ContactController extends Controller
         }
     }
 
-
-// mc-todo: update to MailerSend
-    /**
-     * Create a contact submission (legacy method)
-     *
-     * Alternative contact creation method that uses SendGrid for email delivery
-     * instead of Laravel's mail system. Validates data, creates contact record,
-     * and sends email using SendGrid utility.
-     *
-     * @param Request $request Contains name, email, subject, body
-     * @return JsonResponse Contact details and email recipients or validation errors
-     *
-     * @source Database Models:
-     *   - SiteConfig (reads latest config)
-     *   - Contact (creates)
-     */
-    public function create(Request $request): JsonResponse
-    {
-        $config    = SiteConfig::orderByDesc('created_at')->first()->toArray();
-        $validated = Contact::validate($request->all());
-        if (! isset($validated['errors'])) {
-            $contact = Contact::create($validated);
-            $toName  = 'ACT Contacts';
-            $toEmail = env('APP_DEBUG') ? $config['dev_email'] : $config['contact_email'];
-
-            // $response = SendGridUtil::send('Contact Message', $validated['name'], $validated['email'], $toName, $toEmail, $validated['subject'], $validated['body']);
-
-            // $contact->sendgrid_response = json_encode($response, JSON_PRETTY_PRINT);
-
-            $contact->save();
-
-            // if ($response['statusCode'] != 202) {
-            //     SendGridUtil::send('Error', $validated['name'], $validated['email'], 'ACT Errors', $config['dev_email'], $validated['subject'], $validated['body']);
-            // }
-
-            return response()->json(['toName' => $toName, 'toEmail' => $toEmail, 'contactRec' => $contact]);
-        }
-
-        return response()->json($validated);
-    }
 
     /**
      * Get all contact submissions

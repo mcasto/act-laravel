@@ -15,6 +15,14 @@
         <q-form @submit.prevent="onSubmit">
           <q-card-section class="q-gutter-y-sm">
             <q-input
+              type="number"
+              label="Number of Tickets"
+              stack-label
+              dense
+              outlined
+              v-model.number="form.quantity"
+            ></q-input>
+            <q-input
               type="email"
               label="Email"
               stack-label
@@ -46,14 +54,6 @@
               dense
               outlined
               v-model="form.phone"
-            ></q-input
-            ><q-input
-              type="number"
-              label="Number of Tickets"
-              stack-label
-              dense
-              outlined
-              v-model.number="form.quantity"
             ></q-input>
           </q-card-section>
 
@@ -70,15 +70,17 @@
 import { clone } from "lodash-es";
 import callApi from "src/assets/call-api";
 import { ref } from "vue";
+import { useStore } from "src/stores/store";
 
 const props = defineProps(["performance"]);
+const store = useStore();
 
 const form = ref({
   type: "paypal",
-  email: null,
-  first_name: null,
-  last_name: null,
-  phone: null,
+  email: store.patron?.email || null,
+  first_name: store.patron?.first_name || null,
+  last_name: store.patron?.last_name || null,
+  phone: store.patron?.phone || null,
   quantity: null,
 });
 
@@ -89,11 +91,16 @@ const getPatron = async () => {
     showError: false,
   }).catch(() => null);
 
-  if (!patron) return;
+  if (!patron) {
+    store.patron = null;
+    return;
+  }
 
   form.value.first_name = patron.first_name;
   form.value.last_name = patron.last_name;
   form.value.phone = patron.phone;
+
+  store.patron = patron;
 };
 
 const onSubmit = async () => {
@@ -107,7 +114,6 @@ const onSubmit = async () => {
   });
 
   if (response.transaction_id) {
-    const store = useStore();
     store.router.push({
       name: "ticket-confirmation",
       params: { uuid: response.transaction_id },

@@ -81,7 +81,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return ['status' => 'error', 'messasge' => 'Invalid request'];
+            return ['status' => 'error', 'message' => 'Invalid request'];
         }
 
         $user = User::find($id);

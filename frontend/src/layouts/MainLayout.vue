@@ -47,6 +47,6 @@ const adminPath = computed(() => {
 
 onMounted(async () => {
   await store.currentAudition();
-  await store.getOpenClasses();
+  await store.openCourses();
 });
 </script>

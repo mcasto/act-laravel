@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\TheaterSeason;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -25,15 +26,11 @@ class PatronFlexPackage extends Model
 
     public function ticketsRemaining(): int
     {
-        [$startYear] = explode('-', $this->season);
-        $startYear = (int) ('20' . $startYear);
+        $dates = TheaterSeason::datesForSeason($this->season);
 
         $used = TicketSale::where('patron_id', $this->patron_id)
             ->whereHas('paymentMethod', fn ($q) => $q->where('value', 'flex'))
-            ->whereHas('performance', fn ($q) => $q->whereBetween('date', [
-                "{$startYear}-10-01",
-                ($startYear + 1) . '-08-31',
-            ]))
+            ->whereHas('performance', fn ($q) => $q->whereBetween('date', [$dates['start'], $dates['end']]))
             ->sum('quantity');
 
         return $this->tickets_purchased - $used;

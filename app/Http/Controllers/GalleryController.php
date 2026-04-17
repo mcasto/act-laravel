@@ -54,6 +54,8 @@ class GalleryController extends Controller
             $files = [$files];
         }
 
+        $uploadedFiles = [];
+
         foreach ($files as $file) {
             if ($file->isValid()) {
                 $path = $file->store('gallery-temp', 'public');

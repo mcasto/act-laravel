@@ -17,8 +17,8 @@ export default (id) => {
         label: "Yes",
         handler: () => {
           callApi({
-            path: `/delete-show/${id}`,
-            method: "post",
+            path: `/shows/${id}`,
+            method: "delete",
             useAuth: true,
           }).then(() => {
             remove(store.admin.shows, (show) => show.id == id);

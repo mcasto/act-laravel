@@ -112,6 +112,11 @@ return [
     |
     */
 
+    'comp_from' => [
+        'address' => env('COMP_FROM_ADDRESS', 'hello@example.com'),
+        'name' => 'Comp Tickets'
+    ],
+
     'contact_from' => [
         'address' => env('CONTACT_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('CONTACT_FROM_NAME', 'Example'),

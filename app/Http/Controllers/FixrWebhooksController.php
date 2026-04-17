@@ -110,15 +110,13 @@ class FixrWebhooksController extends Controller
                 $rec = [
                     'patron_id' => $patron->id,
                     'payment_method_id' => $creditCardMethod?->id,
-                    'payment_method' => $creditCardMethod?->label,
                     'transaction_id' => Str::uuid(),
                     'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil')->format('Y-m-d H:i:s'),
-                    'performance' => $performanceDateTime ? Carbon::parse($performanceDateTime)->format('Y-m-d H:i:s') : null,
                     'performance_id' => $performanceId ?? null,
                     'quantity' => $validated['payload']['quantity']
                 ];
 
-                $records[] = $rec;
+                $records[] = ['rec' => $rec, 'patron' => $patron];
             }
 
             // Insert into database and send emails
@@ -126,15 +124,30 @@ class FixrWebhooksController extends Controller
             $emailsSent = 0;
             $emailsFailed = 0;
 
-            foreach ($records as $rec) {
+            foreach ($records as $entry) {
+                $rec = $entry['rec'];
+                $patron = $entry['patron'];
+
                 try {
                     TicketSale::create($rec);
                     $insertedCount++;
 
                     // Send notification email
                     try {
+                        $ticketData = [
+                            'show'           => $show?->name ?? $validated['payload']['event_name'],
+                            'performance'    => $performanceDateTime ? Carbon::parse($performanceDateTime)->format('Y-m-d H:i:s') : null,
+                            'first_name'     => $patron->first_name,
+                            'last_name'      => $patron->last_name,
+                            'email'          => $patron->email,
+                            'mobile_number'  => $patron->phone,
+                            'payment_method' => $creditCardMethod?->label,
+                            'quantity'       => $rec['quantity'],
+                            'sold_at'        => $rec['sold_at'],
+                        ];
+
                         Mail::to(config('mail.to.address'))
-                            ->send(new TicketSaleMailer($rec));
+                            ->send(new TicketSaleMailer($ticketData));
                         $emailsSent++;
                     } catch (Exception $e) {
                         $emailsFailed++;

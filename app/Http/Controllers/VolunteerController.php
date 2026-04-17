@@ -82,7 +82,7 @@ class VolunteerController extends Controller
         }
         $volunteer->delete();
 
-        return [['status' => 'success', 'volunteer' => $volunteer]];
+        return ['status' => 'success', 'volunteer' => $volunteer];
     }
 
     /**

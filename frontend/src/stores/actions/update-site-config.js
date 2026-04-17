@@ -11,11 +11,11 @@ export default () => {
     method: "post",
     payload: { config: clone(store.config), buttons: clone(store.buttons) },
     useAuth: true,
-  }).then(
+  }).then(() => {
     Notify.create({
       type: "positive",
       message: "Config updated.",
       group: false,
-    })
-  );
+    });
+  });
 };

@@ -133,6 +133,5 @@ const onSubmit = async () => {
     payload: form.value,
   });
 
-  console.log({ response });
 };
 </script>

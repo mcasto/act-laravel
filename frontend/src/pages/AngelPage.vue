@@ -80,12 +80,14 @@ const preparePaymentMethods = (buttons) => {
       label: config.config.fixr_label,
       value: "fixr",
     },
-    ...buttons.map((button) => {
-      return {
-        label: button.label,
-        value: button.id,
-      };
-    }),
+    ...buttons
+      .map((button) => {
+        return {
+          label: button.label,
+          value: button.id,
+        };
+      })
+      .filter((button) => button.value < 3),
   ];
 };
 

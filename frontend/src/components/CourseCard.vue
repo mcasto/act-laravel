@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <q-img :src="`/api/storage/posters/${course.poster}`"></q-img>
+    <q-img :src="POSTER_BASE_URL + course.poster"></q-img>
     <q-card-section>
       <div class="text-h6">
         {{ course.name }}
@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { cloneDeep } from "lodash-es";
 import { computed } from "vue";

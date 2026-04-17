@@ -11,13 +11,16 @@ class AngelController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'angel_level_id' => 'required|exists:angel_levels,id',
             'founding_angel' => 'boolean'
         ]);
 
         // Ensure founding_angel defaults to false if not provided
         $validated['founding_angel'] = $validated['founding_angel'] ?? false;
+
+        $validated['recognition_name'] = $validated['first_name'] . " " . $validated['last_name'];
 
         $angel = Angel::create($validated);
 
@@ -33,10 +36,13 @@ class AngelController extends Controller
         $angel = Angel::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'angel_level_id' => 'required|exists:angel_levels,id',
             'founding_angel' => 'boolean'
         ]);
+
+        $validated['recognition_name'] = $validated['first_name'] . " " . $validated['last_name'];
 
         $angel->update($validated);
 

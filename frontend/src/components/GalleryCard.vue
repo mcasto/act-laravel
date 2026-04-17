@@ -8,7 +8,7 @@
         {{ date }}
       </div>
       <q-img
-        :src="`/api/storage/posters/${show.poster}`"
+        :src="POSTER_BASE_URL + show.poster"
         :width="Screen.lt.md ? '85vw' : '25vw'"
         height="40vh"
         fit="contain"
@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { computed, ref } from "vue";
 import { Screen } from "quasar";

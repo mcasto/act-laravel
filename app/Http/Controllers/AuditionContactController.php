@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Audition;
 use App\Models\AuditionContact;
-use App\Models\Show;
-use App\Models\SiteConfig;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -53,28 +50,7 @@ class AuditionContactController extends Controller
             return response()->json(['status' => 'error', 'message' => array_values($errors)]);
         }
 
-        $audition = Audition::find($role['audition_id']);
-        $show     = Show::find($audition->show_id);
-        $to       = $audition->director_email;
-
         $auditionContact = AuditionContact::create($contact);
-
-        $config = SiteConfig::orderByDesc('created_at')->first()->toArray();
-
-        $toName  = $show->director;
-        $toEmail = env('APP_DEBUG') ? $config['dev_email'] : $audition->director_email;
-
-        $body = "Name: " . $auditionContact['name'] . "<br />"
-            . "Email: " . $auditionContact['email'] . "<br />"
-            . "Phone: " . $auditionContact['phone']
-            . "<br /><br />"
-            . "Auditioning for " . $auditionContact['role']
-            . "<br /><br />"
-            . $auditionContact['body'];
-
-        // mc-todo: send email using MailerSend
-
-        $auditionContact->save();
 
         return response()->json(['response' => $auditionContact]);
     }

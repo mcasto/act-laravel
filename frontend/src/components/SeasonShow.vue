@@ -1,7 +1,7 @@
 <template>
   <q-card bordered flat class="bg-grey-2">
     <q-img
-      :src="`/api/storage/posters/${show.poster}`"
+      :src="POSTER_BASE_URL + show.poster"
       fit="contain"
       height="40vh"
       :alt="`Poster for ${show.name}`"
@@ -35,6 +35,7 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { cloneDeep } from "lodash-es";
 import { computed } from "vue";

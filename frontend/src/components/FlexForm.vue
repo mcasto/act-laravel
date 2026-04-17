@@ -28,13 +28,21 @@
 
         <q-toolbar v-else>
           <div class="text-subtitle2">
-            To see your Flex summary and history, enter your email address and
-            press `tab`
+            {{ header }}
           </div>
         </q-toolbar>
 
         <q-form @submit.prevent="onSubmit">
           <q-card-section class="q-gutter-y-sm">
+            <q-input
+              type="number"
+              label="Number of Tickets"
+              stack-label
+              dense
+              outlined
+              v-model.number="form.quantity"
+              required
+            ></q-input>
             <q-input
               type="email"
               label="Email"
@@ -71,15 +79,6 @@
               outlined
               v-model="form.phone"
               required
-            ></q-input
-            ><q-input
-              type="number"
-              label="Number of Tickets"
-              stack-label
-              dense
-              outlined
-              v-model.number="form.quantity"
-              required
             ></q-input>
           </q-card-section>
 
@@ -97,20 +96,32 @@ import { format, parseISO } from "date-fns";
 import { clone } from "lodash-es";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps(["performance"]);
+const store = useStore();
+
+console.log({ patron: store.patron });
 
 const form = ref({
   type: "flex",
-  email: null,
-  first_name: null,
-  last_name: null,
-  phone: null,
+  email: store.patron?.email || null,
+  first_name: store.patron?.first_name || null,
+  last_name: store.patron?.last_name || null,
+  phone: store.patron?.phone || null,
   quantity: null,
 });
 
 const flex = ref({ purchased: null, remaining: null, usage: null });
+
+if (store.patron?.flex_packages.length > 0) {
+  const flexPackage = store.patron.flex_packages[0];
+  flex.value = {
+    purchased: flexPackage.tickets_purchased,
+    remaining: flexPackage.tickets_remaining,
+    usage: flexPackage.usage,
+  };
+}
 
 const historyColumns = [
   {
@@ -133,6 +144,18 @@ const historyColumns = [
   },
 ];
 
+const header = computed(() => {
+  if (!form.value.email) {
+    return "To see your Flex summary and history, enter your email address and press `tab`";
+  }
+
+  if (!store.patron) {
+    return "You haven't purchased a Flex package for this season.";
+  }
+
+  return "";
+});
+
 const getPatron = async () => {
   const patron = await callApi({
     path: `/patrons/lookup?email=${form.value.email}`,
@@ -140,7 +163,16 @@ const getPatron = async () => {
     showError: false,
   }).catch(() => null);
 
-  if (!patron) return;
+  if (!patron) {
+    store.patron = null;
+    form.value.first_name = null;
+    form.value.last_name = null;
+    form.value.phone = null;
+
+    return;
+  }
+
+  store.patron = patron;
 
   form.value.first_name = patron.first_name;
   form.value.last_name = patron.last_name;

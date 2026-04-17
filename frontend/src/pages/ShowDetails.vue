@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-12 col-md-4">
         <q-img
-          :src="`/api/storage/posters/${store.show.poster}`"
+          :src="POSTER_BASE_URL + store.show.poster"
           height="60vh"
           fit="contain"
         ></q-img>
@@ -56,6 +56,7 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed } from "vue";

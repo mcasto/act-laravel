@@ -6,6 +6,7 @@ use App\Http\Controllers\AnnouncementBannerController;
 use App\Http\Controllers\AuditionContactController;
 use App\Http\Controllers\AuditionController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompTixController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FixrWebhooksController;
@@ -67,7 +68,7 @@ Route::get('home-shows', [ShowController::class, 'homeShows']);
 Route::middleware('auth:sanctum')->post('/create-show', [ShowController::class, 'create']);
 Route::middleware('auth:sanctum')->post('/update-show', [ShowController::class, 'update']);
 Route::middleware('auth:sanctum')->get('show/{id}', [ShowController::class, 'show']);
-Route::middleware('auth:sanctum')->post('delete-show/{id}', [ShowController::class, 'destroy']);
+Route::middleware('auth:sanctum')->delete('shows/{id}', [ShowController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('new-show-template', [ShowController::class, 'newShow']);
 Route::middleware('auth:sanctum')->put('update-tentative/{id}', [ShowController::class, 'updateTentative']);
 
@@ -135,7 +136,7 @@ Route::middleware('auth:sanctum')->get('/get-users', [UserController::class, 'in
 Route::middleware('auth:sanctum')->put('/users/{id}', [UserController::class, 'update']);
 Route::middleware('auth:sanctum')->put('/change-password/{id}', [UserController::class, 'changePassword']);
 Route::middleware('auth:sanctum')->post('/create-user', [UserController::class, 'store']);
-Route::middleware('auth:sanctum')->post('/delete-user/{id}', [UserController::class, 'destroy']);
+Route::middleware('auth:sanctum')->delete('/users/{id}', [UserController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('/users/{id}', [UserController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/permission-levels', function () {
     return PermissionLevel::orderBy('label')->get();
@@ -272,3 +273,16 @@ Route::controller(TicketSaleController::class)
     ->group(function () {
         Route::post('/ticket-sales', 'store');
     });
+
+/**
+ * Comp Routes
+ */
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/comp/{id}', [CompTixController::class, 'index']);
+
+    Route::post('/comp', [CompTixController::class, 'store']);
+});
+
+Route::get('/comp/redeem/{uid}', [CompTixController::class, 'show']);
+
+Route::post('/comp/redeem/{uid}', [CompTixController::class, 'update']);

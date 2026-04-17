@@ -63,7 +63,7 @@ const routes = [
         component: () => import("pages/CoursesPage.vue"),
         beforeEnter: async (to, from, next) => {
           const store = useStore();
-          await store.getOpenClasses();
+          await store.openCourses();
 
           if (store.courses.length === 1) {
             const route = `/class-details/${store.courses[0].slug}`;
@@ -157,8 +157,9 @@ const routes = [
         component: () => import("pages/AngelPage.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
-          store.ourAngels = await callApi({ path: "/angels", method: "get" });
-          store.angelConfig = await callApi({ path: "/angels", method: "get" });
+          const angelsData = await callApi({ path: "/angels", method: "get" });
+          store.ourAngels = angelsData;
+          store.angelConfig = angelsData;
         },
         meta: {
           nav: true,
@@ -201,7 +202,7 @@ const routes = [
         beforeEnter: async (to, from) => {
           const store = useStore();
           store.show = store.admin.shows.find(
-            ({ slug }) => slug == to.params.slug
+            ({ slug }) => slug == to.params.slug,
           );
         },
         meta: { nav: false, label: "Show Details" },
@@ -221,6 +222,20 @@ const routes = [
         path: "ticket-confirmation/:uuid",
         component: () => import("pages/TicketConfirmation.vue"),
         meta: { nav: false, label: "Ticket Confirmation" },
+      },
+      {
+        name: "comp-confirmation",
+        path: "comp/:uuid",
+        component: () => import("pages/CompTicketConfirm.vue"),
+        beforeEnter: async (to) => {
+          const store = useStore();
+
+          store.admin.compConfirm = await callApi({
+            path: `/comp/redeem/${to.params.uuid}`,
+            method: "get",
+          });
+        },
+        meta: { nav: false, label: "Comp Ticket Confirmation" },
       },
       {
         name: "class-details",
@@ -491,12 +506,29 @@ const routes = [
             },
           },
           {
+            name: "admin-comp-config",
+            path: "comp-config",
+            component: () => import("src/pages/AdminCompConfig.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+
+              store.admin.compList = await callApi({
+                path: `/comp/${store.admin.show.id}`,
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              label: "Comp Config",
+            },
+          },
+          {
             name: "admin-show-gallery",
             path: "gallery",
             component: () => import("src/pages/AdminGallery.vue"),
-            beforeEnter: async (to) => {
-              const store = useStore();
-            },
             meta: {
               requireAuth: true,
               admin: true,

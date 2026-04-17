@@ -4,7 +4,7 @@
 
 ✔ Add flex purchase option (when they enter email address, determine how many flex tix they have remaining & provide a link to send an email detailing their flex usages) @done(26-04-10 15:03)
 
-☐ Add an admin section for comp tix--allows admin to add emails to comp for current show, email those people a URL with a unique id and they have to enter name of person picking up ticket and the performance they're going to attend.
+☐ Add an admin section (or add to show settings, that makes the most sense) for comp tix--allows admin to add emails to comp for current show, email those people a URL with a unique id and they have to enter name of person picking up ticket and the performance they're going to attend.
 
 ☐ Build flex purch page
 

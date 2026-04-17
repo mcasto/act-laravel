@@ -270,50 +270,7 @@ class CourseController extends Controller
             return response()->json($validated);
         }
 
-        $config    = SiteConfig::orderByDesc('created_at')->first()->toArray();
-        $course = Course::with(['sessions'])->where('id', '=', $request->input('course_id'))->first()->toArray();
-
-        $courseDate = array_shift($course['sessions'])['date'];
-        $courseDate = Carbon::parse($courseDate)->format('F j, Y');
-
-        $contact = CourseContact::create($validated);
-        $contact->questions = $request->input('questions');
-
-        $fromName = $validated['first_name'] . " " . $validated['last_name'];
-        $fromEmail = $validated['email'];
-
-        $toName = $course['instructor_name'];
-        $toEmail = env('APP_DEBUG') ? $config['dev_email'] : $course['instructor_email'];
-
-        $subject = $course['name'] . " Enrollment for " . $fromName;
-        $classNotes = $course['name'] . " in " . $courseDate;
-
-        $questions = $request->input('questions');
-        $questions = !!$questions ? $questions : '';
-        // $converter = new HtmlConverter();
-        // $questions = $converter->convert($questions);
-
-        $body = <<<BODY
-<p>Hi.</p>
-
-<p>My full name is {$fromName}.</p>
-
-<p>My Whatsapp Number is {$validated['phone']}.</p>
-
-<p>Please send more details about the {$classNotes} including how to pay</p>
-
-{$questions}
-BODY;
-
-        // $response = SendGridUtil::send('Course Enrollment Message', $fromName, $fromEmail, $toName, $toEmail, $subject, $body);
-
-        // $contact->sendgrid_response = json_encode($response, JSON_PRETTY_PRINT);
-
-        // $contact->save();
-
-        // if ($response['statusCode'] != 202) {
-        //     SendGridUtil::send('Error', $fromName, $fromEmail, 'ACT Errors', $config['dev_email'], 'Error with Course Enrollment Request for ' . $classNotes, $body);
-        // }
+        CourseContact::create($validated);
 
         return response()->json(['status' => 'success']);
     }

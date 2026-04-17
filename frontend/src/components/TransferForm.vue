@@ -15,6 +15,14 @@
         <q-form @submit.prevent="onSubmit">
           <q-card-section class="q-gutter-y-sm">
             <q-input
+              type="text"
+              label="Number of Tickets"
+              stack-label
+              dense
+              outlined
+              v-model="form.quantity"
+            ></q-input>
+            <q-input
               type="email"
               label="Email"
               stack-label
@@ -54,14 +62,6 @@
               dense
               outlined
               v-model="form.phone"
-            ></q-input
-            ><q-input
-              type="text"
-              label="Number of Tickets"
-              stack-label
-              dense
-              outlined
-              v-model="form.quantity"
             ></q-input>
           </q-card-section>
 
@@ -79,18 +79,19 @@ import { formatISO9075 } from "date-fns";
 import { clone } from "lodash-es";
 import callApi from "src/assets/call-api";
 import { ref } from "vue";
+import { useStore } from "src/stores/store";
 
 const props = defineProps(["performance"]);
+const store = useStore();
 
 const defaultDate = formatISO9075(new Date(), { representation: "date" });
 
 const form = ref({
   type: "transfer",
-  email: null,
-  transfer_date: defaultDate,
-  first_name: null,
-  last_name: null,
-  phone: null,
+  email: store.patron?.email || null,
+  first_name: store.patron?.first_name || null,
+  last_name: store.patron?.last_name || null,
+  phone: store.patron?.phone || null,
   quantity: null,
 });
 
@@ -102,15 +103,15 @@ const getPatron = async () => {
   }).catch(() => null);
 
   if (!patron) {
-    form.value.first_name = null;
-    form.value.last_name = null;
-    form.value.phone = null;
+    store.patron = null;
     return;
   }
 
   form.value.first_name = patron.first_name;
   form.value.last_name = patron.last_name;
   form.value.phone = patron.phone;
+
+  store.patron = patron;
 };
 
 const onSubmit = async () => {
@@ -124,7 +125,6 @@ const onSubmit = async () => {
   });
 
   if (response.transaction_id) {
-    const store = useStore();
     store.router.push({
       name: "ticket-confirmation",
       params: { uuid: response.transaction_id },

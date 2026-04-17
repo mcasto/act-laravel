@@ -55,6 +55,18 @@
                       </q-item-label>
                     </q-item-section>
                   </q-item>
+                  <q-item
+                    clickable
+                    :to="{
+                      name: 'admin-comp-config',
+                    }"
+                  >
+                    <q-item-section>
+                      <q-item-label>
+                        Comp Tickets
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
                   <q-item clickable to="/admin/gallery">
                     <q-item-section>
                       <q-item-label>
@@ -109,7 +121,9 @@ import ShowInfoForm from "src/components/ShowInfoForm.vue";
 
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const store = useStore();
 
 const uploadHeaders = ref([

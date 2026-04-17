@@ -81,7 +81,9 @@
                 :key="`angel-${angel.id}`"
               >
                 <q-item-section>
-                  <q-item-label>{{ angel.name }}</q-item-label>
+                  <q-item-label
+                    >{{ angel.first_name }} {{ angel.last_name }}</q-item-label
+                  >
                   <q-item-label caption v-if="angel.founding_angel">
                     <q-badge color="amber" text-color="black"
                       >Founding Angel</q-badge
@@ -174,8 +176,15 @@
 
         <q-card-section class="q-pt-none">
           <q-input
-            v-model="angelForm.name"
-            label="Name"
+            v-model="angelForm.first_name"
+            label="First Name"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          <q-input
+            v-model="angelForm.last_name"
+            label="Last Name"
             outlined
             dense
             class="q-mb-md"
@@ -195,7 +204,7 @@
             label="Save"
             color="primary"
             @click="saveAngel"
-            :disable="!angelForm.name"
+            :disabled="!angelForm.first_name || !angelForm.last_name"
           />
         </q-card-actions>
       </q-card>
@@ -243,7 +252,7 @@ const loadAngelLevels = async () => {
     // Reselect the current level if it exists
     if (selectedLevel.value) {
       const updatedLevel = angelLevels.value.find(
-        (l) => l.id === selectedLevel.value.id
+        (l) => l.id === selectedLevel.value.id,
       );
       if (updatedLevel) {
         selectedLevel.value = updatedLevel;
@@ -331,14 +340,16 @@ const openAngelDialog = (angel = null) => {
   if (angel) {
     angelForm.value = {
       id: angel.id,
-      name: angel.name,
+      first_name: angel.first_name,
+      last_name: angel.last_name,
       founding_angel: angel.founding_angel,
       angel_level_id: angel.angel_level_id,
     };
   } else {
     angelForm.value = {
       id: null,
-      name: "",
+      first_name: "",
+      last_nane: "",
       founding_angel: 0,
       angel_level_id: selectedLevel.value.id,
     };

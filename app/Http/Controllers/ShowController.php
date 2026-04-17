@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TheaterSeason;
 use App\Models\Show;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
@@ -12,50 +13,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ShowController extends Controller
 {
-    /**
-     * Determine start and end dates of current theater season
-     *
-     * Theater seasons run from October 1 to August 31. This method calculates
-     * which season we're currently in based on the current date and returns
-     * the start and end dates of that season.
-     *
-     * @return array Start and end dates as strings ['start' => 'Y-m-d', 'end' => 'Y-m-d']
-     *
-     * @source None (utility method)
-     */
-    private function getTheaterSeasonDates(): array
-    {
-        $now = Carbon::now();
-
-        // Define season start and end months
-        $seasonStartMonth = 10; // October
-        $seasonEndMonth   = 8;  // August
-
-        // Determine the season's start year
-        if ($now->month >= $seasonStartMonth) {
-            // If current month is October or later, we're in the current season
-            $startYear = $now->year;
-        } else {
-            // If we're in September or earlier, we're still in the previous season
-            $startYear = $now->year - 1;
-        }
-
-        // Define the start and end dates of the season
-        $seasonStart = Carbon::create($startYear, $seasonStartMonth, 1, 0, 0, 0);
-        $seasonEnd   = Carbon::create($startYear + 1, $seasonEndMonth, 31, 23, 59, 59);
-
-        // If we're in September, return the next season
-        if ($now->month == 9) {
-            $seasonStart = $seasonStart->addYear();
-            $seasonEnd   = $seasonEnd->addYear();
-        }
-
-        return [
-            'start' => $seasonStart->toDateString(),
-            'end'   => $seasonEnd->toDateString(),
-        ];
-    }
-
     /**
      * Check if poster and slug are unique among non-deleted records
      *
@@ -112,7 +69,7 @@ class ShowController extends Controller
      */
     public function seasonShows(): JsonResponse
     {
-        $seasonDates = $this->getTheaterSeasonDates(); // Get season start & end dates
+        $seasonDates = TheaterSeason::currentDates();
 
         $shows = Show::with(["performances", 'galleryImages'])->whereHas('performances', function ($query) use ($seasonDates) {
             $query->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
@@ -138,7 +95,7 @@ class ShowController extends Controller
     {
         // get site config
         $siteConfig = SiteConfig::latest()->first();
-        $price = $siteConfig->ticket_price;
+        $price = $siteConfig?->ticket_price ?? 0;
 
         // get upcoming shows
         $shows = Show::with('audition')

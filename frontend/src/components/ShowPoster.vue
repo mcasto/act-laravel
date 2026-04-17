@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-img
-      :src="`/api/storage/posters/${show.poster}`"
+      :src="POSTER_BASE_URL + show.poster"
       :width="width"
       :height="height"
       fit="contain"
@@ -11,5 +11,6 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 const props = defineProps(["show", "width", "height"]);
 </script>

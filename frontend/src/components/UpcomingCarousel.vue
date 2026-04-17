@@ -39,7 +39,7 @@
         >
           <router-link :to="`/show-details/${show.slug}`">
             <q-img
-              :src="`/api/storage/posters/${show.poster}`"
+              :src="POSTER_BASE_URL + show.poster"
               fit="contain"
               height="40vh"
             ></q-img>
@@ -94,6 +94,7 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { Screen } from "quasar";
 import { useStore } from "src/stores/store";

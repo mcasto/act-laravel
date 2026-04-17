@@ -16,8 +16,8 @@ export default (user) => {
         label: "Yes",
         handler: () => {
           callApi({
-            path: `/delete-user/${user.id}`,
-            method: "post",
+            path: `/users/${user.id}`,
+            method: "delete",
             useAuth: true,
           }).then(() => {
             store.getUsers();

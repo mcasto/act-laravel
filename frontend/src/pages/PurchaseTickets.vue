@@ -3,7 +3,7 @@
     <div class="row q-gutter-y-md">
       <div class="col-12 col-md-3 text-center">
         <q-img
-          :src="`/api/storage/posters/${show.poster}`"
+          :src="POSTER_BASE_URL + show.poster"
           style="max-width: 400px;"
         ></q-img>
       </div>
@@ -60,6 +60,7 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed, onMounted, ref } from "vue";

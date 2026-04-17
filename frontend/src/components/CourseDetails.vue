@@ -8,7 +8,7 @@
     <div class="col-12 col-sm-6">
       <!-- Poster image with tagline overlay -->
       <q-img
-        :src="`/api/storage/posters/${course.poster}`"
+        :src="POSTER_BASE_URL + course.poster"
         class="rounded-borders"
       >
         <div
@@ -61,6 +61,7 @@
 </template>
 
 <script setup>
+import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, formatISO9075, parseISO } from "date-fns";
 
 const props = defineProps(["course"]);

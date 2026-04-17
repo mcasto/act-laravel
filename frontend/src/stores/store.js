@@ -13,13 +13,11 @@ import createShow from "./actions/create-show";
 import getSiteConfig from "./actions/get-site-config";
 import updateSiteConfig from "./actions/update-site-config";
 import getUsers from "./actions/get-users";
-import updateUser from "./actions/update-user";
 import createUser from "./actions/create-user";
 import deleteUser from "./actions/delete-user";
 import homeShows from "./actions/home-shows";
 import seasonShows from "./actions/season-shows";
 import getSnippet from "./actions/get-snippet";
-import getOpenClasses from "./actions/get-open-classes";
 import getGallery from "./actions/get-gallery";
 import newContact from "./actions/new-contact";
 import currentAudition from "./actions/current-audition";
@@ -38,6 +36,7 @@ import editUser from "./actions/edit-user";
 import getAuditionConfig from "./actions/get-audition-config";
 import saveAuditionConfig from "./actions/save-audition-config";
 import openCourses from "./actions/open-courses";
+import saveCompConfig from "./actions/save-comp-config";
 
 export const useStore = defineStore(
   "store",
@@ -55,6 +54,7 @@ export const useStore = defineStore(
       gallery: ref(null),
       home: ref(null),
       ourAngels: ref(null),
+      patron: ref(null),
       show: ref(null),
       skills: ref([]),
       snippets: ref({}),
@@ -77,7 +77,6 @@ export const useStore = defineStore(
       getAllShows,
       getAuditionConfig,
       getGallery,
-      getOpenClasses,
       getSkills,
       getSiteConfig,
       getSnippet,
@@ -90,6 +89,7 @@ export const useStore = defineStore(
       openFixr,
       refreshPermissions,
       saveAuditionConfig,
+      saveCompConfig,
       seasonShows,
       showPurchaseConfig,
       signIn,
@@ -99,7 +99,6 @@ export const useStore = defineStore(
       upsertPerformances,
       updateSiteConfig,
       updateTentative,
-      updateUser,
     };
 
     return { ...state, ...getters, ...actions };
