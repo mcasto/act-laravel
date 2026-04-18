@@ -10,8 +10,9 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\PurchaseConfirmationMailer;
 use App\Mail\TicketSaleMailer;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Show;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -148,6 +149,18 @@ class FixrWebhooksController extends Controller
 
                         Mail::to(config('mail.to.address'))
                             ->send(new TicketSaleMailer($ticketData));
+
+                        $performanceDateParsed = $performanceDateTime ? Carbon::parse($performanceDateTime) : null;
+
+                        Mail::to($patron->email)->send(new PurchaseConfirmationMailer([
+                            'view'             => 'purchase-confirmation',
+                            'name'             => $patron->first_name . ' ' . $patron->last_name,
+                            'show_name'        => $show?->name ?? $validated['payload']['event_name'],
+                            'num_tickets'      => $rec['quantity'],
+                            'performance_date' => $performanceDateParsed?->format('F j, Y'),
+                            'performance_time' => $performanceDateParsed?->format('g:i A'),
+                        ]));
+
                         $emailsSent++;
                     } catch (Exception $e) {
                         $emailsFailed++;

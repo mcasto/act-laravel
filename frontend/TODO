@@ -6,7 +6,10 @@
 
 ✔ Add an admin section (or add to show settings, that makes the most sense) for comp tix--allows admin to add emails to comp for current show, email those people a URL with a unique id and they have to enter name of person picking up ticket and the performance they're going to attend. @done(26-04-17 12:41)
 
-☐ Build flex purch page
+✔ Build flex purch page @done(26-04-17 14:39)
+
+☐ Set up confirmation emails
+☐ Set up scheduled items for automated emails
 
 Ticket fields (paypal, transfer, flex):
     - name
