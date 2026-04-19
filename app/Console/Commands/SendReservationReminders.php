@@ -43,6 +43,8 @@ class SendReservationReminders extends Command
             fn($p) => $p->show?->name
         );
 
+        $sentEmails = [];
+
         // Ticket sales
         $ticketSales = TicketSale::with('patron')
             ->whereIn('performance_id', $performanceIds)
@@ -50,7 +52,7 @@ class SendReservationReminders extends Command
 
         foreach ($ticketSales as $sale) {
             $patron = $sale->patron;
-            if (! $patron) continue;
+            if (! $patron || in_array($patron->email, $sentEmails)) continue;
 
             try {
                 Mail::to($patron->email)->send(new ReservationReminderMailer([
@@ -58,6 +60,7 @@ class SendReservationReminders extends Command
                     'show_name'        => $showByPerformance[$sale->performance_id],
                     'performance_time' => $timeByPerformance[$sale->performance_id],
                 ]));
+                $sentEmails[] = $patron->email;
                 $sent++;
             } catch (Exception $e) {
                 $failed++;
@@ -74,12 +77,15 @@ class SendReservationReminders extends Command
             ->get();
 
         foreach ($compTickets as $comp) {
+            if (in_array($comp->email, $sentEmails)) continue;
+
             try {
                 Mail::to($comp->email)->send(new ReservationReminderMailer([
                     'name'             => $comp->name,
                     'show_name'        => $showByPerformance[$comp->performance_id],
                     'performance_time' => $timeByPerformance[$comp->performance_id],
                 ]));
+                $sentEmails[] = $comp->email;
                 $sent++;
             } catch (Exception $e) {
                 $failed++;

@@ -127,7 +127,7 @@ return [
         'name' => env('TICKET_SALE_FROM_NAME', 'Example'),
     ],
 
-    'to' => [
+    'admin_to' => [
         'address' => env('MAIL_TO_ADDRESS'),
         'name' => env('MAIL_TO_NAME')
     ]

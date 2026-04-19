@@ -2,7 +2,9 @@
   <div>
     <div>
       <q-card bordered class="q-mx-md">
-        <q-toolbar v-if="flex.purchased > 0">
+        <q-toolbar
+          v-if="store.patron && store.patron?.flex_packages.length > 0"
+        >
           <q-toolbar-title>
             Your Summary
             <div class="text-caption">
@@ -41,7 +43,9 @@
               dense
               outlined
               v-model.number="form.quantity"
-              required
+              min="1"
+              :rules="[(val) => val >= 1 || 'Must be at least 1']"
+              v-if="store.patron && store.patron?.flex_packages.length > 0"
             ></q-input>
             <q-input
               type="email"
@@ -83,7 +87,15 @@
           </q-card-section>
 
           <q-card-actions class="flex justify-end">
-            <q-btn type="submit" label="Continue" color="primary"></q-btn>
+            <q-btn
+              type="submit"
+              label="Continue"
+              color="primary"
+              :loading="loading"
+              :disabled="
+                !store.patron || store.patron?.flex_packages.length == 0
+              "
+            ></q-btn>
           </q-card-actions>
         </q-form>
       </q-card>
@@ -101,7 +113,9 @@ import { computed, ref } from "vue";
 const props = defineProps(["performance"]);
 const store = useStore();
 
-console.log({ patron: store.patron });
+console.log({ flex: store.patron.flex_packages.length });
+
+const loading = ref(null);
 
 const form = ref({
   type: "flex",
@@ -149,7 +163,7 @@ const header = computed(() => {
     return "To see your Flex summary and history, enter your email address and press `tab`";
   }
 
-  if (!store.patron) {
+  if (!store.patron || store.patron?.flex_packages.length == 0) {
     return "You haven't purchased a Flex package for this season.";
   }
 
@@ -189,6 +203,8 @@ const getPatron = async () => {
 };
 
 const onSubmit = async () => {
+  loading.value = true;
+
   const payload = clone(form.value);
   payload.performance_id = props.performance.id;
 

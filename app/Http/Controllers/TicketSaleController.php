@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RefId;
 use App\Helpers\TheaterSeason;
 use App\Mail\PurchaseConfirmationMailer;
 use App\Mail\TicketSaleMailer;
@@ -37,7 +38,7 @@ class TicketSaleController extends Controller
             'last_name'  => 'required|string',
             'email'      => 'required|email',
             'phone'      => 'required|string',
-            'quantity' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
             'transfer_date' => 'sometimes|nullable|date'
         ]);
 
@@ -55,7 +56,6 @@ class TicketSaleController extends Controller
 
         $rec = [
             'patron_id'         => $patron->id,
-            'transaction_id'    => Str::uuid(),
             'transfer_date'     => $validated['transfer_date'] ?? null,
             'performance_id'    => $validated['performance_id'],
             'sold_at'           => now(),
@@ -63,7 +63,9 @@ class TicketSaleController extends Controller
             'payment_method_id' => $paymentMethod->id,
         ];
 
-        TicketSale::create($rec);
+        $ticketSale = TicketSale::create($rec);
+        $ticketSale->transaction_id = RefId::ref_id($ticketSale->id);
+        $ticketSale->save();
 
         try {
             $performance = Performance::with('show')->find($validated['performance_id']);
@@ -79,8 +81,6 @@ class TicketSaleController extends Controller
                 'quantity'       => $validated['quantity'],
                 'sold_at'        => $rec['sold_at'],
             ];
-
-            Mail::to(config('mail.to.address'))->send(new TicketSaleMailer($ticketData));
 
             $confirmationData = [
                 'name'             => $patron->first_name . ' ' . $patron->last_name,
@@ -103,6 +103,8 @@ class TicketSaleController extends Controller
                 $confirmationData['view'] = 'purchase-confirmation';
             }
 
+            Mail::to(config('mail.admin_to.address'))->send(new TicketSaleMailer($ticketData));
+
             Mail::to($patron->email)->send(new PurchaseConfirmationMailer($confirmationData));
         } catch (Exception $e) {
             logger()->error('Failed to send ticket sale email', [
@@ -111,6 +113,6 @@ class TicketSaleController extends Controller
             ]);
         }
 
-        return response()->json(['transaction_id' => $rec['transaction_id']]);
+        return response()->json(['transaction_id' => $ticketSale->transaction_id]);
     }
 }

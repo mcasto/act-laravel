@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RefId;
 use App\Mail\CompTicketMailer;
 use App\Models\CompTicket;
 use App\Models\TicketSale;
@@ -49,11 +50,10 @@ class CompTixController extends Controller
         ]);
 
         $rec = $validated;
-        $rec['uid'] = Str::uuid();
 
-        CompTicket::create($rec);
-
-
+        $comp = CompTicket::create($rec);
+        $comp->uid = $rec['uid'] = RefId::ref_id($rec['id']);
+        $comp->save();
 
         return response()->json(
             [

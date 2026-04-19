@@ -45,8 +45,6 @@ const props = defineProps([
   "isFlex",
 ]);
 
-console.log({ isFlex: props.isFlex });
-
 const paymentMethod = defineModel();
 
 const paymentMethodForm = computed(() => {

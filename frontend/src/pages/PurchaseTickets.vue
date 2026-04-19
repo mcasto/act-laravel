@@ -41,7 +41,7 @@
           :options="performances"
           v-model="performance"
           option-label="displayDate"
-          :option-disable="(opt) => opt.soldOut"
+          :option-disable="(opt) => opt.soldOut || opt.isPast"
           dense
           outlined
         ></q-select>
@@ -93,6 +93,7 @@ const performanceDates = computed(() => {
 });
 
 const performances = computed(() => {
+  const now = new Date();
   return sortBy(
     show.value.performances.map((performance) => {
       let displayDate = format(
@@ -100,16 +101,19 @@ const performances = computed(() => {
         "PPp",
       );
       const soldOut = performance.sold_out == 1;
+      const isPast = new Date(`${performance.date}T${performance.start_time}`) < now;
 
       if (soldOut) {
         displayDate = `${displayDate} (Sold Out)`;
+      } else if (isPast) {
+        displayDate = `${displayDate} (Past)`;
       }
 
       return {
         ...performance,
         displayDate,
-
         soldOut,
+        isPast,
       };
     }),
     "date",
@@ -133,7 +137,7 @@ const paymentMethods = computed(() => {
 
 onMounted(() => {
   const firstPerformance = (performance.value = performances.value.find(
-    ({ sold_out }) => sold_out == 0,
+    ({ soldOut, isPast }) => !soldOut && !isPast,
   ));
 
   performance.value = firstPerformance || [...performances.value].shift();

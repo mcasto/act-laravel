@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RefId;
 use App\Models\Patron;
 use App\Models\PaymentMethod;
 use App\Models\TicketSale;
@@ -111,7 +112,6 @@ class FixrWebhooksController extends Controller
                 $rec = [
                     'patron_id' => $patron->id,
                     'payment_method_id' => $creditCardMethod?->id,
-                    'transaction_id' => Str::uuid(),
                     'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil')->format('Y-m-d H:i:s'),
                     'performance_id' => $performanceId ?? null,
                     'quantity' => $validated['payload']['quantity']
@@ -130,7 +130,10 @@ class FixrWebhooksController extends Controller
                 $patron = $entry['patron'];
 
                 try {
-                    TicketSale::create($rec);
+                    $ticketSale = TicketSale::create($rec);
+                    $ticketSale->transaction_id = RefId::ref_id($rec['id']);
+                    $ticketSale->save();
+
                     $insertedCount++;
 
                     // Send notification email
@@ -147,7 +150,7 @@ class FixrWebhooksController extends Controller
                             'sold_at'        => $rec['sold_at'],
                         ];
 
-                        Mail::to(config('mail.to.address'))
+                        Mail::to(config('mail.admin_to.address'))
                             ->send(new TicketSaleMailer($ticketData));
 
                         $performanceDateParsed = $performanceDateTime ? Carbon::parse($performanceDateTime) : null;

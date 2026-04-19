@@ -21,6 +21,8 @@
               dense
               outlined
               v-model.number="form.quantity"
+              min="1"
+              :rules="[(val) => val >= 1 || 'Must be at least 1']"
               v-if="!isFlex"
             ></q-input>
             <q-input
@@ -59,7 +61,12 @@
           </q-card-section>
 
           <q-card-actions class="flex justify-end">
-            <q-btn type="submit" label="Continue" color="primary"></q-btn>
+            <q-btn
+              type="submit"
+              label="Continue"
+              color="primary"
+              :loading="loading"
+            ></q-btn>
           </q-card-actions>
         </q-form>
       </q-card>
@@ -75,6 +82,8 @@ import { useStore } from "src/stores/store";
 
 const props = defineProps(["performance", "isFlex"]);
 const store = useStore();
+
+const loading = ref(null);
 
 const form = ref({
   type: "paypal",
@@ -105,6 +114,7 @@ const getPatron = async () => {
 };
 
 const onSubmit = async () => {
+  loading.value = true;
   const payload = clone(form.value);
   payload.performance_id = props.performance.id;
 

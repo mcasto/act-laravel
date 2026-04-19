@@ -40,7 +40,7 @@ class ContactController extends Controller
 
         // send email about contact
         try {
-            Mail::to(config('mail.to.address'))
+            Mail::to(config('mail.admin_to.address'))
                 ->send(new ContactMailer($contact));
             return ['status' => 'success'];
         } catch (Exception $e) {

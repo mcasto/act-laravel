@@ -8,8 +8,10 @@
 
 ✔ Build flex purch page @done(26-04-17 14:39)
 
-☐ Set up confirmation emails
-☐ Set up scheduled items for automated emails
+✔ Set up confirmation emails @done(26-04-19 04:48)
+✔ Set up scheduled items for automated emails @done(26-04-19 04:48)
+
+☐ Ticket Sales admin area
 
 Ticket fields (paypal, transfer, flex):
     - name

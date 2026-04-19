@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\RefId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -30,7 +31,7 @@ class CompTicket extends Model
     protected static function booted(): void
     {
         static::creating(function (CompTicket $compTicket) {
-            $compTicket->uid ??= (string) Str::uuid();
+            $compTicket->uid ??= (string) RefId::ref_id($compTicket->id);
         });
     }
 
