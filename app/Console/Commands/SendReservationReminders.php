@@ -19,7 +19,7 @@ class SendReservationReminders extends Command
 
     public function handle(): void
     {
-        $tomorrow = Carbon::tomorrow()->toDateString();
+        $tomorrow = Carbon::tomorrow('America/Guayaquil')->toDateString();
 
         $performances = Performance::with('show')
             ->whereDate('date', $tomorrow)
@@ -36,11 +36,11 @@ class SendReservationReminders extends Command
 
         // Map performance id -> formatted time for quick lookup
         $timeByPerformance = $performances->keyBy('id')->map(
-            fn ($p) => Carbon::parse($p->start_time)->format('g:i A')
+            fn($p) => Carbon::parse($p->start_time)->format('g:i A')
         );
 
         $showByPerformance = $performances->keyBy('id')->map(
-            fn ($p) => $p->show?->name
+            fn($p) => $p->show?->name
         );
 
         // Ticket sales

@@ -8,4 +8,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('reminders:send')->dailyAt('10:00');
+Schedule::command('reminders:send')
+    ->dailyAt('10:00')
+    ->timezone('America/Guayaquil');
