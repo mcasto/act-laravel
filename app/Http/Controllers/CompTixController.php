@@ -7,6 +7,7 @@ use App\Mail\CompTicketMailer;
 use App\Models\CompTicket;
 use App\Models\TicketSale;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -52,7 +53,7 @@ class CompTixController extends Controller
         $rec = $validated;
 
         $comp = CompTicket::create($rec);
-        $comp->uid = $rec['uid'] = RefId::ref_id($rec['id']);
+        $comp->uid = RefId::ref_id($comp->id);
         $comp->save();
 
         return response()->json(
@@ -117,6 +118,32 @@ class CompTixController extends Controller
         return response()->json($compTicket);
     }
 
+    public function redeemComp(string $uid, int $performanceId, string $pickupName): CompTicket
+    {
+        $comp = CompTicket::where('uid', $uid)->firstOrFail();
+        $comp->update([
+            'performance_id' => $performanceId,
+            'pickup_name'    => $pickupName,
+            'redeemed_at'    => now(),
+        ]);
+
+        $performance = $comp->fresh()->performance;
+
+        try {
+            Mail::to($comp->email)->send(new CompTicketMailer([
+                'view'             => 'comp-ticket-confirm',
+                'name'             => $comp->name,
+                'pickup_name'      => $pickupName,
+                'performance_date' => Carbon::parse($performance->date)->format('F j, Y'),
+                'performance_time' => Carbon::parse($performance->start_time)->format('g:i A'),
+            ]));
+        } catch (Exception $e) {
+            logger()->error('Failed to send comp ticket confirmation', ['error' => $e->getMessage()]);
+        }
+
+        return $comp->fresh();
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -124,20 +151,13 @@ class CompTixController extends Controller
     {
         $validated = $request->validate([
             'performance_id' => 'required|int',
-            'pickup_name' => 'required|string'
+            'pickup_name'    => 'required|string',
         ]);
 
-        $update = $validated;
-        $update['redeemed_at'] = now();
+        $comp = $this->redeemComp($id, $validated['performance_id'], $validated['pickup_name']);
 
-        $rec = CompTicket::where('uid', $id)
-            ->firstOrFail();
-
-        $rec->update($update);
-        $rec->save();
-
-        return response()->json(['rec' => $compTicket = CompTicket::with(['show.performances'])
-            ->where('uid', $id)
+        return response()->json(['rec' => CompTicket::with(['show.performances'])
+            ->where('uid', $comp->uid)
             ->firstOrFail()]);
     }
 

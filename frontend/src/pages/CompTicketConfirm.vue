@@ -4,7 +4,7 @@
       <div class="flex justify-center q-mt-md">
         <div class="column">
           <div class="text-h6 text-red">
-            Your comp ticket has already been redeemed for use on
+            Your comp ticket has been redeemed for use on
             {{ performance.formatted_date }} at {{ performance.formatted_time }}
           </div>
           <div class="text-subtitle1 text-green">
@@ -69,10 +69,12 @@ const performance = computed(() => {
 });
 
 const form = ref({
-  performance: {
-    label: `${performance.value.formatted_date} ${performance.value.formatted_time}`,
-    value: performance.value.id,
-  },
+  performance: performance.value
+    ? {
+        label: `${performance.value.formatted_date} ${performance.value.formatted_time}`,
+        value: performance.value.id,
+      }
+    : null,
   pickup_name: store.admin.compConfirm.pickup_name || null,
 });
 
@@ -92,8 +94,8 @@ const options = computed(() => {
 });
 
 const onSubmit = async () => {
-  const payload = form.value;
-  payload.performance_id = payload.performance.value;
+  const payload = { ...form.value };
+  payload.performance_id = payload.performance?.value;
 
   try {
     const response = await callApi({

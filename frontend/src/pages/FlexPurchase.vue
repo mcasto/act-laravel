@@ -35,8 +35,6 @@ import PurchaseOptions from "src/components/PurchaseOptions.vue";
 
 const store = useStore();
 
-console.log({ flex: store.flex });
-
 const paymentMethod = ref(null);
 
 const paymentMethods = computed(() => {

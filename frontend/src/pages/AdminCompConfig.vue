@@ -64,6 +64,7 @@
                 label="Send Bulk"
                 color="primary"
                 @click="sendBulk"
+                :loading="sending"
               ></q-btn>
             </q-th>
           </template>
@@ -84,6 +85,7 @@
                 class="q-ml-sm"
                 :disabled="row.sent_at"
                 @click="onSend(row)"
+                :loading="sending"
               ></q-btn>
             </q-td>
           </template>
@@ -141,19 +143,13 @@ const onDelete = async (row) => {
     ok: "Yes",
     cancel: "No",
   }).onOk(async () => {
-    if (!row.sent_at) {
-      remove(store.admin.compList, ({ email }) => email == row.email);
+    const response = await callApi({
+      path: `/comp/${row.uid}`,
+      method: "delete",
+      useAuth: true,
+    });
 
-      return;
-    } else {
-      const response = await callApi({
-        path: `/comp/${row.uid}`,
-        method: "delete",
-        useAuth: true,
-      });
-
-      remove(store.admin.compList, ({ id }) => id == response.id);
-    }
+    remove(store.admin.compList, ({ id }) => id == response.id);
   });
 };
 
@@ -176,7 +172,10 @@ const onSubmit = async () => {
   }
 };
 
+const sending = ref(null);
+
 const onSend = async (row) => {
+  sending.value = true;
   const response = await callApi({
     path: `/comp/send/${row.uid}`,
     method: "post",
@@ -184,6 +183,7 @@ const onSend = async (row) => {
   });
 
   store.admin.compList = response.list;
+  sending.value = false;
 };
 
 const sendBulk = async () => {

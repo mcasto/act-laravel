@@ -14,6 +14,7 @@ use App\Http\Controllers\FlexPurchaseController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PatronController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SiteConfigController;
@@ -61,6 +62,7 @@ Route::put('/announcement-banner', [AnnouncementBannerController::class, 'update
  * Show-related Routes
  */
 Route::get('all-shows', [ShowController::class, 'index']);
+Route::get('shows/{id}', [ShowController::class, 'show']);
 Route::get('season-shows', [ShowController::class, 'seasonShows']);
 Route::get('home-shows', [ShowController::class, 'homeShows']);
 
@@ -262,6 +264,8 @@ Route::controller(TicketSaleController::class)
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/ticket-sales', 'index');
+        Route::put('/ticket-sales', 'update');
+        Route::delete('/ticket-sales', 'destroy');
     });
 
 /**
@@ -290,3 +294,9 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/comp/redeem/{uid}', [CompTixController::class, 'show']);
 
 Route::post('/comp/redeem/{uid}', [CompTixController::class, 'update']);
+
+/**
+ * Payment Method Routes
+ */
+
+Route::middleware('auth:sanctum')->resource('payment-methods', PaymentMethodController::class);

@@ -129,6 +129,7 @@ const onSubmit = async () => {
 
   const payload = clone(form.value);
   payload.performance_id = props.performance.id;
+  payload.transfer_date = formatISO9075(new Date(), { representation: "date" });
 
   const response = await callApi({
     path: "/ticket-sales",

@@ -224,16 +224,18 @@ const routes = [
         meta: { nav: false, label: "Ticket Confirmation" },
       },
       {
-        name: "comp-confirmation",
+        name: "comp-ticket-confirm",
         path: "comp/:uuid",
         component: () => import("pages/CompTicketConfirm.vue"),
         beforeEnter: async (to) => {
           const store = useStore();
 
-          store.admin.compConfirm = await callApi({
+          const comp = await callApi({
             path: `/comp/redeem/${to.params.uuid}`,
             method: "get",
           });
+
+          store.admin.compConfirm = comp;
         },
         meta: { nav: false, label: "Comp Ticket Confirmation" },
       },
@@ -336,6 +338,47 @@ const routes = [
               dash: true,
               order: 18,
               label: "Ticket Sales",
+            },
+          },
+          {
+            name: "admin-ticket-sale-new",
+            path: "ticket-sale-new/:show_id",
+            component: () => import("src/pages/AdminTicketSaleForm.vue"),
+            beforeEnter: async (to) => {
+              const store = useStore();
+
+              store.paymentMethods = await callApi({
+                path: "/payment-methods",
+                method: "get",
+                useAuth: true,
+              });
+
+              store.admin.show = await callApi({
+                path: `/shows/${to.params.show_id}`,
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              dash: false,
+              order: 18.5,
+              label: "New Ticket Sale",
+            },
+          },
+          {
+            name: "admin-ticket-sale-edit",
+            path: "admin-ticket-sale-edit/:id",
+            component: () => import("src/pages/AdminTicketSaleForm.vue"),
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              dash: false,
+              order: 18.6,
+              label: "Edit Ticket Sale",
             },
           },
           {

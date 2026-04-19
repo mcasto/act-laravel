@@ -58,8 +58,6 @@ import { computed, onBeforeMount, onMounted, ref } from "vue";
 
 const store = useStore();
 
-console.log({ audition: store.audition });
-
 const audition = computed(() => {
   return store.audition;
 });

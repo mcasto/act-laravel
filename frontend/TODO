@@ -11,7 +11,12 @@
 ✔ Set up confirmation emails @done(26-04-19 04:48)
 ✔ Set up scheduled items for automated emails @done(26-04-19 04:48)
 
-☐ Ticket Sales admin area
+Ticket Sales admin area:
+    ✔ new ticket sale @done(26-04-19 15:11)
+    ✔ delete ticket sale @done(26-04-19 15:11)
+    ✔ edit ticket sale @done(26-04-19 16:30)
+
+☐ need a box office report output for the door
 
 Ticket fields (paypal, transfer, flex):
     - name

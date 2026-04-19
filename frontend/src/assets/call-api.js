@@ -16,12 +16,13 @@ export default ({
     payload = `/${payload}`;
   }
 
-  const apiCall = useAuth
-    ? wretch("/api")
-        .auth(`Bearer ${store.admin.user?.token}`)
-        .url(path)
-        [method](payload)
-    : wretch("/api").url(path)[method](payload);
+  const base = useAuth
+    ? wretch("/api").auth(`Bearer ${store.admin.user?.token}`).url(path)
+    : wretch("/api").url(path);
+
+  const apiCall = method == "delete" && payload
+    ? base.json(payload).delete()
+    : base[method](payload);
 
   return apiCall
     .json()

@@ -113,8 +113,6 @@ import { computed, ref } from "vue";
 const props = defineProps(["performance"]);
 const store = useStore();
 
-console.log({ flex: store.patron.flex_packages.length });
-
 const loading = ref(null);
 
 const form = ref({

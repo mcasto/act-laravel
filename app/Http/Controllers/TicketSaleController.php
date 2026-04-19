@@ -10,6 +10,7 @@ use App\Models\Patron;
 use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
 use App\Models\Performance;
+use App\Models\CompTicket;
 use App\Models\TicketSale;
 use Carbon\Carbon;
 use Exception;
@@ -21,12 +22,43 @@ class TicketSaleController extends Controller
 {
     public function index()
     {
-        return response()->json(TicketSale::with('performance.show')
+        return response()->json($this->allSales());
+    }
+
+    private function allSales()
+    {
+        $compPaymentMethod = PaymentMethod::where('value', 'comp')->first();
+
+        $ticketSales = TicketSale::with('performance.show', 'patron', 'paymentMethod')
             ->join('performances', 'ticket_sales.performance_id', '=', 'performances.id')
             ->orderBy('performances.date', 'desc')
             ->orderBy('performances.start_time', 'asc')
             ->select('ticket_sales.*')
-            ->get());
+            ->get()
+            ->map(fn($sale) => $sale->toArray());
+
+        $compTickets = CompTicket::with('performance.show')
+            ->join('performances', 'comp_tickets.performance_id', '=', 'performances.id')
+            ->select('comp_tickets.*')
+            ->get()
+            ->map(fn($comp) => [
+                'id'             => $comp->id,
+                'quantity'       => 1,
+                'sold_at'        => $comp->redeemed_at ?? $comp->sent_at,
+                'transaction_id' => $comp->uid,
+                'patron'         => [
+                    'first_name' => $comp->name,
+                    'last_name'  => '',
+                    'email'      => $comp->email,
+                    'phone'      => null,
+                ],
+                'payment_method' => $compPaymentMethod,
+                'performance'    => $comp->performance,
+            ]);
+
+        return $ticketSales->concat($compTickets)
+            ->sortByDesc(fn($item) => $item['performance']['date'] ?? '')
+            ->values();
     }
 
     public function store(Request $request)
@@ -50,6 +82,34 @@ class TicketSaleController extends Controller
                 'phone'      => $validated['phone'],
             ]
         );
+
+        if ($validated['type'] === 'comp') {
+            $performance = Performance::with('show')->find($validated['performance_id']);
+            $pickupName  = $patron->first_name . ' ' . $patron->last_name;
+
+            $comp = CompTicket::where('email', $patron->email)
+                ->where('show_id', $performance?->show_id)
+                ->whereNull('redeemed_at')
+                ->first();
+
+            if (! $comp) {
+                $comp = CompTicket::create([
+                    'name'    => $pickupName,
+                    'email'   => $patron->email,
+                    'show_id' => $performance?->show_id,
+                ]);
+                $comp->uid = RefId::ref_id($comp->id);
+                $comp->save();
+            }
+
+            app(CompTixController::class)->redeemComp(
+                $comp->uid,
+                $validated['performance_id'],
+                $pickupName
+            );
+
+            return response()->json(['status' => 'success']);
+        }
 
         $paymentMethod = PaymentMethod::where('value', $validated['type'])
             ->first();
@@ -114,5 +174,55 @@ class TicketSaleController extends Controller
         }
 
         return response()->json(['transaction_id' => $ticketSale->transaction_id]);
+    }
+
+    public function update(Request $request)
+    {
+        $validated = $request->validate([
+            'id'            => 'required|integer|exists:ticket_sales,id',
+            'type'          => 'required|string',
+            'performance_id'=> 'required|integer',
+            'first_name'    => 'required|string',
+            'last_name'     => 'required|string',
+            'email'         => 'required|email',
+            'phone'         => 'required|string',
+            'quantity'      => 'required|integer|min:1',
+            'transfer_date' => 'sometimes|nullable|date',
+        ]);
+
+        $patron = Patron::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'first_name' => $validated['first_name'],
+                'last_name'  => $validated['last_name'],
+                'phone'      => $validated['phone'],
+            ]
+        );
+
+        $paymentMethod = PaymentMethod::where('value', $validated['type'])->first();
+
+        $ticketSale = TicketSale::findOrFail($validated['id']);
+        $ticketSale->update([
+            'patron_id'         => $patron->id,
+            'performance_id'    => $validated['performance_id'],
+            'quantity'          => $validated['quantity'],
+            'payment_method_id' => $paymentMethod->id,
+            'transfer_date'     => $validated['transfer_date'] ?? null,
+        ]);
+
+        return response()->json($this->allSales());
+    }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->input('id');
+
+        if ($request->input('payment_method.value') === 'comp') {
+            CompTicket::findOrFail($id)->delete();
+        } else {
+            TicketSale::findOrFail($id)->delete();
+        }
+
+        return response()->json($this->allSales());
     }
 }

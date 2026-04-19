@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-beetween banner">
+  <div class="flex banner" style="position: relative;">
     <q-img
       src="/images/logo-home-2025.png"
       height="200px"
@@ -10,7 +10,7 @@
     ></q-img>
 
     <div
-      class="absolute-center text-no-wrap q-pb-xl text-blue-grey-2 text-center"
+      class="col flex flex-center text-no-wrap text-blue-grey-2 text-center"
       :class="Screen.lt.sm ? 'text-h5' : 'text-h3'"
     >
       Azuay Community Theater

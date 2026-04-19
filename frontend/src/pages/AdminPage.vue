@@ -32,7 +32,9 @@ const permissionLevel = ref(null);
 watch(
   () => route.path, // Watch the path specifically
   (newPath) => {
-    const permissionLevelRequired = newPath.match(/\/admin\/?([^\/]*).*/)[1];
+    const match = newPath.match(/\/admin\/?([^\/]*).*/);
+    if (!match) return;
+    const permissionLevelRequired = match[1];
 
     if (
       permissionLevelRequired == "dashboard" ||
