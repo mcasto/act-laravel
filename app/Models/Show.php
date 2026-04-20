@@ -20,7 +20,8 @@ class Show extends Model
         'poster',
         'ticket_sales_start',
         'slug',
-        'tentative'
+        'tentative',
+        'ticket_price'
     ];
 
     public static function validate($data, $id = null)
@@ -34,6 +35,7 @@ class Show extends Model
             'poster'             => ['required', 'string', 'max:255'],
             'ticket_sales_start' => ['required', 'date'],
             'slug'               => ['required', 'string', 'max:255'],
+            'ticket_price'      => ['sometimes', 'integer']
         ];
 
         $validator = validator($data, $rules);

@@ -1,63 +1,21 @@
-✔ In `Upcoming Shows`, display an `audition` link if audition is available @done(26-02-09 17:54)
-
-✔ For reserve tix, add form with name, email, perf date for paypal & bank transfer options @done(26-04-10 15:03)
-
-✔ Add flex purchase option (when they enter email address, determine how many flex tix they have remaining & provide a link to send an email detailing their flex usages) @done(26-04-10 15:03)
-
-✔ Add an admin section (or add to show settings, that makes the most sense) for comp tix--allows admin to add emails to comp for current show, email those people a URL with a unique id and they have to enter name of person picking up ticket and the performance they're going to attend. @done(26-04-17 12:41)
-
-✔ Build flex purch page @done(26-04-17 14:39)
-
-✔ Set up confirmation emails @done(26-04-19 04:48)
-✔ Set up scheduled items for automated emails @done(26-04-19 04:48)
-
-Ticket Sales admin area:
-    ✔ new ticket sale @done(26-04-19 15:11)
-    ✔ delete ticket sale @done(26-04-19 15:11)
-    ✔ edit ticket sale @done(26-04-19 16:30)
-
 ☐ need a box office report output for the door
-
-Ticket fields (paypal, transfer, flex):
-    - name
-    - whatsapp
-    - email address
-    - performance date
-    - subject = "purchased tickets (paypal)"
-
-angel:
-    - last_name
-    - first_name
-    - benefit (text)
-    - email
-    - angel_level (fk)
-    - payment_type
-
-Ticket Sales:
-    ☐ Email templates
-    Tables:
-        ☐ flex
-        ☐ angel_levels
-
-
----
+☐ need method to add `door`, `new comers?`, `walk-in`, `no shows` & adjust the summary to include those things (do all of them become payment methods?)
 
 ☐ add editors to `admin/site-config` for standard button text
 
 ☐ class management
 ☐ add "course poster" handler to AdminEditCourse.vue
-✔ class page @done(25-12-18 08:57)
 ☐ fix class `/images` calls (Crap. I'm not sure what this means)
 
----
+☐ add class management (with enrolled) to admin area
+    payment methods for enrollment?
 
-Read Only:
-    ☐ add read only handler to all admin pages (except dashboard)
+---
 
 Admin Section needs:
     ✔ announcement-banner @done(25-09-15 12:10)
     ✔ volunteers @done(25-09-23 09:49)
-    ☐ tickets
+    ✔ tickets @done(26-04-20 11:03)
     ✔ shows @done(25-09-15 12:10)
     ☐ patrons
     ☐ donations
@@ -66,7 +24,5 @@ Admin Section needs:
     ✔ site config @done(25-09-15 12:10)
     ☐ payments
 
-☐ add class management (with enrolled) to admin area
-    payment methods for enrollment?
 
 ☐ mailchimp tie-in

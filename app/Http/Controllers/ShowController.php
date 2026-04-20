@@ -108,6 +108,7 @@ class ShowController extends Controller
 
         // first show (current or next)
         $currentShow = array_shift($shows);
+        $price = $currentShow['ticket_price'] == 0 ? $price : $currentShow['ticket_price'];
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
         $currentShow['buttons'] = StandardButton::orderBy('sort_order')
             ->get()
@@ -268,7 +269,11 @@ class ShowController extends Controller
             ], 404);
         }
 
-        $validated = Show::validate($request->all(), $request->input('id'));
+        $validated = Show::validate(
+            $request->all(),
+            $request->input('id')
+        );
+
         if (! is_array($validated) || array_key_exists('errors', $validated)) {
             return response()->json([
                 'status'  => 'error',
