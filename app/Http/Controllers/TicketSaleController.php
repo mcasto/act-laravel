@@ -63,6 +63,8 @@ class TicketSaleController extends Controller
 
     public function store(Request $request)
     {
+        $request->mergeIfMissing(['send_mail' => true]);
+
         $validated = $request->validate([
             'type' => 'required|string',
             'performance_id' => 'required|integer',
@@ -71,7 +73,8 @@ class TicketSaleController extends Controller
             'email'      => 'required|email',
             'phone'      => 'required|string',
             'quantity' => 'required|integer|min:1',
-            'transfer_date' => 'sometimes|nullable|date'
+            'transfer_date' => 'sometimes|nullable|date',
+            'send_mail' => 'sometimes|boolean'
         ]);
 
         $patron = Patron::firstOrCreate(
@@ -105,7 +108,8 @@ class TicketSaleController extends Controller
             app(CompTixController::class)->redeemComp(
                 $comp->uid,
                 $validated['performance_id'],
-                $pickupName
+                $pickupName,
+                $validated['send_mail']
             );
 
             return response()->json(['status' => 'success']);
@@ -163,9 +167,10 @@ class TicketSaleController extends Controller
                 $confirmationData['view'] = 'purchase-confirmation';
             }
 
-            Mail::to(config('mail.admin_to.address'))->send(new TicketSaleMailer($ticketData));
-
-            Mail::to($patron->email)->send(new PurchaseConfirmationMailer($confirmationData));
+            if ($validated['send_mail']) {
+                Mail::to(config('mail.admin_to.address'))->send(new TicketSaleMailer($ticketData));
+                Mail::to($patron->email)->send(new PurchaseConfirmationMailer($confirmationData));
+            }
         } catch (Exception $e) {
             logger()->error('Failed to send ticket sale email', [
                 'error' => $e->getMessage(),
@@ -181,7 +186,7 @@ class TicketSaleController extends Controller
         $validated = $request->validate([
             'id'            => 'required|integer|exists:ticket_sales,id',
             'type'          => 'required|string',
-            'performance_id'=> 'required|integer',
+            'performance_id' => 'required|integer',
             'first_name'    => 'required|string',
             'last_name'     => 'required|string',
             'email'         => 'required|email',

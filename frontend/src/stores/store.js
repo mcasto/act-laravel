@@ -56,6 +56,7 @@ export const useStore = defineStore(
       ourAngels: ref(null),
       patron: ref(null),
       paymentMethods: ref(null),
+      send_mail: 1,
       show: ref(null),
       skills: ref([]),
       snippets: ref({}),

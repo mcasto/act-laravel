@@ -14,7 +14,6 @@
           outlined
           v-model="form.email"
           @blur="getPatron"
-          :rules="[(val) => !!val || 'Required']"
         ></q-input>
 
         <q-input
@@ -116,12 +115,8 @@ const existingSale = isEdit
 const performanceOptions = computed(() => {
   const now = new Date();
   return (store.admin.show?.performances ?? []).map((p) => {
-    const isPast = new Date(`${p.date}T${p.start_time}`) < now;
-    const soldOut = p.sold_out == 1;
     let label = `${p.formatted_date} ${p.formatted_time}`;
-    if (soldOut) label += " (Sold Out)";
-    else if (isPast) label += " (Past)";
-    return { label, value: p, disable: isPast || soldOut };
+    return { label, value: p };
   });
 });
 
@@ -188,6 +183,7 @@ const onSubmit = async () => {
     performance_id: form.value.performance?.value?.id,
     type: form.value.payment_method?.value?.value,
     quantity: form.value.quantity,
+    send_mail: store.send_mail,
     transfer_date:
       form.value.type == "transfer"
         ? formatISO(new Date(), { representation: "date" })

@@ -103,7 +103,9 @@ const performances = computed(() => {
       const soldOut = performance.sold_out == 1;
       const isPast = new Date(`${performance.date}T${performance.start_time}`) < now;
 
-      if (soldOut) {
+      if (isPast && soldOut) {
+        displayDate = `${displayDate} (Past - Sold Out)`;
+      } else if (soldOut) {
         displayDate = `${displayDate} (Sold Out)`;
       } else if (isPast) {
         displayDate = `${displayDate} (Past)`;

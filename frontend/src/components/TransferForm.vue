@@ -33,6 +33,7 @@
               outlined
               v-model="form.email"
               @blur="getPatron"
+              :rules="(v) => !!v || 'Required'"
             ></q-input>
             <q-input
               type="date"
@@ -41,6 +42,7 @@
               dense
               outlined
               v-model="form.transfer_date"
+              :rules="(v) => !!v || 'Required'"
             ></q-input>
             <q-input
               type="text"
@@ -49,6 +51,7 @@
               dense
               outlined
               v-model="form.first_name"
+              :rules="(v) => !!v || 'Required'"
             ></q-input>
             <q-input
               type="text"
@@ -57,6 +60,7 @@
               dense
               outlined
               v-model="form.last_name"
+              :rules="(v) => !!v || 'Required'"
             ></q-input
             ><q-input
               type="tel"

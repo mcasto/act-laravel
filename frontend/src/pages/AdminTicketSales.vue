@@ -27,12 +27,23 @@
             />
             <q-space />
             <template v-if="show">
+              <q-toggle
+                label="Send Emails"
+                v-model="store.send_mail"
+                :false-value="0"
+                :true-value="1"
+              ></q-toggle>
               <q-btn
                 icon="add"
                 size="sm"
                 color="primary"
                 round
                 @click="onNewTicket"
+              />
+              <AdminTicketSalesPrint
+                :recs="recs"
+                :ticket-price="ticketPrice"
+                :show-name="show.label"
               />
               <q-btn icon="mdi-cash-multiple" color="positive" flat>
                 <q-menu>
@@ -200,6 +211,7 @@ import { Dialog } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
+import AdminTicketSalesPrint from "./AdminTicketSalesPrint.vue";
 
 const store = useStore();
 
@@ -379,6 +391,9 @@ const onNewTicket = async () => {
 };
 
 const onEditSale = async (row) => {
-  store.router.push({ name: "admin-ticket-sale-edit", params: { id: row.id } });
+  store.router.push({
+    name: "admin-ticket-sale-edit",
+    params: { id: row.id },
+  });
 };
 </script>

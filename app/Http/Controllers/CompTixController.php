@@ -118,7 +118,7 @@ class CompTixController extends Controller
         return response()->json($compTicket);
     }
 
-    public function redeemComp(string $uid, int $performanceId, string $pickupName): CompTicket
+    public function redeemComp(string $uid, int $performanceId, string $pickupName, bool $sendMail = true): CompTicket
     {
         $comp = CompTicket::where('uid', $uid)->firstOrFail();
         $comp->update([
@@ -129,16 +129,18 @@ class CompTixController extends Controller
 
         $performance = $comp->fresh()->performance;
 
-        try {
-            Mail::to($comp->email)->send(new CompTicketMailer([
-                'view'             => 'comp-ticket-confirm',
-                'name'             => $comp->name,
-                'pickup_name'      => $pickupName,
-                'performance_date' => Carbon::parse($performance->date)->format('F j, Y'),
-                'performance_time' => Carbon::parse($performance->start_time)->format('g:i A'),
-            ]));
-        } catch (Exception $e) {
-            logger()->error('Failed to send comp ticket confirmation', ['error' => $e->getMessage()]);
+        if ($sendMail) {
+            try {
+                Mail::to($comp->email)->send(new CompTicketMailer([
+                    'view'             => 'comp-ticket-confirm',
+                    'name'             => $comp->name,
+                    'pickup_name'      => $pickupName,
+                    'performance_date' => Carbon::parse($performance->date)->format('F j, Y'),
+                    'performance_time' => Carbon::parse($performance->start_time)->format('g:i A'),
+                ]));
+            } catch (Exception $e) {
+                logger()->error('Failed to send comp ticket confirmation', ['error' => $e->getMessage()]);
+            }
         }
 
         return $comp->fresh();

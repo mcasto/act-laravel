@@ -55,7 +55,7 @@
               outlined
               v-model="form.email"
               @blur="getPatron"
-              required
+              :rules="(v) => !!v || 'Required'"
             ></q-input>
             <q-input
               type="text"
@@ -64,7 +64,7 @@
               dense
               outlined
               v-model="form.first_name"
-              required
+              :rules="(v) => !!v || 'Required'"
             ></q-input>
             <q-input
               type="text"
@@ -73,7 +73,7 @@
               dense
               outlined
               v-model="form.last_name"
-              required
+              :rules="(v) => !!v || 'Required'"
             ></q-input
             ><q-input
               type="tel"
@@ -82,7 +82,6 @@
               dense
               outlined
               v-model="form.phone"
-              required
             ></q-input>
           </q-card-section>
 
