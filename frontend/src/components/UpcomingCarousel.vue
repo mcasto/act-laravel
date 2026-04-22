@@ -38,11 +38,11 @@
           :key="`upcoming-show-${show.id}`"
         >
           <router-link :to="`/show-details/${show.slug}`">
-            <q-img
+            <poster-with-banner
               :src="POSTER_BASE_URL + show.poster"
-              fit="contain"
-              height="40vh"
-            ></q-img>
+              max-height="40vh"
+              :sold-out="isShowSoldOut(show)"
+            />
           </router-link>
         </q-carousel-slide>
 
@@ -99,6 +99,7 @@ import { format, parseISO } from "date-fns";
 import { Screen } from "quasar";
 import { useStore } from "src/stores/store";
 import { computed, onMounted, ref } from "vue";
+import PosterWithBanner from "src/components/PosterWithBanner.vue";
 
 const store = useStore();
 
@@ -112,6 +113,11 @@ const slide = ref(null);
 const curShow = computed(() => {
   return store.home.upcomingShows.find(({ id }) => id == slide.value);
 });
+
+const isShowSoldOut = (show) => {
+  const perfs = show?.performances ?? [];
+  return perfs.length > 0 && perfs.every((p) => p.sold_out);
+};
 
 const firstSlide = computed(() => {
   const first = [...store.home.upcomingShows].shift();

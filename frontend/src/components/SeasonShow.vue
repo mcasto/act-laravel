@@ -1,11 +1,10 @@
 <template>
   <q-card bordered flat class="bg-grey-2">
-    <q-img
+    <poster-with-banner
       :src="POSTER_BASE_URL + show.poster"
-      fit="contain"
-      height="40vh"
-      :alt="`Poster for ${show.name}`"
-    ></q-img>
+      max-height="40vh"
+      :sold-out="allSoldOut"
+    />
 
     <div class="text-center text-bold text-black">
       {{ show.name }}
@@ -39,8 +38,14 @@ import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { cloneDeep } from "lodash-es";
 import { computed } from "vue";
+import PosterWithBanner from "src/components/PosterWithBanner.vue";
 
 const props = defineProps(["show"]);
+
+const allSoldOut = computed(() => {
+  const perfs = props.show?.performances ?? [];
+  return perfs.length > 0 && perfs.every((p) => p.sold_out);
+});
 
 const hasGallery = computed(() => {
   return props.show.gallery_images?.length > 0;

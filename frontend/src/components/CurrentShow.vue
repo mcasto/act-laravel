@@ -25,18 +25,12 @@
 
     <div id="show-details" class="row q-gutter-x-sm q-pa-md">
       <div class="col-12 col-lg-4 text-center">
-        <q-img
-          id="poster"
-          :src="POSTER_BASE_URL + show.poster"
-          fit="contain"
+        <poster-with-banner
           v-if="show?.poster"
-          :style="
-            Screen.lt.lg
-              ? 'max-height: 50vh; max-width: 60%; margin: 0 auto;'
-              : 'max-height: 50vh;'
-          "
-          :class="Screen.gt.md ? 'q-ml-xl' : ''"
-        ></q-img>
+          :src="POSTER_BASE_URL + show.poster"
+          max-height="50vh"
+          :sold-out="allSoldOut"
+        />
       </div>
       <div
         class="col-12 col-lg-7 q-px-xl"
@@ -118,6 +112,7 @@ import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, formatISO, isFuture, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed } from "vue";
+import PosterWithBanner from "src/components/PosterWithBanner.vue";
 
 const store = useStore();
 
@@ -174,6 +169,11 @@ const performanceDates = computed(() => {
   });
 
   return formatted.join(" & ");
+});
+
+const allSoldOut = computed(() => {
+  const perfs = show.value?.performances ?? [];
+  return perfs.length > 0 && perfs.every((p) => p.sold_out);
 });
 
 const ticketsStart = computed(() => {

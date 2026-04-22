@@ -7,12 +7,11 @@
       <div class="text-caption">
         {{ date }}
       </div>
-      <q-img
+      <poster-with-banner
         :src="POSTER_BASE_URL + show.poster"
-        :width="Screen.lt.md ? '85vw' : '25vw'"
-        height="40vh"
-        fit="contain"
-      ></q-img>
+        max-height="40vh"
+        :sold-out="allSoldOut"
+      />
     </q-card-section>
     <q-dialog v-model="album">
       <gallery-carousel
@@ -30,11 +29,17 @@ import { format, parseISO } from "date-fns";
 import { computed, ref } from "vue";
 import { Screen } from "quasar";
 import GalleryCarousel from "./GalleryCarousel.vue";
+import PosterWithBanner from "./PosterWithBanner.vue";
 
 const album = ref(false);
 const slide = ref(null);
 
 const props = defineProps(["show"]);
+
+const allSoldOut = computed(() => {
+  const perfs = props.show?.performances ?? [];
+  return perfs.length > 0 && perfs.every((p) => p.sold_out);
+});
 
 const date = computed(() => {
   const date = props.show.performances

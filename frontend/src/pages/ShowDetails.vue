@@ -16,11 +16,11 @@
   <div class="q-py-md">
     <div class="row">
       <div class="col-12 col-md-4">
-        <q-img
+        <poster-with-banner
           :src="POSTER_BASE_URL + store.show.poster"
-          height="60vh"
-          fit="contain"
-        ></q-img>
+          max-height="60vh"
+          :sold-out="allSoldOut"
+        />
       </div>
       <div class="col-12 col-md-8 text-center">
         <div class="text-h6">
@@ -57,11 +57,17 @@
 
 <script setup>
 import { POSTER_BASE_URL } from "src/assets/constants";
+import PosterWithBanner from "src/components/PosterWithBanner.vue";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed } from "vue";
 
 const store = useStore();
+
+const allSoldOut = computed(() => {
+  const perfs = store.show?.performances ?? [];
+  return perfs.length > 0 && perfs.every((p) => p.sold_out);
+});
 
 const displayDate = computed(() => {
   const performances = store.show.performances;

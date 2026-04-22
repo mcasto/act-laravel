@@ -2,10 +2,11 @@
   <div class="q-pa-md">
     <div class="row q-gutter-y-md">
       <div class="col-12 col-md-3 text-center">
-        <q-img
+        <poster-with-banner
           :src="POSTER_BASE_URL + show.poster"
-          style="max-width: 400px;"
-        ></q-img>
+          max-width="400px"
+          :sold-out="allSoldOut"
+        />
       </div>
       <div class="col-12 col-md-8 offset-md-1">
         <div class="text-h6 text-center">
@@ -61,6 +62,7 @@
 
 <script setup>
 import { POSTER_BASE_URL } from "src/assets/constants";
+import PosterWithBanner from "src/components/PosterWithBanner.vue";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed, onMounted, ref } from "vue";
@@ -71,6 +73,11 @@ const store = useStore();
 
 const show = computed(() => {
   return store.home.currentShow;
+});
+
+const allSoldOut = computed(() => {
+  const perfs = show.value?.performances ?? [];
+  return perfs.length > 0 && perfs.every((p) => p.sold_out);
 });
 
 const performance = ref(null);
