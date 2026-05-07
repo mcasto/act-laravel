@@ -37,7 +37,7 @@ class StandardButtonsController extends Controller
             'buttons' => StandardButton::orderBy('sort_order')
                 ->get()
                 ->map(function ($rec) {
-                    $rec->template = $rec->popupText = file_get_contents(resource_path("views/standard-buttons/{$rec->key}.blade.php"));
+                    $rec->template =  file_get_contents(resource_path("views/standard-buttons/{$rec->key}.blade.php"));
 
                     return $rec;
                 })
