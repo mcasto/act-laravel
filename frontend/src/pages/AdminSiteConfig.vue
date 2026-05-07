@@ -63,8 +63,19 @@
 </template>
 
 <script setup>
+import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const store = useStore();
+
+onMounted(async () => {
+  const response = await callApi({
+    path: "/standard-buttons",
+    method: "get",
+    useAuth: true,
+  });
+
+  console.log({ response });
+});
 </script>

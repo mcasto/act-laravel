@@ -1,12 +1,7 @@
 <template>
-  <q-btn
-    icon="print"
-    size="md"
-    color="grey-7"
-    flat
-    round
-    @click="open = true"
-  />
+  <q-btn icon="print" size="md" color="grey-7" flat round @click="open = true">
+    <q-tooltip>Print sheet for door</q-tooltip>
+  </q-btn>
 
   <q-dialog v-model="open" maximized>
     <q-card class="column no-wrap">

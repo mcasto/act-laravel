@@ -17,8 +17,8 @@ export default ({
   }
 
   const base = useAuth
-    ? wretch("/api").auth(`Bearer ${store.admin.user?.token}`).url(path)
-    : wretch("/api").url(path);
+    ? wretch("/api").auth(`Bearer ${store.admin.user?.token}`).accept("application/json").url(path)
+    : wretch("/api").accept("application/json").url(path);
 
   const apiCall = method == "delete" && payload
     ? base.json(payload).delete()

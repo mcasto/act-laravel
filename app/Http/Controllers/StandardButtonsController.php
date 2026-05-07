@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SiteConfig;
 use App\Models\StandardButton;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,20 +21,26 @@ class StandardButtonsController extends Controller
      *
      * @source Database Model: StandardButton (reads filtered by type)
      */
-    public function index(int $amount)
+    public function index()
     {
-        logger()->info(__FILE__);
-        logger()->info(__LINE__);
-        $buttons = StandardButton::orderBy('sort_order')
-            ->get()
-            ->map(function ($rec) use ($amount) {
-                $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'price' => $amount['price'],
-                ])->render();
+        // need flex config
+        // need suport us config
+        // need standard buttons views
 
-                return $rec;
-            });
+        $siteConfig = SiteConfig::latest()->first();
 
-        return $buttons;
+        return response()->json([
+            'support' => json_decode(Storage::disk('local')
+                ->get('support-us.config.json')),
+            'flex' => json_decode(Storage::disk('local')
+                ->get('flex-purchase-config.json')),
+            'buttons' => StandardButton::orderBy('sort_order')
+                ->get()
+                ->map(function ($rec) {
+                    $rec->template = $rec->popupText = file_get_contents(resource_path("views/standard-buttons/{$rec->key}.blade.php"));
+
+                    return $rec;
+                })
+        ]);
     }
 }

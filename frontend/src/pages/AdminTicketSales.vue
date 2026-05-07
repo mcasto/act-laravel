@@ -10,8 +10,7 @@
       :columns="columns"
       row-key="id"
       dense
-      :pagination="{ rowsPerPage: 12 }"
-      :rows-per-page-options="[12]"
+      v-model:pagination="pagination"
     >
       <template #top>
         <div class="full-width">
@@ -126,6 +125,18 @@
               </div>
             </template>
           </div>
+          <div class="flex justify-end">
+            <q-pagination
+              v-if="pagesNumber > 1"
+              v-model="pagination.page"
+              :max="pagesNumber"
+              :max-pages="6"
+              boundary-links
+              direction-links
+              size="sm"
+              class="q-mt-sm"
+            />
+          </div>
         </div>
       </template>
 
@@ -139,6 +150,18 @@
         <q-th :props="props">
           <q-icon name="mdi-cog" />
         </q-th>
+      </template>
+
+      <template #body-cell-no_show="props">
+        <q-td :props="props">
+          <q-toggle
+            label="No Show"
+            v-model="props.row.no_show"
+            :false-value="0"
+            :true-value="1"
+            @update:model-value="updateNoShow(props.row)"
+          ></q-toggle>
+        </q-td>
       </template>
 
       <template #body-cell-info="props">
@@ -171,12 +194,15 @@
       </template>
 
       <template #body-cell-payment_method="props">
-        <q-td :props="props">
-          <div
-            :style="`width: 10px; height: 10px; border-radius: 50%; background: ${
+        <q-td :props="props" class="text-center">
+          <q-icon
+            name="mdi-circle"
+            :style="`color: ${
               paymentMethodColors[props.row.payment_method.label]
             };`"
-          ></div>
+          >
+            <q-tooltip>{{ props.row.payment_method.label }}</q-tooltip>
+          </q-icon>
         </q-td>
       </template>
 
@@ -200,6 +226,20 @@
           />
         </q-td>
       </template>
+
+      <template #bottom>
+        <div class="flex justify-end full-width">
+          <q-pagination
+            v-if="pagesNumber > 1"
+            v-model="pagination.page"
+            :max="pagesNumber"
+            :max-pages="6"
+            boundary-links
+            direction-links
+            size="sm"
+          />
+        </div>
+      </template>
     </q-table>
   </div>
 </template>
@@ -210,7 +250,7 @@ import { uniqBy } from "lodash-es";
 import { Dialog } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import AdminTicketSalesPrint from "./AdminTicketSalesPrint.vue";
 
 const store = useStore();
@@ -218,12 +258,28 @@ const store = useStore();
 const currentShow = store.home.currentShow;
 
 const show = ref(
-  currentShow ? { label: currentShow.name, value: currentShow.id } : null,
+  store.admin.selectedShow ??
+    (currentShow ? { label: currentShow.name, value: currentShow.id } : null),
 );
+
+watch(show, (val) => {
+  store.admin.selectedShow = val;
+});
 
 const search = ref("");
 
+const pagination = ref({ page: 1, rowsPerPage: 12 });
+const pagesNumber = computed(() =>
+  Math.ceil(filteredRecs.value.length / pagination.value.rowsPerPage),
+);
+
 const columns = [
+  {
+    name: "no_show",
+    label: "No Show",
+    field: "no_show",
+    align: "center",
+  },
   {
     name: "name",
     label: "Name",
@@ -395,5 +451,18 @@ const onEditSale = async (row) => {
     name: "admin-ticket-sale-edit",
     params: { id: row.id },
   });
+};
+
+const updateNoShow = async (row) => {
+  try {
+    await callApi({
+      path: `/ticket-sales/no-show/${row.id}`,
+      method: "put",
+      payload: row,
+      useAuth: true,
+    });
+  } catch (e) {
+    console.error({ error: e });
+  }
 };
 </script>

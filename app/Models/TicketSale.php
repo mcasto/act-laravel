@@ -19,6 +19,7 @@ class TicketSale extends Model
         'performance_id',
         'sold_at',
         'quantity',
+        'no_show'
     ];
 
     public function patron(): BelongsTo

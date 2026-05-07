@@ -181,6 +181,15 @@ class TicketSaleController extends Controller
         return response()->json(['transaction_id' => $ticketSale->transaction_id]);
     }
 
+    public function updateNoShow(Request $request, string $id)
+    {
+        $rec = TicketSale::findOrFail($id);
+        $rec->no_show = $request->input('no_show');
+        $rec->save();
+
+        return response()->json(['rec' => $rec, 'id' => $id]);
+    }
+
     public function update(Request $request)
     {
         $validated = $request->validate([
@@ -193,6 +202,7 @@ class TicketSaleController extends Controller
             'phone'         => 'required|string',
             'quantity'      => 'required|integer|min:1',
             'transfer_date' => 'sometimes|nullable|date',
+            'no_show'       => 'sometimes|boolean'
         ]);
 
         $patron = Patron::firstOrCreate(
@@ -213,6 +223,7 @@ class TicketSaleController extends Controller
             'quantity'          => $validated['quantity'],
             'payment_method_id' => $paymentMethod->id,
             'transfer_date'     => $validated['transfer_date'] ?? null,
+            'no_show' => $validated['no_show']
         ]);
 
         return response()->json($this->allSales());

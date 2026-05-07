@@ -236,7 +236,7 @@ Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
 /**
  * Standard Button Routes
  */
-Route::get('/standard-buttons/{amount}', [StandardButtonsController::class, 'index']);
+Route::get('/standard-buttons', [StandardButtonsController::class, 'index']);
 
 /**
  * Angel Routes - Add these to your existing api.php
@@ -260,12 +260,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/support-us', [SupportUsController::class, 'index']);
 
+/**
+ * Ticket Sale Routes
+ */
 Route::controller(TicketSaleController::class)
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/ticket-sales', 'index');
         Route::put('/ticket-sales', 'update');
         Route::delete('/ticket-sales', 'destroy');
+        Route::put('/ticket-sales/no-show/{id}', 'updateNoShow');
     });
 
 /**
