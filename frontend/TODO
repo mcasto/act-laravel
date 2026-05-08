@@ -1,7 +1,7 @@
 ✔ need a box office report output for the door @done(26-04-24 07:54)
 ✔ need method to add `door`, `new comers?`, `walk-in`, `no shows` & adjust the summary to include those things (do all of them become payment methods?) @done(26-05-07 16:34)
 
-☐ add editors to `admin/site-config` for standard button text
+✔ add editors to `admin/site-config` for standard button text @done(26-05-08 14:54)
 
 ☐ class management
 ☐ add "course poster" handler to AdminEditCourse.vue
