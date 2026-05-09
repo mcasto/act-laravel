@@ -21,7 +21,13 @@
       </template>
       <template #body-cell-contacts="props">
         <q-td align="center">
-          {{ props.row.contacts.length }}
+          <q-btn
+            color="primary"
+            size="sm"
+            @click="openEnrolleesDialog(props.row.contacts)"
+          >
+            {{ props.row.contacts.length }}
+          </q-btn>
         </q-td>
       </template>
       <template #body-cell-actions="props">
@@ -43,6 +49,11 @@
         </q-td>
       </template>
     </q-table>
+
+    <course-enrollees-dialog
+      v-model="enrolleesDialog.visible"
+      :contacts="enrolleesDialog.contacts"
+    ></course-enrollees-dialog>
   </div>
 </template>
 
@@ -52,8 +63,14 @@ import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
+import CourseEnrolleesDialog from "src/components/CourseEnrolleesDialog.vue";
 
 const store = useStore();
+
+const enrolleesDialog = ref({
+  visible: false,
+  contacts: null,
+});
 
 const columns = [
   { name: "name", label: "Class Name", field: "name", align: "left" },
@@ -77,7 +94,7 @@ const columns = [
   },
   {
     name: "contacts",
-    label: "Contacts",
+    label: "Enrollees",
     align: "center",
   },
   {
@@ -88,6 +105,13 @@ const columns = [
 ];
 
 const editing = ref(null);
+
+const openEnrolleesDialog = (contacts) => {
+  enrolleesDialog.value = {
+    visible: true,
+    contacts,
+  };
+};
 
 const onDelete = (course) => {
   Notify.create({
@@ -111,7 +135,7 @@ const onDelete = (course) => {
           });
           if (response.status == "success") {
             store.admin.courses = store.admin.courses.filter(
-              (c) => c.id !== course.id
+              (c) => c.id !== course.id,
             );
             Notify.create({
               type: "positive",

@@ -245,7 +245,8 @@ const routes = [
         component: () => import("pages/CourseInfo.vue"),
         beforeEnter: async (to) => {
           const store = useStore();
-          await store.classDetails(to.params.slug);
+          const found = await store.classDetails(to.params.slug);
+          if (!found) return { path: "/not-found" };
         },
         meta: { nav: false, label: "Class Details" },
       },

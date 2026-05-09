@@ -26,7 +26,8 @@ class CourseContact extends Model
             'first_name'    => ['required', 'string', 'max:255'],
             'last_name'    => ['required', 'string', 'max:255'],
             'email'   => ['required', 'email', 'max:255'],
-            'phone'   => ['required', 'string', 'max:20'],
+            'phone'     => ['required', 'string', 'max:20'],
+            'questions' => ['nullable', 'string'],
         ]);
 
         if ($validator->fails()) {

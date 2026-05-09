@@ -3,11 +3,11 @@
 
 ✔ add editors to `admin/site-config` for standard button text @done(26-05-08 14:54)
 
-☐ class management
-☐ add "course poster" handler to AdminEditCourse.vue
-☐ fix class `/images` calls (Crap. I'm not sure what this means)
+✔ class management @done(26-05-09 10:34)
+✔ add "course poster" handler to AdminEditCourse.vue @done(26-05-09 10:34)
+✔ fix class `/images` calls (Crap. I'm not sure what this means) @done(26-05-09 10:34)
 
-☐ add class management (with enrolled) to admin area
+✔ add class management (with enrolled) to admin area @done(26-05-09 12:13)
     payment methods for enrollment?
 
 ---

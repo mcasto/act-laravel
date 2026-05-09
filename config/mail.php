@@ -122,6 +122,11 @@ return [
         'name' => env('CONTACT_FROM_NAME', 'Example'),
     ],
 
+    'class_from' => [
+        'address' => env('CLASS_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('CLASS_FROM_NAME', 'Example'),
+    ],
+
     'ticket_sale_from' => [
         'address' => env('TICKET_SALE_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('TICKET_SALE_FROM_NAME', 'Example'),

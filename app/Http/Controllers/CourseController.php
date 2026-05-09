@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CourseInquiryConfirmationMailer;
+use App\Mail\CourseInquiryMailer;
 use App\Models\Course;
 use App\Models\CourseContact;
 use App\Models\SiteConfig;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use League\HTMLToMarkdown\HtmlConverter;
 use Illuminate\Support\Str;
@@ -104,6 +108,16 @@ class CourseController extends Controller
             $rec['slug'] = $baseSlug . '-' . sprintf('%03s', $nextNumber);
         }
 
+        if (Storage::disk('local')->exists("uploads/{$rec['poster']}")) {
+            $ext = pathinfo($rec['poster'], PATHINFO_EXTENSION);
+            $rec['poster'] = $this->publishUpload($rec['poster'], 'posters', "{$rec['slug']}.{$ext}");
+        }
+
+        if (Storage::disk('local')->exists("uploads/{$rec['instructor_photo']}")) {
+            $ext = pathinfo($rec['instructor_photo'], PATHINFO_EXTENSION);
+            $rec['instructor_photo'] = $this->publishUpload($rec['instructor_photo'], 'images', "{$rec['slug']}-instructor.{$ext}");
+        }
+
         $course = Course::create($rec);
         $rec['id'] = $course->id;
 
@@ -151,6 +165,16 @@ class CourseController extends Controller
 
         $rec = $validator->validated();
 
+        if (Storage::disk('local')->exists("uploads/{$rec['poster']}")) {
+            $ext = pathinfo($rec['poster'], PATHINFO_EXTENSION);
+            $rec['poster'] = $this->publishUpload($rec['poster'], 'posters', "{$course->slug}.{$ext}");
+        }
+
+        if (Storage::disk('local')->exists("uploads/{$rec['instructor_photo']}")) {
+            $ext = pathinfo($rec['instructor_photo'], PATHINFO_EXTENSION);
+            $rec['instructor_photo'] = $this->publishUpload($rec['instructor_photo'], 'images', "{$course->slug}-instructor.{$ext}");
+        }
+
         $course->update($rec);
 
         // Update the blade template view file
@@ -160,6 +184,16 @@ class CourseController extends Controller
         file_put_contents($viewPath, $rec['message']);
 
         return response()->json($course);
+    }
+
+    private function publishUpload(string $tempFilename, string $dir, string $newFilename): string
+    {
+        Storage::disk('public')->put(
+            "{$dir}/{$newFilename}",
+            Storage::disk('local')->get("uploads/{$tempFilename}")
+        );
+        Storage::disk('local')->delete("uploads/{$tempFilename}");
+        return $newFilename;
     }
 
     public function destroy(int $id)
@@ -271,6 +305,16 @@ class CourseController extends Controller
         }
 
         CourseContact::create($validated);
+
+        $course = Course::find($validated['course_id']);
+
+        $data = array_merge($validated, [
+            'course_name'     => $course->name,
+            'instructor_name' => $course->instructor_name,
+        ]);
+
+        Mail::to($course->instructor_email)->send(new CourseInquiryMailer($data));
+        Mail::to($validated['email'])->send(new CourseInquiryConfirmationMailer($data));
 
         return response()->json(['status' => 'success']);
     }

@@ -76,6 +76,7 @@
                         field-name="poster"
                         :headers="headers"
                         @uploaded="posterUploaded"
+                        @rejected="onFileRejected"
                       />
                     </template>
                     <template v-slot:hint>
@@ -159,6 +160,7 @@
                         field-name="instructor_photo"
                         :headers="headers"
                         @uploaded="instructorImageUploaded"
+                        @rejected="onFileRejected"
                       />
                     </template>
                     <template v-slot:hint>
@@ -360,6 +362,15 @@ import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 
 const store = useStore();
+
+const onFileRejected = (rejectedEntries) => {
+  rejectedEntries.forEach(({ failedPropValidation, file }) => {
+    const reason = failedPropValidation === "max-file-size"
+      ? `"${file.name}" is too large (max 1MB)`
+      : `"${file.name}" is not an accepted image type`;
+    Notify.create({ type: "negative", message: reason });
+  });
+};
 
 const headers = [
   { name: "Authorization", value: `Bearer ${store.admin.user.token}` },
