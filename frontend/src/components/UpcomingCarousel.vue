@@ -36,6 +36,7 @@
           :name="show.id"
           v-for="show of shows"
           :key="`upcoming-show-${show.id}`"
+          class="text-center"
         >
           <router-link :to="`/show-details/${show.slug}`">
             <poster-with-banner
@@ -141,17 +142,9 @@ const performanceDates = computed(() => {
     return false;
   }
 
-  let first = performances.shift();
-  let last = performances.length > 0 ? performances.pop() : first;
+  const first = performances.shift();
 
-  if (curShow.value.tentative) {
-    return format(parseISO(first), "MMM y");
-  }
-
-  first = format(parseISO(first), "PP");
-  last = format(parseISO(last), "PP");
-
-  return `${first} - ${last}`;
+  return format(parseISO(first), "MMM y");
 });
 
 const ticketsStart = () => {

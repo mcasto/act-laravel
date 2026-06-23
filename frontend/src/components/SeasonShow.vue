@@ -1,5 +1,5 @@
 <template>
-  <q-card bordered flat class="bg-grey-2">
+  <q-card bordered flat class="bg-grey-2 text-center">
     <poster-with-banner
       :src="POSTER_BASE_URL + show.poster"
       max-height="40vh"
@@ -58,7 +58,7 @@ const displayDate = computed(() => {
 
   return `${format(parseISO(first.date), "MMM d y")} - ${format(
     parseISO(last.date),
-    "MMM d y"
+    "MMM d y",
   )}`;
 });
 </script>
