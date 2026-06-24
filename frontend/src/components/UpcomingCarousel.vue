@@ -25,9 +25,9 @@
         v-model="slide"
         swipeable
         animated
-        navigation
+        :navigation="shows.length > 1"
         padding
-        height="52vh"
+        height="62vh"
         class="rounded-borders"
         ref="carousel"
         control-color="black"
@@ -41,7 +41,7 @@
           <router-link :to="`/show-details/${show.slug}`">
             <poster-with-banner
               :src="POSTER_BASE_URL + show.poster"
-              max-height="40vh"
+              max-height="50vh"
               :sold-out="isShowSoldOut(show)"
             />
           </router-link>
@@ -57,6 +57,7 @@
               label="Previous"
               @click="carousel.previous()"
               :disable="firstSlide"
+              v-if="shows.length > 1"
             />
           </q-carousel-control>
           <q-carousel-control position="bottom-right" :offset="[18, 18]">
@@ -68,6 +69,7 @@
               label="Next"
               @click="carousel.next()"
               :disable="lastSlide"
+              v-if="shows.length > 1"
             />
           </q-carousel-control>
         </template>
