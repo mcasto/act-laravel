@@ -9,10 +9,7 @@
       </q-toolbar>
       <q-card bordered class="q-ma-sm">
         <q-toolbar class="bg-primary text-white">
-          <q-toolbar-title
-            class="text-h6"
-            v-html="displayDate(currentShow)"
-          >
+          <q-toolbar-title class="text-h6" v-html="displayDate(currentShow)">
           </q-toolbar-title>
         </q-toolbar>
         <q-card-section class="row items-center">
@@ -50,7 +47,7 @@
       <template #top>
         <q-toolbar>
           <q-toolbar-title>
-            {{ currentShow ? 'Other Shows' : 'Shows' }}
+            {{ currentShow ? "Other Shows" : "Shows" }}
           </q-toolbar-title>
           <q-btn icon="add" round color="primary" to="new-show"></q-btn>
         </q-toolbar>
@@ -97,7 +94,6 @@
 
 <script setup>
 import { add, format, formatISO9075, parseISO } from "date-fns";
-import { clone } from "lodash-es";
 import { computed } from "vue";
 import ShowPoster from "src/components/ShowPoster.vue";
 import { useStore } from "src/stores/store";
@@ -105,23 +101,48 @@ import { useStore } from "src/stores/store";
 const store = useStore();
 
 const displayDate = (show) => {
-  // if performances, then return range of dates for performances
   if (show.performances?.length > 0) {
-    const performances = clone(show.performances);
-    const dateList = performances.map(({ date }) => date).sort();
-    const first = format(parseISO(dateList.shift()), "LLL d, yyyy");
-    const last =
-      dateList.length == 0
-        ? first
-        : format(parseISO(dateList.pop()), "LLL d, yyyy");
+    const dates = show.performances
+      .map(({ date }) => parseISO(date))
+      .sort((a, b) => a - b);
 
-    return `Performances: <div> ${first} - ${last}</div>`;
+    if (show.tentative) {
+      return `Performances: <div>${format(dates[0], "MMM y")}</div>`;
+    }
+
+    const runs = [];
+    let run = [dates[0]];
+
+    for (let i = 1; i < dates.length; i++) {
+      const diffDays = Math.round((dates[i] - dates[i - 1]) / 86400000);
+      if (diffDays === 1) {
+        run.push(dates[i]);
+      } else {
+        runs.push(run);
+        run = [dates[i]];
+      }
+    }
+    runs.push(run);
+
+    const formatted = runs.map((run) => {
+      const first = run[0];
+      const last = run[run.length - 1];
+
+      if (run.length === 1) return format(first, "MMM d");
+
+      if (format(first, "MMM") === format(last, "MMM")) {
+        return `${format(first, "MMM d")} - ${format(last, "d")}`;
+      }
+
+      return `${format(first, "MMM d")} - ${format(last, "MMM d")}`;
+    });
+
+    return `Performances: <div>${formatted.join(" & ")}</div>`;
   }
 
-  // else get ticket_sales_start
-  return `Tickets On Sale: <div> ${format(
+  return `Tickets On Sale: <div>${format(
     parseISO(show.ticket_sales_start),
-    "LLL d, yyyy"
+    "LLL d, yyyy",
   )}</div>`;
 };
 
