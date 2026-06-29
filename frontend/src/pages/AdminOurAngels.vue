@@ -151,7 +151,25 @@
             outlined
             dense
             prefix="$"
+            class="q-mb-md"
           />
+          <q-input
+            v-model="levelForm.fixr_link"
+            label="Fixr Link"
+            outlined
+            dense
+          >
+            <template #after>
+              <q-btn
+                round
+                size="sm"
+                :icon="matLink"
+                color="primary"
+                :disable="!levelForm.fixr_link"
+                @click="openLink(levelForm.fixr_link)"
+              />
+            </template>
+          </q-input>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -213,7 +231,7 @@
 </template>
 
 <script setup>
-import { matAdd, matDelete, matEdit } from "@quasar/extras/material-icons";
+import { matAdd, matDelete, matEdit, matLink } from "@quasar/extras/material-icons";
 import { ref, onMounted } from "vue";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
@@ -227,6 +245,7 @@ const levelForm = ref({
   id: null,
   label: "",
   min_amount: null,
+  fixr_link: "",
 });
 
 const angelForm = ref({
@@ -266,18 +285,24 @@ const selectLevel = (level) => {
   selectedLevel.value = level;
 };
 
+const openLink = (url) => {
+  window.open(url);
+};
+
 const openLevelDialog = (level = null) => {
   if (level) {
     levelForm.value = {
       id: level.id,
       label: level.label,
       min_amount: level.min_amount,
+      fixr_link: level.fixr_link ?? "",
     };
   } else {
     levelForm.value = {
       id: null,
       label: "",
       min_amount: null,
+      fixr_link: "",
     };
   }
   levelDialog.value = true;

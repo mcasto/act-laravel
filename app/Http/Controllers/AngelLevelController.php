@@ -31,8 +31,9 @@ class AngelLevelController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'label' => 'required|string|max:255',
-            'min_amount' => 'required|integer|min:0'
+            'label'      => 'required|string|max:255',
+            'min_amount' => 'required|integer|min:0',
+            'fixr_link'  => 'nullable|string',
         ]);
 
         $level = AngelLevel::create($validated);
@@ -49,8 +50,9 @@ class AngelLevelController extends Controller
         $level = AngelLevel::findOrFail($id);
 
         $validated = $request->validate([
-            'label' => 'required|string|max:255',
-            'min_amount' => 'required|integer|min:0'
+            'label'      => 'required|string|max:255',
+            'min_amount' => 'required|integer|min:0',
+            'fixr_link'  => 'nullable|string',
         ]);
 
         $level->update($validated);

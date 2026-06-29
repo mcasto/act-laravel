@@ -15,7 +15,8 @@ class AngelLevel extends Model
 
     protected $fillable = [
         'label',
-        'min_amount'
+        'min_amount',
+        'fixr_link',
     ];
 
     protected $appends = ['min_amount_formatted', 'benefits', 'buttons'];
