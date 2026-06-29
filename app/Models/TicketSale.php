@@ -22,6 +22,10 @@ class TicketSale extends Model
         'no_show'
     ];
 
+    protected $casts = [
+        'no_show' => 'integer',
+    ];
+
     public function patron(): BelongsTo
     {
         return $this->belongsTo(Patron::class);

@@ -24,6 +24,10 @@ class Angel extends Model
         'season',
     ];
 
+    protected $casts = [
+        'founding_angel' => 'integer',
+    ];
+
     public function angelLevel(): BelongsTo
     {
         return $this->belongsTo(AngelLevel::class);

@@ -24,6 +24,10 @@ class Show extends Model
         'ticket_price'
     ];
 
+    protected $casts = [
+        'tentative' => 'integer',
+    ];
+
     public static function validate($data, $id = null)
     {
         $rules = [

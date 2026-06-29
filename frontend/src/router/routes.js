@@ -173,7 +173,7 @@ const routes = [
       {
         name: "news",
         path: "news",
-        meta: { nav: true, external: true, label: "News" },
+        meta: { nav: true, external: true, label: "News", fbIcon: true },
         beforeEnter: (to, from) => {
           window.open("https://www.facebook.com/cuencacommunitytheater");
           return false;
@@ -349,8 +349,16 @@ const routes = [
             beforeEnter: async (to) => {
               const store = useStore();
               [store.paymentMethods, store.admin.show] = await Promise.all([
-                callApi({ path: "/payment-methods", method: "get", useAuth: true }),
-                callApi({ path: `/shows/${to.params.show_id}`, method: "get", useAuth: true }),
+                callApi({
+                  path: "/payment-methods",
+                  method: "get",
+                  useAuth: true,
+                }),
+                callApi({
+                  path: `/shows/${to.params.show_id}`,
+                  method: "get",
+                  useAuth: true,
+                }),
               ]);
             },
             meta: {

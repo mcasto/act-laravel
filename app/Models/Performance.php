@@ -22,6 +22,10 @@ class Performance extends Model
         'fixr_link'
     ];
 
+    protected $casts = [
+        'sold_out' => 'integer',
+    ];
+
     protected $appends = [
         'formatted_date',
         'formatted_time'

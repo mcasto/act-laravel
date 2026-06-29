@@ -19,6 +19,10 @@ class Volunteer extends Model
         'active',
     ];
 
+    protected $casts = [
+        'active' => 'integer',
+    ];
+
     public static function validate($data)
     {
         $validator = validator($data, [
