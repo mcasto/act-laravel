@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 
 class ImageController extends Controller
 {
@@ -79,13 +80,13 @@ class ImageController extends Controller
         $filename = basename(parse_url($filename, PHP_URL_PATH)); // strip any timestamps generated to refresh the image in the frontend
         $filename = pathinfo($filename, PATHINFO_FILENAME) . '.' . $extension;
 
-        $path     = $request->file('image')->storeAs(
-            'posters',
-            $filename,
-            'public'
-        );
+        $absPath = Storage::disk('public')->path("posters/{$filename}");
 
-        return response()->json(['filename' => basename($path)]);
+        Image::read($request->file('image'))
+            ->scaleDown(width: 1200)
+            ->save($absPath, quality: 80);
+
+        return response()->json(['filename' => $filename]);
     }
 
     /**

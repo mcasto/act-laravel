@@ -11,3 +11,7 @@ Artisan::command('inspire', function () {
 Schedule::command('reminders:send')
     ->dailyAt('10:00')
     ->timezone('America/Guayaquil');
+
+Schedule::command('storage:cleanup-orphans')
+    ->dailyAt('03:00')
+    ->timezone('America/Guayaquil');

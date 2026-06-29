@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Laravel\Facades\Image;
 use League\HTMLToMarkdown\HtmlConverter;
 use Illuminate\Support\Str;
 
@@ -188,10 +189,15 @@ class CourseController extends Controller
 
     private function publishUpload(string $tempFilename, string $dir, string $newFilename): string
     {
-        Storage::disk('public')->put(
-            "{$dir}/{$newFilename}",
-            Storage::disk('local')->get("uploads/{$tempFilename}")
-        );
+        $tempPath   = Storage::disk('local')->path("uploads/{$tempFilename}");
+        $targetPath = Storage::disk('public')->path("{$dir}/{$newFilename}");
+
+        Storage::disk('public')->makeDirectory($dir);
+
+        Image::read($tempPath)
+            ->scaleDown(width: 1200)
+            ->save($targetPath, quality: 80);
+
         Storage::disk('local')->delete("uploads/{$tempFilename}");
         return $newFilename;
     }
