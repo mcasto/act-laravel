@@ -5,7 +5,7 @@
         <div class="q-mt-md q-mx-sm">
           <show-poster :show="store.admin.show" height="40vh"></show-poster>
           <div class="text-center q-mt-xs">
-            <q-btn color="primary" icon="refresh" label="Change Poster Image">
+            <q-btn color="primary" :icon="matRefresh" label="Change Poster Image">
               <q-tooltip>
                 Replace Poster Image
               </q-tooltip>
@@ -31,7 +31,7 @@
           <q-separator class="q-my-md" v-if="store.admin.show.id"></q-separator>
 
           <div class="text-center">
-            <q-btn icon="settings" color="secondary">
+            <q-btn :icon="matSettings" color="secondary">
               <q-menu auto-close>
                 <q-list
                   dense
@@ -115,6 +115,7 @@
 </template>
 
 <script setup>
+import { matRefresh, matSettings } from "@quasar/extras/material-icons";
 import PerformancesDrawer from "src/components/PerformancesDrawer.vue";
 import ShowPoster from "src/components/ShowPoster.vue";
 import ShowInfoForm from "src/components/ShowInfoForm.vue";

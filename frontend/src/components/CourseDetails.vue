@@ -21,18 +21,18 @@
     <div class="col-12 col-sm-6 q-pl-md">
       <div class="q-my-md q-gutter-y-sm">
         <div class="q-gutter-sm flex items-center no-wrap">
-          <q-icon name="place" color="primary" />
+          <q-icon :name="matPlace" color="primary" />
           <span class="text-body1">{{ course.location }}</span>
         </div>
         <div class="q-gutter-sm flex items-center">
-          <q-icon name="event" color="primary" />
+          <q-icon :name="matEvent" color="primary" />
           <span class="text-body1">
             Enrollment: {{ formatDate(course.enrollment_start) }} –
             {{ formatDate(course.enrollment_end) }}
           </span>
         </div>
         <div class="q-gutter-sm flex items-center">
-          <q-icon name="payments" color="primary" />
+          <q-icon :name="matPayments" color="primary" />
           <span class="text-body1">${{ course.cost }}</span>
         </div>
       </div>
@@ -61,6 +61,7 @@
 </template>
 
 <script setup>
+import { matEvent, matPayments, matPlace } from "@quasar/extras/material-icons";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, formatISO9075, parseISO } from "date-fns";
 

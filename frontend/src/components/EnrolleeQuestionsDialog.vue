@@ -3,7 +3,7 @@
     <q-card style="min-width: 300px;">
       <q-card-actions class="justify-between">
         Questions
-        <q-btn icon="close" round flat @click="model = false" size="sm"></q-btn>
+        <q-btn :icon="matClose" round flat @click="model = false" size="sm"></q-btn>
       </q-card-actions>
       <q-separator></q-separator>
       <q-card-section>
@@ -14,6 +14,7 @@
 </template>
 
 <script setup>
+import { matClose } from "@quasar/extras/material-icons";
 const model = defineModel();
 const props = defineProps(["questions"]);
 </script>

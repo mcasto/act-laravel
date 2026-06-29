@@ -57,7 +57,7 @@
           <div class="q-my-md cursor-pointer">
             Ticket Sales Start:
             {{ format(parseISO(props.show.ticket_sales_start), "PP") }}
-            <q-btn icon="calendar_month" flat round></q-btn>
+            <q-btn :icon="matCalendarMonth" flat round></q-btn>
             <q-popup-edit
               v-model="props.show.ticket_sales_start"
               v-slot="scope"
@@ -87,6 +87,7 @@
 </template>
 
 <script setup>
+import { matCalendarMonth } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed } from "vue";

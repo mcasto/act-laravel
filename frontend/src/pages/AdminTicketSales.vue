@@ -33,7 +33,7 @@
                 :true-value="1"
               ></q-toggle>
               <q-btn
-                icon="add"
+                :icon="matAdd"
                 size="sm"
                 color="primary"
                 round
@@ -44,7 +44,7 @@
                 :ticket-price="ticketPrice"
                 :show-name="show.label"
               />
-              <q-btn icon="mdi-cash-multiple" color="positive" flat>
+              <q-btn :icon="mdiCashMultiple" color="positive" flat>
                 <q-menu>
                   <q-list dense style="min-width: 260px;">
                     <q-item-label header class="text-weight-bold"
@@ -108,7 +108,7 @@
               debounce="300"
             >
               <template #prepend>
-                <q-icon name="search" />
+                <q-icon :name="matSearch" />
               </template>
             </q-input>
             <q-space />
@@ -142,13 +142,13 @@
 
       <template #header-cell-payment_method="props">
         <q-th :props="props">
-          <q-icon name="mdi-currency-usd" />
+          <q-icon :name="mdiCurrencyUsd" />
         </q-th>
       </template>
 
       <template #header-cell-actions="props">
         <q-th :props="props">
-          <q-icon name="mdi-cog" />
+          <q-icon :name="mdiCog" />
         </q-th>
       </template>
 
@@ -166,7 +166,7 @@
 
       <template #body-cell-info="props">
         <q-td :props="props">
-          <q-btn icon="info" flat round size="sm">
+          <q-btn :icon="matInfo" flat round size="sm">
             <q-menu>
               <q-list dense separator>
                 <q-item>
@@ -196,7 +196,7 @@
       <template #body-cell-payment_method="props">
         <q-td :props="props" class="text-center">
           <q-icon
-            name="mdi-circle"
+            :name="mdiCircle"
             :style="`color: ${
               paymentMethodColors[props.row.payment_method.label]
             };`"
@@ -209,7 +209,7 @@
       <template #body-cell-actions="props">
         <q-td :props="props">
           <q-btn
-            icon="edit"
+            :icon="matEdit"
             flat
             round
             color="primary"
@@ -217,7 +217,7 @@
             @click="onEditSale(props.row)"
           />
           <q-btn
-            icon="delete"
+            :icon="matDelete"
             flat
             round
             color="negative"
@@ -245,6 +245,8 @@
 </template>
 
 <script setup>
+import { matAdd, matDelete, matEdit, matInfo, matSearch } from "@quasar/extras/material-icons";
+import { mdiCashMultiple, mdiCircle, mdiCog, mdiCurrencyUsd } from "@quasar/extras/mdi-v7";
 import { format, parseISO } from "date-fns";
 import { uniqBy } from "lodash-es";
 import { Dialog } from "quasar";

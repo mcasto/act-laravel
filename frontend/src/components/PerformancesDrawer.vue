@@ -2,12 +2,12 @@
   <div>
     <q-toolbar class="bg-primary text-white text-h6 justify-between">
       <div>
-        <q-btn icon="add" flat round @click="newPerformance"></q-btn>
+        <q-btn :icon="matAdd" flat round @click="newPerformance"></q-btn>
         Performances
       </div>
-      <q-btn icon="save" flat round @click="$emit('update')"></q-btn>
+      <q-btn :icon="matSave" flat round @click="$emit('update')"></q-btn>
 
-      <q-btn icon="close" size="sm" flat round @click="$emit('close')"></q-btn>
+      <q-btn :icon="matClose" size="sm" flat round @click="$emit(matClose)"></q-btn>
     </q-toolbar>
 
     <q-markup-table separator="cell">
@@ -107,7 +107,7 @@
                 autofocus
               >
                 <template #append>
-                  <q-btn icon="link" round flat @click="openLink(scope.value)">
+                  <q-btn :icon="matLink" round flat @click="openLink(scope.value)">
                     <q-tooltip>Test Link</q-tooltip>
                   </q-btn>
                 </template>
@@ -115,7 +115,7 @@
             </q-popup-edit>
           </q-td>
           <q-td class="text-center">
-            <q-btn icon="delete" flat round @click="performance.deleted = true">
+            <q-btn :icon="matDelete" flat round @click="performance.deleted = true">
               <q-tooltip>
                 Delete Performance
               </q-tooltip>
@@ -128,6 +128,7 @@
 </template>
 
 <script setup>
+import { matAdd, matClose, matDelete, matLink, matSave } from "@quasar/extras/material-icons";
 import { useStore } from "src/stores/store";
 import { add, format, formatISO9075, parseISO, sub } from "date-fns";
 import { clone } from "lodash-es";

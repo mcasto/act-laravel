@@ -8,7 +8,7 @@
         {{ date }}
       </div>
       <div class="absolute-top flex justify-end">
-        <q-btn icon="close" flat round v-close-popup></q-btn>
+        <q-btn :icon="matClose" flat round v-close-popup></q-btn>
       </div>
       <q-carousel
         v-model="slide"
@@ -38,6 +38,7 @@
 </template>
 
 <script setup>
+import { matClose } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
 import { computed } from "vue";
 

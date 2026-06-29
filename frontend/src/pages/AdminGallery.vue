@@ -5,7 +5,7 @@
         <q-page>
           <div class="column q-gutter-y-sm">
             <div class="flex justify-end">
-              <q-btn round flat icon="add" size="sm">
+              <q-btn round flat :icon="matAdd" size="sm">
                 <q-menu v-model="uploaderRef">
                   <q-uploader
                     accept=".jpg,.jpeg,.png"
@@ -62,7 +62,7 @@
         <q-page class="q-pl-md">
           <q-toolbar class="justify-end">
             <q-btn
-              icon="delete"
+              :icon="matDelete"
               class="q-mr-md"
               flat
               color="negative"
@@ -71,14 +71,14 @@
               v-if="photo"
             ></q-btn>
             <q-btn
-              icon="mdi-arrow-up"
+              :icon="mdiArrowUp"
               color="primary"
               @click="reorder(-1)"
               :disable="photo.idx == 0"
               v-if="photo"
             ></q-btn>
             <q-btn
-              icon="mdi-arrow-down"
+              :icon="mdiArrowDown"
               color="primary"
               @click="reorder(1)"
               :disable="(photo.idx == gallery.length - 1)"
@@ -101,6 +101,8 @@
 </template>
 
 <script setup>
+import { matAdd, matDelete } from "@quasar/extras/material-icons";
+import { mdiArrowDown, mdiArrowUp } from "@quasar/extras/mdi-v7";
 import { remove } from "lodash-es";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";

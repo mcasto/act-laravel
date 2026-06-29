@@ -15,7 +15,7 @@
     <template #body-cell-info="props">
       <q-td class="text-center">
         <q-btn
-          icon="info"
+          :icon="matInfo"
           round
           flat
           dense
@@ -35,7 +35,7 @@
     <template #body-cell-side="props">
       <q-td class="text-center">
         <q-btn
-          icon="fa-solid fa-file-arrow-down"
+          :icon="fasFileArrowDown"
           round
           flat
           dense
@@ -54,7 +54,7 @@
         <q-toolbar-title>
           {{ infoDialog.character }}
         </q-toolbar-title>
-        <q-btn icon="close" v-close-popup round flat dense></q-btn>
+        <q-btn :icon="matClose" v-close-popup round flat dense></q-btn>
       </q-toolbar>
       <q-separator></q-separator>
       <q-card-section>
@@ -65,6 +65,8 @@
 </template>
 
 <script setup>
+import { matClose, matInfo } from "@quasar/extras/material-icons";
+import { fasFileArrowDown } from "@quasar/extras/fontawesome-v6";
 import { Notify } from "quasar";
 import { ref } from "vue";
 import wretch from "wretch";

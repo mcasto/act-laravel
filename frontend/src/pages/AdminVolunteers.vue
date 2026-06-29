@@ -20,11 +20,11 @@
             style="min-width: 20rem;"
             hint="This is an 'OR' search"
           >
-            <template #prepend> <q-icon name="mdi-magnify"></q-icon> </template
+            <template #prepend> <q-icon :name="mdiMagnify"></q-icon> </template
           ></q-select>
 
           <q-btn
-            icon="add"
+            :icon="matAdd"
             round
             color="primary"
             to="/admin/edit-volunteer/new"
@@ -63,7 +63,7 @@
             <a :href="`mailto:${row.email}`">{{ row.email }}</a>
           </q-td>
           <q-td class="text-center">
-            <q-btn icon="mdi-tools" flat round></q-btn>
+            <q-btn :icon="mdiTools" flat round></q-btn>
             <q-menu>
               <q-list dense separator>
                 <q-item
@@ -81,7 +81,7 @@
           </q-td>
           <q-td class="text-center">
             <q-btn
-              icon="mdi-drama-masks"
+              :icon="mdiDramaMasks"
               flat
               round
               @click="
@@ -91,14 +91,14 @@
           </q-td>
           <q-td>
             <q-btn
-              icon="delete"
+              :icon="matDelete"
               flat
               round
               color="negative"
               @click="deleteVolunteer(row)"
             ></q-btn>
             <q-btn
-              icon="edit"
+              :icon="matEdit"
               flat
               round
               :to="`/admin/edit-volunteer/${row.id}`"
@@ -115,6 +115,8 @@
 </template>
 
 <script setup>
+import { matAdd, matDelete, matEdit } from "@quasar/extras/material-icons";
+import { mdiDramaMasks, mdiMagnify, mdiTools } from "@quasar/extras/mdi-v7";
 import { useStore } from "src/stores/store";
 import VolunteerExperience from "src/components/VolunteerExperience.vue";
 import { computed, ref } from "vue";

@@ -71,14 +71,14 @@
           <template #body-cell-tools="{row}">
             <q-td class="text-center">
               <q-btn
-                icon="delete"
+                :icon="matDelete"
                 round
                 size="sm"
                 color="negative"
                 @click="onDelete(row)"
               ></q-btn>
               <q-btn
-                icon="send"
+                :icon="matSend"
                 size="sm"
                 round
                 color="positive"
@@ -96,6 +96,7 @@
 </template>
 
 <script setup>
+import { matDelete, matSend } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
 import { remove } from "lodash-es";
 import { Dialog, Notify } from "quasar";

@@ -1,7 +1,7 @@
 <template>
   <q-toolbar class="justify-end fixed z-max">
     <q-btn
-      icon="fa-regular fa-circle-left"
+      :icon="farCircleLeft"
       dense
       flat
       round
@@ -56,6 +56,7 @@
 </template>
 
 <script setup>
+import { farCircleLeft } from "@quasar/extras/fontawesome-v6";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import PosterWithBanner from "src/components/PosterWithBanner.vue";
 import { format, parseISO } from "date-fns";

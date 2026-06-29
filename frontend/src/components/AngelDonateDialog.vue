@@ -2,7 +2,7 @@
   <q-dialog v-model="model">
     <q-card style="width: 100vw;">
       <div class="flex justify-end">
-        <q-btn icon="close" flat round size="sm" @click="model = false"></q-btn>
+        <q-btn :icon="matClose" flat round size="sm" @click="model = false"></q-btn>
       </div>
 
       <q-separator spaced></q-separator>
@@ -26,6 +26,7 @@
 </template>
 
 <script setup>
+import { matClose } from "@quasar/extras/material-icons";
 import PurchaseOptions from "./PurchaseOptions.vue";
 
 const model = defineModel();

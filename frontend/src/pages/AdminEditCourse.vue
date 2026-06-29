@@ -24,7 +24,7 @@
                     :rules="[(val) => !!val || 'Course name is required']"
                   >
                     <template #prepend>
-                      <q-icon name="school" />
+                      <q-icon :name="matSchool" />
                     </template>
                   </q-input>
                 </div>
@@ -40,7 +40,7 @@
                     :rules="[(val) => !!val || 'Tagline is required']"
                   >
                     <template #prepend>
-                      <q-icon name="format_quote" />
+                      <q-icon :name="matFormatQuote" />
                     </template>
                   </q-input>
                 </div>
@@ -103,7 +103,7 @@
                     :rules="[(val) => !!val || 'Instructor name is required']"
                   >
                     <template #prepend>
-                      <q-icon name="person" />
+                      <q-icon :name="matPerson" />
                     </template>
                   </q-input>
                 </div>
@@ -123,7 +123,7 @@
                     ]"
                   >
                     <template #prepend>
-                      <q-icon name="email" />
+                      <q-icon :name="matEmail" />
                     </template>
                   </q-input>
                 </div>
@@ -212,7 +212,7 @@
                     hint="Full address of the venue"
                   >
                     <template #prepend>
-                      <q-icon name="place" />
+                      <q-icon :name="matPlace" />
                     </template>
                   </q-input>
                 </div>
@@ -229,7 +229,7 @@
                     :rules="[(val) => val >= 0 || 'Cost must be 0 or greater']"
                   >
                     <template #prepend>
-                      <q-icon name="attach_money" />
+                      <q-icon :name="matAttachMoney" />
                     </template>
                   </q-input>
                 </div>
@@ -243,7 +243,7 @@
                     hint="Optional ticketing URL"
                   >
                     <template #prepend>
-                      <q-icon name="link" />
+                      <q-icon :name="matLink" />
                     </template>
                   </q-input>
                 </div>
@@ -267,7 +267,7 @@
                     :rules="[(val) => !!val || 'Start date is required']"
                   >
                     <template #prepend>
-                      <q-icon name="event" class="cursor-pointer">
+                      <q-icon :name="matEvent" class="cursor-pointer">
                         <q-popup-proxy
                           cover
                           transition-show="scale"
@@ -303,7 +303,7 @@
                     :rules="[(val) => !!val || 'End date is required']"
                   >
                     <template #prepend>
-                      <q-icon name="event" class="cursor-pointer">
+                      <q-icon :name="matEvent" class="cursor-pointer">
                         <q-popup-proxy
                           cover
                           transition-show="scale"
@@ -357,6 +357,7 @@
 </template>
 
 <script setup>
+import { matAttachMoney, matEmail, matEvent, matFormatQuote, matLink, matPerson, matPlace, matSchool } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";

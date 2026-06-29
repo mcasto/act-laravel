@@ -49,7 +49,7 @@
           <q-toolbar-title>
             {{ currentShow ? "Other Shows" : "Shows" }}
           </q-toolbar-title>
-          <q-btn icon="add" round color="primary" to="new-show"></q-btn>
+          <q-btn :icon="matAdd" round color="primary" to="new-show"></q-btn>
         </q-toolbar>
       </template>
       <template #item="props">
@@ -77,7 +77,7 @@
               </div>
               <div>
                 <q-btn
-                  icon="delete"
+                  :icon="matDelete"
                   round
                   flat
                   size="small"
@@ -93,6 +93,7 @@
 </template>
 
 <script setup>
+import { matAdd, matDelete } from "@quasar/extras/material-icons";
 import { add, format, formatISO9075, parseISO } from "date-fns";
 import { computed } from "vue";
 import ShowPoster from "src/components/ShowPoster.vue";

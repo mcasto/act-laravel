@@ -9,7 +9,7 @@
         <q-btn
           v-if="auditionLink"
           color="primary"
-          icon="theater_comedy"
+          :icon="matTheaterComedy"
           :label="auditionLink.label"
           flat
           :to="auditionLink.url"
@@ -17,7 +17,7 @@
         <q-btn
           v-if="classLink"
           color="primary"
-          icon="school"
+          :icon="matSchool"
           :label="classLink.label"
           flat
           :to="classLink.url"
@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+import { matMail, matMap, matSchool, matTheaterComedy, matVolunteerActivism } from "@quasar/extras/material-icons";
 // Props or imports based on your original
 import { useStore } from "src/stores/store";
 import { computed } from "vue";
@@ -74,13 +75,13 @@ const alwaysVisibleLinks = [
   {
     label: "Volunteer",
     url: "/volunteer",
-    icon: "volunteer_activism",
+    icon: matVolunteerActivism,
     color: "accent",
   },
   {
     label: "Find Us",
     url: "/find-us",
-    icon: "map",
+    icon: matMap,
     color: "secondary",
   },
   {
@@ -88,7 +89,7 @@ const alwaysVisibleLinks = [
     url:
       "https://actseats.us20.list-manage.com/subscribe?u=0022128dcf342c7a58eb81790&id=dff3d650cc",
     external: true,
-    icon: "mail",
+    icon: matMail,
     color: "deep-orange",
   },
 ];

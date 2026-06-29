@@ -27,7 +27,7 @@
       >
         <template #append>
           <q-btn
-            :icon="showPass ? 'visibility_off' : 'visibility'"
+            :icon="showPass ? matVisibilityOff : matVisibility"
             flat
             @click="showPass = !showPass"
           ></q-btn>
@@ -41,6 +41,7 @@
 </template>
 
 <script setup>
+import { matVisibility, matVisibilityOff } from "@quasar/extras/material-icons";
 import { Screen } from "quasar";
 import { useStore } from "src/stores/store";
 import { ref } from "vue";

@@ -63,7 +63,7 @@
             <q-btn
               round
               size="sm"
-              icon="link"
+              :icon="matLink"
               color="primary"
               @click="openLink"
             ></q-btn>
@@ -77,7 +77,7 @@
               :toolbar="[
                 ['left', 'center', 'right', 'justify'],
                 ['bold', 'italic', 'underline'],
-                ['link'],
+                [matLink],
                 ['undo', 'redo'],
                 ['viewsource'],
               ]"
@@ -123,6 +123,7 @@
 </template>
 
 <script setup>
+import { matLink } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";

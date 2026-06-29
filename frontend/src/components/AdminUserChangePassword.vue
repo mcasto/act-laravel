@@ -14,7 +14,7 @@
             <template #append>
               <q-btn
                 tabindex="-1"
-                :icon="showPass ? 'visibility_off' : 'visibility'"
+                :icon="showPass ? matVisibilityOff : matVisibility"
                 round
                 flat
                 color="primary"
@@ -45,6 +45,7 @@
 </template>
 
 <script setup>
+import { matVisibility, matVisibilityOff } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { ref } from "vue";

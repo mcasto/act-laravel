@@ -45,14 +45,14 @@
       </q-card-section>
       <q-card-actions class="justify-between">
         <q-btn
-          icon="delete"
+          :icon="matDelete"
           round
           flat
           color="negative"
           @click="deleteContact"
         ></q-btn>
         <q-btn
-          icon="message"
+          :icon="matMessage"
           flat
           round
           @click="showDialog = { visible: true, message: contact.body }"
@@ -67,6 +67,7 @@
 </template>
 
 <script setup>
+import { matDelete, matMessage } from "@quasar/extras/material-icons";
 import { useStore } from "src/stores/store";
 import AdminContactMessageDialog from "src/components/AdminContactMessageDialog.vue";
 import { ref } from "vue";

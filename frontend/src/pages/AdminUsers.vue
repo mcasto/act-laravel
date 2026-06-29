@@ -10,7 +10,7 @@
       <template #header-cell-tools>
         <q-th class="text-right">
           <q-btn
-            icon="mdi-plus-circle"
+            :icon="mdiPlusCircle"
             flat
             round
             color="primary"
@@ -54,7 +54,7 @@
       <template #body-cell-tools="{row}">
         <q-td class="text-right">
           <q-btn
-            icon="delete"
+            :icon="matDelete"
             flat
             round
             color="negative"
@@ -62,7 +62,7 @@
             :disable="row.id == 1 || row.id == store.admin.user.id"
           ></q-btn>
           <q-btn
-            icon="mdi-content-save"
+            :icon="mdiContentSave"
             color="primary"
             flat
             round
@@ -87,6 +87,8 @@
 </template>
 
 <script setup>
+import { matDelete } from "@quasar/extras/material-icons";
+import { mdiContentSave, mdiPlusCircle } from "@quasar/extras/mdi-v7";
 import { useStore } from "src/stores/store";
 import { ref } from "vue";
 import NewUserDialog from "src/components/NewUserDialog.vue";

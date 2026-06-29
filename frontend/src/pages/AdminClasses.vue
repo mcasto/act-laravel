@@ -12,7 +12,7 @@
         <q-th align="right">
           <q-btn
             color="primary"
-            icon="add"
+            :icon="matAdd"
             round
             size="sm"
             to="/admin/edit-course/new"
@@ -34,14 +34,14 @@
         <q-td align="right">
           <q-btn
             color="negative"
-            icon="delete"
+            :icon="matDelete"
             round
             flat
             @click="onDelete(props.row)"
           />
           <q-btn
             color="primary"
-            icon="edit"
+            :icon="matEdit"
             round
             flat
             :to="{ name: 'admin-edit-course', params: { id: props.row.id } }"
@@ -58,6 +58,7 @@
 </template>
 
 <script setup>
+import { matAdd, matDelete, matEdit } from "@quasar/extras/material-icons";
 import { format } from "date-fns";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";

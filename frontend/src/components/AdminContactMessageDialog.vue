@@ -4,7 +4,7 @@
       <q-btn
         flat
         round
-        icon="close"
+        :icon="matClose"
         size="sm"
         @click="model = false"
         class="absolute-top-right z-max"
@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import { matClose } from "@quasar/extras/material-icons";
 const model = defineModel();
 const props = defineProps(["message"]);
 </script>

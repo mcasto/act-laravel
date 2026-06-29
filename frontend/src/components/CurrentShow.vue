@@ -74,7 +74,7 @@
             <q-btn
               label="Reserve Tickets"
               color="primary"
-              icon="fa-solid fa-ticket"
+              :icon="fasTicket"
               to="/purchase-tickets"
             ></q-btn>
           </div>
@@ -107,6 +107,7 @@
 </template>
 
 <script setup>
+import { fasTicket } from "@quasar/extras/fontawesome-v6";
 import { Screen } from "quasar";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, formatISO, isFuture, parseISO } from "date-fns";

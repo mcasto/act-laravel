@@ -15,7 +15,7 @@
           </q-item-label>
         </q-item-section>
         <q-item-section side v-if="item.permissionLevel == 'read'">
-          <q-icon name="mdi-eye-lock"></q-icon>
+          <q-icon :name="mdiEyeLock"></q-icon>
         </q-item-section>
       </q-item>
       <!-- <q-item
@@ -32,7 +32,7 @@
           </q-item-label>
         </q-item-section>
         <q-item-section side v-if="item.permissionLevel == 'read'">
-          <q-icon name="mdi-eye-lock"></q-icon>
+          <q-icon :name="mdiEyeLock"></q-icon>
         </q-item-section>
       </q-item> -->
     </q-list>
@@ -40,6 +40,7 @@
 </template>
 
 <script setup>
+import { mdiEyeLock } from "@quasar/extras/mdi-v7";
 import { useStore } from "src/stores/store";
 
 const store = useStore();

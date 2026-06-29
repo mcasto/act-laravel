@@ -40,7 +40,7 @@
                 <q-btn
                   flat
                   round
-                  :icon="showPass ? 'visibility_off' : 'visibility'"
+                  :icon="showPass ? matVisibilityOff : matVisibility"
                   @click="showPass = !showPass"
                   tabindex="-1"
                 ></q-btn>
@@ -73,6 +73,7 @@
 </template>
 
 <script setup>
+import { matVisibility, matVisibilityOff } from "@quasar/extras/material-icons";
 import { ref } from "vue";
 
 const model = defineModel();

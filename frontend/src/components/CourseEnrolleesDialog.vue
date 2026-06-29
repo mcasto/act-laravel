@@ -3,7 +3,7 @@
     <q-card>
       <q-card-actions class="justify-between">
         Enrollees
-        <q-btn icon="close" round flat @click="model = false" size="sm"></q-btn>
+        <q-btn :icon="matClose" round flat @click="model = false" size="sm"></q-btn>
       </q-card-actions>
       <q-card-section>
         <q-table
@@ -46,6 +46,7 @@
 </template>
 
 <script setup>
+import { matClose } from "@quasar/extras/material-icons";
 import { ref } from "vue";
 import EnrolleeQuestionsDialog from "./EnrolleeQuestionsDialog.vue";
 

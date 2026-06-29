@@ -11,7 +11,7 @@
       </q-route-tab>
     </q-tabs>
     <q-btn
-      icon="menu"
+      :icon="matMenu"
       v-else
       size="md"
       label="Navigation Menu"
@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+import { matMenu } from "@quasar/extras/material-icons";
 import { Screen } from "quasar";
 import { useStore } from "src/stores/store";
 import { computed, ref, watch } from "vue";

@@ -1,5 +1,5 @@
 <template>
-  <q-btn icon="print" size="md" color="grey-7" flat round @click="open = true">
+  <q-btn :icon="matPrint" size="md" color="grey-7" flat round @click="open = true">
     <q-tooltip>Print sheet for door</q-tooltip>
   </q-btn>
 
@@ -15,8 +15,8 @@
           style="min-width: 200px;"
         />
         <q-space />
-        <q-btn label="Print" icon="print" color="primary" @click="doPrint" />
-        <q-btn icon="close" flat round @click="open = false" />
+        <q-btn label="Print" :icon="matPrint" color="primary" @click="doPrint" />
+        <q-btn :icon="matClose" flat round @click="open = false" />
       </q-card-section>
 
       <q-card-section class="col overflow-auto print-area">
@@ -95,6 +95,7 @@
 </template>
 
 <script setup>
+import { matClose, matPrint } from "@quasar/extras/material-icons";
 import { uniqBy, sortBy } from "lodash-es";
 import { computed, ref, watch } from "vue";
 

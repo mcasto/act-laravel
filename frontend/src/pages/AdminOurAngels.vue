@@ -8,7 +8,7 @@
           <div class="q-mb-md">
             <q-btn
               color="primary"
-              icon="add"
+              :icon="matAdd"
               label="Add Level"
               @click="openLevelDialog()"
             />
@@ -34,14 +34,14 @@
               <q-item-section side>
                 <div class="row q-gutter-x-xs">
                   <q-btn
-                    icon="edit"
+                    :icon="matEdit"
                     flat
                     dense
                     size="sm"
                     @click.stop="openLevelDialog(level)"
                   />
                   <q-btn
-                    icon="delete"
+                    :icon="matDelete"
                     flat
                     dense
                     size="sm"
@@ -69,7 +69,7 @@
               <div class="text-h6">{{ selectedLevel.label }} Angels</div>
               <q-btn
                 color="primary"
-                icon="add"
+                :icon="matAdd"
                 label="Add Angel"
                 @click="openAngelDialog()"
               />
@@ -93,14 +93,14 @@
                 <q-item-section side>
                   <div class="row q-gutter-x-xs">
                     <q-btn
-                      icon="edit"
+                      :icon="matEdit"
                       flat
                       dense
                       size="sm"
                       @click="openAngelDialog(angel)"
                     />
                     <q-btn
-                      icon="delete"
+                      :icon="matDelete"
                       flat
                       dense
                       size="sm"
@@ -213,6 +213,7 @@
 </template>
 
 <script setup>
+import { matAdd, matDelete, matEdit } from "@quasar/extras/material-icons";
 import { ref, onMounted } from "vue";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";

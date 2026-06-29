@@ -14,7 +14,7 @@
     <template #body-cell-address="{row}">
       <q-td class="text-center">
         <a :href="row.location_map_link" target="_blank">
-          <q-btn icon="pin_drop" round flat dense>
+          <q-btn :icon="matPinDrop" round flat dense>
             <q-tooltip>{{ row.location_address }}</q-tooltip>
           </q-btn></a
         >
@@ -24,6 +24,7 @@
 </template>
 
 <script setup>
+import { matPinDrop } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
 
 const props = defineProps(["sessions"]);

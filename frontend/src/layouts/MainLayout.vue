@@ -10,20 +10,20 @@
         <global-items v-if="!adminPath"></global-items>
       </q-page>
       <q-footer class="flex items-center q-pr-sm">
-        <q-btn flat icon="fa-solid fa-toolbox" to="/admin" v-if="!adminPath">
+        <q-btn flat :icon="fasToolbox" to="/admin" v-if="!adminPath">
           <q-tooltip>Admin</q-tooltip>
         </q-btn>
-        <q-btn flat icon="home" v-else to="/"></q-btn>
+        <q-btn flat :icon="matHome" v-else to="/"></q-btn>
         <q-btn
           flat
-          icon="logout"
+          :icon="matLogout"
           @click="store.signOut()"
           v-if="store.admin?.user"
         ></q-btn>
         <q-space></q-space>
 
         <a href="https://castoware.com" target="_blank" class="text-white">
-          <q-icon name="info" size="sm" v-if="Screen.xs"> </q-icon>
+          <q-icon :name="matInfo" size="sm" v-if="Screen.xs"> </q-icon>
           <span v-else>Website by CastoWare Development</span></a
         >
       </q-footer>
@@ -32,6 +32,8 @@
 </template>
 
 <script setup>
+import { matHome, matInfo, matLogout } from "@quasar/extras/material-icons";
+import { fasToolbox } from "@quasar/extras/fontawesome-v6";
 import HeaderPartial from "components/HeaderPartial.vue";
 import NavPartial from "components/NavPartial.vue";
 import GlobalItems from "src/components/GlobalItems.vue";
