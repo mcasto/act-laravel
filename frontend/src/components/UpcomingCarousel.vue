@@ -8,11 +8,15 @@
     <q-separator></q-separator>
 
     <div v-if="shows?.length == 0">
-      <q-img src="/images/curtains-rising.jpg" fit="cover">
-        <div class="flex full-width absolute-center flex-center text-h4">
+      <q-img
+        src="/images/saving-your-seat.jpeg"
+        fit="cover"
+        class="full-height"
+      >
+        <!-- <div class="flex full-width absolute-center flex-center text-h4">
           Curtain Rising Soon <br />
           On Our Next Season ...
-        </div>
+        </div> -->
       </q-img>
     </div>
 

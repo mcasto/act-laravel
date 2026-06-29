@@ -7,7 +7,13 @@
       </div>
       <q-btn :icon="matSave" flat round @click="$emit('update')"></q-btn>
 
-      <q-btn :icon="matClose" size="sm" flat round @click="$emit('close')"></q-btn>
+      <q-btn
+        :icon="matClose"
+        size="sm"
+        flat
+        round
+        @click="$emit('close')"
+      ></q-btn>
     </q-toolbar>
 
     <q-markup-table separator="cell">
@@ -33,7 +39,7 @@
       <tbody>
         <q-tr
           v-for="performance of store.admin.show.performances.filter(
-            ({ deleted }) => !deleted
+            ({ deleted }) => !deleted,
           )"
           :key="performance.id"
         >
@@ -50,7 +56,7 @@
               {{
                 format(
                   parseISO(`${performance.date} ${performance.start_time}`),
-                  "pp"
+                  "pp",
                 )
               }}
               <q-popup-edit
@@ -107,7 +113,12 @@
                 autofocus
               >
                 <template #append>
-                  <q-btn :icon="matLink" round flat @click="openLink(scope.value)">
+                  <q-btn
+                    :icon="matLink"
+                    round
+                    flat
+                    @click="openLink(scope.value)"
+                  >
                     <q-tooltip>Test Link</q-tooltip>
                   </q-btn>
                 </template>
@@ -115,7 +126,12 @@
             </q-popup-edit>
           </q-td>
           <q-td class="text-center">
-            <q-btn :icon="matDelete" flat round @click="performance.deleted = true">
+            <q-btn
+              :icon="matDelete"
+              flat
+              round
+              @click="performance.deleted = true"
+            >
               <q-tooltip>
                 Delete Performance
               </q-tooltip>
@@ -128,7 +144,13 @@
 </template>
 
 <script setup>
-import { matAdd, matClose, matDelete, matLink, matSave } from "@quasar/extras/material-icons";
+import {
+  matAdd,
+  matClose,
+  matDelete,
+  matLink,
+  matSave,
+} from "@quasar/extras/material-icons";
 import { useStore } from "src/stores/store";
 import { add, format, formatISO9075, parseISO, sub } from "date-fns";
 import { clone } from "lodash-es";
@@ -144,7 +166,7 @@ const openLink = (link) => {
 const newPerformance = () => {
   // get date of last performance
   const lastPerformance = clone(
-    store.admin.show.performances.filter(({ deleted }) => !deleted)
+    store.admin.show.performances.filter(({ deleted }) => !deleted),
   ).pop() || {
     date: formatISO9075(sub(new Date(), { days: 1 }), {
       representation: "date",
@@ -157,7 +179,7 @@ const newPerformance = () => {
     add(parseISO(lastPerformance.date), { days: 1 }),
     {
       representation: "date",
-    }
+    },
   );
 
   // set time for new performance
