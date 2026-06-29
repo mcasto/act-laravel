@@ -95,7 +95,7 @@ class ShowController extends Controller
     public function homeShows(): JsonResponse
     {
         // get site config
-        $siteConfig = SiteConfig::latest()->first();
+        $siteConfig = Cache::remember('site-config', 3600, fn() => SiteConfig::latest()->first());
         $price = $siteConfig?->ticket_price ?? 0;
 
         // get upcoming shows
@@ -111,8 +111,7 @@ class ShowController extends Controller
         $currentShow = array_shift($shows);
         $price = $currentShow['ticket_price'] == 0 ? $price : $currentShow['ticket_price'];
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
-        $currentShow['buttons'] = StandardButton::orderBy('sort_order')
-            ->get()
+        $currentShow['buttons'] = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
             ->map(function ($rec) use ($price) {
                 $price = "$" . $price;
 
@@ -195,7 +194,7 @@ class ShowController extends Controller
      */
     public function newShow(): JsonResponse
     {
-        $config = SiteConfig::orderByDesc('created_at')->first()->toArray();
+        $config = Cache::remember('site-config', 3600, fn() => SiteConfig::latest()->first())->toArray();
 
         return response()->json([
             'name'               => null,

@@ -4,11 +4,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class SiteConfig extends Model
 {
  /** @use HasFactory<\Database\Factories\SiteConfigFactory> */
  use HasFactory, SoftDeletes;
+
+ protected static function booted(): void
+ {
+  static::saved(fn() => Cache::forget('site-config'));
+  static::deleted(fn() => Cache::forget('site-config'));
+ }
 
  protected $fillable = [
   'ticket_price',

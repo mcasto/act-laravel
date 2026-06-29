@@ -1,13 +1,15 @@
 <template>
   <div>
-    <q-pagination
-      v-model="page"
-      color="black"
-      :max="max"
-      :max-pages="6"
-      :boundary-numbers="false"
-      v-if="max > 1"
-    />
+    <div class="flex items-center justify-between">
+      <q-pagination
+        v-model="page"
+        color="black"
+        :max="max"
+        :max-pages="6"
+        v-if="max > 1"
+      />
+      <!-- search here -->
+    </div>
 
     <div class="row q-mt-md">
       <div class="col-12 col-md-6" v-for="contact of paged">

@@ -4,11 +4,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionLevel extends Model
 {
  /** @use HasFactory<\Database\Factories\PermissionLevelFactory> */
  use HasFactory, SoftDeletes;
+
+ protected static function booted(): void
+ {
+  static::saved(fn() => Cache::forget('permission-levels'));
+  static::deleted(fn() => Cache::forget('permission-levels'));
+ }
 
  protected $fillable = [
   'label',

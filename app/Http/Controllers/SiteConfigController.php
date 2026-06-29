@@ -6,6 +6,7 @@ use App\Models\SiteConfig;
 use App\Models\StandardButton;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -27,8 +28,8 @@ class SiteConfigController extends Controller
      */
     public function show(): JsonResponse
     {
-        $config = SiteConfig::latest()->first();
-        $buttons = StandardButton::orderBy('sort_order')->get();
+        $config = Cache::remember('site-config', 3600, fn() => SiteConfig::latest()->first());
+        $buttons = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get());
 
         return response()->json(['config' => $config, 'buttons' => $buttons]);
     }

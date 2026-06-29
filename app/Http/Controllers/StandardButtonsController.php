@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class StandardButtonsController extends Controller
@@ -27,7 +28,7 @@ class StandardButtonsController extends Controller
         // need suport us config
         // need standard buttons views
 
-        $siteConfig = SiteConfig::latest()->first();
+        $siteConfig = Cache::remember('site-config', 3600, fn() => SiteConfig::latest()->first());
 
         return response()->json([
             'support' => json_decode(Storage::disk('local')

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StandardButton;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class SupportUsController extends Controller
@@ -13,16 +13,18 @@ class SupportUsController extends Controller
         $config = json_decode(Storage::disk('local')
             ->get('support-us.config.json'));
 
-        $config->buttons = StandardButton::orderBy('sort_order')
+        $price = $config->price;
+        $config->buttons = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
             ->whereIn('key', ['paypal', 'transfer'])
-            ->get()
-            ->map(function ($rec) use ($config) {
-                $price = $config->price;
-                $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'param' => "{$price}",
-                    'subject' => 'Support Us'
-                ])->render();
-
+            ->map(function ($rec) use ($price) {
+                $rec->popupText = Cache::remember(
+                    "standard-button-{$rec->key}-{$price}-support",
+                    3600,
+                    fn() => view("standard-buttons.{$rec->key}", [
+                        'param' => "{$price}",
+                        'subject' => 'Support Us'
+                    ])->render()
+                );
                 return $rec;
             });
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class AngelLevel extends Model
@@ -33,16 +34,19 @@ class AngelLevel extends Model
 
     protected function buttons(): Attribute
     {
-        $buttons = StandardButton::orderBy('sort_order')
-            ->get()
-            ->map(function ($rec) {
-                $price = $this->min_amount_formatted;
+        $price   = $this->min_amount_formatted;
+        $levelId = $this->id;
 
-                $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'param' => $price,
-                    'subject' => "{$price} Angel Donation"
-                ])->render();
-
+        $buttons = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
+            ->map(function ($rec) use ($price, $levelId) {
+                $rec->popupText = Cache::remember(
+                    "standard-button-{$rec->key}-angel-{$levelId}",
+                    3600,
+                    fn() => view("standard-buttons.{$rec->key}", [
+                        'param'   => $price,
+                        'subject' => "{$price} Angel Donation"
+                    ])->render()
+                );
                 return $rec;
             });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StandardButton;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 
@@ -26,15 +27,18 @@ class FlexPurchaseController extends Controller
         $config = json_decode(Storage::disk('local')
             ->get('flex-purchase-config.json'), true);
 
-        $config['buttons'] = StandardButton::orderBy('sort_order')
+        $price = $config['price'];
+        $config['buttons'] = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
             ->whereNotIn('key', ['questions', 'flex'])
-            ->get()
-            ->map(function ($rec) use ($config) {
-                $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'param' => "{$config['price']}",
-                    'subject' => "you purchased Flex Tickets"
-                ])->render();
-
+            ->map(function ($rec) use ($price) {
+                $rec->popupText = Cache::remember(
+                    "standard-button-{$rec->key}-{$price}-flex",
+                    3600,
+                    fn() => view("standard-buttons.{$rec->key}", [
+                        'param' => "{$price}",
+                        'subject' => "you purchased Flex Tickets"
+                    ])->render()
+                );
                 return $rec;
             });
 
