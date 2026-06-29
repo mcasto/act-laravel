@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\GalleryImage;
 use App\Models\Show;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Laravel\Facades\Image;
 
 class GalleryController extends Controller
 {
@@ -46,35 +50,47 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        // Get the file(s)
         $files = $request->file('galleryUpload');
-
-        // Make it always an array for consistent handling
         if (!is_array($files)) {
             $files = [$files];
         }
 
+        $show = Show::findOrFail($request->show_id);
+        $showSlug = Str::slug($show->name);
+        $showYear = Carbon::parse($show->ticket_sales_start)->year;
+
+        Storage::disk('public')->makeDirectory('gallery');
+
         $uploadedFiles = [];
 
         foreach ($files as $file) {
-            if ($file->isValid()) {
-                $path = $file->store('gallery-temp', 'public');
-
-
-                $rec = [
-                    'show_id' => $request->show_id,
-                    'image' => $path
-                ];
-
-                $image = GalleryImage::create($rec);
-
-                $uploadedFiles[] = $image;
+            if (!$file->isValid()) {
+                continue;
             }
+
+            $tempPath = $file->store('gallery-temp', 'public');
+
+            $ext = strtolower($file->getClientOriginalExtension()) ?: 'jpg';
+            $filename = "gallery-{$showSlug}-{$showYear}-" . uniqid() . ".{$ext}";
+            $permanentPath = "gallery/{$filename}";
+
+            Image::read(Storage::disk('public')->path($tempPath))
+                ->scaleDown(width: 1920, height: 1920)
+                ->save(Storage::disk('public')->path($permanentPath), quality: 80);
+
+            Storage::disk('public')->delete($tempPath);
+
+            $image = GalleryImage::create([
+                'show_id' => $request->show_id,
+                'image'   => $permanentPath,
+            ]);
+
+            $uploadedFiles[] = $image;
         }
 
         return response()->json([
             'status' => 'success',
-            'files' => $uploadedFiles,
+            'files'  => $uploadedFiles,
         ]);
     }
 
