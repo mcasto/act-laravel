@@ -8,7 +8,7 @@
     <q-separator></q-separator>
 
     <div v-if="shows?.length == 0">
-      <q-img src="/images/logo-home.png" height="40vh" fit="contain">
+      <q-img src="/images/curtains-rising.jpg" fit="cover">
         <div class="flex full-width absolute-center flex-center text-h4">
           Curtain Rising Soon <br />
           On Our Next Season ...

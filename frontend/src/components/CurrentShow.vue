@@ -24,7 +24,7 @@
     <q-separator></q-separator>
 
     <div id="show-details" class="row q-gutter-x-sm q-pa-md">
-      <div class="col-12 col-lg-4 text-center">
+      <div class="col-12 text-center">
         <poster-with-banner
           v-if="show?.poster"
           :src="POSTER_BASE_URL + show.poster"
@@ -33,7 +33,7 @@
         />
       </div>
       <div
-        class="col-12 col-lg-7 q-px-xl"
+        class="col-12 q-px-xl"
         :class="Screen.gt.md ? 'q-mx-lg' : ''"
         id="show-overview"
       >
