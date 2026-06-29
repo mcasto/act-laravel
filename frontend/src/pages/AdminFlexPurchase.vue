@@ -77,7 +77,7 @@
               :toolbar="[
                 ['left', 'center', 'right', 'justify'],
                 ['bold', 'italic', 'underline'],
-                [matLink],
+                ['link'],
                 ['undo', 'redo'],
                 ['viewsource'],
               ]"

@@ -7,7 +7,7 @@
       </div>
       <q-btn :icon="matSave" flat round @click="$emit('update')"></q-btn>
 
-      <q-btn :icon="matClose" size="sm" flat round @click="$emit(matClose)"></q-btn>
+      <q-btn :icon="matClose" size="sm" flat round @click="$emit('close')"></q-btn>
     </q-toolbar>
 
     <q-markup-table separator="cell">
