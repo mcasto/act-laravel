@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class Course extends Model
 {
@@ -59,7 +60,9 @@ class Course extends Model
      */
     public function getMessageAttribute()
     {
-        return view("courses.{$this->slug}")->render();
+        return Cache::remember("course-message-{$this->slug}", 3600, fn() =>
+            view("courses.{$this->slug}")->render()
+        );
     }
 
     /**

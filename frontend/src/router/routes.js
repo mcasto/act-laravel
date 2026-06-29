@@ -7,12 +7,13 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     beforeEnter: async (to, from) => {
       const store = useStore();
-
-      await store.announcementBanner();
-      await store.seasonShows();
-      await store.homeShows();
-      await store.openCourses();
-      await store.flexshowPurchaseConfig();
+      await Promise.all([
+        store.announcementBanner(),
+        store.seasonShows(),
+        store.homeShows(),
+        store.openCourses(),
+        store.flexshowPurchaseConfig(),
+      ]);
     },
     children: [
       {
@@ -347,18 +348,10 @@ const routes = [
             component: () => import("src/pages/AdminTicketSaleForm.vue"),
             beforeEnter: async (to) => {
               const store = useStore();
-
-              store.paymentMethods = await callApi({
-                path: "/payment-methods",
-                method: "get",
-                useAuth: true,
-              });
-
-              store.admin.show = await callApi({
-                path: `/shows/${to.params.show_id}`,
-                method: "get",
-                useAuth: true,
-              });
+              [store.paymentMethods, store.admin.show] = await Promise.all([
+                callApi({ path: "/payment-methods", method: "get", useAuth: true }),
+                callApi({ path: `/shows/${to.params.show_id}`, method: "get", useAuth: true }),
+              ]);
             },
             meta: {
               requireAuth: true,

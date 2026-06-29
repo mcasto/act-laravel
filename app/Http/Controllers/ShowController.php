@@ -9,6 +9,7 @@ use App\Models\StandardButton;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ShowController extends Controller
@@ -115,10 +116,14 @@ class ShowController extends Controller
             ->map(function ($rec) use ($price) {
                 $price = "$" . $price;
 
-                $rec->popupText = view("standard-buttons.{$rec->key}", [
-                    'param' => "{$price} per ticket",
-                    'subject' => "purchased tickets"
-                ])->render();
+                $rec->popupText = Cache::remember(
+                    "standard-button-{$rec->key}-{$price}",
+                    3600,
+                    fn() => view("standard-buttons.{$rec->key}", [
+                        'param' => "{$price} per ticket",
+                        'subject' => "purchased tickets"
+                    ])->render()
+                );
 
                 return $rec;
             });
