@@ -135,5 +135,10 @@ return [
     'admin_to' => [
         'address' => env('MAIL_TO_ADDRESS'),
         'name' => env('MAIL_TO_NAME')
+    ],
+
+    'volunteer_to' => [
+        'address' => env('MAIL_TO_ADDRESS'),
+        'name' => env('MAIL_TO_NAME')
     ]
 ];

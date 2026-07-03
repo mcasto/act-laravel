@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VolunteerContactMailer;
+use App\Models\Skill;
 use App\Models\Volunteer;
 use App\Models\VolunteerSkill;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class VolunteerController extends Controller
@@ -44,7 +47,25 @@ class VolunteerController extends Controller
      */
     public function contactCreate(Request $request): JsonResponse
     {
-        return response()->json($request);
+        $request->validate([
+            'name'     => 'required|string',
+            'email'    => 'required|email',
+            'phone'    => 'required|string',
+            'skills'   => 'array',
+            'skills.*' => 'integer|exists:skills,id',
+        ]);
+
+        $skills = Skill::whereIn('id', $request->input('skills', []))->get();
+
+        Mail::to(config('mail.volunteer_to.address'))
+            ->send(new VolunteerContactMailer(
+                name:   $request->input('name'),
+                email:  $request->input('email'),
+                phone:  $request->input('phone'),
+                skills: $skills,
+            ));
+
+        return response()->json(['status' => 'success']);
     }
 
     /**
