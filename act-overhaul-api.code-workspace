@@ -1,8 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+    "folders": [{
+            "path": "."
+        },
+        {
+            "path": "../../../../Volumes/ma-vids/programming-projects/act-cms-dev/dist/spa/site-data/images/volunteer"
+        }
+    ],
+    "settings": {}
 }
