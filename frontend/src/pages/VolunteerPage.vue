@@ -47,7 +47,7 @@
         label="Volunteer with ACT"
         size="lg"
         unelevated
-        @click="formDialog = true"
+        @click="openForm"
       />
     </div>
 
@@ -79,7 +79,7 @@
         label="Volunteer with ACT"
         size="lg"
         unelevated
-        @click="formDialog = true"
+        @click="openForm"
       />
     </div>
 
@@ -217,6 +217,12 @@ const volunteerContact = async () => {
 
   formDialog.value = false;
   resetForm();
+};
+
+const openForm = () => {
+  window.open(
+    "https://docs.google.com/forms/d/e/1FAIpQLSeMG44w4XchzHAvNhCu8WFeu2eC-coNq2A3qjt8DRYMHicyvg/viewform",
+  );
 };
 
 const sections = [
