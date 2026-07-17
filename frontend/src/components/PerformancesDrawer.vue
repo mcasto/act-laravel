@@ -95,7 +95,13 @@
             </div>
           </q-td>
           <q-td class="text-center">
-            <q-btn icon="img:/api/storage/fixr-icon" size="sm" flat round>
+            <q-btn
+              icon="img:/api/storage/fixr-icon"
+              :class="performance.fixr_link ? 'fixr-icon-active' : 'fixr-icon-inactive'"
+              size="sm"
+              flat
+              round
+            >
               <q-tooltip>Fixr Link</q-tooltip>
             </q-btn>
             <q-popup-edit
@@ -195,3 +201,13 @@ const newPerformance = () => {
   });
 };
 </script>
+
+<style scoped>
+.fixr-icon-active :deep(img) {
+  filter: invert(72%) sepia(2%) saturate(35603%) hue-rotate(81deg) brightness(86%) contrast(82%);
+}
+
+.fixr-icon-inactive :deep(img) {
+  filter: invert(54%) sepia(84%) saturate(254%) hue-rotate(-75deg) brightness(57%) contrast(415%);
+}
+</style>
