@@ -29,7 +29,7 @@
         </q-toolbar>
 
         <q-toolbar v-else>
-          <div class="text-subtitle2">
+          <div class="text-subtitle2" :class="{ 'text-red': noFlexPackage }">
             {{ header }}
           </div>
         </q-toolbar>
@@ -155,12 +155,19 @@ const historyColumns = [
   },
 ];
 
+const noFlexPackage = computed(() => {
+  return (
+    !!form.value.email &&
+    (!store.patron || store.patron?.flex_packages.length == 0)
+  );
+});
+
 const header = computed(() => {
   if (!form.value.email) {
     return "To see your Flex summary and history, enter your email address and press `tab`";
   }
 
-  if (!store.patron || store.patron?.flex_packages.length == 0) {
+  if (noFlexPackage.value) {
     return "You haven't purchased a Flex package for this season.";
   }
 
