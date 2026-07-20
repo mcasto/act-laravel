@@ -66,9 +66,11 @@ import PosterWithBanner from "src/components/PosterWithBanner.vue";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import PurchaseOptions from "src/components/PurchaseOptions.vue";
 import { sortBy } from "lodash-es";
 
+const route = useRoute();
 const store = useStore();
 
 const show = computed(() => {
@@ -151,10 +153,12 @@ onMounted(() => {
 
   performance.value = firstPerformance || [...performances.value].shift();
 
-  paymentMethod.value = {
-    id: performance.value.fixr_link,
-    label: show.value.fixrLabel,
-    value: "fixr",
-  };
+  const flexButton = route.query.flex
+    ? show.value.buttons.find((b) => b.key === "flex")
+    : null;
+
+  paymentMethod.value = flexButton
+    ? { id: null, label: flexButton.label, value: flexButton.id }
+    : { id: performance.value.fixr_link, label: show.value.fixrLabel, value: "fixr" };
 });
 </script>

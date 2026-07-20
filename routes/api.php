@@ -10,6 +10,7 @@ use App\Http\Controllers\CompTixController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FixrWebhooksController;
+use App\Http\Controllers\FlexLinkController;
 use App\Http\Controllers\FlexPurchaseController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
@@ -65,6 +66,8 @@ Route::get('all-shows', [ShowController::class, 'index']);
 Route::get('shows/{id}', [ShowController::class, 'show']);
 Route::get('season-shows', [ShowController::class, 'seasonShows']);
 Route::get('home-shows', [ShowController::class, 'homeShows']);
+Route::get('shows/flex/{uid}', [FlexLinkController::class, 'showByUid']);
+Route::middleware('auth:sanctum')->get('admin/flex-link/{showId}', [FlexLinkController::class, 'getOrCreate']);
 
 // Protected routes (requires auth)
 Route::middleware('auth:sanctum')->post('/create-show', [ShowController::class, 'create']);

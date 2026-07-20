@@ -15,7 +15,7 @@
   </q-toolbar>
   <div class="q-py-md">
     <div class="row">
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-4 text-center">
         <poster-with-banner
           :src="POSTER_BASE_URL + store.show.poster"
           max-height="60vh"
@@ -48,6 +48,20 @@
           <span class="text-bold">Directed By:</span>
           {{ store.show.director }}
         </div>
+
+        <q-separator class="q-my-xl" />
+
+        <div v-if="ticketsStart && !isFlexAccess">
+          <span class="text-bold">Tickets On Sale:</span> {{ ticketsStart }}
+        </div>
+        <div v-else-if="!store.show.tentative">
+          <q-btn
+            label="Reserve Tickets"
+            color="primary"
+            :icon="fasTicket"
+            :to="isFlexAccess ? { path: '/purchase-tickets', query: { flex: '1' } } : '/purchase-tickets'"
+          />
+        </div>
       </div>
 
       <div class="col-12 q-px-xl q-pt-md" v-html="store.show.info"></div>
@@ -57,13 +71,24 @@
 
 <script setup>
 import { farCircleLeft } from "@quasar/extras/fontawesome-v6";
+import { fasTicket } from "@quasar/extras/fontawesome-v6";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import PosterWithBanner from "src/components/PosterWithBanner.vue";
-import { format, parseISO } from "date-fns";
+import { format, isFuture, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
+import { useRoute } from "vue-router";
 import { computed } from "vue";
 
 const store = useStore();
+const route  = useRoute();
+
+const isFlexAccess = route.name === "flex-show-details";
+
+const ticketsStart = computed(() => {
+  if (!store.show?.ticket_sales_start) return false;
+  if (!isFuture(parseISO(store.show.ticket_sales_start))) return false;
+  return format(parseISO(store.show.ticket_sales_start), "PP");
+});
 
 const allSoldOut = computed(() => {
   const perfs = store.show?.performances ?? [];
@@ -76,7 +101,7 @@ const displayDate = computed(() => {
   if (performances.length == 0) {
     return {
       label: "Tickets On Sale",
-      date: format(parseISO(store.show.ticket_sales_start), PP),
+      date: format(parseISO(store.show.ticket_sales_start), "PP"),
     };
   }
 

@@ -74,6 +74,13 @@
                       </q-item-label>
                     </q-item-section>
                   </q-item>
+                  <q-item clickable @click="openFlexDialog">
+                    <q-item-section>
+                      <q-item-label>
+                        Flex Link
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
                 </q-list>
               </q-menu>
             </q-btn>
@@ -98,6 +105,45 @@
       </template>
     </q-splitter>
 
+    <!-- Flex Link dialog -->
+    <q-dialog v-model="flexDialog">
+      <q-card style="min-width: 480px; max-width: 90vw;">
+        <q-card-section class="row items-center bg-secondary text-white">
+          <div class="text-h6">Flex Early-Access Link</div>
+          <q-space />
+          <q-btn :icon="matClose" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section v-if="flexLoading" class="text-center q-py-xl">
+          <q-spinner size="2em" />
+        </q-card-section>
+
+        <q-card-section v-else>
+          <div class="text-caption q-mb-sm text-grey-7">
+            Share this link with flex ticket holders for early ticket access.
+          </div>
+          <q-input
+            :model-value="flexUrl"
+            readonly
+            outlined
+            dense
+          >
+            <template #append>
+              <q-btn
+                :icon="matContentCopy"
+                flat
+                round
+                dense
+                @click="copyFlexLink"
+              >
+                <q-tooltip>Copy to clipboard</q-tooltip>
+              </q-btn>
+            </template>
+          </q-input>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
     <q-dialog
       v-model="performancesDrawer"
       :maximized="false"
@@ -115,17 +161,20 @@
 </template>
 
 <script setup>
-import { matRefresh, matSettings } from "@quasar/extras/material-icons";
+import { matClose, matContentCopy, matRefresh, matSettings } from "@quasar/extras/material-icons";
 import PerformancesDrawer from "src/components/PerformancesDrawer.vue";
 import ShowPoster from "src/components/ShowPoster.vue";
 import ShowInfoForm from "src/components/ShowInfoForm.vue";
+import callApi from "src/assets/call-api";
 
+import { Notify } from "quasar";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute();
-const store = useStore();
+const route  = useRoute();
+const router = useRouter();
+const store  = useStore();
 
 const uploadHeaders = ref([
   { name: "Authorization", value: `Bearer ${store.admin.user?.token}` },
@@ -134,6 +183,39 @@ const uploadHeaders = ref([
 const uploadMenu = ref(false);
 
 const performancesDrawer = ref(false);
+
+const flexDialog  = ref(false);
+const flexLoading = ref(false);
+const flexUid     = ref(null);
+
+const flexUrl = computed(() => {
+  if (!flexUid.value) return "";
+  const path = router.resolve({
+    name: "flex-show-details",
+    params: { uid: flexUid.value },
+  }).href;
+  return window.location.origin + path;
+});
+
+const openFlexDialog = async () => {
+  flexDialog.value  = true;
+  flexLoading.value = true;
+  flexUid.value     = null;
+
+  const response = await callApi({
+    path: `/admin/flex-link/${store.admin.show.id}`,
+    method: "get",
+    useAuth: true,
+  });
+
+  flexUid.value     = response?.uid ?? null;
+  flexLoading.value = false;
+};
+
+const copyFlexLink = async () => {
+  await navigator.clipboard.writeText(flexUrl.value);
+  Notify.create({ type: "positive", message: "Link copied to clipboard" });
+};
 
 const refreshPoster = ({ xhr }) => {
   const { filename } = JSON.parse(xhr.response);

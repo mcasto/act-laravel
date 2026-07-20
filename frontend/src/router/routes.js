@@ -197,6 +197,21 @@ const routes = [
       },
 
       {
+        name: "flex-show-details",
+        path: "show-details/flex/:uid",
+        component: () => import("pages/ShowDetails.vue"),
+        beforeEnter: async (to, from) => {
+          const store = useStore();
+          const response = await callApi({
+            path: `/shows/flex/${to.params.uid}`,
+            method: "get",
+          });
+          if (!response?.show) return { name: "home" };
+          store.show = response.show;
+        },
+        meta: { nav: false, label: "Show Details" },
+      },
+      {
         name: "show-details",
         path: "show-details/:slug",
         component: () => import("pages/ShowDetails.vue"),
