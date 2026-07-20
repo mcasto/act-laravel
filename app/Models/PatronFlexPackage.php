@@ -37,11 +37,15 @@ class PatronFlexPackage extends Model
     {
         $dates = TheaterSeason::datesForSeason($this->season);
 
+        $totalPurchased = PatronFlexPackage::where('patron_id', $this->patron_id)
+            ->where('season', $this->season)
+            ->sum('tickets_purchased');
+
         $used = TicketSale::where('patron_id', $this->patron_id)
             ->whereHas('paymentMethod', fn ($q) => $q->where('value', 'flex'))
             ->whereHas('performance', fn ($q) => $q->whereBetween('date', [$dates['start'], $dates['end']]))
             ->sum('quantity');
 
-        return $this->tickets_purchased - $used;
+        return $totalPurchased - $used;
     }
 }
