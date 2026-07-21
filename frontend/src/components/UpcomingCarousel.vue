@@ -12,6 +12,7 @@
         src="/images/saving-your-seat.jpeg"
         fit="cover"
         class="full-height"
+        :ratio="1508 / 944"
       >
         <!-- <div class="flex full-width absolute-center flex-center text-h4">
           Curtain Rising Soon <br />

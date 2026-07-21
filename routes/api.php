@@ -78,32 +78,43 @@ Route::middleware('auth:sanctum')->get('new-show-template', [ShowController::cla
 Route::middleware('auth:sanctum')->put('update-tentative/{id}', [ShowController::class, 'updateTentative']);
 
 /**
+ * Serves a storage file with long-lived cache headers (etag derived from
+ * mtime+size, so it changes whenever the file is overwritten/re-optimized).
+ */
+$cacheableFile = function (string $path): BinaryFileResponse {
+    return Response::file($path)->setCache([
+        'public'        => true,
+        'max_age'       => 604800,
+        'etag'          => md5(filemtime($path) . filesize($path)),
+        'last_modified' => new \DateTime('@' . filemtime($path)),
+    ]);
+};
+
+/**
  * Fixr Icon
  */
-Route::get('/storage/fixr-icon', function () {
-    $path = storage_path("app/public/fixr.png");
-    return Response::file($path);
+Route::get('/storage/fixr-icon', function () use ($cacheableFile) {
+    return $cacheableFile(storage_path("app/public/fixr.png"));
 });
 
 /**
  * Flex Image
  */
-Route::get('/storage/flex-image', function () {
-    $path = storage_path("app/public/flex-image.jpg");
-    return Response::file($path);
+Route::get('/storage/flex-image', function () use ($cacheableFile) {
+    return $cacheableFile(storage_path("app/public/flex-image.jpg"));
 });
 
 /**
  * Image-related Routes
  */
-Route::get('/storage/{path}/{filename}', function ($path, $filename): BinaryFileResponse {
+Route::get('/storage/{path}/{filename}', function ($path, $filename) use ($cacheableFile): BinaryFileResponse {
     $path = storage_path("app/public/{$path}/{$filename}");
 
     if (! file_exists($path)) {
         $path = storage_path('app/private/image-not-found.jpeg');
     }
 
-    return Response::file($path);
+    return $cacheableFile($path);
 });
 
 Route::get('/storage/sides/{filename}', function ($filename): BinaryFileResponse | JsonResponse {
@@ -281,6 +292,7 @@ Route::controller(TicketSaleController::class)
  * Patron Routes
  */
 Route::get('/patrons/lookup', [PatronController::class, 'lookup']);
+Route::middleware('auth:sanctum')->get('/admin/flex-purchases', [PatronController::class, 'flexPurchases']);
 
 Route::controller(TicketSaleController::class)
     ->group(function () {

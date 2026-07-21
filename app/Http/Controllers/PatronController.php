@@ -4,12 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Helpers\TheaterSeason;
 use App\Models\Patron;
+use App\Models\PatronFlexPackage;
 use App\Models\TicketSale;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PatronController extends Controller
 {
+    public function flexPurchases(): JsonResponse
+    {
+        $purchases = PatronFlexPackage::with('patron')
+            ->get()
+            ->groupBy(fn ($pkg) => "{$pkg->patron_id}|{$pkg->season}")
+            ->map(function ($group) {
+                $first = $group->first();
+                $ticketsPurchased = $group->sum('tickets_purchased');
+                $ticketsUsed = $ticketsPurchased - $first->ticketsRemaining();
+
+                return [
+                    'season'            => $first->season,
+                    'first_name'        => $first->patron->first_name,
+                    'last_name'         => $first->patron->last_name,
+                    'email'             => $first->patron->email,
+                    'tickets_purchased' => $ticketsPurchased,
+                    'tickets_used'      => $ticketsUsed,
+                ];
+            })
+            ->sortByDesc('season')
+            ->values();
+
+        return response()->json($purchases);
+    }
+
     public function lookup(Request $request): JsonResponse
     {
         $request->validate(['email' => 'required|email']);

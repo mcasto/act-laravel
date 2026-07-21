@@ -38,14 +38,26 @@
     <q-btn
       label="Open FIXR"
       color="primary"
+      :loading="!ready"
+      :disable="!ready"
       @click="store.openFixr(id)"
     ></q-btn>
   </div>
 </template>
 
 <script setup>
+import loadFixrWidget from "src/assets/load-fixr-widget";
 import { useStore } from "src/stores/store";
+import { onMounted, ref } from "vue";
 
 const props = defineProps(["id"]);
 const store = useStore();
+
+const ready = ref(false);
+
+onMounted(async () => {
+  await loadFixrWidget();
+  store.fixr = window.fixr;
+  ready.value = true;
+});
 </script>

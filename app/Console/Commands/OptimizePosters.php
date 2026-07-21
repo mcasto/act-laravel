@@ -24,27 +24,40 @@ class OptimizePosters extends Command
             ->values()
             ->all();
 
+        Storage::disk('public')->makeDirectory('posters-sm');
+
         $diskFiles = Storage::disk('public')->files('posters');
+
+        // Clean up any small-variant files whose full-size poster no longer exists
+        $currentFilenames = collect($diskFiles)->map(fn($p) => basename($p))->all();
+        foreach (Storage::disk('public')->files('posters-sm') as $smallRelativePath) {
+            if (!in_array(basename($smallRelativePath), $currentFilenames)) {
+                Storage::disk('public')->delete($smallRelativePath);
+            }
+        }
 
         $deleted  = 0;
         $optimized = 0;
         $failed   = 0;
 
         foreach ($diskFiles as $relativePath) {
-            $filename = basename($relativePath);
-            $absPath  = Storage::disk('public')->path($relativePath);
+            $filename     = basename($relativePath);
+            $absPath      = Storage::disk('public')->path($relativePath);
+            $smallAbsPath = Storage::disk('public')->path("posters-sm/{$filename}");
 
             if (!in_array($filename, $dbPosters)) {
                 Storage::disk('public')->delete($relativePath);
+                Storage::disk('public')->delete("posters-sm/{$filename}");
                 $this->line("  [DELETED] {$filename}");
                 $deleted++;
                 continue;
             }
 
             try {
-                Image::read($absPath)
-                    ->scaleDown(width: 1200)
-                    ->save($absPath, quality: 80);
+                $posterImage = Image::read($absPath);
+
+                $posterImage->scaleDown(width: 1200)->save($absPath, quality: 80);
+                $posterImage->scaleDown(width: 600)->save($smallAbsPath, quality: 80);
 
                 $this->line("  [OK] {$filename}");
                 $optimized++;

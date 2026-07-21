@@ -80,11 +80,15 @@ class ImageController extends Controller
         $filename = basename(parse_url($filename, PHP_URL_PATH)); // strip any timestamps generated to refresh the image in the frontend
         $filename = pathinfo($filename, PATHINFO_FILENAME) . '.' . $extension;
 
-        $absPath = Storage::disk('public')->path("posters/{$filename}");
+        Storage::disk('public')->makeDirectory('posters-sm');
 
-        Image::read($request->file('image'))
-            ->scaleDown(width: 1200)
-            ->save($absPath, quality: 80);
+        $absPath      = Storage::disk('public')->path("posters/{$filename}");
+        $smallAbsPath = Storage::disk('public')->path("posters-sm/{$filename}");
+
+        $posterImage = Image::read($request->file('image'));
+
+        $posterImage->scaleDown(width: 1200)->save($absPath, quality: 80);
+        $posterImage->scaleDown(width: 600)->save($smallAbsPath, quality: 80);
 
         return response()->json(['filename' => $filename]);
     }
