@@ -75,6 +75,7 @@ import { fasTicket } from "@quasar/extras/fontawesome-v6";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import PosterWithBanner from "src/components/PosterWithBanner.vue";
 import { format, isFuture, parseISO } from "date-fns";
+import formatPerformanceDateRange from "src/assets/format-performance-date-range";
 import { useStore } from "src/stores/store";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
@@ -105,13 +106,18 @@ const displayDate = computed(() => {
     };
   }
 
-  const dates = performances.map(({ date }) => format(parseISO(date), "PP"));
-  const startDate = dates.shift();
-  const endDate = dates.length > 0 ? dates.pop() : startDate;
+  if (store.show.tentative) {
+    return {
+      label: "Performance Dates",
+      date: format(parseISO(performances[0].date), "MMM y"),
+    };
+  }
+
+  const dates = performances.map(({ date }) => parseISO(date));
 
   return {
     label: "Performance Dates",
-    date: `${startDate} - ${endDate}`,
+    date: formatPerformanceDateRange(dates),
   };
 });
 </script>

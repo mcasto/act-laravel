@@ -111,6 +111,7 @@ import { fasTicket } from "@quasar/extras/fontawesome-v6";
 import { Screen } from "quasar";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, formatISO, isFuture, parseISO } from "date-fns";
+import formatPerformanceDateRange from "src/assets/format-performance-date-range";
 import { useStore } from "src/stores/store";
 import { computed } from "vue";
 import PosterWithBanner from "src/components/PosterWithBanner.vue";
@@ -139,37 +140,7 @@ const performanceDates = computed(() => {
     return format(dates[0], "MMM y");
   }
 
-  // Group into consecutive runs
-  const runs = [];
-  let run = [dates[0]];
-
-  for (let i = 1; i < dates.length; i++) {
-    const diffMs = dates[i] - dates[i - 1];
-    const diffDays = Math.round(diffMs / 86400000);
-    if (diffDays === 1) {
-      run.push(dates[i]);
-    } else {
-      runs.push(run);
-      run = [dates[i]];
-    }
-  }
-  runs.push(run);
-
-  // Format each run as "Apr 17 - 19" or "Apr 17" or "Mar 29 - Apr 2"
-  const formatted = runs.map((run) => {
-    const first = run[0];
-    const last = run[run.length - 1];
-
-    if (run.length === 1) return format(first, "MMM d");
-
-    if (format(first, "MMM") === format(last, "MMM")) {
-      return `${format(first, "MMM d")} - ${format(last, "d")}`;
-    }
-
-    return `${format(first, "MMM d")} - ${format(last, "MMM d")}`;
-  });
-
-  return formatted.join(" & ");
+  return formatPerformanceDateRange(dates);
 });
 
 const allSoldOut = computed(() => {
