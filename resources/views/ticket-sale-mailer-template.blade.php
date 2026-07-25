@@ -35,4 +35,10 @@
     <div>
         <strong>Sold At:</strong> {{ \Carbon\Carbon::parse($ticketData['sold_at'])->format('M j, Y g:i A') }}
     </div>
+
+    @if (!empty($ticketData['special_request']))
+        <p></p>
+        <h3>Special Request</h3>
+        <div>{!! $ticketData['special_request'] !!}</div>
+    @endif
 </div>

@@ -35,6 +35,7 @@ import PurchaseCredit from "./PurchaseCredit.vue";
 import PayPalForm from "./PayPalForm.vue";
 import TransferForm from "./TransferForm.vue";
 import FlexForm from "./FlexForm.vue";
+import MessageUsForm from "./MessageUsForm.vue";
 
 const props = defineProps([
   "fixrLink",
@@ -52,9 +53,12 @@ const paymentMethodForm = computed(() => {
     paypal: PayPalForm,
     transfer: TransferForm,
     flex: FlexForm,
+    "message us": MessageUsForm,
   };
 
-  const type = paymentMethod.value.label.match(/(paypal)|(transfer)|(flex)/i);
+  const type = paymentMethod.value.label.match(
+    /(paypal)|(transfer)|(flex)|(message us)/i,
+  );
 
   if (!type) return null;
 

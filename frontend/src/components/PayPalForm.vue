@@ -60,6 +60,8 @@
               outlined
               v-model="form.phone"
             ></q-input>
+            <div class="text-subtitle2">Special Request</div>
+            <q-editor v-model="form.special_request"></q-editor>
           </q-card-section>
 
           <q-card-actions class="flex justify-end">
@@ -94,6 +96,7 @@ const form = ref({
   last_name: store.patron?.last_name || null,
   phone: store.patron?.phone || null,
   quantity: props.isFlex ? store.flex.num_tickets : null,
+  special_request: null,
 });
 
 const getPatron = async () => {

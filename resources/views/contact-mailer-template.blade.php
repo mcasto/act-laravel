@@ -8,9 +8,9 @@
     <p>
         Subject: {{ $contact->subject }}
     </p>
-    <p>
-        {{ $contact->body }}
-    </p>
+    <div>
+        {!! $contact->body !!}
+    </div>
     <div>
         Received: {{ $contact->created_at->format('M j, Y g:i A') }}
     </div>

@@ -74,6 +74,7 @@ class TicketSaleController extends Controller
             'phone'      => 'required|string',
             'quantity' => 'required|integer|min:1',
             'transfer_date' => 'sometimes|nullable|date',
+            'special_request' => 'sometimes|nullable|string',
             'send_mail' => 'sometimes|boolean'
         ]);
 
@@ -144,6 +145,7 @@ class TicketSaleController extends Controller
                 'payment_method' => $paymentMethod?->label,
                 'quantity'       => $validated['quantity'],
                 'sold_at'        => $rec['sold_at'],
+                'special_request' => $validated['special_request'] ?? null,
             ];
 
             $confirmationData = [
