@@ -4,9 +4,8 @@
       <q-card bordered class="q-mx-md">
         <q-toolbar>
           <q-toolbar-title>
-            <div class="text-subtitle1">
-              2. Submit this form
-            </div>
+            <div class="text-overline">Step 2</div>
+            <div class="text-subtitle1">Submit this form</div>
             <div class="text-caption">
               This form lets us know to look out for your payment.
             </div>

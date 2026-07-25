@@ -57,7 +57,7 @@ To add a new payment method, add a row to the `standard_buttons` table and creat
 
 Each partial is a self-contained HTML form that posts to `POST /api/ticket-sales`. They share the same structure:
 
-- A `<fieldset>` with a numbered legend ("2. Submit this form") to visually group the form as step 2 of the payment flow
+- A `<fieldset>` with a numbered legend ("Step 2. Submit this form") to visually group the form as step 2 of the payment flow
 - Dense, outlined `q-field`-styled inputs (plain CSS mimicking Quasar's `outlined` + `stack-label` + `dense` appearance — not actual Vue components)
 - Required fields: `email`, `name`, `phone`
 - Hidden fields:
