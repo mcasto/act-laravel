@@ -91,6 +91,7 @@
 import { formatISO9075 } from "date-fns";
 import { clone } from "lodash-es";
 import callApi from "src/assets/call-api";
+import notifyNetworkError from "src/assets/notify-network-error";
 import { ref } from "vue";
 import { useStore } from "src/stores/store";
 
@@ -133,21 +134,27 @@ const getPatron = async () => {
 const onSubmit = async () => {
   loading.value = true;
 
-  const payload = clone(form.value);
-  payload.performance_id = props.performance.id;
-  payload.transfer_date = formatISO9075(new Date(), { representation: "date" });
+  try {
+    const payload = clone(form.value);
+    payload.performance_id = props.performance.id;
+    payload.transfer_date = formatISO9075(new Date(), { representation: "date" });
 
-  const response = await callApi({
-    path: "/ticket-sales",
-    method: "post",
-    payload,
-  });
-
-  if (response.transaction_id) {
-    store.router.push({
-      name: "ticket-confirmation",
-      params: { uuid: response.transaction_id },
+    const response = await callApi({
+      path: "/ticket-sales",
+      method: "post",
+      payload,
     });
+
+    if (response.transaction_id) {
+      store.router.push({
+        name: "ticket-confirmation",
+        params: { uuid: response.transaction_id },
+      });
+    }
+  } catch (error) {
+    notifyNetworkError("Something went wrong submitting your request.");
+  } finally {
+    loading.value = false;
   }
 };
 </script>

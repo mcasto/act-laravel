@@ -38,7 +38,7 @@
     <q-btn
       label="Open FIXR"
       color="primary"
-      :loading="!ready"
+      :loading="!ready && !failed"
       :disable="!ready"
       @click="store.openFixr(id)"
     ></q-btn>
@@ -47,6 +47,7 @@
 
 <script setup>
 import loadFixrWidget from "src/assets/load-fixr-widget";
+import notifyNetworkError from "src/assets/notify-network-error";
 import { useStore } from "src/stores/store";
 import { onMounted, ref } from "vue";
 
@@ -54,10 +55,16 @@ const props = defineProps(["id"]);
 const store = useStore();
 
 const ready = ref(false);
+const failed = ref(false);
 
 onMounted(async () => {
-  await loadFixrWidget();
-  store.fixr = window.fixr;
-  ready.value = true;
+  try {
+    await loadFixrWidget();
+    store.fixr = window.fixr;
+    ready.value = true;
+  } catch (error) {
+    failed.value = true;
+    notifyNetworkError("We couldn't load the credit card payment option.");
+  }
 });
 </script>
