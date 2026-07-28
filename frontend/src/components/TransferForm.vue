@@ -26,13 +26,13 @@
             ></q-input>
             <q-input
               type="email"
-              label="Email"
+              label="Your Email"
               stack-label
               dense
               outlined
               v-model="form.email"
               @blur="getPatron"
-              :rules="(v) => !!v || 'Required'"
+              :rules="[(v) => !!v || 'Required']"
             ></q-input>
             <q-input
               type="date"
@@ -41,7 +41,7 @@
               dense
               outlined
               v-model="form.transfer_date"
-              :rules="(v) => !!v || 'Required'"
+              :rules="[(v) => !!v || 'Required']"
             ></q-input>
             <q-input
               type="text"
@@ -50,7 +50,7 @@
               dense
               outlined
               v-model="form.first_name"
-              :rules="(v) => !!v || 'Required'"
+              :rules="[(v) => !!v || 'Required']"
             ></q-input>
             <q-input
               type="text"
@@ -59,7 +59,7 @@
               dense
               outlined
               v-model="form.last_name"
-              :rules="(v) => !!v || 'Required'"
+              :rules="[(v) => !!v || 'Required']"
             ></q-input
             ><q-input
               type="tel"
@@ -104,12 +104,12 @@ const defaultDate = formatISO9075(new Date(), { representation: "date" });
 
 const form = ref({
   type: "transfer",
-  email: store.patron?.email || null,
+  email: null,
   first_name: store.patron?.first_name || null,
   last_name: store.patron?.last_name || null,
   phone: store.patron?.phone || null,
   quantity: props.isFlex ? store.flex.num_tickets : null,
-  special_request: null,
+  special_request: "",
 });
 
 const getPatron = async () => {

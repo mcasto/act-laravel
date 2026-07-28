@@ -14,6 +14,7 @@ use App\Http\Controllers\FlexLinkController;
 use App\Http\Controllers\FlexPurchaseController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\MessageUsController;
 use App\Http\Controllers\PatronController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PerformanceController;
@@ -206,6 +207,7 @@ Route::put('/gallery', [GalleryController::class, 'update'])
  * Contact Routes
  */
 Route::post('/create-contact', [ContactController::class, 'store']);
+Route::post('/message-us', [MessageUsController::class, 'store']);
 
 /**
  * Audition Routes
