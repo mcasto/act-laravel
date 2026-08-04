@@ -32,7 +32,10 @@
               outlined
               v-model="form.email"
               @blur="getPatron"
-              :rules="[(v) => !!v || 'Required']"
+              :rules="[
+                (v) => !!v || 'Required',
+                (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email',
+              ]"
             ></q-input>
             <q-input
               type="text"
@@ -59,6 +62,7 @@
               dense
               outlined
               v-model="form.phone"
+              :rules="[(v) => !!v || 'Required']"
             ></q-input>
             <div class="text-subtitle2">Special Request</div>
             <q-editor v-model="form.special_request"></q-editor>
@@ -81,7 +85,7 @@
 <script setup>
 import { clone } from "lodash-es";
 import callApi from "src/assets/call-api";
-import notifyNetworkError from "src/assets/notify-network-error";
+import notifySubmitError from "src/assets/notify-submit-error";
 import { ref } from "vue";
 import { useStore } from "src/stores/store";
 
@@ -139,7 +143,7 @@ const onSubmit = async () => {
       });
     }
   } catch (error) {
-    notifyNetworkError("Something went wrong submitting your request.");
+    notifySubmitError(error, "Something went wrong submitting your request.");
   } finally {
     loading.value = false;
   }

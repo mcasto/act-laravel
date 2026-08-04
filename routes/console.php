@@ -15,3 +15,6 @@ Schedule::command('reminders:send')
 Schedule::command('storage:cleanup-orphans')
     ->dailyAt('03:00')
     ->timezone('America/Guayaquil');
+
+Schedule::command('sync:flex-sheet')
+    ->everyMinute();

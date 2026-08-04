@@ -108,6 +108,10 @@ export const useStore = defineStore(
   {
     persist: {
       key: "azuay-community-theater",
+      // patron (email/first_name/last_name/phone/flex_packages) is PII looked
+      // up during a purchase flow — keep it in memory for the current session
+      // only, never written to localStorage.
+      omit: ["patron"],
     },
   },
 );
