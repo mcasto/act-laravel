@@ -37,11 +37,12 @@ class SiteConfigController extends Controller
     public function updateButtons(Request $request)
     {
         $validated = $request->validate([
-            'id'         => 'required|integer|exists:standard_buttons,id',
-            'label'      => 'required|string',
-            'key'        => 'required|string',
-            'sort_order' => 'required|integer',
-            'template'   => 'required|string',
+            'id'                     => 'required|integer|exists:standard_buttons,id',
+            'label'                  => 'required|string',
+            'key'                    => 'required|string',
+            'sort_order'             => 'required|integer',
+            'template'               => 'required|string',
+            'confirmation_template'  => 'sometimes|nullable|string',
         ]);
 
         StandardButton::find($validated['id'])->update([
@@ -53,6 +54,11 @@ class SiteConfigController extends Controller
         file_put_contents(
             resource_path("views/standard-buttons/{$validated['key']}.blade.php"),
             $validated['template']
+        );
+
+        file_put_contents(
+            resource_path("views/standard-buttons/{$validated['key']}-confirmation.blade.php"),
+            $validated['confirmation_template'] ?? ''
         );
 
         return response()->json(['status' => 'success']);
@@ -75,17 +81,18 @@ class SiteConfigController extends Controller
     public function updateFlex(Request $request)
     {
         $request->validate([
-            'title'        => 'required|string',
-            'image'        => 'required|string',
-            'price'        => 'required|string',
-            'num_tickets'  => 'required|integer|min:1',
-            'subtitle'     => 'required|string',
-            'body'         => 'required|string',
-            'fixr'         => 'required|array',
-            'fixr.link'    => 'required|url',
-            'fixr.label'   => 'required|string',
-            'start_date'   => 'required|date',
-            'end_date'     => 'required|date|after:start_date',
+            'title'              => 'required|string',
+            'image'              => 'required|string',
+            'price'              => 'required|string',
+            'num_tickets'        => 'required|integer|min:1',
+            'subtitle'           => 'required|string',
+            'body'               => 'required|string',
+            'confirmation_body'  => 'sometimes|nullable|string',
+            'fixr'               => 'required|array',
+            'fixr.link'          => 'required|url',
+            'fixr.label'         => 'required|string',
+            'start_date'         => 'required|date',
+            'end_date'           => 'required|date|after:start_date',
         ]);
 
         Storage::disk('local')

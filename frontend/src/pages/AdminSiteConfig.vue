@@ -160,9 +160,21 @@
           />
         </div>
         <div class="col-12">
-          <div class="text-caption text-grey-7 q-mb-xs">Body</div>
+          <div class="text-caption text-grey-7 q-mb-xs">
+            Template for Display on Site
+          </div>
           <q-editor
             v-model="contentConfig.flex.body"
+            min-height="6rem"
+            :toolbar="bodyToolbar"
+          />
+        </div>
+        <div class="col-12">
+          <div class="text-caption text-grey-7 q-mb-xs">
+            Template for Confirmation Email
+          </div>
+          <q-editor
+            v-model="contentConfig.flex.confirmation_body"
             min-height="6rem"
             :toolbar="bodyToolbar"
           />
@@ -205,7 +217,7 @@
           </div>
           <div class="col-12">
             <div class="flex items-center q-gutter-x-sm q-mb-xs">
-              <span class="text-caption text-grey-7">Template</span>
+              <span class="text-caption text-grey-7">Template for Display on Site</span>
               <q-badge color="grey-3" text-color="grey-8" class="text-caption">
                 use <code class="q-mx-xs">{{ templatePlaceholder }}</code> as a
                 variable placeholder
@@ -216,6 +228,19 @@
               min-height="5rem"
               :toolbar="templateToolbar"
               :definitions="templateDefinitions"
+            />
+          </div>
+          <div
+            class="col-12"
+            v-if="!['flex', 'questions'].includes(selectedButton.key)"
+          >
+            <div class="text-caption text-grey-7 q-mb-xs">
+              Template for Confirmation Email
+            </div>
+            <q-editor
+              v-model="selectedButton.confirmation_template"
+              min-height="5rem"
+              :toolbar="bodyToolbar"
             />
           </div>
           <div class="col-12 flex justify-end">
@@ -348,6 +373,14 @@ onMounted(async () => {
     useAuth: true,
   });
 
-  if (response) contentConfig.value = response;
+  if (response) {
+    // pre-existing configs saved before this field existed won't have it yet
+    if (response.flex) response.flex.confirmation_body ??= "";
+    response.buttons?.forEach((button) => {
+      button.confirmation_template ??= "";
+    });
+
+    contentConfig.value = response;
+  }
 });
 </script>

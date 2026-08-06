@@ -11,11 +11,13 @@ use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
 use App\Models\Performance;
 use App\Models\CompTicket;
+use App\Models\StandardButton;
 use App\Models\TicketSale;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class TicketSaleController extends Controller
@@ -162,11 +164,23 @@ class TicketSaleController extends Controller
                     ->where('season', $season)
                     ->first();
 
-                $confirmationData['view']           = 'flex-confirmation';
-                $confirmationData['remaining_flex'] = $flexPackage?->ticketsRemaining() ?? 0;
-                $confirmationData['season']         = $season;
+                $flexConfig = json_decode(Storage::disk('local')->get('flex-purchase-config.json'), true);
+
+                $confirmationData['view']              = 'flex-confirmation';
+                $confirmationData['remaining_flex']    = $flexPackage?->ticketsRemaining() ?? 0;
+                $confirmationData['season']            = $season;
+                $confirmationData['confirmation_body'] = $flexConfig['confirmation_body'] ?? null;
             } else {
                 $confirmationData['view'] = 'purchase-confirmation';
+
+                $standardButton = StandardButton::where('key', $validated['type'])->first();
+                $confirmationPath = $standardButton
+                    ? resource_path("views/standard-buttons/{$standardButton->key}-confirmation.blade.php")
+                    : null;
+
+                $confirmationData['confirmation_body'] = ($confirmationPath && file_exists($confirmationPath))
+                    ? file_get_contents($confirmationPath)
+                    : null;
             }
 
             if ($validated['send_mail']) {

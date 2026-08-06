@@ -38,7 +38,12 @@ class StandardButtonsController extends Controller
             'buttons' => StandardButton::orderBy('sort_order')
                 ->get()
                 ->map(function ($rec) {
-                    $rec->template =  file_get_contents(resource_path("views/standard-buttons/{$rec->key}.blade.php"));
+                    $rec->template = file_get_contents(resource_path("views/standard-buttons/{$rec->key}.blade.php"));
+
+                    $confirmationPath = resource_path("views/standard-buttons/{$rec->key}-confirmation.blade.php");
+                    $rec->confirmation_template = file_exists($confirmationPath)
+                        ? file_get_contents($confirmationPath)
+                        : '';
 
                     return $rec;
                 })
