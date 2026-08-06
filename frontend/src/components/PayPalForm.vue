@@ -97,9 +97,9 @@ const loading = ref(null);
 const form = ref({
   type: "paypal",
   email: null,
-  first_name: store.patron?.first_name || null,
-  last_name: store.patron?.last_name || null,
-  phone: store.patron?.phone || null,
+  first_name: null,
+  last_name: null,
+  phone: null,
   quantity: props.isFlex ? store.flex.num_tickets : null,
   special_request: "",
 });

@@ -1,15 +1,15 @@
 <div>
-    <p>Hello {{ $name }},</p>
-
-    <p>
-        This is to confirm the redemption of {{ $num_tickets }} FLEX ticket(s) to our {{ $performance_date }}
-        performance of {{ $show_name }}, starting at {{ $performance_time }}. You have {{ $remaining_flex }} Flex
-        ticket(s) remaining to be used during our {{ $season }} season.
-    </p>
-
     @if (!empty($confirmation_body))
         {!! $confirmation_body !!}
     @else
+        <p>Hello {{ $name }},</p>
+
+        <p>
+            This is to confirm the redemption of {{ $num_tickets }} FLEX ticket(s) to our {{ $performance_date }}
+            performance of {{ $show_name }}, starting at {{ $performance_time }}. You have {{ $remaining_flex }} Flex
+            ticket(s) remaining to be used during our {{ $season }} season.
+        </p>
+
         <p>
             The theater has limited seating capacity so we ask that you provide us 48 hours notice if you should need to
             cancel your reservation, or your ticket for this performance will be considered used. ACT does not allow pets

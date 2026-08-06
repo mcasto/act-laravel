@@ -16,6 +16,7 @@ use App\Models\TicketSale;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -166,10 +167,14 @@ class TicketSaleController extends Controller
 
                 $flexConfig = json_decode(Storage::disk('local')->get('flex-purchase-config.json'), true);
 
-                $confirmationData['view']              = 'flex-confirmation';
-                $confirmationData['remaining_flex']    = $flexPackage?->ticketsRemaining() ?? 0;
-                $confirmationData['season']            = $season;
-                $confirmationData['confirmation_body'] = $flexConfig['confirmation_body'] ?? null;
+                $confirmationData['view']           = 'flex-confirmation';
+                $confirmationData['remaining_flex'] = $flexPackage?->ticketsRemaining() ?? 0;
+                $confirmationData['season']         = $season;
+
+                $rawConfirmationBody = $flexConfig['confirmation_body'] ?? null;
+                $confirmationData['confirmation_body'] = $rawConfirmationBody
+                    ? Blade::render($rawConfirmationBody, $confirmationData, true)
+                    : null;
             } else {
                 $confirmationData['view'] = 'purchase-confirmation';
 
@@ -178,8 +183,11 @@ class TicketSaleController extends Controller
                     ? resource_path("views/standard-buttons/{$standardButton->key}-confirmation.blade.php")
                     : null;
 
-                $confirmationData['confirmation_body'] = ($confirmationPath && file_exists($confirmationPath))
+                $rawConfirmationBody = ($confirmationPath && file_exists($confirmationPath))
                     ? file_get_contents($confirmationPath)
+                    : null;
+                $confirmationData['confirmation_body'] = $rawConfirmationBody
+                    ? Blade::render($rawConfirmationBody, $confirmationData, true)
                     : null;
             }
 

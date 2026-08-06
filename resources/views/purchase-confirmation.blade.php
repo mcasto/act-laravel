@@ -1,14 +1,14 @@
 <div>
-    <p>Hello {{ $name }},</p>
-
-    <p>
-        This is to confirm your purchase of {{ $num_tickets }} ticket(s) to our {{ $performance_date }} performance of
-        {{ $show_name }}, starting at {{ $performance_time }}.
-    </p>
-
     @if (!empty($confirmation_body))
         {!! $confirmation_body !!}
     @else
+        <p>Hello {{ $name }},</p>
+
+        <p>
+            This is to confirm your purchase of {{ $num_tickets }} ticket(s) to our {{ $performance_date }} performance of
+            {{ $show_name }}, starting at {{ $performance_time }}.
+        </p>
+
         <p>
             All sales are final. Cancellations and refunds are not allowed, but performance dates may be changed for the
             same
