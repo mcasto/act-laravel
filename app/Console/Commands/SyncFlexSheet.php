@@ -35,6 +35,22 @@ class SyncFlexSheet extends Command
 
     public function handle(): int
     {
+        $start = now();
+        Log::info('sync:flex-sheet started', ['at' => $start->toDateTimeString()]);
+
+        try {
+            return $this->sync();
+        } finally {
+            $end = now();
+            Log::info('sync:flex-sheet finished', [
+                'at' => $end->toDateTimeString(),
+                'duration_seconds' => $end->timestamp - $start->timestamp,
+            ]);
+        }
+    }
+
+    private function sync(): int
+    {
         $dryRun = $this->option('dry-run');
         if ($dryRun) {
             $this->info('[DRY RUN — no changes will be written]');
