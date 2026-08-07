@@ -114,7 +114,7 @@ import { clone } from "lodash-es";
 import callApi from "src/assets/call-api";
 import notifySubmitError from "src/assets/notify-submit-error";
 import { useStore } from "src/stores/store";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 const props = defineProps(["performance"]);
 const store = useStore();
@@ -132,6 +132,14 @@ const form = ref({
 });
 
 const flex = ref({ purchased: null, remaining: null, usage: null });
+const checked = ref(false);
+
+watch(
+  () => form.value.email,
+  () => {
+    checked.value = false;
+  },
+);
 
 if (store.patron?.flex_packages.length > 0) {
   const flexPackage = store.patron.flex_packages[0];
@@ -165,6 +173,7 @@ const historyColumns = [
 
 const noFlexPackage = computed(() => {
   return (
+    checked.value &&
     !!form.value.email &&
     (!store.patron || store.patron?.flex_packages.length == 0)
   );
@@ -173,6 +182,10 @@ const noFlexPackage = computed(() => {
 const header = computed(() => {
   if (!form.value.email) {
     return "To see your Flex summary and history, enter your email address and press `tab`";
+  }
+
+  if (!checked.value) {
+    return "";
   }
 
   if (noFlexPackage.value) {
@@ -188,6 +201,8 @@ const getPatron = async () => {
     method: "get",
     showError: false,
   }).catch(() => null);
+
+  checked.value = true;
 
   if (!patron) {
     store.patron = null;
