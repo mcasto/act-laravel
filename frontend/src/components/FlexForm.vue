@@ -2,39 +2,78 @@
   <div>
     <div>
       <q-card bordered class="q-mx-md">
-        <q-toolbar
-          v-if="store.patron && store.patron?.flex_packages.length > 0"
-        >
-          <q-toolbar-title>
-            Your Summary
-            <div class="text-caption">
-              Remaining Flex Tickets: {{ flex.remaining }}
+        <q-card-section>
+          <q-input
+            type="email"
+            label="Your Email"
+            stack-label
+            dense
+            outlined
+            v-model="form.email"
+            :readonly="verified"
+            :rules="[
+              (v) => !!v || 'Required',
+              (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email',
+            ]"
+            @keyup.enter="!verified && verify()"
+          >
+            <template v-slot:append>
+              <q-btn
+                v-if="!verified"
+                label="Continue"
+                color="primary"
+                dense
+                no-caps
+                :loading="verifying"
+                :disable="!form.email"
+                @click="verify"
+              ></q-btn>
+              <q-btn
+                v-else
+                label="Change"
+                flat
+                dense
+                no-caps
+                color="primary"
+                @click="resetVerification"
+              ></q-btn>
+            </template>
+          </q-input>
+        </q-card-section>
+
+        <template v-if="verified">
+          <q-toolbar v-if="hasTickets">
+            <q-toolbar-title>
+              Your Summary
+              <div class="text-caption">
+                Remaining Flex Tickets: {{ flex.remaining }}
+              </div>
+            </q-toolbar-title>
+            <q-btn label="History" color="primary">
+              <q-menu>
+                <q-card>
+                  <q-card-section>
+                    <q-table
+                      :rows="flex.usage"
+                      dense
+                      :hide-bottom="flex.usage.length > 0"
+                      :pagination="{ rowsPerPage: 0 }"
+                      :columns="historyColumns"
+                    ></q-table>
+                  </q-card-section>
+                </q-card>
+              </q-menu>
+            </q-btn>
+          </q-toolbar>
+
+          <q-toolbar v-else>
+            <div class="text-subtitle2 text-red">
+              {{ noTicketsMessage }}
             </div>
-          </q-toolbar-title>
-          <q-btn label="History" color="primary">
-            <q-menu>
-              <q-card>
-                <q-card-section>
-                  <q-table
-                    :rows="flex.usage"
-                    dense
-                    :hide-bottom="flex.usage.length > 0"
-                    :pagination="{ rowsPerPage: 0 }"
-                    :columns="historyColumns"
-                  ></q-table>
-                </q-card-section>
-              </q-card>
-            </q-menu>
-          </q-btn>
-        </q-toolbar>
+          </q-toolbar>
+        </template>
 
-        <q-toolbar v-else>
-          <div class="text-subtitle2" :class="{ 'text-red': noFlexPackage }">
-            {{ header }}
-          </div>
-        </q-toolbar>
-
-        <q-form @submit.prevent="onSubmit">
+        <q-form v-if="hasTickets" @submit.prevent="onSubmit">
           <q-card-section class="q-gutter-y-sm">
             <q-input
               type="number"
@@ -45,20 +84,6 @@
               v-model.number="form.quantity"
               min="1"
               :rules="[(val) => val >= 1 || 'Must be at least 1']"
-              v-if="store.patron && store.patron?.flex_packages.length > 0"
-            ></q-input>
-            <q-input
-              type="email"
-              label="Your Email"
-              stack-label
-              dense
-              outlined
-              v-model="form.email"
-              @blur="getPatron"
-              :rules="[
-                (v) => !!v || 'Required',
-                (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Invalid email',
-              ]"
             ></q-input>
             <q-input
               type="text"
@@ -97,9 +122,6 @@
               label="Continue"
               color="primary"
               :loading="loading"
-              :disabled="
-                !store.patron || store.patron?.flex_packages.length == 0
-              "
             ></q-btn>
           </q-card-actions>
         </q-form>
@@ -119,36 +141,39 @@ import { computed, ref, watch } from "vue";
 const props = defineProps(["performance"]);
 const store = useStore();
 
-const loading = ref(null);
+const loading = ref(false);
+const verifying = ref(false);
+const verified = ref(!!store.patron);
 
 const form = ref({
   type: "flex",
   email: store.patron?.email || null,
-  first_name: store.patron?.first_name || null,
-  last_name: store.patron?.last_name || null,
-  phone: store.patron?.phone || null,
+  first_name: null,
+  last_name: null,
+  phone: null,
   quantity: null,
   special_request: "",
 });
 
 const flex = ref({ purchased: null, remaining: null, usage: null });
-const checked = ref(false);
+
+if (store.patron) {
+  const flexPackage = store.patron.flex_packages?.[0];
+  flex.value = flexPackage
+    ? {
+        purchased: flexPackage.tickets_purchased,
+        remaining: flexPackage.tickets_remaining,
+        usage: flexPackage.usage,
+      }
+    : { purchased: null, remaining: 0, usage: [] };
+}
 
 watch(
   () => form.value.email,
   () => {
-    checked.value = false;
+    verified.value = false;
   },
 );
-
-if (store.patron?.flex_packages.length > 0) {
-  const flexPackage = store.patron.flex_packages[0];
-  flex.value = {
-    purchased: flexPackage.tickets_purchased,
-    remaining: flexPackage.tickets_remaining,
-    usage: flexPackage.usage,
-  };
-}
 
 const historyColumns = [
   {
@@ -171,62 +196,60 @@ const historyColumns = [
   },
 ];
 
-const noFlexPackage = computed(() => {
-  return (
-    checked.value &&
-    !!form.value.email &&
-    (!store.patron || store.patron?.flex_packages.length == 0)
-  );
-});
+const hasTickets = computed(
+  () => verified.value && !!store.patron && flex.value.remaining > 0,
+);
 
-const header = computed(() => {
-  if (!form.value.email) {
-    return "To see your Flex summary and history, enter your email address and press `tab`";
-  }
-
-  if (!checked.value) {
-    return "";
-  }
-
-  if (noFlexPackage.value) {
+const noTicketsMessage = computed(() => {
+  if (!store.patron || store.patron.flex_packages?.length === 0) {
     return "You haven't purchased a Flex package for this season.";
   }
 
-  return "";
+  return "You have no remaining Flex tickets for this season.";
 });
 
-const getPatron = async () => {
+const verify = async () => {
+  verifying.value = true;
+
   const patron = await callApi({
     path: `/patrons/lookup?email=${form.value.email}`,
     method: "get",
     showError: false,
   }).catch(() => null);
 
-  checked.value = true;
+  verifying.value = false;
+  verified.value = true;
 
   if (!patron) {
     store.patron = null;
     form.value.first_name = null;
     form.value.last_name = null;
     form.value.phone = null;
+    flex.value = { purchased: null, remaining: null, usage: null };
 
     return;
   }
 
   store.patron = patron;
 
-  form.value.first_name = patron.first_name;
-  form.value.last_name = patron.last_name;
-  form.value.phone = patron.phone;
+  const flexPackage = patron.flex_packages[0];
+  flex.value = flexPackage
+    ? {
+        purchased: flexPackage.tickets_purchased,
+        remaining: flexPackage.tickets_remaining,
+        usage: flexPackage.usage,
+      }
+    : { purchased: null, remaining: 0, usage: [] };
+};
 
-  if (patron.flex_packages.length > 0) {
-    const flexPackage = patron.flex_packages[0];
-    flex.value = {
-      purchased: flexPackage.tickets_purchased,
-      remaining: flexPackage.tickets_remaining,
-      usage: flexPackage.usage,
-    };
-  }
+const resetVerification = () => {
+  verified.value = false;
+  store.patron = null;
+  form.value.email = null;
+  form.value.first_name = null;
+  form.value.last_name = null;
+  form.value.phone = null;
+  flex.value = { purchased: null, remaining: null, usage: null };
 };
 
 const onSubmit = async () => {
