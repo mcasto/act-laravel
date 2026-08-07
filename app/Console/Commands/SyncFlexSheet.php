@@ -36,16 +36,16 @@ class SyncFlexSheet extends Command
     public function handle(): int
     {
         $start = now();
-        Log::info('sync:flex-sheet started', ['at' => $start->toDateTimeString()]);
+        // Log::info('sync:flex-sheet started', ['at' => $start->toDateTimeString()]);
 
         try {
             return $this->sync();
         } finally {
             $end = now();
-            Log::info('sync:flex-sheet finished', [
-                'at' => $end->toDateTimeString(),
-                'duration_seconds' => $end->timestamp - $start->timestamp,
-            ]);
+            // Log::info('sync:flex-sheet finished', [
+            //     'at' => $end->toDateTimeString(),
+            //     'duration_seconds' => $end->timestamp - $start->timestamp,
+            // ]);
         }
     }
 
