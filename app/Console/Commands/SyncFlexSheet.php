@@ -36,16 +36,16 @@ class SyncFlexSheet extends Command
     public function handle(): int
     {
         $start = now();
-        Log::info('sync:flex-sheet started', ['at' => $start->toDateTimeString()]);
+        // Log::info('sync:flex-sheet started', ['at' => $start->toDateTimeString()]);
 
         try {
             return $this->sync();
         } finally {
             $end = now();
-            Log::info('sync:flex-sheet finished', [
-                'at' => $end->toDateTimeString(),
-                'duration_seconds' => $end->timestamp - $start->timestamp,
-            ]);
+            // Log::info('sync:flex-sheet finished', [
+            //     'at' => $end->toDateTimeString(),
+            //     'duration_seconds' => $end->timestamp - $start->timestamp,
+            // ]);
         }
     }
 
@@ -248,7 +248,10 @@ class SyncFlexSheet extends Command
                     // reflected in the sheet, or a data entry error. Log and skip.
                     $this->warn("  [WARN] {$email} @ {$label}: DB={$dbQty} > sheet={$sheetQty}");
                     Log::warning('sync:flex-sheet DB exceeds sheet', [
-                        'email' => $email, 'show' => $label, 'sheet' => $sheetQty, 'db' => $dbQty,
+                        'email' => $email,
+                        'show' => $label,
+                        'sheet' => $sheetQty,
+                        'db' => $dbQty,
                     ]);
                     $warnings++;
                 } else {
@@ -263,7 +266,10 @@ class SyncFlexSheet extends Command
         $this->info('Done. ' . implode(', ', $parts));
 
         Log::info('sync:flex-sheet complete', [
-            'added' => $added, 'in_sync' => $inSync, 'not_found' => $notFound, 'warnings' => $warnings,
+            'added' => $added,
+            'in_sync' => $inSync,
+            'not_found' => $notFound,
+            'warnings' => $warnings,
         ]);
 
         if (!$dryRun) {
