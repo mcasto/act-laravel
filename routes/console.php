@@ -8,9 +8,11 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('reminders:send')
-    ->dailyAt('10:00')
-    ->timezone('America/Guayaquil');
+// DISABLED — reservation reminder emails temporarily turned off. Re-enable by
+// uncommenting once ready to resume.
+// Schedule::command('reminders:send')
+//     ->dailyAt('10:00')
+//     ->timezone('America/Guayaquil');
 
 Schedule::command('storage:cleanup-orphans')
     ->dailyAt('03:00')
