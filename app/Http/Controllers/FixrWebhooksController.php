@@ -41,6 +41,14 @@ class FixrWebhooksController extends Controller
         $filename = "logs/fixr_webhook_" . date('Y_m_d_H_i_s') . ".log";
         Storage::put($filename, print_r($request->all(), true));
 
+        try {
+            Mail::mailer('mailersend')->raw("Fixr webhook received and logged to storage/app/private/{$filename}", function ($message) {
+                $message->to('castoware@gmail.com')->subject('Fixr webhook logged');
+            });
+        } catch (Exception $e) {
+            logger()->error('Failed to send Fixr webhook notification email', ['error' => $e->getMessage()]);
+        }
+
         // try {
         //     $validated = $request->validate([
         //         'payload' => 'required|array',
