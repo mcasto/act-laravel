@@ -39,6 +39,19 @@
                 round
                 @click="onNewTicket"
               />
+              <!-- TEMP-NIGHTINGALES-SYNC: remove this button + the dialog below,
+                   and syncPerformanceId/syncPerformanceOptions/syncFormFields/
+                   onSyncUploaded/onSyncFailed in the script, once the manual
+                   nightly Nightingales sheet sync is no longer needed. -->
+              <q-btn
+                :icon="matSync"
+                size="sm"
+                color="secondary"
+                round
+                @click="syncDialog = true"
+              >
+                <q-tooltip>Sync Nightingales Sheet</q-tooltip>
+              </q-btn>
               <AdminTicketSalesPrint
                 :recs="recs"
                 :ticket-price="ticketPrice"
@@ -241,15 +254,64 @@
         </div>
       </template>
     </q-table>
+
+    <!-- TEMP-NIGHTINGALES-SYNC: remove this whole dialog once no longer needed -->
+    <q-dialog v-model="syncDialog">
+      <q-card style="min-width: 350px;">
+        <q-card-section>
+          <div class="text-h6">Sync Nightingales Sheet</div>
+          <div class="text-caption text-grey-7">
+            Upload the whole Nightingales.xlsx workbook — each tab is matched to
+            a performance of {{ show?.label }} by its date automatically.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <q-uploader
+            accept=".xlsx"
+            url="/api/ticket-sales/sync-nightingales"
+            method="post"
+            field-name="xlsx"
+            :headers="[
+              {
+                name: 'Authorization',
+                value: `Bearer ${store.admin.user.token}`,
+              },
+            ]"
+            :form-fields="syncFormFields"
+            @uploaded="onSyncUploaded"
+            @failed="onSyncFailed"
+            style="width: 100%;"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close" @click="syncDialog = false" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <!-- END TEMP-NIGHTINGALES-SYNC -->
   </div>
 </template>
 
 <script setup>
-import { matAdd, matDelete, matEdit, matInfo, matSearch } from "@quasar/extras/material-icons";
-import { mdiCashMultiple, mdiCircle, mdiCog, mdiCurrencyUsd } from "@quasar/extras/mdi-v7";
+import {
+  matAdd,
+  matDelete,
+  matEdit,
+  matInfo,
+  matSearch,
+  matSync,
+} from "@quasar/extras/material-icons";
+import {
+  mdiCashMultiple,
+  mdiCircle,
+  mdiCog,
+  mdiCurrencyUsd,
+} from "@quasar/extras/mdi-v7";
 import { format, parseISO } from "date-fns";
 import { uniqBy } from "lodash-es";
-import { Dialog } from "quasar";
+import { Dialog, Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { computed, ref, watch } from "vue";
@@ -467,4 +529,95 @@ const updateNoShow = async (row) => {
     console.error({ error: e });
   }
 };
+
+// TEMP-NIGHTINGALES-SYNC: remove this whole block (through onSyncFailed)
+// once the manual Nightingales sheet sync is no longer needed.
+const syncDialog = ref(false);
+
+const syncFormFields = computed(() => [
+  { name: "show_id", value: show.value?.value ?? "" },
+]);
+
+const onSyncUploaded = ({ xhr }) => {
+  const response = JSON.parse(xhr.response);
+
+  if (response.status !== "success") {
+    Notify.create({
+      type: "negative",
+      position: "center",
+      message: response.message || "Sync failed.",
+    });
+    return;
+  }
+
+  store.admin.ticket_sales = response.sales;
+
+  Notify.create({
+    position: "top",
+    message: syncResultHtml(response),
+    html: true,
+    timeout: 0,
+    multiLine: true,
+    actions: [{ label: "Close" }],
+  });
+  syncDialog.value = false;
+};
+
+// Text pulled into this summary (sheet tab names, patron names from the
+// spreadsheet) isn't guaranteed HTML-safe, so escape it before interpolating.
+const escapeHtml = (str) =>
+  String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+const syncResultHtml = (response) => {
+  if (!response.results.length && !response.skipped_sheets.length) {
+    return "Nothing to sync.";
+  }
+
+  const rows = response.results
+    .map((r) => {
+      const skipped = r.skipped.length
+        ? `<div class="text-caption text-warning q-mt-xs">Skipped: ${escapeHtml(
+            r.skipped.join("; "),
+          )}</div>`
+        : "";
+
+      return `
+        <div class="q-mt-sm">
+          <div class="text-weight-medium">${escapeHtml(r.performance)}</div>
+          <div class="text-caption">
+            <span class="text-positive">+${r.created} added</span> &nbsp;·&nbsp;
+            <span class="text-info">${r.updated} updated</span> &nbsp;·&nbsp;
+            <span class="text-grey-4">${
+              r.unchanged
+            } unchanged</span> &nbsp;·&nbsp;
+            <span>${r.new_patrons} new patron(s)</span>
+          </div>
+          ${skipped}
+        </div>
+      `;
+    })
+    .join("");
+
+  const skippedSheets = response.skipped_sheets.length
+    ? `<div class="text-caption text-warning q-mt-sm">Skipped tabs: ${escapeHtml(
+        response.skipped_sheets.join("; "),
+      )}</div>`
+    : "";
+
+  return `<div class="text-weight-bold">Nightingales Sync Complete</div>${rows}${skippedSheets}`;
+};
+
+const onSyncFailed = ({ xhr }) => {
+  let message = "Upload failed.";
+  try {
+    message = JSON.parse(xhr.response)?.message || message;
+  } catch (e) {
+    // ignore, use default message
+  }
+  Notify.create({ type: "negative", position: "center", message });
+};
+// END TEMP-NIGHTINGALES-SYNC
 </script>

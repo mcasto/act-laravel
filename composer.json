@@ -17,6 +17,7 @@
     "league/html-to-markdown": "^5.1",
     "mailersend/laravel-driver": "^2.12",
     "nyholm/psr7": "^1.8",
+    "phpoffice/phpspreadsheet": "^5.9",
     "symfony/http-client": "^7.2"
   },
   "require-dev": {

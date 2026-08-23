@@ -302,6 +302,8 @@ Route::controller(TicketSaleController::class)
         Route::put('/ticket-sales', 'update');
         Route::delete('/ticket-sales', 'destroy');
         Route::put('/ticket-sales/no-show/{id}', 'updateNoShow');
+        // TEMP-NIGHTINGALES-SYNC — remove once the manual nightly sheet sync is no longer needed
+        Route::post('/ticket-sales/sync-nightingales', 'syncNightingalesSheet');
     });
 
 /**

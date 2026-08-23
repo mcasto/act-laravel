@@ -265,4 +265,248 @@ class TicketSaleController extends Controller
 
         return response()->json($this->allSales());
     }
+
+    // ===== TEMP-NIGHTINGALES-SYNC =====================================
+    // Manual nightly reconciliation from the "Nightingales" tracking
+    // workbook (uploaded as-is, one tab per performance) while
+    // FixR/PayPal/BankTrans/Door sales for this show have no other feed
+    // into the app. Remove this method + its two private helpers below,
+    // the route (routes/api.php), and the "Sync Nightingales" button +
+    // dialog in AdminTicketSales.vue once this show closes.
+    //
+    // Sheet column label => payment_methods.value. "Comp" is intentionally
+    // not handled here — comps live in a separate table with their own
+    // redemption flow, not ticket_sales.
+    private const NIGHTINGALES_CHANNEL_COLUMNS = [
+        'FixR' => 'fixr',
+        'Flex' => 'flex',
+        'Pay Pal' => 'paypal',
+        'Bank Trans' => 'transfer',
+        'Door' => 'door',
+        'Walk-in' => 'cash',
+    ];
+
+    public function syncNightingalesSheet(Request $request)
+    {
+        $validated = $request->validate([
+            'show_id' => 'required|integer|exists:shows,id',
+            'xlsx' => 'required|file',
+        ]);
+
+        // These sheets declare a used range of 1000+ rows (leftover fill/border
+        // formatting) even though real data ends around row 40 — reading that
+        // whole phantom range across every tab exhausts PHP's memory limit, so
+        // cap what PhpSpreadsheet actually materializes into cell objects.
+        $readFilter = new class implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter
+        {
+            public function readCell(string $columnAddress, int $row, string $worksheetName = ''): bool
+            {
+                return $row <= 200;
+            }
+        };
+
+        try {
+            $path = $validated['xlsx']->getRealPath();
+            $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($path);
+            $reader->setReadFilter($readFilter);
+            $spreadsheet = $reader->load($path);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not read that file as a spreadsheet: ' . $e->getMessage(),
+            ], 422);
+        }
+
+        $performancesByDate = Performance::where('show_id', $validated['show_id'])->get()->keyBy('date');
+
+        $paymentMethods = PaymentMethod::whereIn('value', array_values(self::NIGHTINGALES_CHANNEL_COLUMNS))
+            ->get()->keyBy('value');
+
+        $results = [];
+        $skippedSheets = [];
+
+        foreach ($spreadsheet->getAllSheets() as $sheet) {
+            $sheetName = $sheet->getTitle();
+
+            $date = $this->findNightingalesSheetDate($sheet);
+            if (! $date) {
+                $skippedSheets[] = "{$sheetName} (no performance date found)";
+                continue;
+            }
+
+            $performance = $performancesByDate->get($date);
+            if (! $performance) {
+                $skippedSheets[] = "{$sheetName} (no performance on {$date} for this show)";
+                continue;
+            }
+
+            $colMap = $this->findNightingalesHeaderRow($sheet);
+            if (! $colMap) {
+                $skippedSheets[] = "{$sheetName} (no header row found — expected a \"Last Name\" column)";
+                continue;
+            }
+            [$headerRow, $colMap] = $colMap;
+
+            $required = array_merge(['Last Name', 'First Name', 'email address'], array_keys(self::NIGHTINGALES_CHANNEL_COLUMNS));
+            $missing = array_diff($required, array_keys($colMap));
+            if (! empty($missing)) {
+                $skippedSheets[] = "{$sheetName} (missing column(s): " . implode(', ', $missing) . ')';
+                continue;
+            }
+
+            $cell = fn (int $row, string $label) => trim((string) $sheet->getCell([$colMap[$label], $row])->getValue());
+
+            // Aggregate per (email|last|first|channel) in case a name
+            // appears more than once in the sheet (it happens).
+            $aggregate = [];
+            $highestRow = $sheet->getHighestDataRow();
+
+            for ($r = $headerRow + 1; $r <= $highestRow; $r++) {
+                $last = $cell($r, 'Last Name');
+                $first = $cell($r, 'First Name');
+                $email = $cell($r, 'email address');
+
+                if ($last === '' && $first === '') {
+                    continue;
+                }
+
+                foreach (self::NIGHTINGALES_CHANNEL_COLUMNS as $sheetLabel => $methodValue) {
+                    $raw = $cell($r, $sheetLabel);
+                    $qty = is_numeric($raw) ? (int) $raw : 0;
+
+                    if ($qty <= 0) {
+                        continue;
+                    }
+
+                    $key = strtolower($email) . '|' . strtolower($last) . '|' . strtolower($first) . '|' . $methodValue;
+
+                    $aggregate[$key] ??= [
+                        'last' => $last, 'first' => $first, 'email' => $email,
+                        'method' => $methodValue, 'qty' => 0,
+                    ];
+                    $aggregate[$key]['qty'] += $qty;
+                }
+            }
+
+            $results[] = array_merge(
+                ['sheet' => $sheetName, 'performance_id' => $performance->id, 'performance' => "{$performance->formatted_date} {$performance->formatted_time}"],
+                $this->applyNightingalesAggregate($aggregate, $performance, $paymentMethods)
+            );
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'results' => $results,
+            'skipped_sheets' => $skippedSheets,
+            'sales' => $this->allSales(),
+        ]);
+    }
+
+    /** Scans the first few rows/columns for a cell formatted as a date — that's the performance's date. Returns Y-m-d or null. */
+    private function findNightingalesSheetDate(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet): ?string
+    {
+        for ($r = 1; $r <= 6; $r++) {
+            for ($c = 1; $c <= 6; $c++) {
+                $cellObj = $sheet->getCell([$c, $r]);
+                $raw = $cellObj->getValue();
+
+                if (is_numeric($raw) && \PhpOffice\PhpSpreadsheet\Shared\Date::isDateTime($cellObj)) {
+                    return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($raw)->format('Y-m-d');
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /** Scans the first ~10 rows for a "Last Name" cell (the real header row, below a few metadata/totals rows) and maps column labels to column indexes. */
+    private function findNightingalesHeaderRow(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet): ?array
+    {
+        $highestCol = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($sheet->getHighestColumn());
+
+        for ($r = 1; $r <= 10; $r++) {
+            $rowLabels = [];
+            for ($c = 1; $c <= $highestCol; $c++) {
+                $rowLabels[$c] = trim((string) $sheet->getCell([$c, $r])->getValue());
+            }
+
+            if (in_array('Last Name', $rowLabels, true)) {
+                // Flip to label => column index, dropping blank-label columns.
+                return [$r, array_flip(array_filter($rowLabels, fn ($label) => $label !== ''))];
+            }
+        }
+
+        return null;
+    }
+
+    /** Patron-matches and upserts ticket_sales for one sheet's aggregated (patron, channel) => qty entries. */
+    private function applyNightingalesAggregate(array $aggregate, Performance $performance, \Illuminate\Support\Collection $paymentMethods): array
+    {
+        $created = 0;
+        $updated = 0;
+        $unchanged = 0;
+        $newPatrons = 0;
+        $skipped = [];
+
+        foreach ($aggregate as $entry) {
+            $method = $paymentMethods->get($entry['method']);
+            if (! $method) {
+                $skipped[] = "{$entry['first']} {$entry['last']} ({$entry['method']} payment method not configured)";
+                continue;
+            }
+
+            if ($entry['email'] !== '') {
+                $patron = Patron::firstOrCreate(
+                    ['email' => $entry['email']],
+                    ['first_name' => $entry['first'], 'last_name' => $entry['last']]
+                );
+            } else {
+                $patron = Patron::whereRaw('LOWER(first_name) = ? AND LOWER(last_name) = ?', [
+                    strtolower($entry['first']), strtolower($entry['last']),
+                ])->first();
+
+                if (! $patron) {
+                    $patron = Patron::create(['first_name' => $entry['first'], 'last_name' => $entry['last']]);
+                }
+            }
+
+            if ($patron->wasRecentlyCreated) {
+                $newPatrons++;
+            }
+
+            // Keyed on (patron, performance, channel) so re-uploading the
+            // same sheet updates in place instead of duplicating.
+            $ticketSale = TicketSale::where('patron_id', $patron->id)
+                ->where('performance_id', $performance->id)
+                ->where('payment_method_id', $method->id)
+                ->first();
+
+            if ($ticketSale) {
+                if ((int) $ticketSale->quantity !== $entry['qty']) {
+                    $ticketSale->update(['quantity' => $entry['qty']]);
+                    $updated++;
+                } else {
+                    $unchanged++;
+                }
+            } else {
+                TicketSale::create([
+                    'patron_id' => $patron->id,
+                    'performance_id' => $performance->id,
+                    'payment_method_id' => $method->id,
+                    'quantity' => $entry['qty'],
+                    'sold_at' => $performance->date . ' ' . $performance->start_time,
+                ]);
+                $created++;
+            }
+        }
+
+        return [
+            'created' => $created,
+            'updated' => $updated,
+            'unchanged' => $unchanged,
+            'new_patrons' => $newPatrons,
+            'skipped' => $skipped,
+        ];
+    }
+    // ===== END TEMP-NIGHTINGALES-SYNC ==================================
 }
