@@ -10,6 +10,7 @@
       <template #header-cell-tools>
         <q-th class="text-right">
           <q-btn
+            v-if="store.admin.user.is_owner"
             :icon="mdiPlusCircle"
             flat
             round
@@ -26,7 +27,7 @@
       </template>
 
       <template v-slot:body-cell="props">
-        <q-td v-if="props.row.id == 1 || props.row.id == store.admin.user.id">
+        <q-td v-if="!isEditable(props.row)">
           {{ props.row[props.col.name] }}
         </q-td>
         <q-td :props="props" class="text-left" v-else>
@@ -45,7 +46,7 @@
             label="Change Password"
             color="primary"
             size="sm"
-            :disable="row.id == 1 || row.id == store.admin.user.id"
+            :disable="!isEditable(row)"
             @click="changePasswordDialog = { visible: true, row }"
           ></q-btn>
         </q-td>
@@ -59,14 +60,14 @@
             round
             color="negative"
             @click="store.deleteUser(row)"
-            :disable="row.id == 1 || row.id == store.admin.user.id"
+            :disable="!store.admin.user.is_owner"
           ></q-btn>
           <q-btn
             :icon="mdiContentSave"
             color="primary"
             flat
             round
-            :disable="row.id == 1 || row.id == store.admin.user.id"
+            :disable="!isEditable(row)"
             @click="onSave(row)"
           ></q-btn>
         </q-td>
@@ -129,6 +130,11 @@ const columns = [
     align: "left",
   },
 ];
+
+// Owner can affect any user; everyone else can only affect their own entry
+// (see UserController::isOwner, which enforces this server-side too).
+const isEditable = (row) =>
+  store.admin.user.is_owner || row.id === store.admin.user.id;
 
 const onSave = async (row) => {
   Loading.show({ delay: 300 });

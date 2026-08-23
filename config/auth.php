@@ -117,4 +117,17 @@ return [
 
  'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+ /*
+    |--------------------------------------------------------------------------
+    | Owner Account
+    |--------------------------------------------------------------------------
+    |
+    | Interim stand-in for the per-section permission system (still WIP):
+    | this one account has unrestricted access to every user's record. Every
+    | other logged-in user may only view/edit their own. See UserController.
+    |
+    */
+
+ 'owner_email' => env('OWNER_EMAIL', 'castoware@gmail.com'),
+
 ];

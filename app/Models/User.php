@@ -36,6 +36,24 @@ class User extends Authenticatable
  ];
 
  /**
+  * The accessors to append to the model's array/JSON form.
+  *
+  * @var list<string>
+  */
+ protected $appends = [
+  'is_owner',
+ ];
+
+ /**
+  * Whether this is the account with unrestricted access to every user's
+  * record, regardless of the (still WIP) per-section permission system.
+  */
+ public function getIsOwnerAttribute(): bool
+ {
+  return $this->email === config('auth.owner_email');
+ }
+
+ /**
   * Get the attributes that should be cast.
   *
   * @return array<string, string>

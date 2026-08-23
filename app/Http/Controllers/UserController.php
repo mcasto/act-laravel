@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     /**
+     * Whether the currently authenticated user is the account with
+     * unrestricted access to every user's record (see config('auth.owner_email')).
+     * Everyone else may only affect their own user entry.
+     */
+    private function isOwner(Request $request): bool
+    {
+        return $request->user()?->email === config('auth.owner_email');
+    }
+
+    /**
      * Get all users with their permissions
      *
      * Retrieves all user records including their permission relationships
@@ -45,6 +55,10 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        if (! $this->isOwner($request)) {
+            return response()->json(['status' => 'error', 'message' => 'Only the account owner can create users'], 403);
+        }
+
         $validated = User::validate($request->all());
         if (isset($validated['errors'])) {
             return response()->json(['status' => 'error', 'message' => array_values($validated['errors'])]);
@@ -77,6 +91,10 @@ class UserController extends Controller
      */
     public function changePassword(Request $request, int $id)
     {
+        if (! $this->isOwner($request) && $request->user()->id !== $id) {
+            return ['status' => 'error', 'message' => 'You can only change your own password'];
+        }
+
         $validator = Validator::make($request->all(), [
             'password' => 'required|string'
         ]);
@@ -112,6 +130,10 @@ class UserController extends Controller
      */
     public function update(Request $request, int $id): JsonResponse
     {
+        if (! $this->isOwner($request) && $request->user()->id !== $id) {
+            return response()->json(['status' => 'error', 'message' => 'You can only edit your own user entry'], 403);
+        }
+
         $user = User::find($id);
 
         $validator = validator($request->all(), [
@@ -145,8 +167,12 @@ class UserController extends Controller
      *
      * @source Database Model: User (deletes)
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(Request $request, int $id): JsonResponse
     {
+        if (! $this->isOwner($request)) {
+            return response()->json(['status' => 'error', 'message' => 'Only the account owner can delete users'], 403);
+        }
+
         $user = User::find($id);
         if (! $user) {
             return response()->json(['status' => 'error', 'message' => 'User not found']);
