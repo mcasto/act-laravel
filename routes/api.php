@@ -29,8 +29,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
 use App\Models\PermissionLevel;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
@@ -52,6 +54,18 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
  * Fixr Webhook Handler
  */
 Route::post('/fixr-webhooks', [FixrWebhooksController::class, 'create']);
+
+/**
+ * TEMPORARY: capture the raw postMessage data Fixr's checkout widget sends
+ * on purchase completion, to see what shape it actually is. Remove once
+ * that's confirmed.
+ */
+Route::post('/fixr-investigate', function (Request $request) {
+    $filename = 'logs/fixr-investigate-' . date('Y_m_d_H_i_s') . '.txt';
+    Storage::put($filename, $request->getContent());
+
+    return response()->noContent();
+});
 
 /**
  * Announcement Banner
