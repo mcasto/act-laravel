@@ -265,6 +265,11 @@ Route::get('/contacts', [ContactController::class, 'index'])
 Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
     ->middleware('auth:sanctum');
 
+Route::get('/message-us', [MessageUsController::class, 'index'])
+    ->middleware('auth:sanctum');
+Route::delete('/message-us/{id}', [MessageUsController::class, 'destroy'])
+    ->middleware('auth:sanctum');
+
 /**
  * Standard Button Routes
  */

@@ -14,6 +14,8 @@ class PaymentMethod extends Model
   'label',
   'value',
   'user_option',
+  'color',
+  'revenue_multiplier',
  ];
 
 /**

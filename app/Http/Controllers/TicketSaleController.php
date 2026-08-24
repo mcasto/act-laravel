@@ -278,7 +278,10 @@ class TicketSaleController extends Controller
     // not handled here — comps live in a separate table with their own
     // redemption flow, not ticket_sales.
     private const NIGHTINGALES_CHANNEL_COLUMNS = [
-        'FixR' => 'fixr',
+        // Fixr is just the payment processor for credit card purchases, not
+        // a distinct payment method — the sheet's column is still "FixR",
+        // but it maps to the same payment method as any other card sale.
+        'FixR' => 'credit_card',
         'Flex' => 'flex',
         'Pay Pal' => 'paypal',
         'Bank Trans' => 'transfer',

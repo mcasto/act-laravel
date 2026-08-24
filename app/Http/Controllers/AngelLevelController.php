@@ -34,9 +34,15 @@ class AngelLevelController extends Controller
             'label'      => 'required|string|max:255',
             'min_amount' => 'required|integer|min:0',
             'fixr_link'  => 'nullable|string',
+            'benefits'   => 'nullable|array',
+            'benefits.*' => 'string',
         ]);
 
+        $benefits = $validated['benefits'] ?? [];
+        unset($validated['benefits']);
+
         $level = AngelLevel::create($validated);
+        $this->saveBenefits($level->id, $benefits);
 
         return response()->json([
             'status' => 'success',
@@ -53,9 +59,15 @@ class AngelLevelController extends Controller
             'label'      => 'required|string|max:255',
             'min_amount' => 'required|integer|min:0',
             'fixr_link'  => 'nullable|string',
+            'benefits'   => 'nullable|array',
+            'benefits.*' => 'string',
         ]);
 
+        $benefits = $validated['benefits'] ?? [];
+        unset($validated['benefits']);
+
         $level->update($validated);
+        $this->saveBenefits($level->id, $benefits);
 
         return response()->json([
             'status' => 'success',
@@ -71,9 +83,27 @@ class AngelLevelController extends Controller
         // The cascade delete in the migration will handle deleting associated angels
         $level->delete();
 
+        Storage::disk('local')->delete("angel-config/{$id}.json");
+
         return response()->json([
             'status' => 'success',
             'message' => 'Angel level deleted successfully'
         ]);
+    }
+
+    /**
+     * Persist an angel level's benefits list, filtering out blank entries
+     * (the frontend list editor can leave an empty row while it's being
+     * typed into). Stored as a plain JSON array — see AngelLevel::benefits().
+     */
+    private function saveBenefits(int $levelId, array $benefits): void
+    {
+        $benefits = array_values(array_filter(
+            array_map('trim', $benefits),
+            fn ($benefit) => $benefit !== ''
+        ));
+
+        Storage::disk('local')->makeDirectory('angel-config');
+        Storage::disk('local')->put("angel-config/{$levelId}.json", json_encode($benefits, JSON_PRETTY_PRINT));
     }
 }

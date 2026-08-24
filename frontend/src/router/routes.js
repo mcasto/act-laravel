@@ -358,6 +358,27 @@ const routes = [
             },
           },
           {
+            name: "admin-payment-methods",
+            path: "payment-methods",
+            component: () => import("src/pages/AdminPaymentMethods.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              store.admin.payment_methods = await callApi({
+                path: "/payment-methods",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 19,
+              label: "Payment Methods",
+            },
+          },
+          {
             name: "admin-ticket-sale-new",
             path: "ticket-sale-new/:show_id",
             component: () => import("src/pages/AdminTicketSaleForm.vue"),
@@ -552,6 +573,28 @@ const routes = [
               dash: true,
               order: 50,
               label: "Contacts",
+            },
+          },
+          {
+            name: "admin-quick-messages",
+            path: "quick-messages",
+            component: () => import("src/pages/AdminMessageUs.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+
+              store.admin.message_us_submissions = await callApi({
+                path: "/message-us",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 51,
+              label: "Quick Messages",
             },
           },
           {

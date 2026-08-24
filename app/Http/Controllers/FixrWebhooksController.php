@@ -90,12 +90,15 @@ class FixrWebhooksController extends Controller
             ]
         );
 
-        $fixrPaymentMethod = PaymentMethod::where('value', 'fixr')->first();
+        // Fixr is just the payment processor for credit card purchases, not a
+        // distinct payment method — recorded as "credit_card" so the label
+        // stays accurate if the processor ever changes.
+        $creditCardMethod = PaymentMethod::where('value', 'credit_card')->first();
 
         $ticketSale = TicketSale::create([
             'patron_id' => $patron->id,
             'performance_id' => $performance->id,
-            'payment_method_id' => $fixrPaymentMethod?->id,
+            'payment_method_id' => $creditCardMethod?->id,
             'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil'),
             'quantity' => $validated['payload']['quantity'],
             'transaction_id' => $validated['payload']['order_reference'],

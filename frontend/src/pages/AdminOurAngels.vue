@@ -128,7 +128,7 @@
     </q-splitter>
 
     <!-- Angel Level Dialog -->
-    <q-dialog v-model="levelDialog" persistent>
+    <q-dialog v-model="levelDialog" persistent full-width>
       <q-card style="min-width: 400px;">
         <q-card-section>
           <div class="text-h6">
@@ -158,6 +158,7 @@
             label="Fixr Link"
             outlined
             dense
+            class="q-mb-md"
           >
             <template #after>
               <q-btn
@@ -170,6 +171,38 @@
               />
             </template>
           </q-input>
+
+          <div class="text-caption text-grey-7 q-mb-xs">Benefits</div>
+          <div
+            v-for="(benefit, index) in levelForm.benefits"
+            :key="index"
+            class="row items-center q-gutter-x-xs q-mb-xs"
+          >
+            <q-input
+              v-model="levelForm.benefits[index]"
+              dense
+              outlined
+              class="col"
+            />
+            <q-btn
+              :icon="matDelete"
+              flat
+              dense
+              round
+              size="sm"
+              color="negative"
+              @click="levelForm.benefits.splice(index, 1)"
+            />
+          </div>
+          <q-btn
+            flat
+            dense
+            size="sm"
+            color="primary"
+            :icon="matAdd"
+            label="Add Benefit"
+            @click="levelForm.benefits.push('')"
+          />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -231,7 +264,12 @@
 </template>
 
 <script setup>
-import { matAdd, matDelete, matEdit, matLink } from "@quasar/extras/material-icons";
+import {
+  matAdd,
+  matDelete,
+  matEdit,
+  matLink,
+} from "@quasar/extras/material-icons";
 import { ref, onMounted } from "vue";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
@@ -246,6 +284,7 @@ const levelForm = ref({
   label: "",
   min_amount: null,
   fixr_link: "",
+  benefits: [],
 });
 
 const angelForm = ref({
@@ -296,6 +335,7 @@ const openLevelDialog = (level = null) => {
       label: level.label,
       min_amount: level.min_amount,
       fixr_link: level.fixr_link ?? "",
+      benefits: [...(level.benefits ?? [])],
     };
   } else {
     levelForm.value = {
@@ -303,6 +343,7 @@ const openLevelDialog = (level = null) => {
       label: "",
       min_amount: null,
       fixr_link: "",
+      benefits: [],
     };
   }
   levelDialog.value = true;
