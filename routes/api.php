@@ -161,6 +161,7 @@ Route::get('/site-config', [SiteConfigController::class, 'show']);
 Route::middleware('auth:sanctum')->put('/site-config/standard-buttons', [SiteConfigController::class, 'updateButtons']);
 Route::middleware('auth:sanctum')->put('/site-config/support', [SiteConfigController::class, 'updateSupport']);
 Route::middleware('auth:sanctum')->put('/site-config/flex', [SiteConfigController::class, 'updateFlex']);
+Route::middleware('auth:sanctum')->put('/site-config/season', [SiteConfigController::class, 'updateSeason']);
 
 /**
  * User Routes
@@ -281,6 +282,7 @@ Route::get('/standard-buttons', [StandardButtonsController::class, 'index']);
 
 // Public routes
 Route::get('/angels', [AngelLevelController::class, 'index']);
+Route::post('/angel-donation', [AngelController::class, 'donate']);
 
 // Protected routes (requires auth)
 Route::middleware('auth:sanctum')->group(function () {

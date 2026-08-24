@@ -19,6 +19,9 @@
           :payment-methods="paymentMethods"
           :buttons="buttons"
           v-model="paymentMethod"
+          :is-angel-donation="true"
+          :angel-level-id="angelLevelId"
+          :donation-amount="donationAmount"
         ></purchase-options>
       </q-card-section>
     </q-card>
@@ -31,5 +34,12 @@ import PurchaseOptions from "./PurchaseOptions.vue";
 
 const model = defineModel();
 const paymentMethod = defineModel("paymentMethod");
-const props = defineProps(["buttons", "fixrLink", "paymentMethods", "title"]);
+const props = defineProps([
+  "buttons",
+  "fixrLink",
+  "paymentMethods",
+  "title",
+  "angelLevelId",
+  "donationAmount",
+]);
 </script>

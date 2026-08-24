@@ -44,6 +44,8 @@
           v-model:paymentMethod="dialog.paymentMethod"
           :payment-methods="dialog.paymentMethods"
           :title="dialog.title"
+          :angel-level-id="dialog.angelLevelId"
+          :donation-amount="dialog.donationAmount"
         ></angel-donate-dialog>
       </div>
     </div>
@@ -71,6 +73,8 @@ const onDonateClick = (level) => {
     paymentMethods: preparePaymentMethods(level.buttons),
     paymentMethod: preparePaymentMethod(level.fixr_link),
     title: `${level.label} (${level.min_amount_formatted})`,
+    angelLevelId: level.id,
+    donationAmount: level.min_amount,
   };
 };
 
@@ -105,5 +109,7 @@ const dialog = ref({
   fixrLink: null,
   paymentMethods: null,
   paymentMethod: null,
+  angelLevelId: null,
+  donationAmount: null,
 });
 </script>

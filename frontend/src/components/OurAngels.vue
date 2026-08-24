@@ -26,7 +26,7 @@
             v-for="angel of level.angels"
             :key="`angel-donor-${angel.id}`"
           >
-            {{ angel.first_name }} {{ angel.last_name }}
+            {{ angel.recognition_name }}
             {{ angel.founding_angel ? "*" : "" }}
           </div>
         </div>

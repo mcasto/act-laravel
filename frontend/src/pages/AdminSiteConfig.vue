@@ -57,8 +57,30 @@
         />
       </div>
 
+      <!-- Season -->
+      <div v-if="section === 'season'" class="q-px-sm" style="max-width: 360px;">
+        <div class="text-caption text-grey-7 q-mb-sm">
+          Which season new Angel donations get tagged with. Separate from the
+          show/Flex-ticket calendar, since Angel promotion for a season
+          starts before the previous one technically ends.
+        </div>
+        <q-select
+          v-model="selectedSeason"
+          :options="seasonOptions"
+          label="Active Angel Season"
+          dense
+          outlined
+          emit-value
+          map-options
+          class="q-mb-md"
+        />
+        <div class="flex justify-end">
+          <q-btn label="Save" color="primary" @click="saveSeason" />
+        </div>
+      </div>
+
       <!-- Support -->
-      <div v-if="section === 'support'" class="row q-col-gutter-md q-px-sm">
+      <div v-else-if="section === 'support'" class="row q-col-gutter-md q-px-sm">
         <div class="col-12 col-sm-4">
           <q-input
             v-model="contentConfig.support.price"
@@ -286,10 +308,25 @@ const section = ref("support");
 const selectedButtonId = ref(null);
 
 const sectionOptions = [
+  { label: "Season", value: "season" },
   { label: "Support Us", value: "support" },
   { label: "Flex Tickets", value: "flex" },
   { label: "Payment Methods", value: "buttons" },
 ];
+
+const currentYear = new Date().getFullYear();
+
+// { last year }-{ this year }, { this year }-{ next year }, { next year }-{ following year }
+const seasonOptions = [-1, 0, 1].map((offset) => {
+  const startYear = currentYear + offset;
+  const endYear = startYear + 1;
+  return {
+    label: `${startYear} - ${endYear}`,
+    value: `${String(startYear).slice(-2)}-${String(endYear).slice(-2)}`,
+  };
+});
+
+const selectedSeason = ref(null);
 
 const selectedButton = computed(
   () =>
@@ -488,6 +525,22 @@ const flexConfirmationToolbar = [
   ],
 ];
 
+const saveSeason = async () => {
+  const response = await callApi({
+    path: "/site-config/season",
+    method: "put",
+    payload: { season: selectedSeason.value },
+    useAuth: true,
+  });
+
+  if (response.status == "success") {
+    Notify.create({
+      color: "positive",
+      message: "Active Angel Season Updated",
+    });
+  }
+};
+
 const saveSupport = async () => {
   const response = await callApi({
     path: "/site-config/support",
@@ -551,6 +604,7 @@ onMounted(async () => {
     });
 
     contentConfig.value = response;
+    selectedSeason.value = response.season ?? null;
   }
 });
 </script>

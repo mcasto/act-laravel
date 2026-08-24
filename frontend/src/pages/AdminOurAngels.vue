@@ -240,6 +240,14 @@
             dense
             class="q-mb-md"
           />
+          <q-input
+            v-model="recognitionName"
+            label="Recognition Name"
+            hint="How do you want the name(s) displayed?"
+            outlined
+            dense
+            class="q-mb-md"
+          />
           <q-checkbox
             v-model="angelForm.founding_angel"
             label="Founding Angel"
@@ -255,7 +263,7 @@
             label="Save"
             color="primary"
             @click="saveAngel"
-            :disabled="!angelForm.first_name || !angelForm.last_name"
+            :disabled="!angelForm.first_name || !angelForm.last_name || !angelForm.recognition_name"
           />
         </q-card-actions>
       </q-card>
@@ -270,7 +278,7 @@ import {
   matEdit,
   matLink,
 } from "@quasar/extras/material-icons";
-import { ref, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 
@@ -289,9 +297,30 @@ const levelForm = ref({
 
 const angelForm = ref({
   id: null,
-  name: "",
+  first_name: "",
+  last_name: "",
+  recognition_name: "",
   founding_angel: false,
   angel_level_id: null,
+});
+
+// Keeps recognition_name in sync with first/last name until the admin
+// deliberately edits that field directly (or it's an existing angel).
+const recognitionNameEdited = ref(false);
+
+const recognitionName = computed({
+  get: () => angelForm.value.recognition_name,
+  set: (val) => {
+    angelForm.value.recognition_name = val;
+    recognitionNameEdited.value = true;
+  },
+});
+
+watch([() => angelForm.value.first_name, () => angelForm.value.last_name], () => {
+  if (!recognitionNameEdited.value) {
+    angelForm.value.recognition_name =
+      `${angelForm.value.first_name || ""} ${angelForm.value.last_name || ""}`.trim();
+  }
 });
 
 onMounted(async () => {
@@ -409,17 +438,23 @@ const openAngelDialog = (angel = null) => {
       id: angel.id,
       first_name: angel.first_name,
       last_name: angel.last_name,
+      recognition_name: angel.recognition_name,
       founding_angel: angel.founding_angel,
       angel_level_id: angel.angel_level_id,
     };
+    // Existing angels already have a (possibly custom) recognition_name —
+    // don't overwrite it just because first/last name gets edited.
+    recognitionNameEdited.value = true;
   } else {
     angelForm.value = {
       id: null,
       first_name: "",
-      last_nane: "",
+      last_name: "",
+      recognition_name: "",
       founding_angel: 0,
       angel_level_id: selectedLevel.value.id,
     };
+    recognitionNameEdited.value = false;
   }
   angelDialog.value = true;
 };

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ActiveSeason;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class StandardButtonsController extends Controller
                 ->get('support-us.config.json')),
             'flex' => json_decode(Storage::disk('local')
                 ->get('flex-purchase-config.json')),
+            'season' => ActiveSeason::get(),
             'buttons' => StandardButton::orderBy('sort_order')
                 ->get()
                 ->map(function ($rec) {

@@ -32,4 +32,23 @@ class Angel extends Model
     {
         return $this->belongsTo(AngelLevel::class);
     }
+
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
+
+    /**
+     * Founding-angel status is a permanent fact about the donor (were they
+     * giving when the Angel program started?), not something that resets
+     * per donation or per season. There's no patron_id on this table to key
+     * off of, so this matches on name — the only identifying info recorded
+     * here — against any of that donor's past records.
+     */
+    public static function wasFoundingAngel(string $firstName, string $lastName): bool
+    {
+        return static::whereRaw('LOWER(first_name) = ? AND LOWER(last_name) = ?', [
+            strtolower($firstName), strtolower($lastName),
+        ])->where('founding_angel', true)->exists();
+    }
 }

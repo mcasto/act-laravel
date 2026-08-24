@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ActiveSeason;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
 use Illuminate\Http\JsonResponse;
@@ -74,6 +75,22 @@ class SiteConfigController extends Controller
 
         Storage::disk('local')
             ->put('support-us.config.json', json_encode($request->all()));
+
+        return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * Override which season NEW Angel donation records get tagged with.
+     * Deliberately separate from TheaterSeason's calendar calculation used
+     * by shows and Flex-ticket redemption — see App\Helpers\ActiveSeason.
+     */
+    public function updateSeason(Request $request)
+    {
+        $validated = $request->validate([
+            'season' => 'required|string|regex:/^\d{2}-\d{2}$/',
+        ]);
+
+        ActiveSeason::set($validated['season']);
 
         return response()->json(['status' => 'success']);
     }
