@@ -36,6 +36,8 @@ class StandardButtonsController extends Controller
                 ->get('support-us.config.json')),
             'flex' => json_decode(Storage::disk('local')
                 ->get('flex-purchase-config.json')),
+            'angels' => json_decode(Storage::disk('local')
+                ->get('angels.config.json')),
             'season' => ActiveSeason::get(),
             'buttons' => StandardButton::orderBy('sort_order')
                 ->get()

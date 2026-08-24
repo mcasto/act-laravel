@@ -79,6 +79,39 @@
         </div>
       </div>
 
+      <!-- Angels -->
+      <div v-else-if="section === 'angels'" class="row q-col-gutter-md q-px-sm">
+        <div class="col-12">
+          <q-input
+            v-model="contentConfig.angels.title"
+            label="Page Title"
+            hint="Shown at the top of the Angels page, e.g. mentions the current season"
+            dense
+            outlined
+          />
+        </div>
+        <div class="col-12 col-sm-6">
+          <q-input
+            v-model="contentConfig.angels.note"
+            label="Note"
+            hint="e.g. explains what an asterisk next to a name means"
+            dense
+            outlined
+          />
+        </div>
+        <div class="col-12 col-sm-6">
+          <q-input
+            v-model="contentConfig.angels.fixr_label"
+            label="Fixr Button Label"
+            dense
+            outlined
+          />
+        </div>
+        <div class="col-12 flex justify-end">
+          <q-btn label="Save" color="primary" @click="saveAngels" />
+        </div>
+      </div>
+
       <!-- Support -->
       <div v-else-if="section === 'support'" class="row q-col-gutter-md q-px-sm">
         <div class="col-12 col-sm-4">
@@ -309,6 +342,7 @@ const selectedButtonId = ref(null);
 
 const sectionOptions = [
   { label: "Season", value: "season" },
+  { label: "Angels", value: "angels" },
   { label: "Support Us", value: "support" },
   { label: "Flex Tickets", value: "flex" },
   { label: "Payment Methods", value: "buttons" },
@@ -537,6 +571,22 @@ const saveSeason = async () => {
     Notify.create({
       color: "positive",
       message: "Active Angel Season Updated",
+    });
+  }
+};
+
+const saveAngels = async () => {
+  const response = await callApi({
+    path: "/site-config/angels",
+    method: "put",
+    payload: contentConfig.value.angels,
+    useAuth: true,
+  });
+
+  if (response.status == "success") {
+    Notify.create({
+      color: "positive",
+      message: "Angels Page Config Updated",
     });
   }
 };

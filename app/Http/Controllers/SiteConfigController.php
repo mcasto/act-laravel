@@ -95,6 +95,20 @@ class SiteConfigController extends Controller
         return response()->json(['status' => 'success']);
     }
 
+    public function updateAngels(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'note' => 'required|string',
+            'fixr_label' => 'required|string',
+        ]);
+
+        Storage::disk('local')
+            ->put('angels.config.json', json_encode($validated));
+
+        return response()->json(['status' => 'success']);
+    }
+
     public function updateFlex(Request $request)
     {
         $request->validate([

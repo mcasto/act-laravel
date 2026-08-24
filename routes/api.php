@@ -162,6 +162,7 @@ Route::middleware('auth:sanctum')->put('/site-config/standard-buttons', [SiteCon
 Route::middleware('auth:sanctum')->put('/site-config/support', [SiteConfigController::class, 'updateSupport']);
 Route::middleware('auth:sanctum')->put('/site-config/flex', [SiteConfigController::class, 'updateFlex']);
 Route::middleware('auth:sanctum')->put('/site-config/season', [SiteConfigController::class, 'updateSeason']);
+Route::middleware('auth:sanctum')->put('/site-config/angels', [SiteConfigController::class, 'updateAngels']);
 
 /**
  * User Routes
