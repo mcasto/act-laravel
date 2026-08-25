@@ -77,6 +77,12 @@
           min="1"
           :rules="[(val) => val >= 1 || 'Must be at least 1']"
         ></q-input>
+
+        <q-checkbox
+          v-if="isEdit"
+          v-model="form.confirmed"
+          label="Payment Confirmed"
+        ></q-checkbox>
       </div>
 
       <div class="flex justify-end q-mt-md q-gutter-x-sm">
@@ -144,6 +150,7 @@ const form = ref(
           value: existingSale.payment_method,
         },
         quantity: existingSale.quantity,
+        confirmed: !!existingSale.confirmed,
       }
     : {
         email: null,
@@ -190,7 +197,10 @@ const onSubmit = async () => {
         : null,
   };
 
-  if (isEdit) payload.id = existingSale.id;
+  if (isEdit) {
+    payload.id = existingSale.id;
+    payload.confirmed = form.value.confirmed;
+  }
 
   const response = await callApi({
     path: "/ticket-sales",

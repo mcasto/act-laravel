@@ -87,6 +87,7 @@ class FixrWebhooksController extends Controller
                 'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil'),
                 'quantity' => $validated['payload']['quantity'],
                 'transaction_id' => $validated['payload']['order_reference'],
+                'confirmed' => true,
             ]);
 
             FixrWebhookResponse::create([

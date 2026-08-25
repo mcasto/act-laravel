@@ -19,11 +19,13 @@ class TicketSale extends Model
         'performance_id',
         'sold_at',
         'quantity',
-        'no_show'
+        'no_show',
+        'confirmed',
     ];
 
     protected $casts = [
         'no_show' => 'integer',
+        'confirmed' => 'boolean',
     ];
 
     public function patron(): BelongsTo

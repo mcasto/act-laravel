@@ -86,7 +86,7 @@
                         >Total</q-item-section
                       >
                       <q-item-section side class="text-weight-bold">
-                        {{ totalTickets }} tickets
+                        {{ confirmedTicketCount }} tickets
                       </q-item-section>
                       <q-item-section
                         side
@@ -174,6 +174,18 @@
             :true-value="1"
             @update:model-value="updateNoShow(props.row)"
           ></q-toggle>
+        </q-td>
+      </template>
+
+      <template #body-cell-confirmed="props">
+        <q-td :props="props" class="text-center">
+          <q-icon
+            v-if="props.row.confirmed"
+            :name="mdiCheckBold"
+            color="positive"
+          >
+            <q-tooltip>Payment confirmed</q-tooltip>
+          </q-icon>
         </q-td>
       </template>
 
@@ -305,6 +317,7 @@ import {
 } from "@quasar/extras/material-icons";
 import {
   mdiCashMultiple,
+  mdiCheckBold,
   mdiCircle,
   mdiCog,
   mdiCurrencyUsd,
@@ -342,6 +355,12 @@ const columns = [
     name: "no_show",
     label: "No Show",
     field: "no_show",
+    align: "center",
+  },
+  {
+    name: "confirmed",
+    label: "Confirmed",
+    field: "confirmed",
     align: "center",
   },
   {
@@ -436,10 +455,18 @@ const ticketPrice = computed(
   () => recs.value[0]?.performance?.show?.ticket_price ?? 0,
 );
 
+// Comp-ticket rows are merged in from a different table and have no
+// `confirmed` field at all (always treated as real/confirmed); regular
+// ticket_sales rows default to unconfirmed, so only exclude those where
+// it's explicitly false.
+const confirmedRecs = computed(() =>
+  recs.value.filter((rec) => rec.confirmed !== false),
+);
+
 const revenueByMethod = computed(() => {
   const price = ticketPrice.value;
   const groups = {};
-  for (const rec of recs.value) {
+  for (const rec of confirmedRecs.value) {
     const { label, color, revenue_multiplier } = rec.payment_method;
     if (!groups[label])
       groups[label] = {
@@ -460,8 +487,15 @@ const totalRevenue = computed(() =>
   revenueByMethod.value.reduce((sum, m) => sum + m.revenue, 0),
 );
 
-const totalTickets = computed(() =>
+// Confirmed-only, matches the Projected Revenue breakdown above.
+const confirmedTicketCount = computed(() =>
   revenueByMethod.value.reduce((sum, m) => sum + m.count, 0),
+);
+
+// All reservations regardless of confirmation — a pending sale still
+// occupies a seat, so sold-out capacity shouldn't exclude it.
+const totalTickets = computed(() =>
+  recs.value.reduce((sum, rec) => sum + (rec.quantity || 1), 0),
 );
 
 const performanceCount = computed(() => {

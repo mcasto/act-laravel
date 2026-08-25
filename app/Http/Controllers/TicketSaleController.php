@@ -226,7 +226,8 @@ class TicketSaleController extends Controller
             'phone'         => 'required|string',
             'quantity'      => 'required|integer|min:1',
             'transfer_date' => 'sometimes|nullable|date',
-            'no_show'       => 'sometimes|boolean'
+            'no_show'       => 'sometimes|boolean',
+            'confirmed'     => 'sometimes|boolean',
         ]);
 
         $patron = Patron::firstOrCreate(
@@ -247,7 +248,8 @@ class TicketSaleController extends Controller
             'quantity'          => $validated['quantity'],
             'payment_method_id' => $paymentMethod->id,
             'transfer_date'     => $validated['transfer_date'] ?? null,
-            'no_show' => $validated['no_show']
+            'no_show'           => $validated['no_show'] ?? false,
+            'confirmed'         => $validated['confirmed'] ?? false,
         ]);
 
         return response()->json($this->allSales());
@@ -485,8 +487,8 @@ class TicketSaleController extends Controller
                 ->first();
 
             if ($ticketSale) {
-                if ((int) $ticketSale->quantity !== $entry['qty']) {
-                    $ticketSale->update(['quantity' => $entry['qty']]);
+                if ((int) $ticketSale->quantity !== $entry['qty'] || ! $ticketSale->confirmed) {
+                    $ticketSale->update(['quantity' => $entry['qty'], 'confirmed' => true]);
                     $updated++;
                 } else {
                     $unchanged++;
@@ -498,6 +500,7 @@ class TicketSaleController extends Controller
                     'payment_method_id' => $method->id,
                     'quantity' => $entry['qty'],
                     'sold_at' => $performance->date . ' ' . $performance->start_time,
+                    'confirmed' => true,
                 ]);
                 $created++;
             }
