@@ -70,7 +70,8 @@ class ShowController extends Controller
      */
     public function seasonShows(): JsonResponse
     {
-        $seasonDates = TheaterSeason::currentDates();
+        // Data-driven, not a blind Oct 1 flip — see activeDisplaySeasonDates().
+        $seasonDates = TheaterSeason::activeDisplaySeasonDates();
 
         $shows = Show::with(["performances", 'galleryImages'])->whereHas('performances', function ($query) use ($seasonDates) {
             $query->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
@@ -98,17 +99,40 @@ class ShowController extends Controller
         $siteConfig = Cache::remember('site-config', 3600, fn() => SiteConfig::latest()->first());
         $price = $siteConfig?->ticket_price ?? 0;
 
+        // Same data-driven season boundary as seasonShows() — a next-season
+        // show with performances already entered shouldn't appear here (as
+        // "current" or in the upcoming carousel) until this season's actual
+        // final performance has passed. See TheaterSeason::activeDisplaySeasonDates().
+        $seasonDates = TheaterSeason::activeDisplaySeasonDates();
+
         // get upcoming shows
         $shows = Show::with('audition')
             ->with("performances")
-            ->whereHas('performances', function ($query) {
-                $query->where('date', '>=', now());
+            ->whereHas('performances', function ($query) use ($seasonDates) {
+                $query->where('date', '>=', now())
+                    ->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
             })
             ->get()
+            // Order by each show's own earliest still-upcoming performance,
+            // not DB row order, so the soonest show is reliably picked as
+            // "current" below rather than whichever happened to be inserted first.
+            ->sortBy(function ($show) {
+                return $show->performances
+                    ->where('date', '>=', now()->toDateString())
+                    ->min('date');
+            })
+            ->values()
             ->toArray();
 
-        // first show (current or next)
+        // first show (current or next) — null when nothing is upcoming in
+        // the active season at all (e.g. the season just ended and no shows
+        // have been entered for the next one yet).
         $currentShow = array_shift($shows);
+
+        if (! $currentShow) {
+            return response()->json(['currentShow' => null, 'upcomingShows' => $shows]);
+        }
+
         $price = $currentShow['ticket_price'] == 0 ? $price : $currentShow['ticket_price'];
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
         $currentShow['buttons'] = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())

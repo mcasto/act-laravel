@@ -1,6 +1,13 @@
 <template>
   <div class="q-pa-md">
-    <div class="row q-gutter-y-md">
+    <div v-if="!show" class="text-center q-pa-xl">
+      <div class="text-h6">No tickets are available for purchase right now.</div>
+      <div class="text-body2 q-mt-sm">
+        Please check back soon, or see the Season page for what's coming up.
+      </div>
+    </div>
+
+    <div v-else class="row q-gutter-y-md">
       <div class="col-12 col-md-3 text-center">
         <poster-with-banner
           :src="POSTER_BASE_URL + show.poster"
@@ -102,6 +109,8 @@ const performanceDates = computed(() => {
 });
 
 const performances = computed(() => {
+  if (!show.value) return [];
+
   const now = new Date();
   return sortBy(
     show.value.performances.map((performance) => {
@@ -132,6 +141,8 @@ const performances = computed(() => {
 });
 
 const paymentMethods = computed(() => {
+  if (!show.value) return [];
+
   return [
     {
       label: show.value.fixrLabel,
@@ -147,6 +158,8 @@ const paymentMethods = computed(() => {
 });
 
 onMounted(() => {
+  if (!show.value) return;
+
   const firstPerformance = (performance.value = performances.value.find(
     ({ soldOut, isPast }) => !soldOut && !isPast,
   ));

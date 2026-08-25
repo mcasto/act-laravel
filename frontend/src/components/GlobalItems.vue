@@ -57,7 +57,7 @@ const auditionLink = computed(() => {
   const audition = {
     label: "Audition",
     url: "/audition",
-    open: store.home.currentShow.audition,
+    open: store.home.currentShow?.audition,
   };
   return audition.open ? audition : null;
 });

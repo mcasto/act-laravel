@@ -1,18 +1,11 @@
 <template>
   <div v-if="!show">
-    <q-img src="/images/empty-theater.jpg">
-      <div>
-        <div class="text-h6 q-px-md q-mb-sm">
-          Next Show: Coming Soon!
-        </div>
-        <div class="q-px-md">
-          Thank you for visiting! We are currently in our pre-production phase
-          for our next show. Please check back soon for exciting announcements,
-          or better yet, join our email list to get updates delivered straight
-          to your inbox.
-        </div>
-      </div>
-    </q-img>
+    <q-img
+      src="/images/saving-your-seat.jpeg"
+      fit="cover"
+      class="full-height"
+      :ratio="1508 / 944"
+    />
   </div>
 
   <div v-else>
@@ -120,6 +113,8 @@ const store = useStore();
 
 // saves some typing
 const show = computed(() => {
+  if (!store.home.currentShow) return null;
+
   const active = store.home.currentShow.performances.find(
     ({ date }) => date == formatISO(new Date(), { representation: "date" }),
   );
