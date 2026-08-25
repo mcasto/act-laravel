@@ -636,6 +636,27 @@ const routes = [
             },
           },
           {
+            name: "admin-sold-out-notifications",
+            path: "sold-out-notifications",
+            component: () => import("src/pages/AdminSoldOutNotifications.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              store.admin.sold_out_notification_recipients = await callApi({
+                path: "/sold-out-notification-recipients",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 26,
+              label: "Sold Out Notifications",
+            },
+          },
+          {
             name: "admin-edit-show",
             path: "edit-show/:id",
             component: () => import("src/pages/AdminEditShow.vue"),

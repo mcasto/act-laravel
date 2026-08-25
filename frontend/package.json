@@ -11,6 +11,7 @@
     "dev": "quasar dev",
     "build": "quasar build",
     "deploy": "bash deploy.sh",
+    "deploy-preview": "bash deploy-preview.sh",
     "postinstall": "quasar prepare",
     "push": "npm version patch && git push",
     "push-minor": "npm version minor && git push",

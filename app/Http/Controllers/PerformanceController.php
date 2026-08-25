@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SoldOutNotificationMailer;
 use App\Models\Performance;
+use App\Models\SoldOutNotificationRecipient;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PerformanceController extends Controller
 {
@@ -58,6 +62,8 @@ class PerformanceController extends Controller
                 return $performance;
             });
 
+        $newlySoldOut = [];
+
         foreach ($upserts as $upsert) {
             $validatedData = Performance::validate($upsert);
 
@@ -69,15 +75,70 @@ class PerformanceController extends Controller
                     $performance = new Performance();
                 }
 
+                // Whether it was sold out *before* this save, so we can tell
+                // apart "just got marked sold out" from "already was" — only
+                // the former should ever prompt to send a notification.
+                $wasSoldOut = $performance->exists && (bool) $performance->sold_out;
+
                 $performance->fill($validatedData);
 
                 $performance->save(); // Laravel handles updated_at automatically
+
+                if (! $wasSoldOut && (bool) $performance->sold_out) {
+                    $newlySoldOut[] = $performance;
+                }
             } else {
                 Log::warning('Performance validation failed', ['errors' => $validatedData, 'record' => $upsert]);
             }
         }
 
-        return response()->json(['deleted' => count($deleteRecs), 'upserted' => count($upserts)]);
+        return response()->json([
+            'deleted' => count($deleteRecs),
+            'upserted' => count($upserts),
+            'newly_sold_out' => collect($newlySoldOut)->map(fn ($p) => [
+                'id' => $p->id,
+                'show_name' => $p->show->name,
+                'label' => "{$p->show->name} — {$p->formatted_date} {$p->formatted_time}",
+            ]),
+        ]);
+    }
+
+    /**
+     * Emails everyone on the sold-out notification list about one or more
+     * newly-sold-out performances. A deliberate, separate step from
+     * upsert() above — never fired automatically, only when an admin
+     * explicitly confirms it after seeing which performances just changed.
+     */
+    public function sendSoldOutNotifications(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'performance_ids' => 'required|array|min:1',
+            'performance_ids.*' => 'integer|exists:performances,id',
+        ]);
+
+        $performances = Performance::with('show')->whereIn('id', $validated['performance_ids'])->get();
+        $recipients = SoldOutNotificationRecipient::all();
+
+        $sent = 0;
+        $failed = 0;
+
+        foreach ($performances as $performance) {
+            foreach ($recipients as $recipient) {
+                try {
+                    Mail::to($recipient->email)->send(new SoldOutNotificationMailer($performance));
+                    $sent++;
+                } catch (Exception $e) {
+                    $failed++;
+                    logger()->error('Failed to send sold-out notification', [
+                        'performance_id' => $performance->id,
+                        'recipient_id' => $recipient->id,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status' => 'success', 'sent' => $sent, 'failed' => $failed]);
     }
 
     /**

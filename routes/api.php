@@ -23,6 +23,7 @@ use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\SnippetController;
+use App\Http\Controllers\SoldOutNotificationRecipientController;
 use App\Http\Controllers\StandardButtonsController;
 use App\Http\Controllers\SupportUsController;
 use App\Http\Controllers\TicketSaleController;
@@ -154,6 +155,16 @@ Route::middleware('auth:sanctum')->post('/update-image', [ImageController::class
 Route::middleware('auth:sanctum')->post('/upsert-performances', [PerformanceController::class, 'upsert']);
 
 Route::middleware('auth:sanctum')->post('/update-fixr-link', [PerformanceController::class, 'updateFixrLink']);
+
+Route::middleware('auth:sanctum')->post('/performances/sold-out-notifications', [PerformanceController::class, 'sendSoldOutNotifications']);
+
+/**
+ * Sold Out Notification Recipients
+ */
+Route::middleware('auth:sanctum')->get('/sold-out-notification-recipients', [SoldOutNotificationRecipientController::class, 'index']);
+Route::middleware('auth:sanctum')->post('/sold-out-notification-recipients', [SoldOutNotificationRecipientController::class, 'store']);
+Route::middleware('auth:sanctum')->put('/sold-out-notification-recipients/{id}', [SoldOutNotificationRecipientController::class, 'update']);
+Route::middleware('auth:sanctum')->delete('/sold-out-notification-recipients/{id}', [SoldOutNotificationRecipientController::class, 'destroy']);
 
 /**
  * Site Config
