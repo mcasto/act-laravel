@@ -2,7 +2,7 @@
   <div class="flex justify-center q-mt-md">
     <div class="text-center">
       <!-- <q-img
-        src="/images/logo-home-2025.png"
+        src="/images/logo.png"
         width="180px"
         class="q-mb-md"
       ></q-img> -->

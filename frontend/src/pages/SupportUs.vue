@@ -2,7 +2,7 @@
   <div class="container">
     <div class="flex justify-center q-mb-md">
       <q-img
-        src="/images/logo-home-2025.png"
+        src="/images/logo.png"
         width="150px"
         fit="contain"
         class="q-mr-md"

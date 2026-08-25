@@ -1,7 +1,7 @@
 <template>
   <div class="flex banner" style="position: relative;">
     <q-img
-      src="/images/logo-home-2025.png"
+      src="/images/logo.png"
       height="200px"
       width="215px"
       class="q-ml-sm"
