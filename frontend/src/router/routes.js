@@ -615,6 +615,27 @@ const routes = [
             },
           },
           {
+            name: "admin-change-log",
+            path: "changelog",
+            component: () => import("src/pages/AdminChangeLog.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+              store.admin.change_logs = await callApi({
+                path: "/change-logs",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 100,
+              label: "Changelog",
+            },
+          },
+          {
             name: "admin-edit-show",
             path: "edit-show/:id",
             component: () => import("src/pages/AdminEditShow.vue"),

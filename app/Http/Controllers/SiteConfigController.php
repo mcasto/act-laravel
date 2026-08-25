@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ActiveSeason;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
+use App\Services\ChangeLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -52,15 +53,18 @@ class SiteConfigController extends Controller
             'sort_order' => $validated['sort_order'],
         ]);
 
-        file_put_contents(
-            resource_path("views/standard-buttons/{$validated['key']}.blade.php"),
-            $validated['template']
-        );
+        $templatePath = resource_path("views/standard-buttons/{$validated['key']}.blade.php");
+        $confirmationPath = resource_path("views/standard-buttons/{$validated['key']}-confirmation.blade.php");
+        $oldTemplate = file_exists($templatePath) ? file_get_contents($templatePath) : null;
+        $oldConfirmation = file_exists($confirmationPath) ? file_get_contents($confirmationPath) : null;
 
-        file_put_contents(
-            resource_path("views/standard-buttons/{$validated['key']}-confirmation.blade.php"),
-            $validated['confirmation_template'] ?? ''
-        );
+        file_put_contents($templatePath, $validated['template']);
+        file_put_contents($confirmationPath, $validated['confirmation_template'] ?? '');
+
+        ChangeLogger::record("Updated \"{$validated['label']}\" payment button template", [
+            'template' => ['old' => $oldTemplate, 'new' => $validated['template']],
+            'confirmation_template' => ['old' => $oldConfirmation, 'new' => $validated['confirmation_template'] ?? ''],
+        ]);
 
         return response()->json(['status' => 'success']);
     }
@@ -73,8 +77,12 @@ class SiteConfigController extends Controller
             'fixr_link' => 'required|string',
         ]);
 
+        $old = json_decode(Storage::disk('local')->get('support-us.config.json') ?? 'null', true);
+
         Storage::disk('local')
             ->put('support-us.config.json', json_encode($request->all()));
+
+        ChangeLogger::record('Updated Support Us page config', ['old' => $old, 'new' => $request->all()]);
 
         return response()->json(['status' => 'success']);
     }
@@ -90,7 +98,10 @@ class SiteConfigController extends Controller
             'season' => 'required|string|regex:/^\d{2}-\d{2}$/',
         ]);
 
+        $old = ActiveSeason::get();
         ActiveSeason::set($validated['season']);
+
+        ChangeLogger::record('Updated active Angel season', ['old' => $old, 'new' => $validated['season']]);
 
         return response()->json(['status' => 'success']);
     }
@@ -103,8 +114,12 @@ class SiteConfigController extends Controller
             'fixr_label' => 'required|string',
         ]);
 
+        $old = json_decode(Storage::disk('local')->get('angels.config.json') ?? 'null', true);
+
         Storage::disk('local')
             ->put('angels.config.json', json_encode($validated));
+
+        ChangeLogger::record('Updated Angels page config', ['old' => $old, 'new' => $validated]);
 
         return response()->json(['status' => 'success']);
     }
@@ -126,8 +141,12 @@ class SiteConfigController extends Controller
             'end_date'           => 'required|date|after:start_date',
         ]);
 
+        $old = json_decode(Storage::disk('local')->get('flex-purchase-config.json') ?? 'null', true);
+
         Storage::disk('local')
             ->put('flex-purchase-config.json', json_encode($request->all()));
+
+        ChangeLogger::record('Updated Flex Tickets page config', ['old' => $old, 'new' => $request->all()]);
 
         return response()->json(['status' => 'success']);
     }

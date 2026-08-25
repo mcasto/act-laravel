@@ -6,6 +6,7 @@ use App\Http\Controllers\AnnouncementBannerController;
 use App\Http\Controllers\AuditionContactController;
 use App\Http\Controllers\AuditionController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChangeLogController;
 use App\Http\Controllers\CompTixController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
@@ -172,6 +173,11 @@ Route::middleware('auth:sanctum')->put('/users/{id}', [UserController::class, 'u
 Route::middleware('auth:sanctum')->put('/change-password/{id}', [UserController::class, 'changePassword']);
 Route::middleware('auth:sanctum')->post('/create-user', [UserController::class, 'store']);
 Route::middleware('auth:sanctum')->delete('/users/{id}', [UserController::class, 'destroy']);
+
+/**
+ * Change Log Routes
+ */
+Route::middleware('auth:sanctum')->get('/change-logs', [ChangeLogController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/users/{id}', [UserController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/permission-levels', function () {
     return PermissionLevel::orderBy('label')->get();

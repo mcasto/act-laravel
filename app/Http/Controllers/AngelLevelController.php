@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Angel;
 use App\Models\AngelLevel;
+use App\Services\ChangeLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -103,7 +104,14 @@ class AngelLevelController extends Controller
             fn ($benefit) => $benefit !== ''
         ));
 
+        $path = "angel-config/{$levelId}.json";
+        $old = json_decode(Storage::disk('local')->get($path) ?? 'null', true);
+
         Storage::disk('local')->makeDirectory('angel-config');
-        Storage::disk('local')->put("angel-config/{$levelId}.json", json_encode($benefits, JSON_PRETTY_PRINT));
+        Storage::disk('local')->put($path, json_encode($benefits, JSON_PRETTY_PRINT));
+
+        if ($old !== $benefits) {
+            ChangeLogger::record("Updated benefits list for Angel level #{$levelId}", ['old' => $old, 'new' => $benefits]);
+        }
     }
 }
