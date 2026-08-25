@@ -12,7 +12,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('action');
-            $table->string('model_type')->nullable();
+            // Short — always just a class basename (e.g. "AngelLevel") —
+            // kept narrow so the composite index below stays well under
+            // any host's max key-length limit regardless of charset/engine.
+            $table->string('model_type', 60)->nullable();
             $table->unsignedBigInteger('model_id')->nullable();
             $table->string('description')->nullable();
             $table->json('changes')->nullable();
