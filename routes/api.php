@@ -128,7 +128,7 @@ Route::get('/storage/{path}/{filename}', function ($path, $filename) use ($cache
     $path = storage_path("app/public/{$path}/{$filename}");
 
     if (! file_exists($path)) {
-        $path = storage_path('app/private/image-not-found.jpeg');
+        $path = storage_path('app/private/logo.png');
     }
 
     return $cacheableFile($path);
