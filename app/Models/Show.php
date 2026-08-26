@@ -89,4 +89,16 @@ class Show extends Model
             ->where('display_date', '<=', now()->toDateString())
             ->where('end_display_date', '>=', now()->toDateString());
     }
+
+    /**
+     * Whether the show's gallery (if any) should be visible yet — hidden
+     * until the day after the show's final performance. Requires
+     * `performances` to already be loaded.
+     */
+    public function galleryVisible(): bool
+    {
+        $lastPerformance = $this->performances->max('date');
+
+        return $lastPerformance && $lastPerformance < now()->toDateString();
+    }
 }

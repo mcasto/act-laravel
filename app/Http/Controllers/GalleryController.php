@@ -19,7 +19,8 @@ class GalleryController extends Controller
      *
      * Retrieves shows that have at least one gallery image, ordered by
      * ticket sales start date (most recent first), including performances
-     * and gallery image data.
+     * and gallery image data. A show's gallery stays hidden until the day
+     * after its final performance.
      *
      * @return JsonResponse Shows with performances and gallery images
      *
@@ -30,7 +31,9 @@ class GalleryController extends Controller
         $shows = Show::with('performances', 'galleryImages')
             ->has('galleryImages')
             ->orderByDesc('ticket_sales_start')
-            ->get();
+            ->get()
+            ->filter(fn (Show $show) => $show->galleryVisible())
+            ->values();
 
         return response()->json($shows);
     }

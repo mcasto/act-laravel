@@ -77,6 +77,13 @@ class ShowController extends Controller
             $query->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
         })->get();
 
+        // Hide a show's gallery (if any) until the day after its final performance.
+        $shows->each(function (Show $show) {
+            if (! $show->galleryVisible()) {
+                $show->setRelation('galleryImages', collect());
+            }
+        });
+
         return response()->json($shows);
     }
 
