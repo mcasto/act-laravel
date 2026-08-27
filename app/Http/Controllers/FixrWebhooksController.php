@@ -110,6 +110,7 @@ class FixrWebhooksController extends Controller
                 'angel_level_id' => $angelLevel->id,
                 'first_name' => $holder['first_name'],
                 'last_name' => $holder['last_name'],
+                'email' => $holder['email'],
                 'recognition_name' => trim($holder['first_name'] . ' ' . $holder['last_name']),
                 // Not payload.price.amount — Fixr reports that net of their
                 // processing fee, but Angel donations are always fixed at

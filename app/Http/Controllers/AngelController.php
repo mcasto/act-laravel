@@ -27,6 +27,7 @@ class AngelController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'recognition_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'angel_level_id' => 'required|exists:angel_levels,id',
             'donation_amount' => 'required|numeric|min:0',
             'payment_method_value' => 'required|string|exists:payment_methods,value',

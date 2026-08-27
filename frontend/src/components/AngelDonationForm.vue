@@ -44,6 +44,15 @@
           v-model="recognitionName"
           :rules="[(v) => !!v || 'Required']"
         ></q-input>
+        <q-input
+          type="email"
+          label="Email"
+          stack-label
+          dense
+          outlined
+          v-model="form.email"
+          :rules="[(v) => !!v || 'Required']"
+        ></q-input>
       </q-card-section>
 
       <q-card-actions class="flex justify-end">
@@ -74,6 +83,7 @@ const form = ref({
   first_name: "",
   last_name: "",
   recognition_name: "",
+  email: "",
 });
 
 // Keeps recognition_name in sync with first/last name until the donor

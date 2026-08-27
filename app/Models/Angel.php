@@ -17,6 +17,7 @@ class Angel extends Model
         'recognition_name',
         'last_name',
         'first_name',
+        'email',
         'benefit',
         'donation_amount',
         'payment_method_id',

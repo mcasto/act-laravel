@@ -2,6 +2,11 @@
     <div>
         From: {{ $angel->recognition_name }} ({{ $angel->first_name }} {{ $angel->last_name }})
     </div>
+    @if ($angel->email)
+    <p>
+        Email: <a href="mailto:{{ $angel->email }}">{{ $angel->email }}</a>
+    </p>
+    @endif
     <p>
         Level: {{ $angel->angelLevel->label }}
     </p>
