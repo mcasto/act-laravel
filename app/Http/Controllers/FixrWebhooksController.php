@@ -106,11 +106,20 @@ class FixrWebhooksController extends Controller
         $angelLevel = $this->findByFixrLink(AngelLevel::whereNotNull('fixr_link')->get(), $eventId);
 
         if ($angelLevel) {
+            $patron = Patron::firstOrCreate(
+                ['email' => $holder['email']],
+                [
+                    'first_name' => $holder['first_name'],
+                    'last_name' => $holder['last_name'],
+                    'phone' => $holder['mobile_number'] ?? null,
+                ]
+            );
+
             $angel = Angel::create([
                 'angel_level_id' => $angelLevel->id,
+                'patron_id' => $patron->id,
                 'first_name' => $holder['first_name'],
                 'last_name' => $holder['last_name'],
-                'email' => $holder['email'],
                 'recognition_name' => trim($holder['first_name'] . ' ' . $holder['last_name']),
                 // Not payload.price.amount — Fixr reports that net of their
                 // processing fee, but Angel donations are always fixed at
@@ -137,7 +146,7 @@ class FixrWebhooksController extends Controller
             }
 
             FixrWebhookResponse::create([
-                'patron_id' => null,
+                'patron_id' => $patron->id,
                 'event' => $validated['event'],
                 'payload' => json_encode($request->all()),
                 'message_id' => $validated['message_id'],

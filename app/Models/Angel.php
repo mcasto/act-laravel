@@ -14,10 +14,10 @@ class Angel extends Model
 
     protected $fillable = [
         'angel_level_id',
+        'patron_id',
         'recognition_name',
         'last_name',
         'first_name',
-        'email',
         'benefit',
         'donation_amount',
         'payment_method_id',
@@ -39,12 +39,24 @@ class Angel extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
+    public function patron(): BelongsTo
+    {
+        return $this->belongsTo(Patron::class);
+    }
+
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->patron?->email,
+        );
+    }
+
     /**
      * Founding-angel status is a permanent fact about the donor (were they
      * giving when the Angel program started?), not something that resets
-     * per donation or per season. There's no patron_id on this table to key
-     * off of, so this matches on name — the only identifying info recorded
-     * here — against any of that donor's past records.
+     * per donation or per season. This still matches on name rather than
+     * patron_id — older records predate that link, and a name match is
+     * what stays consistent across all of them.
      */
     public static function wasFoundingAngel(string $firstName, string $lastName): bool
     {

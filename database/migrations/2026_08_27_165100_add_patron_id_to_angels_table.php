@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('angels', function (Blueprint $table) {
-            $table->string('email')->nullable()->after('recognition_name');
+            $table->foreignId('patron_id')->nullable()->after('recognition_name')
+                ->constrained()->nullOnDelete();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('angels', function (Blueprint $table) {
-            $table->dropColumn('email');
+            $table->dropConstrainedForeignId('patron_id');
         });
     }
 };

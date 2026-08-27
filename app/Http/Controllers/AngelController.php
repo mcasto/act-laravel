@@ -7,6 +7,7 @@ use App\Mail\AngelDonationMailer;
 use App\Models\Angel;
 use App\Models\AngelLevel;
 use App\Models\PaymentMethod;
+use App\Models\Patron;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -35,6 +36,13 @@ class AngelController extends Controller
 
         $level = AngelLevel::findOrFail($validated['angel_level_id']);
         $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
+
+        $patron = Patron::firstOrCreate(
+            ['email' => $validated['email']],
+            ['first_name' => $validated['first_name'], 'last_name' => $validated['last_name']]
+        );
+        $validated['patron_id'] = $patron->id;
+        unset($validated['email']);
 
         $validated['payment_method_id'] = $paymentMethod->id;
         unset($validated['payment_method_value']);
