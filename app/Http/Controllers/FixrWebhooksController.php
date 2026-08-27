@@ -28,7 +28,10 @@ class FixrWebhooksController extends Controller
     public function create(Request $request)
     {
         $filename = "logs/fixr_webhook_" . date('Y_m_d_H_i_s') . ".log";
-        Storage::put($filename, print_r($request->all(), true));
+        Storage::disk('local')->put($filename, json_encode([
+            'headers' => $request->headers->all(),
+            'body' => $request->getContent(),
+        ], JSON_PRETTY_PRINT));
 
         try {
             $validated = $request->validate([
