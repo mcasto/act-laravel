@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ActiveSeason;
 use App\Models\Angel;
 use App\Models\AngelLevel;
 use App\Services\ChangeLogger;
@@ -12,7 +13,11 @@ class AngelLevelController extends Controller
 {
     public function index()
     {
-        $mostRecentAngel = Angel::orderBy('created_at', 'desc')->first();
+        $season = ActiveSeason::get();
+
+        $mostRecentAngel = Angel::where('season', $season)
+            ->orderBy('created_at', 'desc')
+            ->first();
 
         $mostRecent = $mostRecentAngel
             ? $mostRecentAngel->created_at->format('F Y')
@@ -21,7 +26,7 @@ class AngelLevelController extends Controller
         return [
             'header' => view('angel-header')->render(),
             'levels' => AngelLevel::orderBy('min_amount', 'desc')
-                ->with('angels')
+                ->with(['angels' => fn ($query) => $query->where('season', $season)])
                 ->get(),
             'config' => json_decode(Storage::disk('local')
                 ->get('angels.config.json')),
