@@ -331,6 +331,7 @@ import {
 } from "@quasar/extras/material-icons";
 import { computed, onMounted, ref, watch } from "vue";
 import { Notify } from "quasar";
+import { format, parseISO } from "date-fns";
 import callApi from "src/assets/call-api";
 
 const angelLevels = ref([]);
@@ -355,6 +356,14 @@ const seasonColumns = [
     format: (val) => (val != null ? `$${Number(val).toFixed(2)}` : ""),
   },
   { name: "payment_method", label: "Payment Method", field: "payment_method", align: "left", sortable: true },
+  {
+    name: "donated_at",
+    label: "Date",
+    field: "donated_at",
+    align: "left",
+    sortable: true,
+    format: (val) => (val ? format(parseISO(val), "PP") : ""),
+  },
 ];
 
 const levelForm = ref({

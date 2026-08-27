@@ -144,6 +144,7 @@ class AngelController extends Controller
                 'angel_level' => $angel->angelLevel?->label,
                 'donation_amount' => $angel->donation_amount,
                 'payment_method' => $angel->paymentMethod?->label,
+                'donated_at' => $angel->created_at?->toDateString(),
             ])
             ->sortByDesc('donation_amount')
             ->values();
