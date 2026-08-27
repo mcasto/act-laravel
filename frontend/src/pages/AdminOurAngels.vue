@@ -291,19 +291,34 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-select
-            v-model="selectedSeason"
-            :options="seasons"
-            label="Season"
-            outlined
-            dense
-            class="q-mb-md"
-            style="max-width: 200px;"
-          />
+          <div class="row q-gutter-md q-mb-md">
+            <q-select
+              v-model="selectedSeason"
+              :options="seasons"
+              label="Season"
+              outlined
+              dense
+              style="max-width: 200px;"
+            />
+            <q-input
+              v-model="seasonAngelsFilter"
+              label="Search by name"
+              outlined
+              dense
+              clearable
+              class="col"
+            >
+              <template #prepend>
+                <q-icon :name="matSearch" />
+              </template>
+            </q-input>
+          </div>
 
           <q-table
             :rows="seasonAngels"
             :columns="seasonColumns"
+            :filter="seasonAngelsFilter"
+            :filter-method="filterSeasonAngelsByName"
             row-key="id"
             :loading="seasonAngelsLoading"
             flat
@@ -332,6 +347,7 @@ import {
   matEdit,
   matHistoryEdu,
   matLink,
+  matSearch,
 } from "@quasar/extras/material-icons";
 import { computed, onMounted, ref, watch } from "vue";
 import { Notify } from "quasar";
@@ -347,6 +363,14 @@ const seasons = ref([]);
 const selectedSeason = ref(null);
 const seasonAngels = ref([]);
 const seasonAngelsLoading = ref(false);
+const seasonAngelsFilter = ref("");
+
+const filterSeasonAngelsByName = (rows, terms) => {
+  const needle = terms.toLowerCase();
+  return rows.filter((row) =>
+    row.recognition_name?.toLowerCase().includes(needle),
+  );
+};
 
 const seasonColumns = [
   {
@@ -600,6 +624,8 @@ const openSeasonDialog = async () => {
 };
 
 watch(selectedSeason, async (season) => {
+  seasonAngelsFilter.value = "";
+
   if (!season) {
     seasonAngels.value = [];
     return;
