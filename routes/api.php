@@ -313,6 +313,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/angels', [AngelController::class, 'store']);
     Route::put('/angels/{id}', [AngelController::class, 'update']);
     Route::delete('/angels/{id}', [AngelController::class, 'destroy']);
+    Route::get('/angels/seasons', [AngelController::class, 'seasons']);
+    Route::get('/angels/by-season/{season}', [AngelController::class, 'bySeason']);
 });
 
 Route::get('/support-us', [SupportUsController::class, 'index']);

@@ -116,4 +116,38 @@ class AngelController extends Controller
             'message' => 'Angel deleted successfully'
         ]);
     }
+
+    /**
+     * Past seasons that have at least one angel on record, most recent first.
+     */
+    public function seasons()
+    {
+        $seasons = Angel::whereNotNull('season')
+            ->distinct()
+            ->orderByDesc('season')
+            ->pluck('season');
+
+        return response()->json($seasons);
+    }
+
+    /**
+     * Angels for a given season, for the admin's by-season review table.
+     */
+    public function bySeason(string $season)
+    {
+        $angels = Angel::with(['angelLevel', 'paymentMethod'])
+            ->where('season', $season)
+            ->get()
+            ->map(fn (Angel $angel) => [
+                'id' => $angel->id,
+                'recognition_name' => $angel->recognition_name,
+                'angel_level' => $angel->angelLevel?->label,
+                'donation_amount' => $angel->donation_amount,
+                'payment_method' => $angel->paymentMethod?->label,
+            ])
+            ->sortByDesc('donation_amount')
+            ->values();
+
+        return response()->json($angels);
+    }
 }

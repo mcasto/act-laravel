@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div class="row justify-end q-pa-sm">
+      <q-btn
+        color="primary"
+        outline
+        :icon="matHistoryEdu"
+        label="Angels By Season"
+        @click="openSeasonDialog()"
+      />
+    </div>
+
     <q-splitter :model-value="30">
       <template #before>
         <q-page class="q-pa-md">
@@ -268,6 +278,46 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <!-- Angels By Season Dialog -->
+    <q-dialog v-model="seasonDialog">
+      <q-card style="min-width: 600px; max-width: 95vw;">
+        <q-card-section>
+          <div class="text-h6">Angels By Season</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-select
+            v-model="selectedSeason"
+            :options="seasons"
+            label="Season"
+            outlined
+            dense
+            class="q-mb-md"
+            style="max-width: 200px;"
+          />
+
+          <q-table
+            :rows="seasonAngels"
+            :columns="seasonColumns"
+            row-key="id"
+            :loading="seasonAngelsLoading"
+            flat
+            bordered
+          >
+            <template #no-data>
+              <div class="full-width text-center text-grey q-pa-md">
+                No angels recorded for this season.
+              </div>
+            </template>
+          </q-table>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -276,6 +326,7 @@ import {
   matAdd,
   matDelete,
   matEdit,
+  matHistoryEdu,
   matLink,
 } from "@quasar/extras/material-icons";
 import { computed, onMounted, ref, watch } from "vue";
@@ -286,6 +337,25 @@ const angelLevels = ref([]);
 const selectedLevel = ref(null);
 const levelDialog = ref(false);
 const angelDialog = ref(false);
+const seasonDialog = ref(false);
+const seasons = ref([]);
+const selectedSeason = ref(null);
+const seasonAngels = ref([]);
+const seasonAngelsLoading = ref(false);
+
+const seasonColumns = [
+  { name: "recognition_name", label: "Name", field: "recognition_name", align: "left", sortable: true },
+  { name: "angel_level", label: "Angel Level", field: "angel_level", align: "left", sortable: true },
+  {
+    name: "donation_amount",
+    label: "Donation Amount",
+    field: "donation_amount",
+    align: "left",
+    sortable: true,
+    format: (val) => (val != null ? `$${Number(val).toFixed(2)}` : ""),
+  },
+  { name: "payment_method", label: "Payment Method", field: "payment_method", align: "left", sortable: true },
+];
 
 const levelForm = ref({
   id: null,
@@ -478,6 +548,38 @@ const saveAngel = async () => {
     await loadAngelLevels();
   }
 };
+
+const openSeasonDialog = async () => {
+  seasonDialog.value = true;
+
+  if (seasons.value.length === 0) {
+    const response = await callApi({
+      path: "/angels/seasons",
+      method: "get",
+      useAuth: true,
+    });
+
+    seasons.value = response || [];
+    selectedSeason.value = seasons.value[0] ?? null;
+  }
+};
+
+watch(selectedSeason, async (season) => {
+  if (!season) {
+    seasonAngels.value = [];
+    return;
+  }
+
+  seasonAngelsLoading.value = true;
+  const response = await callApi({
+    path: "/angels/by-season",
+    method: "get",
+    payload: season,
+    useAuth: true,
+  });
+  seasonAngels.value = response || [];
+  seasonAngelsLoading.value = false;
+});
 
 const deleteAngel = async (angel) => {
   Notify.create({
