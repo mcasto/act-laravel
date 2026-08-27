@@ -273,7 +273,11 @@
             label="Save"
             color="primary"
             @click="saveAngel"
-            :disabled="!angelForm.first_name || !angelForm.last_name || !angelForm.recognition_name"
+            :disabled="
+              !angelForm.first_name ||
+              !angelForm.last_name ||
+              !angelForm.recognition_name
+            "
           />
         </q-card-actions>
       </q-card>
@@ -345,8 +349,28 @@ const seasonAngels = ref([]);
 const seasonAngelsLoading = ref(false);
 
 const seasonColumns = [
-  { name: "recognition_name", label: "Name", field: "recognition_name", align: "left", sortable: true },
-  { name: "angel_level", label: "Angel Level", field: "angel_level", align: "left", sortable: true },
+  {
+    name: "donated_at",
+    label: "Date",
+    field: "donated_at",
+    align: "left",
+    sortable: true,
+    format: (val) => (val ? format(parseISO(val), "PP") : ""),
+  },
+  {
+    name: "recognition_name",
+    label: "Name",
+    field: "recognition_name",
+    align: "left",
+    sortable: true,
+  },
+  {
+    name: "angel_level",
+    label: "Angel Level",
+    field: "angel_level",
+    align: "left",
+    sortable: true,
+  },
   {
     name: "donation_amount",
     label: "Donation Amount",
@@ -355,14 +379,12 @@ const seasonColumns = [
     sortable: true,
     format: (val) => (val != null ? `$${Number(val).toFixed(2)}` : ""),
   },
-  { name: "payment_method", label: "Payment Method", field: "payment_method", align: "left", sortable: true },
   {
-    name: "donated_at",
-    label: "Date",
-    field: "donated_at",
+    name: "payment_method",
+    label: "Payment Method",
+    field: "payment_method",
     align: "left",
     sortable: true,
-    format: (val) => (val ? format(parseISO(val), "PP") : ""),
   },
 ];
 
@@ -395,12 +417,16 @@ const recognitionName = computed({
   },
 });
 
-watch([() => angelForm.value.first_name, () => angelForm.value.last_name], () => {
-  if (!recognitionNameEdited.value) {
-    angelForm.value.recognition_name =
-      `${angelForm.value.first_name || ""} ${angelForm.value.last_name || ""}`.trim();
-  }
-});
+watch(
+  [() => angelForm.value.first_name, () => angelForm.value.last_name],
+  () => {
+    if (!recognitionNameEdited.value) {
+      angelForm.value.recognition_name = `${angelForm.value.first_name || ""} ${
+        angelForm.value.last_name || ""
+      }`.trim();
+    }
+  },
+);
 
 onMounted(async () => {
   await loadAngelLevels();

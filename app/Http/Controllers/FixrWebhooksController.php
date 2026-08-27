@@ -111,7 +111,11 @@ class FixrWebhooksController extends Controller
                 'first_name' => $holder['first_name'],
                 'last_name' => $holder['last_name'],
                 'recognition_name' => trim($holder['first_name'] . ' ' . $holder['last_name']),
-                'donation_amount' => $validated['payload']['price']['amount'] ?? $angelLevel->min_amount,
+                // Not payload.price.amount — Fixr reports that net of their
+                // processing fee, but Angel donations are always fixed at
+                // the level's pledged amount (see AngelPage.vue), so that's
+                // the figure that belongs on record.
+                'donation_amount' => $angelLevel->min_amount,
                 'payment_method_id' => $creditCardMethod?->id,
                 'benefit' => implode("\n", $angelLevel->benefits ?? []),
                 'season' => ActiveSeason::get(),
