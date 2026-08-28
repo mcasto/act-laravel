@@ -170,6 +170,7 @@ Route::middleware('auth:sanctum')->delete('/sold-out-notification-recipients/{id
  * Site Config
  */
 Route::get('/site-config', [SiteConfigController::class, 'show']);
+Route::middleware('auth:sanctum')->put('/site-config', [SiteConfigController::class, 'update']);
 Route::middleware('auth:sanctum')->put('/site-config/standard-buttons', [SiteConfigController::class, 'updateButtons']);
 Route::middleware('auth:sanctum')->put('/site-config/support', [SiteConfigController::class, 'updateSupport']);
 Route::middleware('auth:sanctum')->put('/site-config/flex', [SiteConfigController::class, 'updateFlex']);

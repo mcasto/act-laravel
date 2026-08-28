@@ -276,6 +276,12 @@
             Upload the whole Nightingales.xlsx workbook — each tab is matched to
             a performance of {{ show?.label }} by its date automatically.
           </div>
+          <div class="text-caption text-warning q-mt-sm">
+            This <strong>replaces</strong> all existing ticket sales for
+            {{ show?.label }} with exactly what's on the sheet. The sheet is
+            the accepted source of truth — every performance needs a usable
+            tab or nothing will be changed.
+          </div>
         </q-card-section>
 
         <q-card-section>
@@ -618,17 +624,21 @@ const syncResultHtml = (response) => {
           )}</div>`
         : "";
 
+      const placeholders = r.placeholder_emails.length
+        ? `<div class="text-caption text-warning q-mt-xs">Placeholder email (no email on sheet): ${escapeHtml(
+            r.placeholder_emails.join("; "),
+          )}</div>`
+        : "";
+
       return `
         <div class="q-mt-sm">
           <div class="text-weight-medium">${escapeHtml(r.performance)}</div>
           <div class="text-caption">
-            <span class="text-positive">+${r.created} added</span> &nbsp;·&nbsp;
-            <span class="text-info">${r.updated} updated</span> &nbsp;·&nbsp;
-            <span class="text-grey-4">${
-              r.unchanged
-            } unchanged</span> &nbsp;·&nbsp;
+            <span class="text-positive">${r.inserted} rows</span> &nbsp;·&nbsp;
+            <span>${r.tickets} tickets</span> &nbsp;·&nbsp;
             <span>${r.new_patrons} new patron(s)</span>
           </div>
+          ${placeholders}
           ${skipped}
         </div>
       `;
@@ -641,7 +651,7 @@ const syncResultHtml = (response) => {
       )}</div>`
     : "";
 
-  return `<div class="text-weight-bold">Nightingales Sync Complete</div>${rows}${skippedSheets}`;
+  return `<div class="text-weight-bold">Nightingales Sync Complete</div><div class="text-caption q-mb-xs">Replaced ${response.deleted_count} existing rows.</div>${rows}${skippedSheets}`;
 };
 
 const onSyncFailed = ({ xhr }) => {

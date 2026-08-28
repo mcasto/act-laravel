@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -269,12 +270,20 @@ class TicketSaleController extends Controller
     }
 
     // ===== TEMP-NIGHTINGALES-SYNC =====================================
-    // Manual nightly reconciliation from the "Nightingales" tracking
-    // workbook (uploaded as-is, one tab per performance) while
-    // FixR/PayPal/BankTrans/Door sales for this show have no other feed
-    // into the app. Remove this method + its two private helpers below,
-    // the route (routes/api.php), and the "Sync Nightingales" button +
-    // dialog in AdminTicketSales.vue once this show closes.
+    // The "Nightingales" tracking workbook (uploaded as-is, one tab per
+    // performance) is the accepted source of truth for this show's ticket
+    // sales — even over whatever's already in the DB. So this OVERWRITES:
+    // every ticket_sales row for the show's performances is deleted and
+    // replaced with exactly what's on the sheet, rather than upserted
+    // per-row. That's deliberate — an upsert keyed on (patron, performance,
+    // method) can't detect or clean up a row that's now wrong because a
+    // patron's date/method changed between two uploads of an evolving
+    // sheet; a full replace can't leave stale rows behind no matter how
+    // much the sheet has changed since the last upload.
+    //
+    // Remove this method + its private helpers below, the route
+    // (routes/api.php), and the "Sync Nightingales" button + dialog in
+    // AdminTicketSales.vue once this show closes.
     //
     // Sheet column label => payment_methods.value. "Comp" is intentionally
     // not handled here — comps live in a separate table with their own
@@ -327,7 +336,9 @@ class TicketSaleController extends Controller
         $paymentMethods = PaymentMethod::whereIn('value', array_values(self::NIGHTINGALES_CHANNEL_COLUMNS))
             ->get()->keyBy('value');
 
-        $results = [];
+        // Parse every sheet first, without touching the DB — if anything
+        // can't be read, we bail before deleting a single existing row.
+        $parsed = [];
         $skippedSheets = [];
 
         foreach ($spreadsheet->getAllSheets() as $sheet) {
@@ -393,14 +404,50 @@ class TicketSaleController extends Controller
                 }
             }
 
-            $results[] = array_merge(
-                ['sheet' => $sheetName, 'performance_id' => $performance->id, 'performance' => "{$performance->formatted_date} {$performance->formatted_time}"],
-                $this->applyNightingalesAggregate($aggregate, $performance, $paymentMethods)
-            );
+            $parsed[] = [
+                'sheet' => $sheetName,
+                'performance' => $performance,
+                'aggregate' => $aggregate,
+            ];
         }
+
+        // Every performance for this show needs a successfully-parsed sheet
+        // before we delete anything — otherwise a skipped/malformed tab
+        // would wipe that performance's sales with nothing to replace them.
+        $coveredPerformanceIds = collect($parsed)->pluck('performance.id');
+        $missingPerformances = $performancesByDate->reject(fn ($p) => $coveredPerformanceIds->contains($p->id));
+
+        if ($missingPerformances->isNotEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Refused to sync — no usable sheet found for: '
+                    . $missingPerformances->map(fn ($p) => "{$p->formatted_date} {$p->formatted_time}")->implode(', ')
+                    . '. Nothing was changed.',
+                'skipped_sheets' => $skippedSheets,
+            ], 422);
+        }
+
+        $results = [];
+        $deletedCount = 0;
+
+        DB::transaction(function () use ($parsed, $paymentMethods, $validated, &$results, &$deletedCount) {
+            $deletedCount = TicketSale::whereHas('performance', fn ($q) => $q->where('show_id', $validated['show_id']))->delete();
+
+            foreach ($parsed as $sheet) {
+                $results[] = array_merge(
+                    [
+                        'sheet' => $sheet['sheet'],
+                        'performance_id' => $sheet['performance']->id,
+                        'performance' => "{$sheet['performance']->formatted_date} {$sheet['performance']->formatted_time}",
+                    ],
+                    $this->applyNightingalesAggregate($sheet['aggregate'], $sheet['performance'], $paymentMethods)
+                );
+            }
+        });
 
         return response()->json([
             'status' => 'success',
+            'deleted_count' => $deletedCount,
             'results' => $results,
             'skipped_sheets' => $skippedSheets,
             'sales' => $this->allSales(),
@@ -444,13 +491,20 @@ class TicketSaleController extends Controller
         return null;
     }
 
-    /** Patron-matches and upserts ticket_sales for one sheet's aggregated (patron, channel) => qty entries. */
+    /** Slugifies a name for a placeholder email's local part — lowercase, non-alphanumerics collapsed to hyphens. */
+    private function slug(string $name): string
+    {
+        $slug = strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $name)));
+        return trim($slug, '-');
+    }
+
+    /** Patron-matches and creates ticket_sales for one sheet's aggregated (patron, channel) => qty entries. Existing rows for the performance are already gone by the time this runs — see syncNightingalesSheet(). */
     private function applyNightingalesAggregate(array $aggregate, Performance $performance, \Illuminate\Support\Collection $paymentMethods): array
     {
-        $created = 0;
-        $updated = 0;
-        $unchanged = 0;
+        $inserted = 0;
+        $tickets = 0;
         $newPatrons = 0;
+        $placeholderEmails = [];
         $skipped = [];
 
         foreach ($aggregate as $entry) {
@@ -460,57 +514,48 @@ class TicketSaleController extends Controller
                 continue;
             }
 
-            if ($entry['email'] !== '') {
-                $patron = Patron::firstOrCreate(
-                    ['email' => $entry['email']],
-                    ['first_name' => $entry['first'], 'last_name' => $entry['last']]
-                );
-            } else {
-                $patron = Patron::whereRaw('LOWER(first_name) = ? AND LOWER(last_name) = ?', [
-                    strtolower($entry['first']), strtolower($entry['last']),
-                ])->first();
-
-                if (! $patron) {
-                    $patron = Patron::create(['first_name' => $entry['first'], 'last_name' => $entry['last']]);
-                }
+            $email = $entry['email'];
+            if ($email === '' || ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                // No usable email on the sheet — don't drop the attendee,
+                // tag them with an obviously-fake placeholder instead so
+                // box office can find and fix these later. Slugged from
+                // their name so the same no-email person across sheets
+                // still resolves to one patron.
+                $name = trim("{$entry['first']} {$entry['last']}");
+                $slug = $this->slug($name) ?: 'unknown-' . uniqid();
+                $email = "no-email+{$slug}@address.com";
+                $placeholderEmails[] = "{$name} -> {$email}";
             }
+
+            $patron = Patron::firstOrCreate(
+                ['email' => $email],
+                ['first_name' => $entry['first'], 'last_name' => $entry['last']]
+            );
 
             if ($patron->wasRecentlyCreated) {
                 $newPatrons++;
             }
 
-            // Keyed on (patron, performance, channel) so re-uploading the
-            // same sheet updates in place instead of duplicating.
-            $ticketSale = TicketSale::where('patron_id', $patron->id)
-                ->where('performance_id', $performance->id)
-                ->where('payment_method_id', $method->id)
-                ->first();
+            $ticketSale = TicketSale::create([
+                'patron_id' => $patron->id,
+                'performance_id' => $performance->id,
+                'payment_method_id' => $method->id,
+                'quantity' => $entry['qty'],
+                'sold_at' => $performance->date . ' ' . $performance->start_time,
+                'confirmed' => true,
+            ]);
+            $ticketSale->transaction_id = RefId::ref_id($ticketSale->id);
+            $ticketSale->save();
 
-            if ($ticketSale) {
-                if ((int) $ticketSale->quantity !== $entry['qty'] || ! $ticketSale->confirmed) {
-                    $ticketSale->update(['quantity' => $entry['qty'], 'confirmed' => true]);
-                    $updated++;
-                } else {
-                    $unchanged++;
-                }
-            } else {
-                TicketSale::create([
-                    'patron_id' => $patron->id,
-                    'performance_id' => $performance->id,
-                    'payment_method_id' => $method->id,
-                    'quantity' => $entry['qty'],
-                    'sold_at' => $performance->date . ' ' . $performance->start_time,
-                    'confirmed' => true,
-                ]);
-                $created++;
-            }
+            $inserted++;
+            $tickets += $entry['qty'];
         }
 
         return [
-            'created' => $created,
-            'updated' => $updated,
-            'unchanged' => $unchanged,
+            'inserted' => $inserted,
+            'tickets' => $tickets,
             'new_patrons' => $newPatrons,
+            'placeholder_emails' => $placeholderEmails,
             'skipped' => $skipped,
         ];
     }

@@ -36,6 +36,32 @@ class SiteConfigController extends Controller
         return response()->json(['config' => $config, 'buttons' => $buttons]);
     }
 
+    /**
+     * Save the core site config fields (ticket price, sold-out target,
+     * ticket/contact emails) shown at the top of the admin Site Config
+     * page. The table is insert-only — this creates a new row rather than
+     * updating in place, carrying forward dev_email from the latest row
+     * since it isn't editable from this form.
+     */
+    public function update(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'ticket_price'    => ['required', 'integer', 'min:0'],
+            'ticket_email'    => ['required', 'email'],
+            'contact_email'   => ['required', 'email'],
+            'sold_out_target' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $old = SiteConfig::latest()->first();
+        $validated['dev_email'] = $old?->dev_email;
+
+        $config = SiteConfig::create($validated);
+
+        ChangeLogger::record('Updated site configuration', ['old' => $old?->toArray(), 'new' => $config->toArray()]);
+
+        return response()->json(['status' => 'success', 'config' => $config]);
+    }
+
     public function updateButtons(Request $request)
     {
         $validated = $request->validate([
