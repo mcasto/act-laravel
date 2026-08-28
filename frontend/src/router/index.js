@@ -7,6 +7,7 @@ import {
 } from "vue-router";
 import routes from "./routes";
 import { useStore } from "src/stores/store";
+import { Loading } from "quasar";
 
 /*
  * If not building with SSR mode, you can
@@ -37,6 +38,14 @@ export default defineRouter(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const store = useStore();
 
+    // Admin route navigation (sidebar links, dashboard tiles) often waits on
+    // a beforeEnter data fetch before the page actually changes — show a
+    // spinner for that gap. Cleared unconditionally in afterEach/onError so
+    // a mid-navigation redirect (e.g. to /sign-in) can never leave it stuck.
+    if (to.meta.admin) {
+      Loading.show({ delay: 200 });
+    }
+
     if (
       (to.meta.requireAuth && !store.admin?.user) ||
       store.admin?.user?.status == "need-sign-in"
@@ -55,6 +64,14 @@ export default defineRouter(function (/* { store, ssrContext } */) {
     }
 
     next();
+  });
+
+  Router.afterEach(() => {
+    Loading.hide();
+  });
+
+  Router.onError(() => {
+    Loading.hide();
   });
 
   return Router;
