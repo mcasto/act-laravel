@@ -337,7 +337,11 @@ Route::controller(TicketSaleController::class)
  * Patron Routes
  */
 Route::get('/patrons/lookup', [PatronController::class, 'lookup']);
-Route::middleware('auth:sanctum')->get('/admin/flex-purchases', [PatronController::class, 'flexPurchases']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/admin/flex-purchases', [PatronController::class, 'flexPurchases']);
+    Route::get('/admin/patrons', [PatronController::class, 'index']);
+    Route::get('/admin/patrons/flex-history/{id}', [PatronController::class, 'flexHistory']);
+});
 
 Route::controller(TicketSaleController::class)
     ->group(function () {

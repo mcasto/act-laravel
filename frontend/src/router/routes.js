@@ -761,12 +761,28 @@ const routes = [
           //   },
           //   meta: { requireAuth: true, admin: true },
           // },
-          // {
-          //   name: "Patrons",
-          //   path: "patrons",
-          //   component: () => import("src/pages/AdminPatrons.vue"),
-          //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
-          // },
+          {
+            name: "admin-patrons",
+            path: "patrons",
+            component: () => import("src/pages/AdminPatrons.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+
+              store.admin.patrons = await callApi({
+                path: "/admin/patrons",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 23,
+              label: "Patrons",
+            },
+          },
           // {
           //   name: "Donations",
           //   path: "donations",
