@@ -57,6 +57,36 @@
                 :ticket-price="ticketPrice"
                 :show-name="show.label"
               />
+              <q-btn :icon="matEvent" color="info" flat>
+                <q-menu>
+                  <q-list dense style="min-width: 220px;">
+                    <q-item-label header class="text-weight-bold"
+                      >Tickets Sold By Date</q-item-label
+                    >
+                    <q-item v-for="row in ticketsByDate" :key="row.id">
+                      <q-item-section>{{ row.label }}</q-item-section>
+                      <q-item-section side class="text-weight-medium">
+                        {{ row.count }}
+                      </q-item-section>
+                    </q-item>
+                    <div
+                      v-if="ticketsByDate.length === 0"
+                      class="text-caption text-grey-7 q-pa-sm"
+                    >
+                      No confirmed sales yet.
+                    </div>
+                    <q-separator v-if="ticketsByDate.length" />
+                    <q-item v-if="ticketsByDate.length">
+                      <q-item-section class="text-weight-bold"
+                        >Total</q-item-section
+                      >
+                      <q-item-section side class="text-weight-bold">
+                        {{ confirmedTicketCount }}
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
               <q-btn :icon="mdiCashMultiple" color="positive" flat>
                 <q-menu>
                   <q-list dense style="min-width: 260px;">
@@ -124,6 +154,18 @@
                 <q-icon :name="matSearch" />
               </template>
             </q-input>
+            <q-select
+              v-if="show"
+              :options="performanceOptions"
+              v-model="performanceFilter"
+              label="Performance Date"
+              dense
+              outlined
+              clearable
+              emit-value
+              map-options
+              style="min-width: 220px;"
+            />
             <q-space />
             <template v-if="show">
               <div
@@ -317,6 +359,7 @@ import {
   matAdd,
   matDelete,
   matEdit,
+  matEvent,
   matInfo,
   matSearch,
   matSync,
@@ -329,7 +372,7 @@ import {
   mdiCurrencyUsd,
 } from "@quasar/extras/mdi-v7";
 import { format, parseISO } from "date-fns";
-import { uniqBy } from "lodash-es";
+import { sortBy, uniqBy } from "lodash-es";
 import { Dialog, Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
@@ -350,6 +393,11 @@ watch(show, (val) => {
 });
 
 const search = ref("");
+const performanceFilter = ref(null);
+
+watch(show, () => {
+  performanceFilter.value = null;
+});
 
 const pagination = ref({ page: 1, rowsPerPage: 12 });
 const pagesNumber = computed(() =>
@@ -395,12 +443,6 @@ const columns = [
     align: "left",
   },
   {
-    name: "show_name",
-    label: "Show",
-    field: (row) => row.performance.show.name,
-    align: "left",
-  },
-  {
     name: "performance",
     label: "Performance",
     field: (row) =>
@@ -431,13 +473,36 @@ const recs = computed(() => {
 });
 
 const filteredRecs = computed(() => {
-  if (!search.value) return recs.value;
-  const q = search.value.toLowerCase();
-  return recs.value.filter((rec) =>
-    `${rec.patron.first_name} ${rec.patron.last_name}`
-      .toLowerCase()
-      .includes(q),
-  );
+  let result = recs.value;
+
+  if (performanceFilter.value) {
+    result = result.filter(
+      (rec) => rec.performance.id === performanceFilter.value,
+    );
+  }
+
+  if (search.value) {
+    const q = search.value.toLowerCase();
+    result = result.filter((rec) =>
+      `${rec.patron.first_name} ${rec.patron.last_name}`
+        .toLowerCase()
+        .includes(q),
+    );
+  }
+
+  return result;
+});
+
+// Distinct performances for the selected show, for the date filter — drawn
+// from recs (not store.admin.shows) so it only offers dates that actually
+// have ticket sales to filter down to.
+const performanceOptions = computed(() => {
+  const uniq = uniqBy(recs.value, (rec) => rec.performance.id).map((rec) => ({
+    label: `${rec.performance.formatted_date} ${rec.performance.formatted_time}`,
+    value: rec.performance.id,
+    date: rec.performance.date,
+  }));
+  return sortBy(uniq, "date");
 });
 
 const shows = computed(() => {
@@ -517,6 +582,26 @@ const soldOutCapacity = computed(
 const soldOutPct = computed(() => {
   if (!soldOutCapacity.value) return 0;
   return ((totalTickets.value / soldOutCapacity.value) * 100).toFixed(1);
+});
+
+// Confirmed sales grouped by performance date — mirrors revenueByMethod's
+// use of confirmedRecs, and is independent of performanceFilter so the
+// summary always shows every date regardless of which one is filtered to.
+const ticketsByDate = computed(() => {
+  const groups = {};
+  for (const rec of confirmedRecs.value) {
+    const perf = rec.performance;
+    if (!groups[perf.id]) {
+      groups[perf.id] = {
+        id: perf.id,
+        date: perf.date,
+        label: `${perf.formatted_date} ${perf.formatted_time}`,
+        count: 0,
+      };
+    }
+    groups[perf.id].count += rec.quantity || 1;
+  }
+  return sortBy(Object.values(groups), "date");
 });
 
 const paymentMethodColors = computed(() => {
