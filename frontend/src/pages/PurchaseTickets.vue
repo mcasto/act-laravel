@@ -7,6 +7,20 @@
       </div>
     </div>
 
+    <div
+      v-else-if="performances.length > 0 && !hasAvailablePerformance"
+      class="text-center q-pa-xl"
+    >
+      <poster-with-banner
+        :src="POSTER_BASE_URL + show.poster"
+        max-width="300px"
+        sold-out
+        class="q-mb-md"
+      />
+      <div class="text-h6">{{ show.name }}</div>
+      <div class="text-subtitle1 q-mb-md">All performances are sold out.</div>
+    </div>
+
     <div v-else class="row q-gutter-y-md">
       <div class="col-12 col-md-3 text-center">
         <poster-with-banner
@@ -140,6 +154,10 @@ const performances = computed(() => {
   );
 });
 
+const hasAvailablePerformance = computed(() =>
+  performances.value.some(({ soldOut, isPast }) => !soldOut && !isPast),
+);
+
 const paymentMethods = computed(() => {
   if (!show.value) return [];
 
@@ -160,11 +178,11 @@ const paymentMethods = computed(() => {
 onMounted(() => {
   if (!show.value) return;
 
-  const firstPerformance = (performance.value = performances.value.find(
+  performance.value = performances.value.find(
     ({ soldOut, isPast }) => !soldOut && !isPast,
-  ));
+  ) ?? null;
 
-  performance.value = firstPerformance || [...performances.value].shift();
+  if (!performance.value) return;
 
   const flexButton = route.query.flex
     ? show.value.buttons.find((b) => b.key === "flex")

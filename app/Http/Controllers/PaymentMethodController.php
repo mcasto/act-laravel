@@ -18,7 +18,6 @@ class PaymentMethodController extends Controller
         $validated = $request->validate([
             'label'              => 'required|string|max:255',
             'value'              => 'required|string|max:255|unique:payment_methods,value',
-            'user_option'        => 'required|boolean',
             'color'              => 'nullable|string|max:20',
             'revenue_multiplier' => 'nullable|numeric|min:0|max:2',
         ]);
@@ -38,7 +37,6 @@ class PaymentMethodController extends Controller
         $validated = $request->validate([
             'label'              => 'required|string|max:255',
             'value'              => 'required|string|max:255|unique:payment_methods,value,' . $method->id,
-            'user_option'        => 'required|boolean',
             'color'              => 'nullable|string|max:20',
             'revenue_multiplier' => 'nullable|numeric|min:0|max:2',
         ]);

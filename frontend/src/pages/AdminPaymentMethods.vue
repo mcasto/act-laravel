@@ -27,15 +27,6 @@
         </q-td>
       </template>
 
-      <template #body-cell-user_option="props">
-        <q-td :props="props" class="text-center">
-          <q-icon
-            :name="props.row.user_option ? matCheck : matClose"
-            :color="props.row.user_option ? 'positive' : 'grey-5'"
-          />
-        </q-td>
-      </template>
-
       <template #body-cell-revenue_multiplier="props">
         <q-td :props="props" class="text-center">
           {{ props.row.revenue_multiplier ?? "—" }}
@@ -132,11 +123,6 @@
             class="q-mb-md"
             hint="Used in revenue projections — e.g. 0.92 to account for a processing fee. Leave blank for full face value."
           />
-
-          <q-checkbox
-            v-model="form.user_option"
-            label="Selectable by patrons on public purchase forms"
-          />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -157,7 +143,6 @@
 <script setup>
 import {
   matAdd,
-  matCheck,
   matClose,
   matDelete,
   matEdit,
@@ -176,19 +161,12 @@ const form = ref({
   value: "",
   color: null,
   revenue_multiplier: null,
-  user_option: false,
 });
 
 const columns = [
   { name: "color", label: "", field: "color", align: "center", style: "width: 40px;" },
   { name: "label", label: "Label", field: "label", align: "left" },
   { name: "value", label: "Value", field: "value", align: "left" },
-  {
-    name: "user_option",
-    label: "Public Option",
-    field: "user_option",
-    align: "center",
-  },
   {
     name: "revenue_multiplier",
     label: "Revenue Multiplier",
@@ -207,7 +185,6 @@ const openDialog = (method = null) => {
         value: "",
         color: null,
         revenue_multiplier: null,
-        user_option: false,
       };
   dialog.value = true;
 };

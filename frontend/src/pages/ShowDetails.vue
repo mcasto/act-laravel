@@ -54,7 +54,7 @@
         <div v-if="ticketsStart && !isFlexAccess">
           <span class="text-bold">Tickets On Sale:</span> {{ ticketsStart }}
         </div>
-        <div v-else-if="!store.show.tentative">
+        <div v-else-if="!store.show.tentative && !allSoldOut">
           <q-btn
             label="Reserve Tickets"
             color="primary"

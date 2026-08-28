@@ -13,7 +13,6 @@ class PaymentMethod extends Model
  protected $fillable = [
   'label',
   'value',
-  'user_option',
   'color',
   'revenue_multiplier',
  ];
@@ -31,7 +30,6 @@ class PaymentMethod extends Model
   $validator = validator($data, [
    'label'       => ['required', 'string', 'max:255'],
    'value'       => ['required', 'string', 'max:255', 'unique:payment_methods,value'],
-   'user_option' => ['required', 'boolean'],
   ]);
 
   if ($validator->fails()) {

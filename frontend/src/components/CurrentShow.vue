@@ -63,7 +63,7 @@
             {{ ticketsStart }}
           </div>
 
-          <div v-else v-if="!show?.tentative">
+          <div v-else-if="!show?.tentative && !allSoldOut">
             <q-btn
               label="Reserve Tickets"
               color="primary"
