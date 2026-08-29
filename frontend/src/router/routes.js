@@ -5,22 +5,24 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
-    beforeEnter: async (to, from) => {
-      const store = useStore();
-      await Promise.all([
-        store.announcementBanner(),
-        store.seasonShows(),
-        store.homeShows(),
-        store.openCourses(),
-        store.flexshowPurchaseConfig(),
-      ]);
-    },
+    // Deliberately no beforeEnter here — this is the parent of every public
+    // route, so anything awaited here blocks first paint of the whole site,
+    // not just whichever page is being loaded. Each child route below fetches
+    // only the data it actually needs. store.openCourses() isn't fetched by
+    // any route guard at all — MainLayout.vue's onMounted() already loads it
+    // for every page (it's read globally by GlobalItems.vue), non-blocking.
     children: [
       {
         name: "home",
         path: "",
         component: () => import("pages/IndexPage.vue"),
-
+        beforeEnter: async () => {
+          const store = useStore();
+          await Promise.all([
+            store.announcementBanner(),
+            store.homeShows(),
+          ]);
+        },
         meta: { nav: true, label: "Home" },
       },
       {
@@ -208,6 +210,9 @@ const routes = [
           });
           if (!response?.show) return { name: "home" };
           store.show = response.show;
+          // Needed for isActiveShow (Reserve Tickets visibility) — no-ops
+          // as a background refresh if already loaded.
+          await store.homeShows();
         },
         meta: { nav: false, label: "Show Details" },
       },
@@ -217,9 +222,23 @@ const routes = [
         component: () => import("pages/ShowDetails.vue"),
         beforeEnter: async (to, from) => {
           const store = useStore();
-          store.show = store.admin.shows.find(
-            ({ slug }) => slug == to.params.slug,
-          );
+          // Fetched directly by slug (not filtered from store.admin.shows,
+          // which is scoped to the current display season) so this works
+          // for any show, current or historical.
+          const response = await callApi({
+            path: "/shows/slug",
+            method: "get",
+            payload: to.params.slug,
+          });
+
+          if (!response || response.status === "error") {
+            return { path: "/not-found" };
+          }
+
+          store.show = response;
+          // Needed for isActiveShow (Reserve Tickets visibility) — no-ops
+          // as a background refresh if already loaded.
+          await store.homeShows();
         },
         meta: { nav: false, label: "Show Details" },
       },
@@ -272,7 +291,7 @@ const routes = [
         component: () => import("pages/FlexPurchase.vue"),
         beforeEnter: async () => {
           const store = useStore();
-          store.flexshowPurchaseConfig();
+          await store.flexshowPurchaseConfig();
         },
         meta: {
           nav: false,

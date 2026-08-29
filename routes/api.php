@@ -81,6 +81,7 @@ Route::put('/announcement-banner', [AnnouncementBannerController::class, 'update
  */
 Route::get('all-shows', [ShowController::class, 'index']);
 Route::get('shows/{id}', [ShowController::class, 'show']);
+Route::get('shows/slug/{slug}', [ShowController::class, 'bySlug']);
 Route::get('season-shows', [ShowController::class, 'seasonShows']);
 Route::get('home-shows', [ShowController::class, 'homeShows']);
 Route::get('shows/flex/{uid}', [FlexLinkController::class, 'showByUid']);

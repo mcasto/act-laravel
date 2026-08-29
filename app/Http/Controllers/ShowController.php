@@ -197,6 +197,34 @@ class ShowController extends Controller
     }
 
     /**
+     * Get a show by slug, for the public Show Details page
+     *
+     * Unlike seasonShows(), this isn't limited to the current display
+     * season — a show-details link should work for any show, current or
+     * historical. Deliberately excludes performances.ticket_sales (that's
+     * only appropriate for the admin-facing show() method above).
+     *
+     * @param string $slug
+     * @return JsonResponse The show, or a 200 error payload if not found
+     *   (a real 404 would make wretch reject the request instead of
+     *   resolving it, so the frontend can't redirect gracefully)
+     *
+     * @source Database Model: Show (reads with performances and galleryImages relationships)
+     */
+    public function bySlug(string $slug): JsonResponse
+    {
+        $show = Show::with(['performances', 'galleryImages'])
+            ->where('slug', $slug)
+            ->first();
+
+        if (! $show) {
+            return response()->json(['status' => 'error', 'message' => 'Show not found.']);
+        }
+
+        return response()->json($show);
+    }
+
+    /**
      * Get specific show by ID
      *
      * Retrieves detailed information for a single show including performances

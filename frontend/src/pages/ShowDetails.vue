@@ -54,7 +54,7 @@
         <div v-if="ticketsStart && !isFlexAccess">
           <span class="text-bold">Tickets On Sale:</span> {{ ticketsStart }}
         </div>
-        <div v-else-if="!store.show.tentative && !allSoldOut">
+        <div v-else-if="!store.show.tentative && !allSoldOut && isActiveShow">
           <q-btn
             label="Reserve Tickets"
             color="primary"
@@ -95,6 +95,13 @@ const allSoldOut = computed(() => {
   const perfs = store.show?.performances ?? [];
   return perfs.length > 0 && perfs.every((p) => p.sold_out);
 });
+
+// /purchase-tickets only ever sells store.home.currentShow — Reserve
+// Tickets should only appear when that's actually the show being viewed
+// here (this page can now show any show, current or historical).
+const isActiveShow = computed(
+  () => !!store.home?.currentShow && store.show?.id === store.home.currentShow.id,
+);
 
 const displayDate = computed(() => {
   const performances = store.show.performances;
