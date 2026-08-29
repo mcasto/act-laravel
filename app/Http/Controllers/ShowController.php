@@ -116,7 +116,13 @@ class ShowController extends Controller
         $shows = Show::with('audition')
             ->with("performances")
             ->whereHas('performances', function ($query) use ($seasonDates) {
-                $query->where('date', '>=', now())
+                // Not now() — performances.date has no time component, so
+                // MySQL compares it against midnight; a bare now() (with
+                // today's real time-of-day) would make today's own
+                // performance evaluate as already past as soon as any time
+                // has elapsed since midnight, dropping the show off the
+                // homepage while it's still playing today.
+                $query->where('date', '>=', now()->toDateString())
                     ->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
             })
             ->get()
