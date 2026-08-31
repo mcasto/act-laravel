@@ -34,6 +34,14 @@
                 :disable="isReadOnly"
               ></q-toggle>
               <q-btn
+                :icon="matInfo"
+                flat
+                round
+                dense
+                size="sm"
+                @click="sendMailInfoDialog = true"
+              ></q-btn>
+              <q-btn
                 :icon="matAdd"
                 size="sm"
                 color="primary"
@@ -302,6 +310,25 @@
         </div>
       </template>
     </q-table>
+
+    <q-dialog v-model="sendMailInfoDialog">
+      <q-card style="max-width: 420px;">
+        <q-card-section>
+          <div class="text-h6">About "Send Emails"</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          When this is on, recording or editing a ticket sale here sends two
+          emails right away: one to the box office letting you know a sale
+          came in, and one to the ticket buyer confirming their purchase.
+          <br /><br />
+          Turn it off if you're catching up on data entry or fixing a mistake
+          and don't want those emails going out again.
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Got it" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -335,6 +362,8 @@ const store = useStore();
 const isReadOnly = computed(
   () => getPermissionLevel(store.admin.user, "ticket-sales") === "read-only",
 );
+
+const sendMailInfoDialog = ref(false);
 
 const currentShow = store.home.currentShow;
 
