@@ -77,6 +77,7 @@
                         :headers="headers"
                         @uploaded="posterUploaded"
                         @rejected="onFileRejected"
+                        :disable="isReadOnly"
                       />
                     </template>
                     <template v-slot:hint>
@@ -161,6 +162,7 @@
                         :headers="headers"
                         @uploaded="instructorImageUploaded"
                         @rejected="onFileRejected"
+                        :disable="isReadOnly"
                       />
                     </template>
                     <template v-slot:hint>
@@ -346,6 +348,7 @@
                   color="positive"
                   unelevated
                   class="q-px-lg"
+                  :disable="isReadOnly"
                 />
               </div>
             </q-form>
@@ -360,9 +363,15 @@
 import { matAttachMoney, matEmail, matEvent, matFormatQuote, matLink, matPerson, matPlace, matSchool } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
+import { computed } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "classes") === "read-only",
+);
 
 const onFileRejected = (rejectedEntries) => {
   rejectedEntries.forEach(({ failedPropValidation, file }) => {

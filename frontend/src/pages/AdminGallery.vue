@@ -5,7 +5,7 @@
         <q-page>
           <div class="column q-gutter-y-sm">
             <div class="flex justify-end">
-              <q-btn round flat :icon="matAdd" size="sm">
+              <q-btn round flat :icon="matAdd" size="sm" :disable="isReadOnly">
                 <q-menu v-model="uploaderRef">
                   <q-uploader
                     accept=".jpg,.jpeg,.png"
@@ -23,6 +23,7 @@
                     ]"
                     :form-fields="[{ name: 'show_id', value: show.id }]"
                     @uploaded="onUploaded"
+                    :disable="isReadOnly"
                   ></q-uploader>
                 </q-menu>
               </q-btn>
@@ -68,20 +69,21 @@
               color="negative"
               size="lg"
               @click="deleteImage"
+              :disable="isReadOnly"
               v-if="photo"
             ></q-btn>
             <q-btn
               :icon="mdiArrowUp"
               color="primary"
               @click="reorder(-1)"
-              :disable="photo.idx == 0"
+              :disable="isReadOnly || photo.idx == 0"
               v-if="photo"
             ></q-btn>
             <q-btn
               :icon="mdiArrowDown"
               color="primary"
               @click="reorder(1)"
-              :disable="(photo.idx == gallery.length - 1)"
+              :disable="isReadOnly || (photo.idx == gallery.length - 1)"
               v-if="photo"
             ></q-btn>
           </q-toolbar>
@@ -106,10 +108,15 @@ import { mdiArrowDown, mdiArrowUp } from "@quasar/extras/mdi-v7";
 import { remove } from "lodash-es";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
 
 const uploaderRef = ref(null);
 

@@ -32,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'webhook.verify' => \App\Http\Middleware\VerifyWebhookToken::class,
+            'permission' => \App\Http\Middleware\CheckSectionPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

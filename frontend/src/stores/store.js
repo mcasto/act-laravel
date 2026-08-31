@@ -30,9 +30,7 @@ import apiLoaded from "./actions/api-loaded";
 import openFixr from "./actions/open-fixr";
 import showPurchaseConfig from "./actions/show-purchase-config";
 import updateAnnouncementBanner from "./actions/update-announcement-banner";
-import getVolunteers from "./actions/get-volunteers";
 import refreshPermissions from "./actions/refresh-permissions";
-import editUser from "./actions/edit-user";
 import getAuditionConfig from "./actions/get-audition-config";
 import saveAuditionConfig from "./actions/save-audition-config";
 import openCourses from "./actions/open-courses";
@@ -74,7 +72,6 @@ export const useStore = defineStore(
       deleteShow,
       deleteUser,
       editShow,
-      editUser,
       flexshowPurchaseConfig,
       getAllShows,
       getAuditionConfig,
@@ -82,7 +79,6 @@ export const useStore = defineStore(
       getSkills,
       getSiteConfig,
       getSnippet,
-      getVolunteers,
       getUsers,
       homeShows,
       newContact,

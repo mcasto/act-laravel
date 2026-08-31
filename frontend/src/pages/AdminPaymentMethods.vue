@@ -6,6 +6,7 @@
         color="primary"
         :icon="matAdd"
         label="Add Payment Method"
+        :disable="isReadOnly"
         @click="openDialog()"
       />
     </div>
@@ -42,6 +43,7 @@
             dense
             size="sm"
             color="primary"
+            :disable="isReadOnly"
             @click="openDialog(props.row)"
           />
           <q-btn
@@ -51,6 +53,7 @@
             dense
             size="sm"
             color="negative"
+            :disable="isReadOnly"
             @click="deleteMethod(props.row)"
           />
         </q-td>
@@ -132,7 +135,7 @@
             label="Save"
             color="primary"
             @click="save"
-            :disable="!form.label || !form.value"
+            :disable="isReadOnly || !form.label || !form.value"
           />
         </q-card-actions>
       </q-card>
@@ -149,10 +152,15 @@ import {
 } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "payment-methods") === "read-only",
+);
 
 const dialog = ref(false);
 const form = ref({

@@ -3,7 +3,7 @@ import { useStore } from "../store";
 
 export default () => {
   const store = useStore();
-  callApi({ path: "/all-shows", method: "get" }).then((shows) => {
+  callApi({ path: "/all-shows", method: "get", useAuth: true }).then((shows) => {
     store.admin.shows = shows;
   });
 };

@@ -140,22 +140,4 @@ class PerformanceController extends Controller
 
         return response()->json(['status' => 'success', 'sent' => $sent, 'failed' => $failed]);
     }
-
-    /**
-     * Update Fixr link for a performance
-     *
-     * Placeholder method that currently only logs the request.
-     * Intended for updating the Fixr ticketing link associated with a performance.
-     *
-     * @param int $id The performance ID
-     * @param Request $request Contains the Fixr link data
-     * @return void
-     *
-     * @source None (only logs)
-     * @todo Implement actual Fixr link update functionality
-     */
-    public function updateFixrLink(int $id, Request $request)
-    {
-        logger()->info('update-fixr-link', ['id' => $id, 'request' => $request->all()]);
-    }
 }

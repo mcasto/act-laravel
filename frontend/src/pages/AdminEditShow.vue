@@ -23,6 +23,7 @@
                   field-name="image"
                   accept=".jpeg, .jpg, .png"
                   @uploaded="refreshPoster"
+                  :disable="isReadOnly"
                   auto-upload
                 ></q-uploader>
               </q-menu>
@@ -93,6 +94,7 @@
               :true-value="1"
               :false-value="0"
               label="Performance Dates are Tentative"
+              :disable="isReadOnly"
               @update:model-value="store.updateTentative"
             ></q-checkbox>
           </div>
@@ -166,6 +168,7 @@ import PerformancesDrawer from "src/components/PerformancesDrawer.vue";
 import ShowPoster from "src/components/ShowPoster.vue";
 import ShowInfoForm from "src/components/ShowInfoForm.vue";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 
 import { Notify } from "quasar";
 import { useStore } from "src/stores/store";
@@ -175,6 +178,10 @@ import { useRoute, useRouter } from "vue-router";
 const route  = useRoute();
 const router = useRouter();
 const store  = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
 
 const uploadHeaders = ref([
   { name: "Authorization", value: `Bearer ${store.admin.user?.token}` },

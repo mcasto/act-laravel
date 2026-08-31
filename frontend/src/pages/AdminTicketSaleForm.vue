@@ -96,6 +96,7 @@
           label="Save"
           color="primary"
           :loading="loading"
+          :disable="isReadOnly"
         ></q-btn>
       </div>
     </q-form>
@@ -105,12 +106,17 @@
 <script setup>
 import { computed, ref } from "vue";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { useRoute } from "vue-router";
 import { formatISO } from "date-fns";
 
 const store = useStore();
 const route = useRoute();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "ticket-sales") === "read-only",
+);
 
 const loading = ref(false);
 const isEdit = route.name === "admin-ticket-sale-edit";
@@ -203,7 +209,7 @@ const onSubmit = async () => {
   }
 
   const response = await callApi({
-    path: "/ticket-sales",
+    path: isEdit ? "/ticket-sales" : "/admin/ticket-sales",
     method: isEdit ? "put" : "post",
     useAuth: true,
     payload,

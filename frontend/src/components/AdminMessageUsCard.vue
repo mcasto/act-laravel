@@ -25,6 +25,7 @@
           round
           flat
           color="negative"
+          :disable="isReadOnly"
           @click="deleteSubmission"
         ></q-btn>
         <q-btn
@@ -46,15 +47,20 @@
 import { matDelete, matMessage } from "@quasar/extras/material-icons";
 import { useStore } from "src/stores/store";
 import AdminContactMessageDialog from "src/components/AdminContactMessageDialog.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { format, parseISO } from "date-fns";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { remove } from "lodash-es";
 
 const props = defineProps(["submission"]);
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "quick-messages") === "read-only",
+);
 
 const deleteFlag = ref(false);
 

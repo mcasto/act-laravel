@@ -19,7 +19,7 @@ class AuthController extends Controller
      * @param Request $request Contains email and password
      * @return JsonResponse User data with token or error message
      *
-     * @source Database Model: User (reads with permissions.permissionLevel relationship)
+     * @source Database Model: User (reads with permissions relationship)
      */
     public function login(Request $request): JsonResponse
     {
@@ -28,7 +28,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::with('permissions.permissionLevel')->where('email', $request->email)->first();
+        $user = User::with('permissions')->where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json(
@@ -52,11 +52,11 @@ class AuthController extends Controller
      * @param Request $request The authenticated request
      * @return \Illuminate\Database\Eloquent\Collection User's current permissions
      *
-     * @source Database Model: User (reads with permissions.permissionLevel relationship)
+     * @source Database Model: User (reads with permissions relationship)
      */
     public function refreshPermissions(Request $request)
     {
-        $user = User::with('permissions.permissionLevel')->find($request->user()->id);
+        $user = User::with('permissions')->find($request->user()->id);
         return $user->permissions;
     }
 

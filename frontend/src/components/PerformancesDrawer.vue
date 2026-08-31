@@ -2,10 +2,10 @@
   <div>
     <q-toolbar class="bg-primary text-white text-h6 justify-between">
       <div>
-        <q-btn :icon="matAdd" flat round @click="newPerformance"></q-btn>
+        <q-btn :icon="matAdd" flat round :disable="isReadOnly" @click="newPerformance"></q-btn>
         Performances
       </div>
-      <q-btn :icon="matSave" flat round @click="$emit('update')"></q-btn>
+      <q-btn :icon="matSave" flat round :disable="isReadOnly" @click="$emit('update')"></q-btn>
 
       <q-btn
         :icon="matClose"
@@ -46,7 +46,7 @@
           <q-td class="text-center">
             <div class="cursor-pointer">
               {{ format(parseISO(performance.date), "PP") }}
-              <q-popup-edit v-model="performance.date" v-slot="scope" buttons>
+              <q-popup-edit v-if="!isReadOnly" v-model="performance.date" v-slot="scope" buttons>
                 <q-date v-model="scope.value" mask="YYYY-MM-DD"></q-date>
               </q-popup-edit>
             </div>
@@ -60,6 +60,7 @@
                 )
               }}
               <q-popup-edit
+                v-if="!isReadOnly"
                 v-model="performance.start_time"
                 v-slot="scope"
                 buttons
@@ -75,6 +76,7 @@
                 size="xs"
                 :true-value="1"
                 :false-value="0"
+                :disable="isReadOnly"
               ></q-checkbox>
 
               <q-tooltip>
@@ -105,6 +107,7 @@
               <q-tooltip>Fixr Link</q-tooltip>
             </q-btn>
             <q-popup-edit
+              v-if="!isReadOnly"
               v-model="performance.fixr_link"
               v-slot="scope"
               buttons
@@ -136,6 +139,7 @@
               :icon="matDelete"
               flat
               round
+              :disable="isReadOnly"
               @click="performance.deleted = true"
             >
               <q-tooltip>
@@ -157,11 +161,17 @@ import {
   matLink,
   matSave,
 } from "@quasar/extras/material-icons";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { add, format, formatISO9075, parseISO, sub } from "date-fns";
 import { clone } from "lodash-es";
+import { computed } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
 
 const emits = defineEmits(["close", "update"]);
 

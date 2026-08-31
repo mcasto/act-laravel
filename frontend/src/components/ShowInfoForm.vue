@@ -9,6 +9,7 @@
             type="text"
             label="Name"
             v-model="props.show.name"
+            :disable="isReadOnly"
             required
           ></q-input>
         </div>
@@ -19,6 +20,7 @@
             type="text"
             label="Writer"
             v-model="props.show.writer"
+            :disable="isReadOnly"
             required
           ></q-input>
         </div>
@@ -30,6 +32,7 @@
             type="text"
             label="Tagline"
             v-model="props.show.tagline"
+            :disable="isReadOnly"
             required
           ></q-input>
         </div>
@@ -40,6 +43,7 @@
             type="text"
             label="Director"
             v-model="props.show.director"
+            :disable="isReadOnly"
             required
           ></q-input>
         </div>
@@ -51,14 +55,16 @@
             label="Ticket Price"
             dense
             outlined
+            :disable="isReadOnly"
           ></q-input>
         </div>
         <div class="col-6 q-px-xs text-right">
           <div class="q-my-md cursor-pointer">
             Ticket Sales Start:
             {{ format(parseISO(props.show.ticket_sales_start), "PP") }}
-            <q-btn :icon="matCalendarMonth" flat round></q-btn>
+            <q-btn :icon="matCalendarMonth" flat round :disable="isReadOnly"></q-btn>
             <q-popup-edit
+              v-if="!isReadOnly"
               v-model="props.show.ticket_sales_start"
               v-slot="scope"
               buttons
@@ -71,7 +77,7 @@
           <div class="text-caption">
             Info
           </div>
-          <q-editor v-model="props.show.info"></q-editor>
+          <q-editor v-model="props.show.info" :disable="isReadOnly"></q-editor>
         </div>
         <div class="col-12 text-right">
           <q-btn
@@ -79,6 +85,7 @@
             :label="btnLabel"
             color="positive"
             class="q-mr-md"
+            :disable="isReadOnly"
           ></q-btn>
         </div>
       </div>
@@ -89,12 +96,17 @@
 <script setup>
 import { matCalendarMonth } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { computed } from "vue";
 
 const props = defineProps(["show"]);
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
 
 const btnLabel = computed(() => {
   return store.router.currentRoute.value.params.id ? "udpate" : "create";

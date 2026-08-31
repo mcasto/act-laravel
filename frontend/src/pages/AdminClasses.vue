@@ -16,6 +16,7 @@
             round
             size="sm"
             to="/admin/edit-course/new"
+            :disable="isReadOnly"
           />
         </q-th>
       </template>
@@ -37,6 +38,7 @@
             :icon="matDelete"
             round
             flat
+            :disable="isReadOnly"
             @click="onDelete(props.row)"
           />
           <q-btn
@@ -62,11 +64,16 @@ import { matAdd, matDelete, matEdit } from "@quasar/extras/material-icons";
 import { format } from "date-fns";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import CourseEnrolleesDialog from "src/components/CourseEnrolleesDialog.vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "classes") === "read-only",
+);
 
 const enrolleesDialog = ref({
   visible: false,

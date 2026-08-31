@@ -3,33 +3,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserPermission extends Model
 {
  /** @use HasFactory<\Database\Factories\UserPermissionFactory> */
- use HasFactory, SoftDeletes;
+ use HasFactory;
 
  protected $fillable = [
   'user_id',
-  'permission_level_id',
+  'section',
   'access',
  ];
-
- public static function validate($data)
- {
-  $validator = validator($data, [
-   'user_id'             => ['required', 'exists:users,id'],
-   'permission_level_id' => ['required', 'exists:permission_levels,id'],
-   'access'              => ['required', 'string', 'max:255'],
-  ]);
-
-  if ($validator->fails()) {
-   return $validator->errors()->toArray();
-  }
-
-  return $validator->validated();
- }
 
  /**
   * Relationship to users
@@ -37,13 +21,5 @@ class UserPermission extends Model
  public function user()
  {
   return $this->belongsTo(User::class);
- }
-
- /**
-  * Relationship to permission_levels
-  */
- public function permissionLevel()
- {
-  return $this->belongsTo(PermissionLevel::class);
  }
 }

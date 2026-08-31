@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="flex justify-end q-mt-md q-mr-md">
-        <q-btn type="submit" label="Update" color="primary" />
+        <q-btn type="submit" label="Update" color="primary" :disable="isReadOnly" />
       </div>
     </q-form>
 
@@ -75,7 +75,7 @@
           class="q-mb-md"
         />
         <div class="flex justify-end">
-          <q-btn label="Save" color="primary" @click="saveSeason" />
+          <q-btn label="Save" color="primary" @click="saveSeason" :disable="isReadOnly" />
         </div>
       </div>
 
@@ -108,7 +108,7 @@
           />
         </div>
         <div class="col-12 flex justify-end">
-          <q-btn label="Save" color="primary" @click="saveAngels" />
+          <q-btn label="Save" color="primary" @click="saveAngels" :disable="isReadOnly" />
         </div>
       </div>
 
@@ -139,7 +139,7 @@
           />
         </div>
         <div class="col-12 flex justify-end">
-          <q-btn label="Save" color="primary" @click="saveSupport" />
+          <q-btn label="Save" color="primary" @click="saveSupport" :disable="isReadOnly" />
         </div>
       </div>
 
@@ -243,7 +243,7 @@
           />
         </div>
         <div class="col-12 flex justify-end">
-          <q-btn label="Save" color="primary" @click="saveFlex" />
+          <q-btn label="Save" color="primary" @click="saveFlex" :disable="isReadOnly" />
         </div>
       </div>
 
@@ -314,7 +314,7 @@
             />
           </div>
           <div class="col-12 flex justify-end">
-            <q-btn label="Save Button" color="primary" @click="saveButton" />
+            <q-btn label="Save Button" color="primary" @click="saveButton" :disable="isReadOnly" />
           </div>
         </div>
       </div>
@@ -331,10 +331,15 @@
 import { Notify } from "quasar";
 import { mdiCircle, mdiCodeBraces, mdiFormatColorText, mdiFormatSize } from "@quasar/extras/mdi-v7";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { computed, onMounted, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "site-config") === "read-only",
+);
 
 const contentConfig = ref(null);
 const section = ref("support");

@@ -11,6 +11,7 @@
         color="primary"
         :icon="matAdd"
         label="Add Recipient"
+        :disable="isReadOnly"
         @click="openDialog()"
       />
     </div>
@@ -32,6 +33,7 @@
             dense
             size="sm"
             color="primary"
+            :disable="isReadOnly"
             @click="openDialog(props.row)"
           />
           <q-btn
@@ -41,6 +43,7 @@
             dense
             size="sm"
             color="negative"
+            :disable="isReadOnly"
             @click="deleteRecipient(props.row)"
           />
         </q-td>
@@ -79,7 +82,7 @@
             label="Save"
             color="primary"
             @click="save"
-            :disable="!form.name || !form.email"
+            :disable="isReadOnly || !form.name || !form.email"
           />
         </q-card-actions>
       </q-card>
@@ -91,10 +94,15 @@
 import { matAdd, matDelete, matEdit } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "sold-out-notifications") === "read-only",
+);
 
 const recipients = ref(store.admin.sold_out_notification_recipients ?? []);
 

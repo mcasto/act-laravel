@@ -9,18 +9,19 @@
         </q-toolbar>
 
         <q-card-section>
-          <q-editor v-model="announcement.html" :toolbar="toolbar"></q-editor>
+          <q-editor v-model="announcement.html" :toolbar="toolbar" :disable="isReadOnly"></q-editor>
         </q-card-section>
         <q-card-actions class="justify-between">
           <div>
             <q-checkbox
               v-model="announcement.status"
               label="Active"
+              :disable="isReadOnly"
             ></q-checkbox>
           </div>
 
           <div>
-            <q-btn type="submit" label="Update" color="primary"></q-btn>
+            <q-btn type="submit" label="Update" color="primary" :disable="isReadOnly"></q-btn>
           </div>
         </q-card-actions>
       </q-card>
@@ -31,10 +32,15 @@
 <script setup>
 import { trim } from "lodash-es";
 import { Notify } from "quasar";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "announcement-banner") === "read-only",
+);
 
 const announcement = ref(store.announcement);
 

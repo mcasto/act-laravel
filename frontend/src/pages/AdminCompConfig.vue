@@ -24,6 +24,7 @@
               label="Name"
               :rules="[(val) => !!val || 'Name is required']"
               v-model="form.name"
+              :disable="isReadOnly"
               @blur="form.pickup_name = form.name"
             ></q-input>
 
@@ -35,6 +36,7 @@
               label="Email"
               :rules="[(val) => !!val || 'Email is required']"
               v-model="form.email"
+              :disable="isReadOnly"
             ></q-input>
 
             <q-card-actions class="justify-end">
@@ -43,6 +45,7 @@
                 label="Add"
                 color="primary"
                 :loading="loading"
+                :disable="isReadOnly"
               ></q-btn>
             </q-card-actions>
           </q-form>
@@ -65,6 +68,7 @@
                 color="primary"
                 @click="sendBulk"
                 :loading="sending"
+                :disable="isReadOnly"
               ></q-btn>
             </q-th>
           </template>
@@ -76,6 +80,7 @@
                 size="sm"
                 color="negative"
                 @click="onDelete(row)"
+                :disable="isReadOnly"
               ></q-btn>
               <q-btn
                 :icon="matSend"
@@ -83,7 +88,7 @@
                 round
                 color="positive"
                 class="q-ml-sm"
-                :disabled="row.sent_at"
+                :disabled="row.sent_at || isReadOnly"
                 @click="onSend(row)"
                 :loading="sending"
               ></q-btn>
@@ -101,10 +106,15 @@ import { format, parseISO } from "date-fns";
 import { remove } from "lodash-es";
 import { Dialog, Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
 
 const loading = ref(false);
 const formRef = ref(null);

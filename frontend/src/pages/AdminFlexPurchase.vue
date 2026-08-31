@@ -89,7 +89,7 @@
           <q-toolbar-title>
             Image
           </q-toolbar-title>
-          <q-btn label="Change Image" color="primary">
+          <q-btn label="Change Image" color="primary" :disable="isReadOnly">
             <q-menu v-model="uploaderMenu">
               <q-uploader
                 auto-upload
@@ -116,7 +116,7 @@
       </div>
       <q-separator spaced></q-separator>
       <div class="flex justify-end">
-        <q-btn color="positive" label="Update" type="submit"></q-btn>
+        <q-btn color="positive" label="Update" type="submit" :disable="isReadOnly"></q-btn>
       </div>
     </q-form>
   </div>
@@ -126,10 +126,15 @@
 import { matLink } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "flex-purchase-config") === "read-only",
+);
 
 const form = ref(store.flex);
 

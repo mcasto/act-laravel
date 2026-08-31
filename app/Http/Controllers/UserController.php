@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PermissionLevel;
 use App\Models\User;
 use App\Models\UserPermission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     /**
      * Whether the currently authenticated user is the account with
      * unrestricted access to every user's record (see config('auth.owner_email')).
-     * Everyone else may only affect their own user entry.
      */
     private function isOwner(Request $request): bool
     {
@@ -24,39 +23,73 @@ class UserController extends Controller
     }
 
     /**
-     * Get all users with their permissions
-     *
-     * Retrieves all user records including their permission relationships
-     * and permission level details.
-     *
-     * @return JsonResponse All users with permissions
-     *
-     * @source Database Model: User (reads with permissions.permissionlevel relationship)
+     * Whether the acting user can manage *other* users' records (create,
+     * delete, edit others, change others' passwords) — the owner always
+     * can, or anyone granted 'full' on the 'users' section. This never
+     * extends to the owner's own record — see canManageTarget().
      */
-    public function index(): JsonResponse
+    private function hasFullUsersAccess(Request $request): bool
     {
-        return response()->json(User::with('permissions.permissionlevel')->get());
+        if ($this->isOwner($request)) {
+            return true;
+        }
+
+        return UserPermission::where('user_id', $request->user()->id)
+            ->where('section', 'users')
+            ->where('access', 'full')
+            ->exists();
     }
 
     /**
-     * Create a new user with full permissions
+     * Whether the acting user may edit/change-password the given target:
+     * always allowed for their own record, otherwise only with
+     * hasFullUsersAccess() — and even then, never for the owner's record
+     * unless the actor *is* the owner.
+     */
+    private function canManageTarget(Request $request, User $target): bool
+    {
+        if ($request->user()->id === $target->id) {
+            return true;
+        }
+
+        if ($target->email === config('auth.owner_email')) {
+            return false;
+        }
+
+        return $this->hasFullUsersAccess($request);
+    }
+
+    /**
+     * Get all users with their permissions
      *
-     * Validates and creates a new user record, then automatically creates
-     * UserPermission records granting 'full' access for all existing
-     * permission levels.
+     * Retrieves all user records including their per-section permissions.
+     *
+     * @return JsonResponse All users with permissions
+     *
+     * @source Database Model: User (reads with permissions relationship)
+     */
+    public function index(): JsonResponse
+    {
+        return response()->json(User::with('permissions')->get());
+    }
+
+    /**
+     * Create a new user
+     *
+     * Validates and creates a new user record. No section permissions are
+     * granted by default — the owner assigns them afterward via
+     * updatePermissions(). A user with no rows for a section has no access
+     * to it (see AdminNav.vue/AdminDashboard.vue's default-to-"none" logic).
      *
      * @param Request $request Contains user data (name, email, password)
      * @return JsonResponse The created user data or validation errors
      *
-     * @source Database Models:
-     *   - User (creates)
-     *   - PermissionLevel (reads all)
-     *   - UserPermission (creates for each permission level)
+     * @source Database Model: User (creates)
      */
     public function store(Request $request): JsonResponse
     {
-        if (! $this->isOwner($request)) {
-            return response()->json(['status' => 'error', 'message' => 'Only the account owner can create users'], 403);
+        if (! $this->hasFullUsersAccess($request)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to create users'], 403);
         }
 
         $validated = User::validate($request->all());
@@ -65,16 +98,71 @@ class UserController extends Controller
         }
 
         $user = User::create($request->all());
-        $levels = Cache::remember('permission-levels', 3600, fn() => PermissionLevel::all());
-        foreach ($levels as $level) {
-            UserPermission::create([
-                'user_id' => $user->id,
-                'permission_level_id' => $level->id,
-                'access' => 'full'
-            ]);
-        }
 
         return response()->json($request);
+    }
+
+    /**
+     * Replace a user's section-level permissions
+     *
+     * Requires hasFullUsersAccess() — the owner, or anyone granted 'full'
+     * on the 'users' section themselves. Sections are whatever keys the
+     * frontend sends (admin routes are the source of truth, not a DB
+     * table), so this doesn't validate section names — only that each
+     * access value is one of the three recognized levels. The owner's own
+     * permissions can never be changed this way — they always have full
+     * access everywhere by virtue of being the owner, not through stored
+     * rows.
+     *
+     * @param Request $request Contains 'permissions' as {section: access}
+     * @param int $id The user ID whose permissions are being set
+     * @return JsonResponse Status and the resulting permission rows
+     *
+     * @source Database Model: UserPermission (replaces all rows for the user)
+     */
+    public function updatePermissions(Request $request, int $id): JsonResponse
+    {
+        if (! $this->hasFullUsersAccess($request)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to manage permissions'], 403);
+        }
+
+        // Even with full Users access, no one can change their own
+        // permissions — prevents accidentally locking themselves out.
+        // Someone else with full Users access has to do it instead.
+        if ($request->user()->id === $id) {
+            return response()->json(['status' => 'error', 'message' => 'You cannot change your own permissions — have another user with full Users access do it.'], 403);
+        }
+
+        $target = User::find($id);
+        if (! $target) {
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+        }
+
+        if ($target->email === config('auth.owner_email')) {
+            return response()->json(['status' => 'error', 'message' => "The owner's permissions can't be changed"], 403);
+        }
+
+        $validated = $request->validate([
+            'permissions' => 'required|array',
+            'permissions.*' => ['required', Rule::in(['full', 'read-only', 'none'])],
+        ]);
+
+        DB::transaction(function () use ($id, $validated) {
+            UserPermission::where('user_id', $id)->delete();
+
+            foreach ($validated['permissions'] as $section => $access) {
+                UserPermission::create([
+                    'user_id' => $id,
+                    'section' => $section,
+                    'access' => $access,
+                ]);
+            }
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'permissions' => UserPermission::where('user_id', $id)->get(),
+        ]);
     }
 
     /**
@@ -91,8 +179,13 @@ class UserController extends Controller
      */
     public function changePassword(Request $request, int $id)
     {
-        if (! $this->isOwner($request) && $request->user()->id !== $id) {
-            return ['status' => 'error', 'message' => 'You can only change your own password'];
+        $user = User::find($id);
+        if (!$user) {
+            return ['status' => 'error', 'message' => 'Invalid user'];
+        }
+
+        if (! $this->canManageTarget($request, $user)) {
+            return ['status' => 'error', 'message' => 'You do not have permission to change this password'];
         }
 
         $validator = Validator::make($request->all(), [
@@ -101,11 +194,6 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return ['status' => 'error', 'message' => 'Invalid request'];
-        }
-
-        $user = User::find($id);
-        if (!$user) {
-            return ['status' => 'error', 'message' => 'Invalid user'];
         }
 
         extract($validator->valid());
@@ -130,11 +218,15 @@ class UserController extends Controller
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        if (! $this->isOwner($request) && $request->user()->id !== $id) {
-            return response()->json(['status' => 'error', 'message' => 'You can only edit your own user entry'], 403);
+        $user = User::find($id);
+
+        if (! $user) {
+            return response()->json(['status' => 'error', 'message' => 'User not found']);
         }
 
-        $user = User::find($id);
+        if (! $this->canManageTarget($request, $user)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to edit this user'], 403);
+        }
 
         $validator = validator($request->all(), [
             'name'  => ['required', 'string', 'max:255'],
@@ -144,10 +236,6 @@ class UserController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors()->toArray();
             return response()->json(['status' => 'error', 'message' => array_values($errors)]);
-        }
-
-        if (! $user) {
-            return response()->json(['status' => 'error', 'message' => 'User not found']);
         }
 
         $user->name  = $request->input('name');
@@ -169,13 +257,17 @@ class UserController extends Controller
      */
     public function destroy(Request $request, int $id): JsonResponse
     {
-        if (! $this->isOwner($request)) {
-            return response()->json(['status' => 'error', 'message' => 'Only the account owner can delete users'], 403);
-        }
-
         $user = User::find($id);
         if (! $user) {
             return response()->json(['status' => 'error', 'message' => 'User not found']);
+        }
+
+        if ($user->email === config('auth.owner_email')) {
+            return response()->json(['status' => 'error', 'message' => "The owner's account can't be deleted"], 403);
+        }
+
+        if (! $this->hasFullUsersAccess($request)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to delete users'], 403);
         }
 
         $user->delete();

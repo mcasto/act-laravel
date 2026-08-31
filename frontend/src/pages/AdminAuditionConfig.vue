@@ -13,6 +13,7 @@
             type="date"
             v-model="store.admin.audition.display_date"
             label="Start Display"
+            :disable="isReadOnly"
           ></q-input>
         </div>
         <div class="col-12 col-md-6 q-pa-md">
@@ -22,6 +23,7 @@
             type="date"
             v-model="store.admin.audition.end_display_date"
             label="End Display"
+            :disable="isReadOnly"
           ></q-input>
         </div>
 
@@ -34,6 +36,7 @@
             :toolbar="toolbar"
             :fonts="fonts"
             max-height="35vh"
+            :disable="isReadOnly"
           ></q-editor>
           <div class="text-caption">
             You can build directly in the editor, or you can go to ChatGPT,
@@ -57,6 +60,7 @@
           label="Save"
           color="positive"
           class="q-ml-md text-black"
+          :disable="isReadOnly"
         ></q-btn>
       </div>
     </q-form>
@@ -64,10 +68,15 @@
 </template>
 
 <script setup>
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
 
 const formRef = ref(null);
 

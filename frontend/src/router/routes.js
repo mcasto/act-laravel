@@ -423,6 +423,7 @@ const routes = [
               dash: false,
               order: 18.5,
               label: "New Ticket Sale",
+              section: "ticket-sales",
             },
           },
           {
@@ -436,6 +437,7 @@ const routes = [
               dash: false,
               order: 18.6,
               label: "Edit Ticket Sale",
+              section: "ticket-sales",
             },
           },
           {
@@ -553,6 +555,7 @@ const routes = [
               nav: false,
               dash: false,
               label: "Edit Course",
+              section: "classes",
             },
           },
           {
@@ -688,6 +691,7 @@ const routes = [
               admin: true,
               nav: false,
               label: "Edit Show",
+              section: "shows",
             },
           },
           {
@@ -703,6 +707,7 @@ const routes = [
               admin: true,
               nav: false,
               label: "Audition Config",
+              section: "shows",
             },
           },
           {
@@ -723,6 +728,7 @@ const routes = [
               admin: true,
               nav: false,
               label: "Comp Config",
+              section: "shows",
             },
           },
           {
@@ -734,6 +740,7 @@ const routes = [
               admin: true,
               nav: false,
               label: "Show Gallery",
+              section: "shows",
             },
           },
 
@@ -750,6 +757,7 @@ const routes = [
               admin: true,
               nav: false,
               label: "New Show",
+              section: "shows",
             },
           },
           // {
@@ -757,28 +765,6 @@ const routes = [
           //   path: "tickets",
           //   component: () => import("src/pages/AdminTickets.vue"),
           //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
-          // },
-          // {
-          //   name: "Volunteers",
-          //   path: "volunteers",
-          //   component: () => import("src/pages/AdminVolunteers.vue"),
-          //   beforeEnter: async () => {
-          //     const store = useStore();
-          //     await store.getSkills();
-          //     await store.getVolunteers();
-          //   },
-          //   meta: { requireAuth: true, admin: true, nav: true, dash:true },
-          // },
-          // {
-          //   name: "Edit Volunteer",
-          //   path: "edit-volunteer/:id",
-          //   component: () => import("src/pages/AdminEditVolunteer.vue"),
-          //   beforeEnter: async () => {
-          //     const store = useStore();
-          //     await store.getSkills();
-          //     await store.getVolunteers();
-          //   },
-          //   meta: { requireAuth: true, admin: true },
           // },
           {
             name: "admin-patrons",

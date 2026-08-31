@@ -34,6 +34,7 @@
                 label="Delete"
                 color="negative"
                 outline
+                :disable="isReadOnly"
                 @click="store.deleteShow(currentShow.id)"
               ></q-btn>
             </div>
@@ -49,7 +50,7 @@
           <q-toolbar-title>
             {{ currentShow ? "Other Shows" : "Shows" }}
           </q-toolbar-title>
-          <q-btn :icon="matAdd" round color="primary" to="new-show"></q-btn>
+          <q-btn :icon="matAdd" round color="primary" to="new-show" :disable="isReadOnly"></q-btn>
         </q-toolbar>
       </template>
       <template #item="props">
@@ -81,6 +82,7 @@
                   round
                   flat
                   size="small"
+                  :disable="isReadOnly"
                   @click="store.deleteShow(props.row.id)"
                 ></q-btn>
               </div>
@@ -97,9 +99,14 @@ import { matAdd, matDelete } from "@quasar/extras/material-icons";
 import { add, format, formatISO9075, parseISO } from "date-fns";
 import { computed } from "vue";
 import ShowPoster from "src/components/ShowPoster.vue";
+import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
 
 const displayDate = (show) => {
   if (show.performances?.length > 0) {

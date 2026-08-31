@@ -20,6 +20,7 @@
               color="primary"
               :icon="matAdd"
               label="Add Level"
+              :disable="isReadOnly"
               @click="openLevelDialog()"
             />
           </div>
@@ -48,6 +49,7 @@
                     flat
                     dense
                     size="sm"
+                    :disable="isReadOnly"
                     @click.stop="openLevelDialog(level)"
                   />
                   <q-btn
@@ -56,6 +58,7 @@
                     dense
                     size="sm"
                     color="negative"
+                    :disable="isReadOnly"
                     @click.stop="deleteLevel(level)"
                   />
                 </div>
@@ -81,6 +84,7 @@
                 color="primary"
                 :icon="matAdd"
                 label="Add Angel"
+                :disable="isReadOnly"
                 @click="openAngelDialog()"
               />
             </div>
@@ -107,6 +111,7 @@
                       flat
                       dense
                       size="sm"
+                      :disable="isReadOnly"
                       @click="openAngelDialog(angel)"
                     />
                     <q-btn
@@ -115,6 +120,7 @@
                       dense
                       size="sm"
                       color="negative"
+                      :disable="isReadOnly"
                       @click="deleteAngel(angel)"
                     />
                   </div>
@@ -201,6 +207,7 @@
               round
               size="sm"
               color="negative"
+              :disable="isReadOnly"
               @click="levelForm.benefits.splice(index, 1)"
             />
           </div>
@@ -211,6 +218,7 @@
             color="primary"
             :icon="matAdd"
             label="Add Benefit"
+            :disable="isReadOnly"
             @click="levelForm.benefits.push('')"
           />
         </q-card-section>
@@ -222,7 +230,7 @@
             label="Save"
             color="primary"
             @click="saveLevel"
-            :disable="!levelForm.label || !levelForm.min_amount"
+            :disable="isReadOnly || !levelForm.label || !levelForm.min_amount"
           />
         </q-card-actions>
       </q-card>
@@ -274,6 +282,7 @@
             color="primary"
             @click="saveAngel"
             :disabled="
+              isReadOnly ||
               !angelForm.first_name ||
               !angelForm.last_name ||
               !angelForm.recognition_name
@@ -353,6 +362,14 @@ import { computed, onMounted, ref, watch } from "vue";
 import { Notify } from "quasar";
 import { format, parseISO } from "date-fns";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
+import { useStore } from "src/stores/store";
+
+const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "our-angels") === "read-only",
+);
 
 const angelLevels = ref([]);
 const selectedLevel = ref(null);
