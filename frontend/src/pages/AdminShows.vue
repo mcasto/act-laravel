@@ -163,13 +163,15 @@ const getShowDateRange = (show) => {
 const currentShow = computed(() => {
   if (!store.admin.shows) return null;
 
-  const now = new Date().getTime();
-  const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const startOfTodayTime = startOfToday.getTime();
 
-  // Filter to shows that are current or upcoming (not ended more than 7 days ago)
+  // Current through the end of its final performance day — stops showing as
+  // current starting the day after, matching the public homepage's rule.
   const activeShows = store.admin.shows.filter((show) => {
     const { latest } = getShowDateRange(show);
-    return latest >= sevenDaysAgo;
+    return latest >= startOfTodayTime;
   });
 
   // Among active shows, find the one with the earliest start date

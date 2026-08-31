@@ -22,7 +22,10 @@
     </div>
 
     <div v-else>
-      <div class="text-center q-mt-md">
+      <div class="text-h6 text-center q-mt-md">
+        {{ curShow?.name }}
+      </div>
+      <div class="text-center">
         {{ performanceDates }}
       </div>
 
