@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ActiveSeason;
+use App\Mail\AngelDonationConfirmationMailer;
 use App\Mail\AngelDonationMailer;
 use App\Models\Angel;
 use App\Models\AngelLevel;
@@ -61,6 +62,16 @@ class AngelController extends Controller
                 ->send(new AngelDonationMailer($angel));
         } catch (Exception $e) {
             logger()->error('Failed to send Angel donation notification email', [
+                'error' => $e->getMessage(),
+                'angel_id' => $angel->id,
+            ]);
+        }
+
+        try {
+            Mail::to($angel->email)
+                ->send(new AngelDonationConfirmationMailer($angel));
+        } catch (Exception $e) {
+            logger()->error('Failed to send Angel donation confirmation email', [
                 'error' => $e->getMessage(),
                 'angel_id' => $angel->id,
             ]);

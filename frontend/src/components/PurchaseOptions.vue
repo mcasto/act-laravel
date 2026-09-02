@@ -23,8 +23,7 @@
         :is="paymentMethodForm"
         v-if="paymentMethodForm"
         :performance="performance"
-        :is-flex="isFlex"
-        v-bind="angelFormProps"
+        v-bind="{ ...angelFormProps, ...flexFormProps }"
       ></component>
     </div>
   </div>
@@ -38,6 +37,7 @@ import TransferForm from "./TransferForm.vue";
 import FlexForm from "./FlexForm.vue";
 import MessageUsForm from "./MessageUsForm.vue";
 import AngelDonationForm from "./AngelDonationForm.vue";
+import FlexPurchaseForm from "./FlexPurchaseForm.vue";
 
 const props = defineProps([
   "fixrLink",
@@ -58,6 +58,13 @@ const paymentMethodForm = computed(() => {
   // method (PayPal/transfer) was picked — it collects donor info, not
   // ticket-purchase details, and posts to a different endpoint entirely.
   if (props.isAngelDonation) return AngelDonationForm;
+
+  // Buying a Flex package (isFlex, set only by FlexPurchase.vue — never by
+  // the redemption contexts on PurchaseTickets.vue/SupportUs.vue) is a
+  // season-level purchase with no performance attached, so it always uses
+  // its own form + endpoint too, regardless of which payment method was
+  // picked — same reasoning as the Angel donation case above.
+  if (props.isFlex) return FlexPurchaseForm;
 
   const types = {
     paypal: PayPalForm,
@@ -89,6 +96,19 @@ const angelFormProps = computed(() => {
   return {
     angelLevelId: props.angelLevelId,
     donationAmount: props.donationAmount,
+    paymentMethodValue: match ? match[0].toLowerCase() : null,
+  };
+});
+
+const flexFormProps = computed(() => {
+  if (!props.isFlex) return {};
+
+  // Same reasoning as angelFormProps above — paymentMethod.value here is a
+  // standard_buttons id, not a payment_methods id, so derive the actual
+  // payment_methods "value" string (paypal/transfer) from the label text.
+  const match = paymentMethod.value?.label?.match(/(paypal)|(transfer)/i);
+
+  return {
     paymentMethodValue: match ? match[0].toLowerCase() : null,
   };
 });

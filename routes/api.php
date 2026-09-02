@@ -270,6 +270,7 @@ Route::put('/flex-purchase-config', [FlexPurchaseController::class, 'update'])
     ->middleware(['auth:sanctum', 'permission:flex-purchase-config']);
 Route::post('/flex-purchase-config/image', [FlexPurchaseController::class, 'image'])
     ->middleware(['auth:sanctum', 'permission:flex-purchase-config']);
+Route::post('/flex-purchase', [FlexPurchaseController::class, 'store']);
 
 /**
  * Contact Routes

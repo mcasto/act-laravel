@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TheaterSeason;
+use App\Mail\FlexPurchaseConfirmationMailer;
+use App\Mail\FlexPurchaseMailer;
+use App\Models\Patron;
+use App\Models\PatronFlexPackage;
+use App\Models\PaymentMethod;
 use App\Models\StandardButton;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 
@@ -120,5 +128,66 @@ class FlexPurchaseController extends Controller
         $path = $file->store('flex-image-temp', 'public');
 
         return ['status' => 'success', 'path' => $path];
+    }
+
+    /**
+     * Public "Buy a Flex Package" form submission (PayPal/Bank Transfer).
+     * Records a season-scoped patron_flex_packages entitlement — deliberately
+     * not tied to any show/performance, since a Flex package is used across
+     * a season, not purchased for one specific show. The FixR path for the
+     * same purchase is handled separately in FixrWebhooksController.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:255',
+            'payment_method_value' => 'required|string|exists:payment_methods,value',
+        ]);
+
+        $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
+
+        $patron = Patron::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'phone' => $validated['phone'],
+            ]
+        );
+
+        $numTickets = json_decode(Storage::disk('local')->get('flex-purchase-config.json'), true)['num_tickets'];
+
+        $package = PatronFlexPackage::create([
+            'patron_id' => $patron->id,
+            'season' => TheaterSeason::currentString(),
+            'tickets_purchased' => $numTickets,
+            'payment_method_id' => $paymentMethod->id,
+            'purchased_at' => now(),
+        ]);
+
+        try {
+            Mail::to(config('mail.admin_to.address'))
+                ->send(new FlexPurchaseMailer($package));
+        } catch (Exception $e) {
+            logger()->error('Failed to send Flex purchase notification email', [
+                'error' => $e->getMessage(),
+                'patron_flex_package_id' => $package->id,
+            ]);
+        }
+
+        try {
+            Mail::to($patron->email)
+                ->send(new FlexPurchaseConfirmationMailer($package));
+        } catch (Exception $e) {
+            logger()->error('Failed to send Flex purchase confirmation email', [
+                'error' => $e->getMessage(),
+                'patron_flex_package_id' => $package->id,
+            ]);
+        }
+
+        return response()->json(['status' => 'success']);
     }
 }

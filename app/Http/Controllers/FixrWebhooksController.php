@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ActiveSeason;
+use App\Helpers\TheaterSeason;
 use App\Mail\AngelDonationMailer;
+use App\Mail\FlexPurchaseMailer;
+use App\Mail\TicketSaleMailer;
 use App\Models\Angel;
 use App\Models\AngelLevel;
 use App\Models\FixrWebhookResponse;
 use App\Models\Patron;
+use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
 use App\Models\Performance;
 use App\Models\TicketSale;
@@ -93,6 +97,28 @@ class FixrWebhooksController extends Controller
                 'confirmed' => true,
             ]);
 
+            // Box-office notification only — unlike the public/admin ticket-sale
+            // paths, there's no patron confirmation here, since Fixr already
+            // handles the buyer-facing receipt as the payment processor.
+            try {
+                Mail::to(config('mail.admin_to.address'))->send(new TicketSaleMailer([
+                    'show' => $performance->show?->name,
+                    'performance' => $performance->date . ' ' . $performance->start_time,
+                    'first_name' => $holder['first_name'],
+                    'last_name' => $holder['last_name'],
+                    'email' => $holder['email'],
+                    'mobile_number' => $holder['mobile_number'] ?? null,
+                    'payment_method' => $creditCardMethod?->label,
+                    'quantity' => $validated['payload']['quantity'],
+                    'sold_at' => $ticketSale->sold_at,
+                ]));
+            } catch (Exception $e) {
+                logger()->error('Failed to send Fixr ticket sale notification email', [
+                    'error' => $e->getMessage(),
+                    'ticket_sale_id' => $ticketSale->id,
+                ]);
+            }
+
             FixrWebhookResponse::create([
                 'patron_id' => $patron->id,
                 'event' => $validated['event'],
@@ -138,6 +164,8 @@ class FixrWebhooksController extends Controller
                 'founding_angel' => Angel::wasFoundingAngel($holder['first_name'], $holder['last_name']),
             ]);
 
+            // Box-office notification only — Fixr sends its own confirmation
+            // to the donor as the payment processor, so we don't duplicate it.
             try {
                 Mail::to(config('mail.admin_to.address'))
                     ->send(new AngelDonationMailer($angel));
@@ -158,6 +186,59 @@ class FixrWebhooksController extends Controller
             return response()->json([
                 'status' => 'success',
                 'angel_id' => $angel->id,
+            ], 200);
+        }
+
+        // Flex packages have a single sitewide Fixr link (not a per-record
+        // list like Performance/AngelLevel above), configured on the Flex
+        // tab of Admin Site Config — reuse findByFixrLink's matching logic
+        // by wrapping it as a one-item list.
+        $flexConfigRaw = Storage::disk('local')->get('flex-purchase-config.json');
+        $flexConfig = $flexConfigRaw ? json_decode($flexConfigRaw, true) : null;
+        $flexLink = $flexConfig['fixr']['link'] ?? null;
+
+        if ($flexLink && $this->findByFixrLink([(object) ['fixr_link' => $flexLink]], $eventId)) {
+            $patron = Patron::firstOrCreate(
+                ['email' => $holder['email']],
+                [
+                    'first_name' => $holder['first_name'],
+                    'last_name' => $holder['last_name'],
+                    'phone' => $holder['mobile_number'] ?? null,
+                ]
+            );
+
+            // Fixr's quantity is how many flex packages were bought, not a
+            // raw ticket count — each package is worth num_tickets tickets.
+            $package = PatronFlexPackage::create([
+                'patron_id' => $patron->id,
+                'season' => TheaterSeason::currentString(),
+                'tickets_purchased' => $validated['payload']['quantity'] * $flexConfig['num_tickets'],
+                'payment_method_id' => $creditCardMethod?->id,
+                'purchased_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil'),
+            ]);
+
+            // Box-office notification only — Fixr sends its own confirmation
+            // to the buyer as the payment processor, so we don't duplicate it.
+            try {
+                Mail::to(config('mail.admin_to.address'))
+                    ->send(new FlexPurchaseMailer($package));
+            } catch (Exception $e) {
+                logger()->error('Failed to send Flex purchase notification email', [
+                    'error' => $e->getMessage(),
+                    'patron_flex_package_id' => $package->id,
+                ]);
+            }
+
+            FixrWebhookResponse::create([
+                'patron_id' => $patron->id,
+                'event' => $validated['event'],
+                'payload' => json_encode($request->all()),
+                'message_id' => $validated['message_id'],
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'patron_flex_package_id' => $package->id,
             ], 200);
         }
 

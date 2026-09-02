@@ -22,7 +22,6 @@
               v-model.number="form.quantity"
               min="1"
               :rules="[(val) => val >= 1 || 'Must be at least 1']"
-              v-if="!isFlex"
             ></q-input>
             <q-input
               type="email"
@@ -89,7 +88,7 @@ import notifySubmitError from "src/assets/notify-submit-error";
 import { ref } from "vue";
 import { useStore } from "src/stores/store";
 
-const props = defineProps(["performance", "isFlex"]);
+const props = defineProps(["performance"]);
 const store = useStore();
 
 const loading = ref(null);
@@ -100,7 +99,7 @@ const form = ref({
   first_name: null,
   last_name: null,
   phone: null,
-  quantity: props.isFlex ? store.flex.num_tickets : null,
+  quantity: null,
   special_request: "",
 });
 
