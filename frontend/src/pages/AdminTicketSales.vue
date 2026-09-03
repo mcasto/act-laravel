@@ -383,7 +383,7 @@ watch(show, () => {
   performanceFilter.value = null;
 });
 
-const pagination = ref({ page: 1, rowsPerPage: 12 });
+const pagination = ref({ page: 1, rowsPerPage: 12, sortBy: "name", descending: false });
 const pagesNumber = computed(() =>
   Math.ceil(filteredRecs.value.length / pagination.value.rowsPerPage),
 );
@@ -406,6 +406,7 @@ const columns = [
     label: "Name",
     field: (row) => `${row.patron.first_name} ${row.patron.last_name}`,
     align: "left",
+    sortable: true,
   },
   {
     name: "info",

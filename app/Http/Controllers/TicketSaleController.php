@@ -17,10 +17,8 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class TicketSaleController extends Controller
 {
@@ -224,11 +222,13 @@ class TicketSaleController extends Controller
             'first_name'    => 'required|string',
             'last_name'     => 'required|string',
             'email'         => 'required|email',
-            'phone'         => 'required|string',
+            'phone'         => 'nullable|string',
             'quantity'      => 'required|integer|min:1',
             'transfer_date' => 'sometimes|nullable|date',
             'no_show'       => 'sometimes|boolean',
             'confirmed'     => 'sometimes|boolean',
+            'reason_changed' => 'nullable|string',
+            'guest_list'    => 'nullable|string',
         ]);
 
         $patron = Patron::firstOrCreate(
@@ -251,6 +251,8 @@ class TicketSaleController extends Controller
             'transfer_date'     => $validated['transfer_date'] ?? null,
             'no_show'           => $validated['no_show'] ?? false,
             'confirmed'         => $validated['confirmed'] ?? false,
+            'reason_changed'    => $validated['reason_changed'] ?? null,
+            'guest_list'        => $validated['guest_list'] ?? null,
         ]);
 
         return response()->json($this->allSales());

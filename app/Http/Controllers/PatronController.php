@@ -6,6 +6,7 @@ use App\Helpers\TheaterSeason;
 use App\Models\Angel;
 use App\Models\Patron;
 use App\Models\PatronFlexPackage;
+use App\Models\PaymentMethod;
 use App\Models\TicketSale;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -110,29 +111,134 @@ class PatronController extends Controller
         ]);
     }
 
+    /**
+     * One row per individual purchase transaction (not aggregated by
+     * patron+season) — this is the editable unit for the admin Flex
+     * Purchases CRUD page. Per-patron remaining balance is shown elsewhere
+     * (index()/flexHistory() above), so it isn't duplicated here.
+     */
     public function flexPurchases(): JsonResponse
     {
-        $purchases = PatronFlexPackage::with('patron')
+        $purchases = PatronFlexPackage::with('patron', 'paymentMethod')
+            ->orderByDesc('purchased_at')
             ->get()
-            ->groupBy(fn ($pkg) => "{$pkg->patron_id}|{$pkg->season}")
-            ->map(function ($group) {
-                $first = $group->first();
-                $ticketsPurchased = $group->sum('tickets_purchased');
-                $ticketsUsed = $ticketsPurchased - $first->ticketsRemaining();
+            ->map(fn (PatronFlexPackage $pkg) => [
+                'id'                => $pkg->id,
+                'patron_id'         => $pkg->patron_id,
+                'first_name'        => $pkg->patron->first_name,
+                'last_name'         => $pkg->patron->last_name,
+                'email'             => $pkg->patron->email,
+                'season'            => $pkg->season,
+                'tickets_purchased' => $pkg->tickets_purchased,
+                'payment_method'    => $pkg->paymentMethod ? [
+                    'id' => $pkg->paymentMethod->id,
+                    'value' => $pkg->paymentMethod->value,
+                    'label' => $pkg->paymentMethod->label,
+                ] : null,
+                'purchased_at'      => $pkg->purchased_at,
+            ]);
 
-                return [
-                    'season'            => $first->season,
-                    'first_name'        => $first->patron->first_name,
-                    'last_name'         => $first->patron->last_name,
-                    'email'             => $first->patron->email,
-                    'tickets_purchased' => $ticketsPurchased,
-                    'tickets_used'      => $ticketsUsed,
-                ];
-            })
-            ->sortByDesc('season')
-            ->values();
+        return response()->json($purchases->values());
+    }
 
-        return response()->json($purchases);
+    /**
+     * Manual admin entry — for backfilling/reconciling purchases made
+     * outside the live flow (e.g. matching up FixR payouts, cash sales).
+     * Deliberately sends no email, unlike FlexPurchaseController::store()
+     * and the FixR webhook branch, which record genuine live purchases.
+     */
+    public function storeFlexPackage(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:255',
+            'season' => 'required|string|max:255',
+            'tickets_purchased' => 'required|integer|min:1',
+            'payment_method_value' => 'required|string|exists:payment_methods,value',
+        ]);
+
+        $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
+
+        $patron = Patron::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'phone' => $validated['phone'] ?? null,
+            ]
+        );
+
+        $package = PatronFlexPackage::create([
+            'patron_id' => $patron->id,
+            'season' => $validated['season'],
+            'tickets_purchased' => $validated['tickets_purchased'],
+            'payment_method_id' => $paymentMethod->id,
+            'purchased_at' => now(),
+        ]);
+
+        $package->load('patron', 'paymentMethod');
+
+        return response()->json(['status' => 'success', 'package' => $package]);
+    }
+
+    /**
+     * patron_id is deliberately not editable here — if the wrong patron
+     * was picked, delete and re-add rather than reassign whose
+     * entitlement the row represents.
+     */
+    public function updateFlexPackage(Request $request, int $id): JsonResponse
+    {
+        $validated = $request->validate([
+            'season' => 'required|string|max:255',
+            'tickets_purchased' => 'required|integer|min:1',
+            'payment_method_value' => 'required|string|exists:payment_methods,value',
+        ]);
+
+        $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
+
+        $package = PatronFlexPackage::findOrFail($id);
+        $package->update([
+            'season' => $validated['season'],
+            'tickets_purchased' => $validated['tickets_purchased'],
+            'payment_method_id' => $paymentMethod->id,
+        ]);
+
+        $package->load('patron', 'paymentMethod');
+
+        return response()->json(['status' => 'success', 'package' => $package]);
+    }
+
+    public function destroyFlexPackage(int $id): JsonResponse
+    {
+        PatronFlexPackage::findOrFail($id)->delete();
+
+        return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * Typeahead patron search by name or email — auth:sanctum only, not
+     * gated by the 'patrons' permission, since this is shared lookup data
+     * used by other admin sections' "find or create a patron" forms
+     * (e.g. AdminFlexPurchases.vue's Add Purchase dialog), not the Patron
+     * Management screen itself.
+     */
+    public function search(Request $request): JsonResponse
+    {
+        $validated = $request->validate(['q' => 'required|string|min:2']);
+        $q = $validated['q'];
+
+        $patrons = Patron::where('first_name', 'like', "%{$q}%")
+            ->orWhere('last_name', 'like', "%{$q}%")
+            ->orWhere('email', 'like', "%{$q}%")
+            ->orWhereRaw("CONCAT(first_name, ' ', last_name) like ?", ["%{$q}%"])
+            ->orderBy('last_name')
+            ->orderBy('first_name')
+            ->limit(15)
+            ->get(['id', 'first_name', 'last_name', 'email', 'phone']);
+
+        return response()->json($patrons);
     }
 
     public function lookup(Request $request): JsonResponse

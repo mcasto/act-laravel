@@ -332,7 +332,13 @@ Route::controller(TicketSaleController::class)
  * Patron Routes
  */
 Route::get('/patrons/lookup', [PatronController::class, 'lookup']);
-Route::middleware(['auth:sanctum', 'permission:flex-purchases'])->get('/admin/flex-purchases', [PatronController::class, 'flexPurchases']);
+Route::middleware('auth:sanctum')->get('/admin/patrons/search', [PatronController::class, 'search']);
+Route::middleware(['auth:sanctum', 'permission:flex-purchases'])->group(function () {
+    Route::get('/admin/flex-purchases', [PatronController::class, 'flexPurchases']);
+    Route::post('/admin/flex-purchases', [PatronController::class, 'storeFlexPackage']);
+    Route::put('/admin/flex-purchases/{id}', [PatronController::class, 'updateFlexPackage']);
+    Route::delete('/admin/flex-purchases/{id}', [PatronController::class, 'destroyFlexPackage']);
+});
 Route::middleware(['auth:sanctum', 'permission:patrons'])->group(function () {
     Route::get('/admin/patrons', [PatronController::class, 'index']);
     Route::get('/admin/patrons/flex-history/{id}', [PatronController::class, 'flexHistory']);
@@ -366,4 +372,12 @@ Route::post('/comp/redeem/{uid}', [CompTixController::class, 'update']);
  * Payment Method Routes
  */
 
-Route::middleware(['auth:sanctum', 'permission:payment-methods'])->resource('payment-methods', PaymentMethodController::class);
+// GET is read-only reference data shared by other admin sections (ticket
+// sales, flex purchases) that need the list for a dropdown — only the
+// actual CRUD actions are gated by the payment-methods permission itself.
+Route::middleware('auth:sanctum')->get('/payment-methods', [PaymentMethodController::class, 'index']);
+Route::middleware(['auth:sanctum', 'permission:payment-methods'])->group(function () {
+    Route::post('/payment-methods', [PaymentMethodController::class, 'store']);
+    Route::put('/payment-methods/{id}', [PaymentMethodController::class, 'update']);
+    Route::delete('/payment-methods/{id}', [PaymentMethodController::class, 'destroy']);
+});

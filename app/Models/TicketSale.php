@@ -21,6 +21,8 @@ class TicketSale extends Model
         'quantity',
         'no_show',
         'confirmed',
+        'reason_changed',
+        'guest_list',
     ];
 
     protected $casts = [

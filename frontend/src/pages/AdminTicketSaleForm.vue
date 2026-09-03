@@ -43,7 +43,6 @@
           dense
           outlined
           v-model="form.phone"
-          :rules="[(val) => !!val || 'Required']"
         ></q-input>
 
         <q-select
@@ -83,6 +82,29 @@
           v-model="form.confirmed"
           label="Payment Confirmed"
         ></q-checkbox>
+
+        <q-input
+          v-if="isEdit"
+          type="textarea"
+          rows="2"
+          label="Reason Changed"
+          stack-label
+          dense
+          outlined
+          v-model="form.reason_changed"
+        ></q-input>
+
+        <q-input
+          v-if="isEdit"
+          type="textarea"
+          rows="2"
+          label="Guest List"
+          hint="Only needed for groups larger than 2"
+          stack-label
+          dense
+          outlined
+          v-model="form.guest_list"
+        ></q-input>
       </div>
 
       <div class="flex justify-end q-mt-md q-gutter-x-sm">
@@ -157,6 +179,8 @@ const form = ref(
         },
         quantity: existingSale.quantity,
         confirmed: !!existingSale.confirmed,
+        reason_changed: existingSale.reason_changed,
+        guest_list: existingSale.guest_list,
       }
     : {
         email: null,
@@ -206,6 +230,8 @@ const onSubmit = async () => {
   if (isEdit) {
     payload.id = existingSale.id;
     payload.confirmed = form.value.confirmed;
+    payload.reason_changed = form.value.reason_changed;
+    payload.guest_list = form.value.guest_list;
   }
 
   const response = await callApi({
