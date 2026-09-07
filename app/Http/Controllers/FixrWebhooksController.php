@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ActiveSeason;
-use App\Helpers\TheaterSeason;
 use App\Mail\AngelDonationMailer;
 use App\Mail\FlexPurchaseMailer;
 use App\Mail\TicketSaleMailer;
@@ -190,8 +189,8 @@ class FixrWebhooksController extends Controller
         }
 
         // Flex packages have a single sitewide Fixr link (not a per-record
-        // list like Performance/AngelLevel above), configured on the Flex
-        // tab of Admin Site Config — reuse findByFixrLink's matching logic
+        // list like Performance/AngelLevel above), configured on the admin
+        // Flex Purchase Config page — reuse findByFixrLink's matching logic
         // by wrapping it as a one-item list.
         $flexConfigRaw = Storage::disk('local')->get('flex-purchase-config.json');
         $flexConfig = $flexConfigRaw ? json_decode($flexConfigRaw, true) : null;
@@ -211,7 +210,7 @@ class FixrWebhooksController extends Controller
             // raw ticket count — each package is worth num_tickets tickets.
             $package = PatronFlexPackage::create([
                 'patron_id' => $patron->id,
-                'season' => TheaterSeason::currentString(),
+                'season' => ActiveSeason::get(),
                 'tickets_purchased' => $validated['payload']['quantity'] * $flexConfig['num_tickets'],
                 'payment_method_id' => $creditCardMethod?->id,
                 'purchased_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil'),

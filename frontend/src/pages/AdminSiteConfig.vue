@@ -60,14 +60,15 @@
       <!-- Season -->
       <div v-if="section === 'season'" class="q-px-sm" style="max-width: 360px;">
         <div class="text-caption text-grey-7 q-mb-sm">
-          Which season new Angel donations get tagged with. Separate from the
-          show/Flex-ticket calendar, since Angel promotion for a season
-          starts before the previous one technically ends.
+          Which season new Angel donations and new Flex ticket purchases get
+          tagged with. Separate from the show/Flex-redemption calendar, since
+          promotion for a season starts before the previous one technically
+          ends.
         </div>
         <q-select
           v-model="selectedSeason"
           :options="seasonOptions"
-          label="Active Angel Season"
+          label="Active Season"
           dense
           outlined
           emit-value
@@ -140,110 +141,6 @@
         </div>
         <div class="col-12 flex justify-end">
           <q-btn label="Save" color="primary" @click="saveSupport" :disable="isReadOnly" />
-        </div>
-      </div>
-
-      <!-- Flex -->
-      <div v-else-if="section === 'flex'" class="row q-col-gutter-md q-px-sm">
-        <div class="col-12 col-sm-6">
-          <q-input
-            v-model="contentConfig.flex.title"
-            label="Title"
-            dense
-            outlined
-          />
-        </div>
-        <div class="col-12 col-sm-3">
-          <q-input
-            v-model="contentConfig.flex.price"
-            label="Price"
-            dense
-            outlined
-          />
-        </div>
-        <div class="col-12 col-sm-3">
-          <q-input
-            v-model.number="contentConfig.flex.num_tickets"
-            type="number"
-            label="# of Tickets"
-            dense
-            outlined
-          />
-        </div>
-        <div class="col-12">
-          <q-input
-            v-model="contentConfig.flex.subtitle"
-            label="Subtitle"
-            dense
-            outlined
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-input
-            v-model="contentConfig.flex.start_date"
-            type="date"
-            label="Available From"
-            dense
-            outlined
-            stack-label
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-input
-            v-model="contentConfig.flex.end_date"
-            type="date"
-            label="Available Through"
-            dense
-            outlined
-            stack-label
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-input
-            v-model="contentConfig.flex.fixr.label"
-            label="Fixr Button Label"
-            dense
-            outlined
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-input
-            v-model="contentConfig.flex.fixr.link"
-            label="Fixr Link"
-            dense
-            outlined
-          />
-        </div>
-        <div class="col-12">
-          <div class="text-caption text-grey-7 q-mb-xs">
-            Template for Display on Site
-          </div>
-          <q-editor
-            v-model="contentConfig.flex.body"
-            min-height="6rem"
-            :toolbar="bodyToolbar"
-            :definitions="colorDefinitions"
-            @paste="handlePlainTextPaste"
-          />
-        </div>
-        <div class="col-12">
-          <div class="flex items-center q-gutter-x-sm q-mb-xs">
-            <span class="text-caption text-grey-7">Template for Confirmation Email</span>
-            <q-badge color="grey-3" text-color="grey-8" class="text-caption">
-              use the <q-icon :name="mdiCodeBraces" size="14px" /> toolbar button to
-              insert available placeholders
-            </q-badge>
-          </div>
-          <q-editor
-            v-model="contentConfig.flex.confirmation_body"
-            min-height="6rem"
-            :toolbar="flexConfirmationToolbar"
-            :definitions="confirmationDefinitions"
-            @paste="handlePlainTextPaste"
-          />
-        </div>
-        <div class="col-12 flex justify-end">
-          <q-btn label="Save" color="primary" @click="saveFlex" :disable="isReadOnly" />
         </div>
       </div>
 
@@ -342,14 +239,13 @@ const isReadOnly = computed(
 );
 
 const contentConfig = ref(null);
-const section = ref("support");
+const section = ref("season");
 const selectedButtonId = ref(null);
 
 const sectionOptions = [
   { label: "Season", value: "season" },
   { label: "Angels", value: "angels" },
   { label: "Support Us", value: "support" },
-  { label: "Flex Tickets", value: "flex" },
   { label: "Payment Methods", value: "buttons" },
 ];
 
@@ -468,16 +364,6 @@ const confirmationDefinitions = {
     label: "Performance Time — {{ $performance_time }}",
     handler: insertPlaceholder("{{ $performance_time }}"),
   },
-  insertRemainingFlex: {
-    tip: "The patron's remaining Flex ticket balance for the season",
-    label: "Remaining Flex Tickets — {{ $remaining_flex }}",
-    handler: insertPlaceholder("{{ $remaining_flex }}"),
-  },
-  insertSeason: {
-    tip: "The current theater season",
-    label: "Season — {{ $season }}",
-    handler: insertPlaceholder("{{ $season }}"),
-  },
 };
 
 const baseToolbar = [
@@ -508,8 +394,6 @@ const baseToolbar = [
   ],
   ["undo", "redo"],
 ];
-
-const bodyToolbar = baseToolbar;
 
 const templateToolbar = [
   ...baseToolbar,
@@ -543,27 +427,6 @@ const confirmationToolbar = [
   ],
 ];
 
-const flexConfirmationToolbar = [
-  ...baseToolbar,
-  [
-    {
-      label: "Insert Parameter",
-      icon: mdiCodeBraces,
-      fixedLabel: true,
-      list: "no-icons",
-      options: [
-        "insertName",
-        "insertShowName",
-        "insertNumTickets",
-        "insertPerformanceDate",
-        "insertPerformanceTime",
-        "insertRemainingFlex",
-        "insertSeason",
-      ],
-    },
-  ],
-];
-
 const saveSeason = async () => {
   const response = await callApi({
     path: "/site-config/season",
@@ -575,7 +438,7 @@ const saveSeason = async () => {
   if (response.status == "success") {
     Notify.create({
       color: "positive",
-      message: "Active Angel Season Updated",
+      message: "Active Season Updated",
     });
   }
 };
@@ -612,22 +475,6 @@ const saveSupport = async () => {
   }
 };
 
-const saveFlex = async () => {
-  const response = await callApi({
-    path: "/site-config/flex",
-    method: "put",
-    payload: contentConfig.value.flex,
-    useAuth: true,
-  });
-
-  if (response.status == "success") {
-    Notify.create({
-      color: "positive",
-      message: "Flex Tickets Config Updated",
-    });
-  }
-};
-
 const saveButton = async () => {
   const response = await callApi({
     path: "/site-config/standard-buttons",
@@ -652,8 +499,6 @@ onMounted(async () => {
   });
 
   if (response) {
-    // pre-existing configs saved before this field existed won't have it yet
-    if (response.flex) response.flex.confirmation_body ??= "";
     response.buttons?.forEach((button) => {
       button.confirmation_template ??= "";
     });

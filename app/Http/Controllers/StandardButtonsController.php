@@ -34,8 +34,6 @@ class StandardButtonsController extends Controller
         return response()->json([
             'support' => json_decode(Storage::disk('local')
                 ->get('support-us.config.json')),
-            'flex' => json_decode(Storage::disk('local')
-                ->get('flex-purchase-config.json')),
             'angels' => json_decode(Storage::disk('local')
                 ->get('angels.config.json')),
             'season' => ActiveSeason::get(),

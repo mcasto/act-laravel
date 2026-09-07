@@ -29,6 +29,15 @@
             v-model.number="form.num_tickets"
             class="col-12 col-md-1"
           ></q-input>
+
+          <q-input
+            type="text"
+            dense
+            outlined
+            label="Price"
+            v-model="form.price"
+            class="col-12 col-md-2"
+          ></q-input>
         </div>
 
         <div class="row q-gutter-x-sm">
@@ -52,23 +61,35 @@
           ></q-input>
         </div>
 
-        <q-input
-          type="text"
-          dense
-          outlined
-          label="Fixr Link"
-          v-model="form.fixr.link"
-        >
-          <template #after>
-            <q-btn
-              round
-              size="sm"
-              :icon="matLink"
-              color="primary"
-              @click="openLink"
-            ></q-btn>
-          </template>
-        </q-input>
+        <div class="row q-gutter-x-md">
+          <q-input
+            type="text"
+            dense
+            outlined
+            label="Fixr Link"
+            v-model="form.fixr.link"
+            class="col"
+          >
+            <template #after>
+              <q-btn
+                round
+                size="sm"
+                :icon="matLink"
+                color="primary"
+                @click="openLink"
+              ></q-btn>
+            </template>
+          </q-input>
+
+          <q-input
+            type="text"
+            dense
+            outlined
+            label="Fixr Button Label"
+            v-model="form.fixr.label"
+            class="col"
+          ></q-input>
+        </div>
 
         <q-field label="Body" stack-label outlined>
           <template v-slot:control>

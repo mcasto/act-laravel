@@ -114,9 +114,10 @@ class SiteConfigController extends Controller
     }
 
     /**
-     * Override which season NEW Angel donation records get tagged with.
-     * Deliberately separate from TheaterSeason's calendar calculation used
-     * by shows and Flex-ticket redemption — see App\Helpers\ActiveSeason.
+     * Override which season NEW Angel donation records and NEW Flex package
+     * purchases get tagged with. Deliberately separate from TheaterSeason's
+     * calendar calculation used by shows and Flex-ticket redemption — see
+     * App\Helpers\ActiveSeason.
      */
     public function updateSeason(Request $request)
     {
@@ -127,9 +128,20 @@ class SiteConfigController extends Controller
         $old = ActiveSeason::get();
         ActiveSeason::set($validated['season']);
 
-        ChangeLogger::record('Updated active Angel season', ['old' => $old, 'new' => $validated['season']]);
+        ChangeLogger::record('Updated active season', ['old' => $old, 'new' => $validated['season']]);
 
         return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * The active season override, for admin forms that need to default a
+     * new record to it (e.g. AdminFlexPurchases.vue's Add Purchase dialog) —
+     * auth:sanctum only, not gated by 'site-config', since this is shared
+     * reference data for other sections, not the Site Config screen itself.
+     */
+    public function activeSeason(): JsonResponse
+    {
+        return response()->json(['season' => ActiveSeason::get()]);
     }
 
     public function updateAngels(Request $request)
@@ -150,30 +162,4 @@ class SiteConfigController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function updateFlex(Request $request)
-    {
-        $request->validate([
-            'title'              => 'required|string',
-            'image'              => 'required|string',
-            'price'              => 'required|string',
-            'num_tickets'        => 'required|integer|min:1',
-            'subtitle'           => 'required|string',
-            'body'               => 'required|string',
-            'confirmation_body'  => 'sometimes|nullable|string',
-            'fixr'               => 'required|array',
-            'fixr.link'          => 'required|url',
-            'fixr.label'         => 'required|string',
-            'start_date'         => 'required|date',
-            'end_date'           => 'required|date|after:start_date',
-        ]);
-
-        $old = json_decode(Storage::disk('local')->get('flex-purchase-config.json') ?? 'null', true);
-
-        Storage::disk('local')
-            ->put('flex-purchase-config.json', json_encode($request->all()));
-
-        ChangeLogger::record('Updated Flex Tickets page config', ['old' => $old, 'new' => $request->all()]);
-
-        return response()->json(['status' => 'success']);
-    }
 }

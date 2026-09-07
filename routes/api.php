@@ -171,8 +171,8 @@ Route::get('/site-config', [SiteConfigController::class, 'show']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config', [SiteConfigController::class, 'update']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/standard-buttons', [SiteConfigController::class, 'updateButtons']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/support', [SiteConfigController::class, 'updateSupport']);
-Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/flex', [SiteConfigController::class, 'updateFlex']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/season', [SiteConfigController::class, 'updateSeason']);
+Route::middleware('auth:sanctum')->get('/active-season', [SiteConfigController::class, 'activeSeason']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/angels', [SiteConfigController::class, 'updateAngels']);
 
 /**

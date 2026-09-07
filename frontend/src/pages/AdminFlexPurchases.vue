@@ -255,14 +255,20 @@ const seasons = computed(() =>
 
 const seasonFilter = ref(seasons.value[0] ?? null);
 
-// Theater seasons run October 1 - August 31 (see App\Helpers\TheaterSeason
-// on the backend, which this mirrors) — the "current" season doesn't flip
-// on a naive calendar-year boundary.
-const currentSeasonString = () => {
+// The site's manually-overridable "active season" (App\Helpers\ActiveSeason
+// on the backend) — the same setting new Angel donations use, and now new
+// Flex purchases too. Falls back to real calendar math (theater seasons run
+// October 1 - August 31) only for the brief window before the fetch below
+// resolves, so the dropdown is never blank.
+const activeSeason = ref(null);
+
+const calendarSeasonString = () => {
   const now = new Date();
   const startYear = now.getMonth() >= 9 ? now.getFullYear() : now.getFullYear() - 1;
   return `${String(startYear).slice(-2)}-${String(startYear + 1).slice(-2)}`;
 };
+
+const currentSeasonString = () => activeSeason.value ?? calendarSeasonString();
 
 const nextSeasonString = () => {
   const [startShort] = currentSeasonString().split("-");
@@ -355,6 +361,14 @@ onMounted(async () => {
     method: "get",
     useAuth: true,
   });
+
+  const response = await callApi({
+    path: "/active-season",
+    method: "get",
+    useAuth: true,
+    showError: false,
+  }).catch(() => null);
+  activeSeason.value = response?.season ?? null;
 });
 
 const dialog = ref(false);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\TheaterSeason;
+use App\Helpers\ActiveSeason;
 use App\Mail\FlexPurchaseConfirmationMailer;
 use App\Mail\FlexPurchaseMailer;
 use App\Models\Patron;
@@ -162,7 +162,7 @@ class FlexPurchaseController extends Controller
 
         $package = PatronFlexPackage::create([
             'patron_id' => $patron->id,
-            'season' => TheaterSeason::currentString(),
+            'season' => ActiveSeason::get(),
             'tickets_purchased' => $numTickets,
             'payment_method_id' => $paymentMethod->id,
             'purchased_at' => now(),

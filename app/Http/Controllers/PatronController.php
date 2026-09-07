@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ActiveSeason;
 use App\Helpers\TheaterSeason;
 use App\Models\Angel;
 use App\Models\Patron;
@@ -15,13 +16,19 @@ class PatronController extends Controller
 {
     /**
      * Patron management listing for the admin — every patron, with their
-     * most recent Angel level (if any) and current-season flex balance
-     * (if they have a flex package this season).
+     * most recent Angel level (if any) and active-season flex balance (if
+     * they have a flex package for that season). "Active season" is the
+     * site's manually-overridable season (see App\Helpers\ActiveSeason),
+     * not strictly the real calendar-current one — so a newly-purchased
+     * package under an early season flip shows up here immediately rather
+     * than waiting for the real calendar to catch up. The usage-window
+     * dates are derived from that same season string, not calendar-current,
+     * so purchased/used stay consistent with each other.
      */
     public function index(): JsonResponse
     {
-        $season = TheaterSeason::currentString();
-        $seasonDates = TheaterSeason::currentDates();
+        $season = ActiveSeason::get();
+        $seasonDates = TheaterSeason::datesForSeason($season);
 
         $patrons = Patron::orderBy('last_name')->orderBy('first_name')->get();
 
