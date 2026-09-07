@@ -321,9 +321,19 @@
                 <q-icon :name="matSearch" />
               </template>
             </q-input>
+            <q-btn
+              flat
+              round
+              :icon="matFileDownload"
+              :disable="seasonAngels.length === 0"
+              @click="exportSeasonAngelsCsv"
+            >
+              <q-tooltip>Download CSV</q-tooltip>
+            </q-btn>
           </div>
 
           <q-table
+            ref="seasonTableRef"
             :rows="seasonAngels"
             :columns="seasonColumns"
             :filter="seasonAngelsFilter"
@@ -354,12 +364,13 @@ import {
   matAdd,
   matDelete,
   matEdit,
+  matFileDownload,
   matHistoryEdu,
   matLink,
   matSearch,
 } from "@quasar/extras/material-icons";
 import { computed, onMounted, ref, watch } from "vue";
-import { Notify } from "quasar";
+import { exportFile, Notify } from "quasar";
 import { format, parseISO } from "date-fns";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
@@ -381,6 +392,7 @@ const selectedSeason = ref(null);
 const seasonAngels = ref([]);
 const seasonAngelsLoading = ref(false);
 const seasonAngelsFilter = ref("");
+const seasonTableRef = ref(null);
 
 const filterSeasonAngelsByName = (rows, terms) => {
   const needle = terms.toLowerCase();
@@ -428,6 +440,48 @@ const seasonColumns = [
     sortable: true,
   },
 ];
+
+// Standard Quasar CSV-export recipe (see the Quasar docs' "Table -> CSV
+// export" example) — wraps each value in quotes and escapes embedded
+// quotes, running each column's own `format` so the CSV matches what's
+// actually on screen (e.g. formatted dates/currency).
+const wrapCsvValue = (val, formatFn, row) => {
+  let formatted = formatFn !== undefined ? formatFn(val, row) : val;
+  formatted = formatted === undefined || formatted === null ? "" : String(formatted);
+  formatted = formatted.split('"').join('""');
+  return `"${formatted}"`;
+};
+
+const exportSeasonAngelsCsv = () => {
+  // filteredSortedRows reflects the current search filter/sort, so the
+  // download always matches what's currently visible in the table.
+  const rows = seasonTableRef.value?.filteredSortedRows ?? seasonAngels.value;
+
+  const content = [seasonColumns.map((col) => wrapCsvValue(col.label))]
+    .concat(
+      rows.map((row) =>
+        seasonColumns
+          .map((col) =>
+            wrapCsvValue(
+              typeof col.field === "function" ? col.field(row) : row[col.field ?? col.name],
+              col.format,
+              row,
+            ),
+          )
+          .join(","),
+      ),
+    )
+    .join("\r\n");
+
+  const status = exportFile(`angels-${selectedSeason.value ?? "season"}.csv`, content, "text/csv");
+
+  if (status !== true) {
+    Notify.create({
+      message: "Browser denied file download — please allow popups/downloads for this site",
+      color: "negative",
+    });
+  }
+};
 
 const levelForm = ref({
   id: null,
