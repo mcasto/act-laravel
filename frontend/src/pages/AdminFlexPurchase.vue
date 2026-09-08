@@ -137,7 +137,12 @@
       </div>
       <q-separator spaced></q-separator>
       <div class="flex justify-end">
-        <q-btn color="positive" label="Update" type="submit" :disable="isReadOnly"></q-btn>
+        <q-btn
+          color="positive"
+          label="Update"
+          type="submit"
+          :disable="isReadOnly"
+        ></q-btn>
       </div>
     </q-form>
   </div>
@@ -154,7 +159,9 @@ import { computed, ref } from "vue";
 const store = useStore();
 
 const isReadOnly = computed(
-  () => getPermissionLevel(store.admin.user, "flex-purchase-config") === "read-only",
+  () =>
+    getPermissionLevel(store.admin.user, "flex-purchase-config") ===
+    "read-only",
 );
 
 const form = ref(store.flex);
@@ -192,5 +199,14 @@ const onSubmit = async () => {
   });
 
   console.log({ response });
+
+  if (response.status == "success") {
+    Notify.create({
+      type: "positive",
+      message: "Config updated",
+    });
+  } else {
+    Notify.create({ type: "negative", message: "Unable to update config" });
+  }
 };
 </script>
