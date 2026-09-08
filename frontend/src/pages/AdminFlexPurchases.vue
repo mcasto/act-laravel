@@ -15,6 +15,7 @@
 
     <q-table
       v-else
+      ref="flexTableRef"
       :rows="filteredRows"
       :columns="columns"
       row-key="id"
@@ -57,6 +58,15 @@
                 <q-icon :name="matSearch" />
               </template>
             </q-input>
+            <q-btn
+              flat
+              round
+              :icon="matFileDownload"
+              :disable="filteredRows.length === 0"
+              @click="exportFlexPurchasesCsv"
+            >
+              <q-tooltip>Download CSV</q-tooltip>
+            </q-btn>
           </div>
         </div>
       </template>
@@ -230,9 +240,9 @@
 </template>
 
 <script setup>
-import { matAdd, matDelete, matEdit, matSearch } from "@quasar/extras/material-icons";
+import { matAdd, matDelete, matEdit, matFileDownload, matSearch } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
-import { Notify } from "quasar";
+import { exportFile, Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
@@ -326,6 +336,10 @@ const columns = [
     field: "purchased_at",
     align: "left",
     sortable: true,
+    // Only exercised by the CSV export below — the on-screen cell uses the
+    // body-cell-purchased_at template slot instead, which takes precedence
+    // over this for rendering but doesn't get consulted for CSV output.
+    format: (val) => (val ? format(parseISO(val), "PP") : "—"),
   },
   {
     name: "actions",
@@ -349,6 +363,51 @@ const filteredRows = computed(() => {
       row.email.toLowerCase().includes(q),
   );
 });
+
+const flexTableRef = ref(null);
+
+// Standard Quasar CSV-export recipe (see the Quasar docs' "Table -> CSV
+// export" example, same as AdminOurAngels.vue's Angels By Season export) —
+// wraps each value in quotes and escapes embedded quotes, running each
+// column's own `format` so the CSV matches what's actually on screen.
+const wrapCsvValue = (val, formatFn, row) => {
+  let formatted = formatFn !== undefined ? formatFn(val, row) : val;
+  formatted = formatted === undefined || formatted === null ? "" : String(formatted);
+  formatted = formatted.split('"').join('""');
+  return `"${formatted}"`;
+};
+
+const exportFlexPurchasesCsv = () => {
+  const exportColumns = columns.filter((col) => col.name !== "actions");
+  // filteredSortedRows reflects the current season filter, search filter,
+  // and any column sort, so the download always matches what's on screen.
+  const tableRows = flexTableRef.value?.filteredSortedRows ?? filteredRows.value;
+
+  const content = [exportColumns.map((col) => wrapCsvValue(col.label))]
+    .concat(
+      tableRows.map((row) =>
+        exportColumns
+          .map((col) =>
+            wrapCsvValue(
+              typeof col.field === "function" ? col.field(row) : row[col.field ?? col.name],
+              col.format,
+              row,
+            ),
+          )
+          .join(","),
+      ),
+    )
+    .join("\r\n");
+
+  const status = exportFile(`flex-purchases-${seasonFilter.value ?? "all"}.csv`, content, "text/csv");
+
+  if (status !== true) {
+    Notify.create({
+      message: "Browser denied file download — please allow popups/downloads for this site",
+      color: "negative",
+    });
+  }
+};
 
 const paymentMethods = ref([]);
 const paymentMethodOptions = computed(() =>
