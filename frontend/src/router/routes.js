@@ -294,6 +294,12 @@ const routes = [
         meta: { nav: false, label: "Class Details" },
       },
       {
+        name: "project-charter",
+        path: "project-charter",
+        component: () => import("pages/ProjectCharterPage.vue"),
+        meta: { nav: false, label: "Project Charter" },
+      },
+      {
         name: "flex-purchase",
         path: "flex-purchase",
         component: () => import("pages/FlexPurchase.vue"),
@@ -794,6 +800,28 @@ const routes = [
               dash: true,
               order: 23,
               label: "Patrons",
+            },
+          },
+          {
+            name: "admin-project-charters",
+            path: "project-charters",
+            component: () => import("src/pages/AdminProjectCharters.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+
+              store.admin.project_charters = await callApi({
+                path: "/admin/project-charters",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 24,
+              label: "Project Charters",
             },
           },
           // {

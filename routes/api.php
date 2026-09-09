@@ -19,6 +19,7 @@ use App\Http\Controllers\MessageUsController;
 use App\Http\Controllers\PatronController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\ProjectCharterController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
@@ -380,4 +381,20 @@ Route::middleware(['auth:sanctum', 'permission:payment-methods'])->group(functio
     Route::post('/payment-methods', [PaymentMethodController::class, 'store']);
     Route::put('/payment-methods/{id}', [PaymentMethodController::class, 'update']);
     Route::delete('/payment-methods/{id}', [PaymentMethodController::class, 'destroy']);
+});
+
+/**
+ * Project Charter Routes
+ *
+ * Not linked/announced anywhere yet — reachable only by direct URL. No auth
+ * on the public form/submission; no email sent on submission.
+ */
+Route::get('/project-charter', [ProjectCharterController::class, 'form']);
+Route::post('/project-charter', [ProjectCharterController::class, 'store']);
+
+Route::middleware(['auth:sanctum', 'permission:project-charters'])->group(function () {
+    Route::get('/admin/project-charters', [ProjectCharterController::class, 'index']);
+    Route::put('/admin/project-charters/{id}/feasibility', [ProjectCharterController::class, 'updateFeasibility']);
+    Route::delete('/admin/project-charters/{id}', [ProjectCharterController::class, 'destroy']);
+    Route::post('/admin/project-charters/{id}/restore', [ProjectCharterController::class, 'restore']);
 });
