@@ -8,9 +8,17 @@ const routes = [
     // Deliberately no beforeEnter here — this is the parent of every public
     // route, so anything awaited here blocks first paint of the whole site,
     // not just whichever page is being loaded. Each child route below fetches
-    // only the data it actually needs. store.openCourses() isn't fetched by
-    // any route guard at all — MainLayout.vue's onMounted() already loads it
-    // for every page (it's read globally by GlobalItems.vue), non-blocking.
+    // only the data it actually needs.
+    //
+    // A few routes below (audition, classes, flex-purchase) have a `global`
+    // nav item whose `display` getter depends on data — store.audition,
+    // store.courses, store.flex — that's normally only fetched by that same
+    // route's own beforeEnter. Left at that, the nav/homepage item (read by
+    // NavPartial.vue/GlobalItems.vue) would only ever appear *after* you'd
+    // already visited the page it links to. So MainLayout.vue's onMounted()
+    // also fetches all three globally, non-blocking, on every page — the
+    // route's own beforeEnter fetch still runs too, for the page's own
+    // content. Any new global+display route needs the same double-fetch.
     children: [
       {
         name: "home",

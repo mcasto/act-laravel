@@ -50,5 +50,6 @@ const adminPath = computed(() => {
 onMounted(async () => {
   await store.currentAudition();
   await store.openCourses();
+  await store.flexshowPurchaseConfig();
 });
 </script>
