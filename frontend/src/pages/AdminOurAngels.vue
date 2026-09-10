@@ -244,6 +244,63 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
+          <template v-if="!angelForm.id">
+            <q-btn-toggle
+              v-model="patronMode"
+              spread
+              no-caps
+              toggle-color="primary"
+              outline
+              :options="[
+                { label: 'Existing Patron', value: 'existing' },
+                { label: 'New Patron', value: 'new' },
+              ]"
+              class="q-mb-md full-width"
+            />
+
+            <template v-if="patronMode === 'existing'">
+              <q-select
+                v-model="selectedPatron"
+                :options="patronSearchResults"
+                use-input
+                hide-selected
+                fill-input
+                input-debounce="300"
+                label="Search by name or email"
+                outlined
+                dense
+                class="q-mb-md"
+                :option-label="(p) => `${p.first_name} ${p.last_name} — ${p.email}`"
+                @filter="onPatronFilter"
+                @update:model-value="onPatronSelected"
+              >
+                <template #no-option>
+                  <q-item>
+                    <q-item-section class="text-grey">
+                      Type at least 2 characters to search
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+              <div v-if="selectedPatron" class="text-caption text-grey-7 q-mb-md">
+                Selected: {{ selectedPatron.first_name }} {{ selectedPatron.last_name }} ({{ selectedPatron.email }})
+              </div>
+            </template>
+
+            <template v-else>
+              <q-input
+                v-model="angelForm.email"
+                type="email"
+                label="Email"
+                outlined
+                dense
+                class="q-mb-md"
+                @blur="getPatron"
+                hint="If this email already exists, we'll use that patron instead of creating a duplicate."
+              />
+            </template>
+          </template>
+
           <q-input
             v-model="angelForm.first_name"
             label="First Name"
@@ -266,12 +323,43 @@
             dense
             class="q-mb-md"
           />
+          <q-input
+            v-model.number="angelForm.donation_amount"
+            type="number"
+            label="Donation Amount"
+            prefix="$"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          <q-select
+            v-model="angelForm.payment_method_value"
+            :options="paymentMethodOptions"
+            label="Payment Method"
+            emit-value
+            map-options
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          <q-select
+            v-model="angelForm.season"
+            :options="seasonOptions"
+            label="Season"
+            outlined
+            dense
+            class="q-mb-md"
+          />
           <q-checkbox
             v-model="angelForm.founding_angel"
             label="Founding Angel"
-            :true-value="1"
-            :false-value="0"
+            :true-value="true"
+            :false-value="false"
+            :disable="foundingAngelLocked"
           />
+          <div v-if="foundingAngelLocked" class="text-caption text-grey-7">
+            This patron is already a Founding Angel — status is permanent.
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -281,12 +369,7 @@
             label="Save"
             color="primary"
             @click="saveAngel"
-            :disabled="
-              isReadOnly ||
-              !angelForm.first_name ||
-              !angelForm.last_name ||
-              !angelForm.recognition_name
-            "
+            :disabled="isReadOnly || !canSaveAngel"
           />
         </q-card-actions>
       </q-card>
@@ -498,11 +581,126 @@ const angelForm = ref({
   recognition_name: "",
   founding_angel: false,
   angel_level_id: null,
+  email: "",
+  donation_amount: null,
+  payment_method_value: null,
+  season: "",
 });
 
 // Keeps recognition_name in sync with first/last name until the admin
 // deliberately edits that field directly (or it's an existing angel).
 const recognitionNameEdited = ref(false);
+
+const patronMode = ref("existing");
+const selectedPatron = ref(null);
+const patronSearchResults = ref([]);
+
+// Snapshot of whether this patron was *already* a Founding Angel before
+// this dialog session — drives the locked/disabled state. Kept separate
+// from the live angelForm.founding_angel value so an admin can still
+// uncheck a box they just checked by mistake, before saving.
+const originalFoundingAngel = ref(false);
+const foundingAngelLocked = computed(() => originalFoundingAngel.value === true);
+
+const paymentMethods = ref([]);
+const paymentMethodOptions = computed(() =>
+  paymentMethods.value.map((pm) => ({ label: pm.label, value: pm.value })),
+);
+
+// The site's manually-overridable "active season" override (same one Flex
+// purchases uses) — falls back to real calendar math for the brief window
+// before the fetch below resolves.
+const activeSeason = ref(null);
+
+const calendarSeasonString = () => {
+  const now = new Date();
+  const startYear = now.getMonth() >= 9 ? now.getFullYear() : now.getFullYear() - 1;
+  return `${String(startYear).slice(-2)}-${String(startYear + 1).slice(-2)}`;
+};
+
+const currentSeasonString = () => activeSeason.value ?? calendarSeasonString();
+
+const nextSeasonString = () => {
+  const [startShort] = currentSeasonString().split("-");
+  const startYear = 2000 + parseInt(startShort, 10) + 1;
+  return `${String(startYear).slice(-2)}-${String(startYear + 1).slice(-2)}`;
+};
+
+const seasonOptions = computed(() => {
+  const opts = [currentSeasonString(), nextSeasonString()];
+  // Editing an older record shouldn't silently lose its actual season.
+  if (angelForm.value.season && !opts.includes(angelForm.value.season)) {
+    opts.unshift(angelForm.value.season);
+  }
+  return opts;
+});
+
+const canSaveAngel = computed(() => {
+  if (
+    !angelForm.value.first_name ||
+    !angelForm.value.last_name ||
+    !angelForm.value.recognition_name ||
+    angelForm.value.donation_amount === null ||
+    angelForm.value.donation_amount === "" ||
+    !angelForm.value.payment_method_value ||
+    !angelForm.value.season
+  ) {
+    return false;
+  }
+
+  if (!angelForm.value.id) {
+    if (patronMode.value === "existing") return !!selectedPatron.value;
+    return !!angelForm.value.email;
+  }
+
+  return true;
+});
+
+const onPatronFilter = (val, update) => {
+  if (val.length < 2) {
+    update(() => {
+      patronSearchResults.value = [];
+    });
+    return;
+  }
+
+  update(async () => {
+    patronSearchResults.value = await callApi({
+      path: `/admin/patrons/search?q=${encodeURIComponent(val)}`,
+      method: "get",
+      useAuth: true,
+      showError: false,
+    }).catch(() => []);
+  });
+};
+
+const onPatronSelected = (patron) => {
+  if (!patron) return;
+  angelForm.value.email = patron.email;
+  angelForm.value.first_name = patron.first_name;
+  angelForm.value.last_name = patron.last_name;
+  originalFoundingAngel.value = !!patron.founding_angel;
+  angelForm.value.founding_angel = !!patron.founding_angel;
+};
+
+const getPatron = async () => {
+  if (!angelForm.value.email) return;
+
+  const patron = await callApi({
+    path: `/patrons/lookup?email=${angelForm.value.email}`,
+    method: "get",
+    useAuth: true,
+    showError: false,
+  }).catch(() => null);
+
+  originalFoundingAngel.value = !!patron?.founding_angel;
+  angelForm.value.founding_angel = !!patron?.founding_angel;
+
+  if (!patron) return;
+
+  angelForm.value.first_name = patron.first_name;
+  angelForm.value.last_name = patron.last_name;
+};
 
 const recognitionName = computed({
   get: () => angelForm.value.recognition_name,
@@ -523,8 +721,40 @@ watch(
   },
 );
 
+// Switching Existing/New Patron mid-dialog shouldn't leave stale
+// selections or a locked founding-angel status from the other mode behind.
+// Guarded to skip edit mode — openAngelDialog() sets patronMode *before*
+// populating angelForm for an existing angel, and this watcher runs on the
+// next tick, after angelForm.id is already set, so it would otherwise wipe
+// out the just-loaded first/last name and founding status.
+watch(patronMode, () => {
+  if (angelForm.value.id) return;
+
+  selectedPatron.value = null;
+  patronSearchResults.value = [];
+  angelForm.value.email = "";
+  angelForm.value.first_name = "";
+  angelForm.value.last_name = "";
+  originalFoundingAngel.value = false;
+  angelForm.value.founding_angel = false;
+});
+
 onMounted(async () => {
   await loadAngelLevels();
+
+  paymentMethods.value = await callApi({
+    path: "/payment-methods",
+    method: "get",
+    useAuth: true,
+  });
+
+  const response = await callApi({
+    path: "/active-season",
+    method: "get",
+    useAuth: true,
+    showError: false,
+  }).catch(() => null);
+  activeSeason.value = response?.season ?? null;
 });
 
 const loadAngelLevels = async () => {
@@ -633,15 +863,24 @@ const deleteLevel = async (level) => {
 };
 
 const openAngelDialog = (angel = null) => {
+  patronMode.value = "existing";
+  selectedPatron.value = null;
+  patronSearchResults.value = [];
+
   if (angel) {
     angelForm.value = {
       id: angel.id,
       first_name: angel.first_name,
       last_name: angel.last_name,
       recognition_name: angel.recognition_name,
-      founding_angel: angel.founding_angel,
+      founding_angel: !!angel.founding_angel,
       angel_level_id: angel.angel_level_id,
+      email: "",
+      donation_amount: angel.donation_amount,
+      payment_method_value: angel.payment_method?.value ?? null,
+      season: angel.season ?? currentSeasonString(),
     };
+    originalFoundingAngel.value = !!angel.founding_angel;
     // Existing angels already have a (possibly custom) recognition_name —
     // don't overwrite it just because first/last name gets edited.
     recognitionNameEdited.value = true;
@@ -651,9 +890,14 @@ const openAngelDialog = (angel = null) => {
       first_name: "",
       last_name: "",
       recognition_name: "",
-      founding_angel: 0,
+      founding_angel: false,
       angel_level_id: selectedLevel.value.id,
+      email: "",
+      donation_amount: selectedLevel.value.min_amount,
+      payment_method_value: null,
+      season: currentSeasonString(),
     };
+    originalFoundingAngel.value = false;
     recognitionNameEdited.value = false;
   }
   angelDialog.value = true;
@@ -661,10 +905,25 @@ const openAngelDialog = (angel = null) => {
 
 const saveAngel = async () => {
   const isEdit = !!angelForm.value.id;
+
+  const payload = {
+    first_name: angelForm.value.first_name,
+    last_name: angelForm.value.last_name,
+    recognition_name: angelForm.value.recognition_name,
+    angel_level_id: angelForm.value.angel_level_id,
+    donation_amount: angelForm.value.donation_amount,
+    payment_method_value: angelForm.value.payment_method_value,
+    season: angelForm.value.season,
+    founding_angel: angelForm.value.founding_angel,
+  };
+  if (!isEdit) {
+    payload.email = angelForm.value.email;
+  }
+
   const response = await callApi({
     path: isEdit ? `/angels/${angelForm.value.id}` : "/angels",
     method: isEdit ? "put" : "post",
-    payload: angelForm.value,
+    payload,
     useAuth: true,
   });
 

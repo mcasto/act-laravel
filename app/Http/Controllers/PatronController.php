@@ -243,7 +243,7 @@ class PatronController extends Controller
             ->orderBy('last_name')
             ->orderBy('first_name')
             ->limit(15)
-            ->get(['id', 'first_name', 'last_name', 'email', 'phone']);
+            ->get(['id', 'first_name', 'last_name', 'email', 'phone', 'founding_angel']);
 
         return response()->json($patrons);
     }
@@ -291,6 +291,7 @@ class PatronController extends Controller
             'last_name'    => $patron->last_name,
             'first_name'   => $patron->first_name,
             'phone'        => $patron->phone,
+            'founding_angel' => $patron->founding_angel,
             'flex_packages' => $flexPackages,
         ]);
     }

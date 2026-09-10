@@ -12,7 +12,6 @@ use App\Models\Patron;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class AngelController extends Controller
 {
@@ -50,10 +49,10 @@ class AngelController extends Controller
 
         $validated['benefit'] = implode("\n", $level->benefits ?? []);
         $validated['season'] = ActiveSeason::get();
-        // Founding-angel status is permanent for a given donor and never
-        // self-declared on this public form — only inherited from a past
-        // record under this name, if one exists.
-        $validated['founding_angel'] = Angel::wasFoundingAngel($validated['first_name'], $validated['last_name']);
+        // Founding-angel status is a permanent, patron-level fact granted
+        // only by an admin — never self-declared on this public form, only
+        // inherited if this patron already has it.
+        $validated['founding_angel'] = $patron->founding_angel;
 
         $angel = Angel::create($validated);
 
@@ -80,21 +79,41 @@ class AngelController extends Controller
         return response()->json(['status' => 'success']);
     }
 
+    /**
+     * Admin manual add — unlike donate()/the Fixr webhook, this is how the
+     * box office records a donation that came in by check, cash, or phone.
+     * Every admin-added angel resolves to a patron (found-or-created by
+     * email), same as the other two creation paths.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'recognition_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'angel_level_id' => 'required|exists:angel_levels,id',
-            'founding_angel' => 'boolean'
+            'donation_amount' => 'required|numeric|min:0',
+            'payment_method_value' => 'required|string|exists:payment_methods,value',
+            'season' => 'required|string',
+            'founding_angel' => 'boolean',
         ]);
 
-        // Founding-angel status is permanent for a given donor — if any past
-        // record under this name has it, this new one inherits it too,
-        // regardless of what was submitted.
-        $validated['founding_angel'] = Angel::wasFoundingAngel($validated['first_name'], $validated['last_name'])
-            || ($validated['founding_angel'] ?? false);
+        $level = AngelLevel::findOrFail($validated['angel_level_id']);
+        $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
+
+        $patron = Patron::firstOrCreate(
+            ['email' => $validated['email']],
+            ['first_name' => $validated['first_name'], 'last_name' => $validated['last_name']]
+        );
+        $validated['patron_id'] = $patron->id;
+        unset($validated['email']);
+
+        $validated['payment_method_id'] = $paymentMethod->id;
+        unset($validated['payment_method_value']);
+
+        $validated['benefit'] = implode("\n", $level->benefits ?? []);
+        $validated['founding_angel'] = $this->resolveFoundingAngel($patron, $validated['founding_angel'] ?? false);
 
         $angel = Angel::create($validated);
 
@@ -114,8 +133,22 @@ class AngelController extends Controller
             'last_name' => 'required|string|max:255',
             'recognition_name' => 'required|string|max:255',
             'angel_level_id' => 'required|exists:angel_levels,id',
-            'founding_angel' => 'boolean'
+            'donation_amount' => 'required|numeric|min:0',
+            'payment_method_value' => 'required|string|exists:payment_methods,value',
+            'season' => 'required|string',
+            'founding_angel' => 'boolean',
         ]);
+
+        $level = AngelLevel::findOrFail($validated['angel_level_id']);
+        $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
+
+        $validated['payment_method_id'] = $paymentMethod->id;
+        unset($validated['payment_method_value']);
+
+        $validated['benefit'] = implode("\n", $level->benefits ?? []);
+        // patron_id is deliberately not editable here — delete and re-add if
+        // the wrong patron was linked, matching PatronController::updateFlexPackage.
+        $validated['founding_angel'] = $this->resolveFoundingAngel($angel->patron, $validated['founding_angel'] ?? false);
 
         $angel->update($validated);
 
@@ -124,6 +157,32 @@ class AngelController extends Controller
             'message' => 'Angel updated successfully',
             'data' => $angel
         ]);
+    }
+
+    /**
+     * Founding-angel status is a permanent fact about the patron, granted
+     * only by an admin manually checking the box (never inferred). Once a
+     * patron has it, every current and future angel record for them shows
+     * it locked on — the submitted value is ignored in that case. A null
+     * $patron (legacy angels that predate patron_id) falls back to a plain,
+     * non-sticky per-record boolean.
+     */
+    private function resolveFoundingAngel(?Patron $patron, bool $submitted): bool
+    {
+        if (! $patron) {
+            return $submitted;
+        }
+
+        if ($patron->founding_angel) {
+            return true;
+        }
+
+        if ($submitted) {
+            $patron->update(['founding_angel' => true]);
+            return true;
+        }
+
+        return false;
     }
 
     public function destroy($id)

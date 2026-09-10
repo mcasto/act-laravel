@@ -157,10 +157,10 @@ class FixrWebhooksController extends Controller
                 'payment_method_id' => $creditCardMethod?->id,
                 'benefit' => implode("\n", $angelLevel->benefits ?? []),
                 'season' => ActiveSeason::get(),
-                // Founding-angel status is permanent for a given donor —
-                // only inherited from a past record under this name, never
-                // set fresh here.
-                'founding_angel' => Angel::wasFoundingAngel($holder['first_name'], $holder['last_name']),
+                // Founding-angel status is a permanent, patron-level fact
+                // granted only by an admin — only inherited here if this
+                // patron already has it, never set fresh.
+                'founding_angel' => $patron->founding_angel,
             ]);
 
             // Box-office notification only — Fixr sends its own confirmation

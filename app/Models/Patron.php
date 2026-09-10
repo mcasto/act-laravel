@@ -15,6 +15,11 @@ class Patron extends Model
         'first_name',
         'phone',
         'email',
+        'founding_angel',
+    ];
+
+    protected $casts = [
+        'founding_angel' => 'boolean',
     ];
 
     public function flexPackages(): HasMany
