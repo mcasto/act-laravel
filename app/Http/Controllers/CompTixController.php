@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Helpers\RefId;
 use App\Mail\CompTicketMailer;
 use App\Models\CompTicket;
+use App\Models\Show;
 use App\Models\TicketSale;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class CompTixController extends Controller
 {
@@ -51,6 +51,9 @@ class CompTixController extends Controller
         ]);
 
         $rec = $validated;
+
+        $show = Show::findOrFail($validated['show_id']);
+        $rec['number'] = $show->reserveTicketNumbers(1)[0];
 
         $comp = CompTicket::create($rec);
         $comp->uid = RefId::ref_id($comp->id);

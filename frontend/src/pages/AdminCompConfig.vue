@@ -121,6 +121,11 @@ const formRef = ref(null);
 
 const columns = [
   {
+    label: "Ticket #",
+    name: "number",
+    field: (row) => (row.number != null ? String(row.number).padStart(3, "0") : "—"),
+  },
+  {
     label: "Name",
     name: "name",
     field: "name",

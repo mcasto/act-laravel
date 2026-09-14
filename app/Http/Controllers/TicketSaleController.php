@@ -12,6 +12,7 @@ use App\Models\PaymentMethod;
 use App\Models\Performance;
 use App\Models\CompTicket;
 use App\Models\StandardButton;
+use App\Models\Ticket;
 use App\Models\TicketSale;
 use Carbon\Carbon;
 use Exception;
@@ -31,7 +32,12 @@ class TicketSaleController extends Controller
     {
         $compPaymentMethod = PaymentMethod::where('value', 'comp')->first();
 
-        $ticketSales = TicketSale::with('performance.show', 'patron', 'paymentMethod')
+        $ticketSales = TicketSale::with([
+                'performance.show',
+                'patron',
+                'paymentMethod',
+                'tickets' => fn ($query) => $query->orderBy('number'),
+            ])
             ->join('performances', 'ticket_sales.performance_id', '=', 'performances.id')
             ->orderBy('performances.date', 'desc')
             ->orderBy('performances.start_time', 'asc')
@@ -46,6 +52,7 @@ class TicketSaleController extends Controller
             ->map(fn($comp) => [
                 'id'             => $comp->id,
                 'quantity'       => 1,
+                'number'         => $comp->number,
                 'sold_at'        => $comp->redeemed_at ?? $comp->sent_at,
                 'transaction_id' => $comp->uid,
                 'patron'         => [
@@ -105,6 +112,7 @@ class TicketSaleController extends Controller
                     'show_id' => $performance?->show_id,
                 ]);
                 $comp->uid = RefId::ref_id($comp->id);
+                $comp->number = $performance?->show?->reserveTicketNumbers(1)[0] ?? null;
                 $comp->save();
             }
 
@@ -133,9 +141,11 @@ class TicketSaleController extends Controller
         $ticketSale = TicketSale::create($rec);
         $ticketSale->transaction_id = RefId::ref_id($ticketSale->id);
         $ticketSale->save();
+        $ticketSale->issueTickets($patron->first_name . ' ' . $patron->last_name);
 
         try {
             $performance = Performance::with('show')->find($validated['performance_id']);
+            $ticketNumbers = $ticketSale->tickets()->orderBy('number')->get()->pluck('formatted_number')->all();
 
             $ticketData = [
                 'show'           => $performance?->show?->name,
@@ -148,6 +158,7 @@ class TicketSaleController extends Controller
                 'quantity'       => $validated['quantity'],
                 'sold_at'        => $rec['sold_at'],
                 'special_request' => $validated['special_request'] ?? null,
+                'ticket_numbers' => $ticketNumbers,
             ];
 
             $confirmationData = [
@@ -156,6 +167,7 @@ class TicketSaleController extends Controller
                 'num_tickets'      => $validated['quantity'],
                 'performance_date' => $performance ? Carbon::parse($performance->date)->format('F j, Y') : null,
                 'performance_time' => $performance ? Carbon::parse($performance->start_time)->format('g:i A') : null,
+                'reference_number' => implode(', ', $ticketNumbers),
             ];
 
             if ($validated['type'] === 'flex') {
@@ -213,6 +225,49 @@ class TicketSaleController extends Controller
         return response()->json(['rec' => $rec, 'id' => $id]);
     }
 
+    /**
+     * Marks individual tickets on this sale as redeemed/un-redeemed — a
+     * separate, focused action from the main update() form, since it's
+     * driven by the table's "Tickets" cell dialog rather than the edit
+     * screen. Tickets don't all redeem together (a group of 3 can show up
+     * across two separate arrivals), so each is toggled independently.
+     */
+    public function redeemTickets(Request $request, string $id)
+    {
+        $ticketSale = TicketSale::findOrFail($id);
+
+        $validated = $request->validate([
+            'tickets' => 'required|array',
+            'tickets.*.id' => 'required|integer|exists:tickets,id',
+            'tickets.*.redeemed' => 'required|boolean',
+        ]);
+
+        // The dialog submits every ticket's current state on each save, not
+        // just the ones that changed — only touch redeemed_at when the
+        // redeemed flag actually flips, so an already-redeemed ticket keeps
+        // its original timestamp instead of getting bumped to now() again.
+        foreach ($validated['tickets'] as $ticket) {
+            $ticketModel = Ticket::where('id', $ticket['id'])
+                ->where('ticket_sale_id', $ticketSale->id)
+                ->first();
+
+            if (! $ticketModel) {
+                continue;
+            }
+
+            if ($ticket['redeemed'] && ! $ticketModel->redeemed_at) {
+                $ticketModel->update(['redeemed_at' => now()]);
+            } elseif (! $ticket['redeemed'] && $ticketModel->redeemed_at) {
+                $ticketModel->update(['redeemed_at' => null]);
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'tickets' => $ticketSale->tickets()->orderBy('number')->get(),
+        ]);
+    }
+
     public function update(Request $request)
     {
         $validated = $request->validate([
@@ -229,6 +284,9 @@ class TicketSaleController extends Controller
             'confirmed'     => 'sometimes|boolean',
             'reason_changed' => 'nullable|string',
             'guest_list'    => 'nullable|string',
+            'tickets'         => 'sometimes|array',
+            'tickets.*.id'    => 'required_with:tickets|integer|exists:tickets,id',
+            'tickets.*.name'  => 'required_with:tickets|string|max:255',
         ]);
 
         $patron = Patron::firstOrCreate(
@@ -254,6 +312,14 @@ class TicketSaleController extends Controller
             'reason_changed'    => $validated['reason_changed'] ?? null,
             'guest_list'        => $validated['guest_list'] ?? null,
         ]);
+
+        foreach ($validated['tickets'] ?? [] as $ticket) {
+            Ticket::where('id', $ticket['id'])
+                ->where('ticket_sale_id', $ticketSale->id)
+                ->update(['name' => $ticket['name']]);
+        }
+
+        $ticketSale->reconcileTicketCount($validated['quantity']);
 
         return response()->json($this->allSales());
     }

@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Helpers\RefId;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompTicket extends Model
@@ -21,6 +20,7 @@ class CompTicket extends Model
         'performance_id',
         'pickup_name',
         'redeemed_at',
+        'number',
     ];
 
     protected $casts = [

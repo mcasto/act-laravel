@@ -26,4 +26,8 @@
             outside our location for directions to the theater entrance.
         </p>
     @endif
+
+    @if (!empty($reference_number))
+        <p><strong>Reference number{{ str_contains($reference_number, ',') ? 's' : '' }}:</strong> {{ $reference_number }}</p>
+    @endif
 </div>

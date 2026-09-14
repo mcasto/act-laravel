@@ -105,6 +105,20 @@
           outlined
           v-model="form.guest_list"
         ></q-input>
+
+        <template v-if="isEdit && ticketRows.length">
+          <div class="text-caption text-grey-7 q-mt-sm">Tickets</div>
+          <q-input
+            v-for="ticket in ticketRows"
+            :key="ticket.id"
+            type="text"
+            :label="`#${ticket.formatted_number}`"
+            stack-label
+            dense
+            outlined
+            v-model="ticket.name"
+          ></q-input>
+        </template>
       </div>
 
       <div class="flex justify-end q-mt-md q-gutter-x-sm">
@@ -159,6 +173,13 @@ const paymentMethodOptions = computed(() =>
     label: m.label,
     value: m,
   })),
+);
+
+// A comp row (merged into store.admin.ticket_sales by TicketSaleController::allSales())
+// has no `tickets` array, only a single `number` — this section only applies
+// to real ticket_sales rows.
+const ticketRows = ref(
+  [...(existingSale?.tickets ?? [])].sort((a, b) => a.number - b.number),
 );
 
 const form = ref(
@@ -232,6 +253,9 @@ const onSubmit = async () => {
     payload.confirmed = form.value.confirmed;
     payload.reason_changed = form.value.reason_changed;
     payload.guest_list = form.value.guest_list;
+    if (ticketRows.value.length) {
+      payload.tickets = ticketRows.value.map((t) => ({ id: t.id, name: t.name }));
+    }
   }
 
   const response = await callApi({

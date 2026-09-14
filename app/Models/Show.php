@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Show extends Model
 {
@@ -88,6 +89,25 @@ class Show extends Model
         return $this->hasOne(Audition::class)
             ->where('display_date', '<=', now()->toDateString())
             ->where('end_display_date', '>=', now()->toDateString());
+    }
+
+    /**
+     * Atomically reserves the next $count sequential internal ticket numbers
+     * for this show, shared across its whole run of performances (never
+     * per-performance). The lockForUpdate() inside a transaction is what
+     * keeps two concurrent purchases for the same show (e.g. PayPal and
+     * Transfer arriving seconds apart) from racing onto the same numbers.
+     */
+    public function reserveTicketNumbers(int $count): array
+    {
+        return DB::transaction(function () use ($count) {
+            $show = static::where('id', $this->id)->lockForUpdate()->first();
+            $start = $show->next_ticket_number;
+            $show->next_ticket_number = $start + $count;
+            $show->save();
+
+            return range($start, $start + $count - 1);
+        });
     }
 
     /**

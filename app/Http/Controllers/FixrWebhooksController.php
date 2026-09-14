@@ -95,6 +95,7 @@ class FixrWebhooksController extends Controller
                 'transaction_id' => $validated['payload']['order_reference'],
                 'confirmed' => true,
             ]);
+            $ticketSale->issueTickets($holder['first_name'] . ' ' . $holder['last_name']);
 
             // Box-office notification only — unlike the public/admin ticket-sale
             // paths, there's no patron confirmation here, since Fixr already
@@ -110,6 +111,7 @@ class FixrWebhooksController extends Controller
                     'payment_method' => $creditCardMethod?->label,
                     'quantity' => $validated['payload']['quantity'],
                     'sold_at' => $ticketSale->sold_at,
+                    'ticket_numbers' => $ticketSale->tickets()->orderBy('number')->get()->pluck('formatted_number')->all(),
                 ]));
             } catch (Exception $e) {
                 logger()->error('Failed to send Fixr ticket sale notification email', [

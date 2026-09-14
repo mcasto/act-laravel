@@ -260,6 +260,19 @@
         </q-td>
       </template>
 
+      <template #body-cell-tickets="props">
+        <q-td :props="props" class="text-center" :class="{ 'bg-green-2': allTicketsRedeemed(props.row) }">
+          <span
+            v-if="props.row.tickets?.length"
+            class="text-primary cursor-pointer text-weight-medium"
+            @click="openTicketsDialog(props.row)"
+          >
+            {{ ticketNumbersDisplay(props.row) }}
+          </span>
+          <span v-else>{{ ticketNumbersDisplay(props.row) }}</span>
+        </q-td>
+      </template>
+
       <template #body-cell-payment_method="props">
         <q-td :props="props" class="text-center">
           <q-icon
@@ -329,6 +342,43 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="ticketsDialog">
+      <q-card style="min-width: 350px;">
+        <q-card-section>
+          <div class="text-h6">Tickets</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-list separator>
+            <q-item v-for="ticket in ticketsDialogRows" :key="ticket.id">
+              <q-item-section side>
+                <div class="text-weight-medium">#{{ ticket.formatted_number }}</div>
+              </q-item-section>
+              <q-item-section>{{ ticket.name }}</q-item-section>
+              <q-item-section side>
+                <q-checkbox
+                  v-model="ticket.redeemed"
+                  label="Redeemed"
+                  :disable="isReadOnly"
+                />
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn
+            flat
+            label="Save"
+            color="primary"
+            :disable="isReadOnly"
+            @click="saveTicketRedemptions"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -388,6 +438,24 @@ const pagesNumber = computed(() =>
   Math.ceil(filteredRecs.value.length / pagination.value.rowsPerPage),
 );
 
+// A real ticket_sales row carries its individual tickets in `tickets`; a
+// comp row (merged in by TicketSaleController::allSales()) carries a single
+// `number` instead. Legacy rows predating this feature have neither.
+const padNumber = (n) => String(n).padStart(3, "0");
+const ticketNumbersDisplay = (row) => {
+  if (row.tickets?.length) {
+    const nums = row.tickets.map((t) => t.number).sort((a, b) => a - b);
+    return nums.length > 1
+      ? `${padNumber(nums[0])}–${padNumber(nums[nums.length - 1])}`
+      : padNumber(nums[0]);
+  }
+  if (row.number != null) return padNumber(row.number);
+  return "—";
+};
+
+const allTicketsRedeemed = (row) =>
+  !!row.tickets?.length && row.tickets.every((t) => !!t.redeemed_at);
+
 const columns = [
   {
     name: "no_show",
@@ -419,6 +487,12 @@ const columns = [
     name: "quantity",
     label: "Qty",
     field: (row) => row.quantity || "?",
+    align: "center",
+  },
+  {
+    name: "tickets",
+    label: "Tickets",
+    field: ticketNumbersDisplay,
     align: "center",
   },
   {
@@ -638,5 +712,42 @@ const updateNoShow = async (row) => {
   } catch (e) {
     console.error({ error: e });
   }
+};
+
+const ticketsDialog = ref(false);
+const ticketsDialogRows = ref([]);
+const activeTicketSaleId = ref(null);
+
+const openTicketsDialog = (row) => {
+  activeTicketSaleId.value = row.id;
+  ticketsDialogRows.value = [...row.tickets]
+    .sort((a, b) => a.number - b.number)
+    .map((t) => ({ ...t, redeemed: !!t.redeemed_at }));
+  ticketsDialog.value = true;
+};
+
+const saveTicketRedemptions = async () => {
+  const response = await callApi({
+    path: `/ticket-sales/${activeTicketSaleId.value}/tickets`,
+    method: "put",
+    useAuth: true,
+    payload: {
+      tickets: ticketsDialogRows.value.map((t) => ({ id: t.id, redeemed: t.redeemed })),
+    },
+  });
+
+  if (!response || response.status !== "success") {
+    Notify.create({
+      type: "negative",
+      message: response?.message || "Something went wrong.",
+    });
+    return;
+  }
+
+  const sale = store.admin.ticket_sales.find((s) => s.id === activeTicketSaleId.value);
+  if (sale) sale.tickets = response.tickets;
+
+  Notify.create({ type: "positive", message: "Ticket redemptions saved." });
+  ticketsDialog.value = false;
 };
 </script>

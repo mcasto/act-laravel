@@ -35,6 +35,12 @@
     <div>
         <strong>Sold At:</strong> {{ \Carbon\Carbon::parse($ticketData['sold_at'])->format('M j, Y g:i A') }}
     </div>
+    @if (!empty($ticketData['ticket_numbers']))
+        <div>
+            <strong>Ticket ID{{ count($ticketData['ticket_numbers']) > 1 ? 's' : '' }}:</strong>
+            {{ implode(', ', $ticketData['ticket_numbers']) }}
+        </div>
+    @endif
 
     @if (!empty($ticketData['special_request']))
         <p></p>

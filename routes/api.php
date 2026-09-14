@@ -326,6 +326,7 @@ Route::controller(TicketSaleController::class)
         Route::put('/ticket-sales', 'update');
         Route::delete('/ticket-sales', 'destroy');
         Route::put('/ticket-sales/no-show/{id}', 'updateNoShow');
+        Route::put('/ticket-sales/{id}/tickets', 'redeemTickets');
         Route::post('/admin/ticket-sales', 'store');
     });
 
