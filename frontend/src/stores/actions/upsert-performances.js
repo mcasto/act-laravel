@@ -50,6 +50,7 @@ const confirmSoldOutNotifications = (performances) => {
     position: "center",
     multiLine: true,
     html: true,
+    timeout: 0,
     message: `<div>Just marked sold out:</div>${list}<div class="q-mt-sm">Send the SOLD OUT notifications?</div>`,
     actions: [
       { label: "No" },
