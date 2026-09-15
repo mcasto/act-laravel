@@ -22,6 +22,7 @@ class Course extends Model
         'enrollment_start',
         'enrollment_end',
         'cost',
+        'max_participants',
         'poster',
         'tagline',
         'location',

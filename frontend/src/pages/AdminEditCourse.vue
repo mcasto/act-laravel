@@ -179,6 +179,7 @@
                     v-model="store.admin.editCourse.instructor_info"
                     min-height="200px"
                     class="shadow-1"
+                    :toolbar="courseEditorToolbar"
                   />
                 </div>
 
@@ -190,6 +191,7 @@
                     v-model="store.admin.editCourse.message"
                     min-height="200px"
                     class="shadow-1"
+                    :toolbar="courseEditorToolbar"
                   />
                 </div>
               </div>
@@ -246,6 +248,25 @@
                   >
                     <template #prepend>
                       <q-icon :name="matLink" />
+                    </template>
+                  </q-input>
+                </div>
+
+                <div class="col-6">
+                  <q-input
+                    v-model.number="store.admin.editCourse.max_participants"
+                    type="number"
+                    label="Maximum Participants (Optional)"
+                    outlined
+                    filled
+                    min="1"
+                    hint="Leave blank for no cap"
+                    :rules="[
+                      (val) => !val || val >= 1 || 'Must be at least 1',
+                    ]"
+                  >
+                    <template #prepend>
+                      <q-icon :name="matGroups" />
                     </template>
                   </q-input>
                 </div>
@@ -360,7 +381,7 @@
 </template>
 
 <script setup>
-import { matAttachMoney, matEmail, matEvent, matFormatQuote, matLink, matPerson, matPlace, matSchool } from "@quasar/extras/material-icons";
+import { matAttachMoney, matEmail, matEvent, matFormatQuote, matGroups, matLink, matPerson, matPlace, matSchool } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
@@ -368,6 +389,16 @@ import { useStore } from "src/stores/store";
 import { computed } from "vue";
 
 const store = useStore();
+
+// Same as QEditor's own default toolbar, plus a "View Source" button so
+// admins can drop into/out of raw HTML when the rich-text controls aren't
+// enough (e.g. pasting pre-formatted content).
+const courseEditorToolbar = [
+  ["left", "center", "right", "justify"],
+  ["bold", "italic", "underline", "strike"],
+  ["undo", "redo"],
+  ["viewsource"],
+];
 
 const isReadOnly = computed(
   () => getPermissionLevel(store.admin.user, "classes") === "read-only",
