@@ -41,7 +41,7 @@
                 >
                   <q-item
                     clickable
-                    @click="performancesDrawer = !performancesDrawer"
+                    @click="togglePerformancesDrawer"
                   >
                     <q-item-section>
                       <q-item-label>
@@ -151,11 +151,12 @@
       :maximized="false"
       transition-show="slide-left"
       transition-hide="slide-right"
+      @hide="onPerformancesDrawerHide"
     >
       <q-card style="width: 500px; max-width: 90vw;">
         <performances-drawer
           @close="performancesDrawer = false"
-          @update="store.upsertPerformances"
+          @update="onPerformancesUpdate"
         ></performances-drawer>
       </q-card>
     </q-dialog>
@@ -171,6 +172,7 @@ import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 
 import { Notify } from "quasar";
+import { cloneDeep } from "lodash-es";
 import { useStore } from "src/stores/store";
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -190,6 +192,30 @@ const uploadHeaders = ref([
 const uploadMenu = ref(false);
 
 const performancesDrawer = ref(false);
+
+// Snapshot of performances taken right when the drawer opens (and refreshed
+// after every save) — restored whenever the dialog closes for any reason
+// (the X button, clicking outside, Esc) without an intervening save, so
+// unsaved edits made by mistake don't linger without a page refresh.
+let performancesSnapshot = null;
+
+const togglePerformancesDrawer = () => {
+  if (!performancesDrawer.value) {
+    performancesSnapshot = cloneDeep(store.admin.show.performances);
+  }
+  performancesDrawer.value = !performancesDrawer.value;
+};
+
+const onPerformancesUpdate = () => {
+  store.upsertPerformances();
+  performancesSnapshot = cloneDeep(store.admin.show.performances);
+};
+
+const onPerformancesDrawerHide = () => {
+  if (performancesSnapshot) {
+    store.admin.show.performances = performancesSnapshot;
+  }
+};
 
 const flexDialog  = ref(false);
 const flexLoading = ref(false);
