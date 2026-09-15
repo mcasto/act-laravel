@@ -72,13 +72,14 @@ class ImageController extends Controller
      */
     public function update(Request $request): JsonResponse
     {
-        $image     = $request->file('image');
-        $extension = $image->guessExtension();
-
         $filename = $request->input('filename');
 
         $filename = basename(parse_url($filename, PHP_URL_PATH)); // strip any timestamps generated to refresh the image in the frontend
-        $filename = pathinfo($filename, PATHINFO_FILENAME) . '.' . $extension;
+        // Posters are always saved as JPEG regardless of the upload's original
+        // format — transparency doesn't matter for a rectangular poster image,
+        // and JPEG compresses photographic posters far smaller than PNG at the
+        // same quality setting (save() infers the encoding from this extension).
+        $filename = pathinfo($filename, PATHINFO_FILENAME) . '.jpg';
 
         Storage::disk('public')->makeDirectory('posters-sm');
 

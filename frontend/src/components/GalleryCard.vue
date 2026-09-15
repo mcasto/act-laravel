@@ -8,7 +8,7 @@
         {{ date }}
       </div>
       <poster-with-banner
-        :src="POSTER_BASE_URL + show.poster"
+        :src="POSTER_SM_BASE_URL + show.poster"
         max-height="40vh"
         :sold-out="allSoldOut"
       />
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { POSTER_BASE_URL } from "src/assets/constants";
+import { POSTER_SM_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { computed, ref } from "vue";
 import { Screen } from "quasar";
