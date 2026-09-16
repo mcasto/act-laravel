@@ -34,6 +34,7 @@ import refreshPermissions from "./actions/refresh-permissions";
 import getAuditionConfig from "./actions/get-audition-config";
 import saveAuditionConfig from "./actions/save-audition-config";
 import openCourses from "./actions/open-courses";
+import previewCourses from "./actions/preview-courses";
 import saveCompConfig from "./actions/save-comp-config";
 
 export const useStore = defineStore(
@@ -48,6 +49,7 @@ export const useStore = defineStore(
       config: ref(null),
       course: ref(null),
       courses: ref([]),
+      previewCourses: ref([]),
       flex: ref(null),
       gallery: ref(null),
       home: ref(null),
@@ -84,6 +86,7 @@ export const useStore = defineStore(
       newContact,
       newShow,
       openCourses,
+      previewCourses,
       openFixr,
       refreshPermissions,
       saveAuditionConfig,

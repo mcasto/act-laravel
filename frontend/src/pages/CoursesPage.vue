@@ -1,9 +1,9 @@
 <template>
   <div class="q-pa-md">
-    <div class="row" v-if="store.courses.length > 0">
+    <div class="row" v-if="courses.length > 0">
       <div
         class="col-12 col-sm-6 col-md-4"
-        v-for="course of store.courses"
+        v-for="course of courses"
         :key="`course-${course.id}`"
       >
         <course-card :course="course"></course-card>
@@ -31,8 +31,20 @@
 <script setup>
 import { useStore } from "src/stores/store";
 import CourseCard from "src/components/CourseCard.vue";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
 const store = useStore();
+const route = useRoute();
+
+// /classes/preview reuses this same page, just backed by previewCourses
+// (the next upcoming class regardless of enrollment window) instead of
+// courses (only classes with enrollment currently open) — kept as separate
+// store state since `courses` also drives the site-wide nav item's
+// visibility and must stay accurate to real open-enrollment state.
+const courses = computed(() =>
+  route.name === "classes-preview" ? store.previewCourses : store.courses,
+);
 </script>
 
 <style scoped>

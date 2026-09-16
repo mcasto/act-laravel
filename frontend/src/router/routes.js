@@ -97,6 +97,25 @@ const routes = [
         },
       },
       {
+        // Same page as /classes, but shows the next upcoming class even
+        // before its enrollment window opens — reachable only by direct
+        // URL (no nav entry), for sharing/QA ahead of an official announce.
+        name: "classes-preview",
+        path: "classes/preview",
+        component: () => import("pages/CoursesPage.vue"),
+        beforeEnter: async (to, from, next) => {
+          const store = useStore();
+          await store.previewCourses();
+
+          if (store.previewCourses.length === 1) {
+            next(`/class-details/${store.previewCourses[0].slug}`);
+            return;
+          }
+          next();
+        },
+        meta: { nav: false, label: "Classes Preview" },
+      },
+      {
         name: "volunteer",
         path: "volunteer",
         component: () => import("pages/VolunteerPage.vue"),

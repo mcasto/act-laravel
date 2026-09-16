@@ -275,6 +275,25 @@ class CourseController extends Controller
     }
 
     /**
+     * Preview version of openEnrollment() — the next class coming up,
+     * regardless of whether its enrollment window has actually opened yet.
+     * Still excludes classes whose enrollment has already fully closed, so
+     * this only ever surfaces something genuinely upcoming. Returned as a
+     * single-item array (same shape as openEnrollment()) so the same
+     * CoursesPage.vue / "exactly one result" redirect logic works unchanged.
+     */
+    public function previewEnrollment(): JsonResponse
+    {
+        $courses = Course::with(['sessions'])
+            ->where('enrollment_end', '>=', now())
+            ->orderBy('enrollment_start')
+            ->limit(1)
+            ->get();
+
+        return response()->json($courses);
+    }
+
+    /**
      * Get detailed information for a specific course
      *
      * Retrieves course details by slug, including session information and

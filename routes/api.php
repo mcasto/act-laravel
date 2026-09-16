@@ -201,6 +201,7 @@ Route::get('/get-snippet/{slug}', [SnippetController::class, 'show']);
  * Course Routes
  */
 Route::get('/open-courses', [CourseController::class, 'openEnrollment']);
+Route::get('/course-preview', [CourseController::class, 'previewEnrollment']);
 Route::get('/course-details/{slug}', [CourseController::class, 'courseDetails']);
 Route::post('/course-contact', [CourseController::class, 'courseContact']);
 
