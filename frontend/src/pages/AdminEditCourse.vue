@@ -45,10 +45,19 @@
                   </q-input>
                 </div>
 
+                <div class="col-12" v-if="originalPoster">
+                  <div class="text-caption text-grey-7 q-mb-xs">Current Image</div>
+                  <q-img
+                    :src="POSTER_BASE_URL + originalPoster"
+                    style="max-width: 200px; max-height: 200px;"
+                    class="rounded-borders"
+                  />
+                </div>
+
                 <div class="col-12">
                   <q-field
                     :model-value="store.admin.editCourse.poster"
-                    label="Course Image"
+                    :label="originalPoster ? 'Replace Course Image' : 'Course Image'"
                     outlined
                     stack-label
                     :rules="[
@@ -129,10 +138,19 @@
                   </q-input>
                 </div>
 
+                <div class="col-12" v-if="originalInstructorPhoto">
+                  <div class="text-caption text-grey-7 q-mb-xs">Current Image</div>
+                  <q-img
+                    :src="`/api/storage/images/${originalInstructorPhoto}`"
+                    style="max-width: 200px; max-height: 200px;"
+                    class="rounded-borders"
+                  />
+                </div>
+
                 <div class="col-12">
                   <q-field
                     :model-value="store.admin.editCourse.instructor_photo"
-                    label="Instructor Photo"
+                    :label="originalInstructorPhoto ? 'Replace Instructor Photo' : 'Instructor Photo'"
                     outlined
                     stack-label
                     :rules="[
@@ -352,6 +370,88 @@
                 </div>
               </div>
 
+              <!-- Class Sessions Section -->
+              <div class="row items-center justify-between q-mt-lg q-mb-sm">
+                <div class="text-h6 text-grey-8">Class Sessions</div>
+                <q-btn
+                  :icon="matAdd"
+                  label="Add Session"
+                  color="primary"
+                  outline
+                  dense
+                  :disable="isReadOnly"
+                  @click="addSession"
+                />
+              </div>
+              <q-separator class="q-mb-md" />
+
+              <div
+                v-if="activeSessions.length === 0"
+                class="text-grey-7 q-mb-md"
+              >
+                No sessions yet — add at least one date/time below.
+              </div>
+
+              <div
+                v-for="session in activeSessions"
+                :key="session._key"
+                class="row q-col-gutter-md items-start q-mb-sm"
+              >
+                <div class="col-4">
+                  <q-input
+                    v-model="session.date"
+                    label="Date"
+                    outlined
+                    filled
+                    dense
+                    mask="####-##-##"
+                    :rules="[(val) => !!val || 'Required']"
+                  >
+                    <template #prepend>
+                      <q-icon :name="matEvent" class="cursor-pointer">
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-date v-model="session.date" mask="YYYY-MM-DD">
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
+                </div>
+
+                <div class="col-3">
+                  <time-select
+                    v-model="session.start"
+                    label="Start Time"
+                    :rules="[(val) => !!val || 'Required']"
+                    :disable="isReadOnly"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <time-select
+                    v-model="session.end"
+                    label="End Time"
+                    :rules="[(val) => !!val || 'Required']"
+                    :disable="isReadOnly"
+                  />
+                </div>
+
+                <div class="col-2 flex items-center" style="height: 48px;">
+                  <q-btn
+                    :icon="matDelete"
+                    flat
+                    round
+                    dense
+                    color="negative"
+                    :disable="isReadOnly"
+                    @click="removeSession(session)"
+                  />
+                </div>
+              </div>
+
               <!-- Form Actions -->
               <q-separator class="q-mt-lg q-mb-md" />
 
@@ -381,12 +481,14 @@
 </template>
 
 <script setup>
-import { matAttachMoney, matEmail, matEvent, matFormatQuote, matGroups, matLink, matPerson, matPlace, matSchool } from "@quasar/extras/material-icons";
+import { matAdd, matAttachMoney, matDelete, matEmail, matEvent, matFormatQuote, matGroups, matLink, matPerson, matPlace, matSchool } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
+import { POSTER_BASE_URL } from "src/assets/constants";
+import TimeSelect from "src/components/TimeSelect.vue";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const store = useStore();
 
@@ -403,6 +505,52 @@ const courseEditorToolbar = [
 const isReadOnly = computed(
   () => getPermissionLevel(store.admin.user, "classes") === "read-only",
 );
+
+// Snapshotted once when the form loads, so the "current image" preview
+// keeps showing the actual saved file even after a replacement is picked in
+// the uploader below (which reassigns the live field to an unpublished temp
+// filename until the form is actually saved).
+const originalPoster = ref(store.admin.editCourse.poster);
+const originalInstructorPhoto = ref(store.admin.editCourse.instructor_photo);
+
+// Sessions are edited locally (add/remove) and only sent to the backend
+// when the whole form is saved — same "stage changes, upsert on save" shape
+// as PerformancesDrawer.vue uses for a show's performances. Existing rows
+// get a stable key from their id; brand-new ones (no id yet) get a
+// client-side key so the list doesn't lose track of them across re-renders.
+let sessionKeyCounter = 0;
+store.admin.editCourse.sessions = (store.admin.editCourse.sessions ?? []).map(
+  (session) => ({ ...session, _key: session.id ?? `new-${sessionKeyCounter++}` }),
+);
+
+const activeSessions = computed(() =>
+  store.admin.editCourse.sessions.filter((session) => !session.deleted),
+);
+
+const addSession = () => {
+  store.admin.editCourse.sessions.push({
+    _key: `new-${sessionKeyCounter++}`,
+    course_id: store.admin.editCourse.id,
+    date: "",
+    start: "",
+    end: "",
+  });
+};
+
+const removeSession = (session) => {
+  if (session.id) {
+    // Existing, saved session — stage for deletion so its id survives to
+    // the upsert call, matching the "deleted" flag convention Performances
+    // uses; the actual DB delete only happens on save.
+    session.deleted = true;
+    return;
+  }
+
+  const index = store.admin.editCourse.sessions.indexOf(session);
+  if (index !== -1) {
+    store.admin.editCourse.sessions.splice(index, 1);
+  }
+};
 
 const onFileRejected = (rejectedEntries) => {
   rejectedEntries.forEach(({ failedPropValidation, file }) => {
@@ -436,6 +584,26 @@ const onSubmit = async () => {
     });
 
     return;
+  }
+
+  const courseId = response.id ?? store.admin.editCourse.id;
+
+  if (store.admin.editCourse.sessions.length > 0) {
+    await callApi({
+      path: "/upsert-course-sessions",
+      method: "post",
+      payload: {
+        sessions: store.admin.editCourse.sessions.map((session) => ({
+          id: session.id,
+          course_id: courseId,
+          date: session.date,
+          start: session.start,
+          end: session.end,
+          deleted: session.deleted,
+        })),
+      },
+      useAuth: true,
+    });
   }
 
   Notify.create({

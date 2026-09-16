@@ -21,6 +21,8 @@
             email: null,
             phone: null,
             questions: '',
+            payment_method_value: null,
+            transfer_date: null,
           }
         "
       ></q-btn>
@@ -53,6 +55,8 @@ const enrollForm = ref({
   email: null,
   phone: null,
   questions: "",
+  payment_method_value: null,
+  transfer_date: null,
 });
 
 const course = computed(() => {
@@ -60,15 +64,13 @@ const course = computed(() => {
 });
 
 const enroll = async () => {
-  enrollForm.value.visible = false;
-
   Loading.show({ message: "Sending email to instructor" });
 
   const payload = cloneDeep(enrollForm.value);
   delete payload.visible;
   payload.course_id = store.course.id;
 
-  const $ = cheerio.load(payload.questions);
+  const $ = cheerio.load(payload.questions || "");
   $("div").each(function () {
     // Replace <div> with <p> and preserve inner HTML
     const content = $(this).html();
@@ -81,9 +83,20 @@ const enroll = async () => {
     path: "/course-contact",
     payload,
     method: "post",
+    showError: false,
   });
 
   Loading.hide();
+
+  if (!response || response.errors) {
+    const message = response?.errors
+      ? Object.values(response.errors).flat().join(" ")
+      : "Something went wrong. Please try again.";
+    Notify.create({ type: "negative", message });
+    return;
+  }
+
+  enrollForm.value.visible = false;
 
   Notify.create({
     type: "positive",

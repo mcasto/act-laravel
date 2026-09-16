@@ -10,6 +10,7 @@ use App\Http\Controllers\ChangeLogController;
 use App\Http\Controllers\CompTixController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseSessionController;
 use App\Http\Controllers\FixrWebhooksController;
 use App\Http\Controllers\FlexLinkController;
 use App\Http\Controllers\FlexPurchaseController;
@@ -220,6 +221,10 @@ Route::middleware(['auth:sanctum', 'permission:classes'])
     ->put('/admin/courses/{id}', [CourseController::class, 'update']);
 Route::middleware(['auth:sanctum', 'permission:classes'])
     ->delete('/admin/courses/{id}', [CourseController::class, 'destroy']);
+Route::middleware(['auth:sanctum', 'permission:classes'])
+    ->post('/upsert-course-sessions', [CourseSessionController::class, 'upsert']);
+Route::middleware(['auth:sanctum', 'permission:classes'])
+    ->put('/admin/course-contacts/{id}/confirmed', [CourseController::class, 'updateConfirmed']);
 
 /**
  * Gallery Routes

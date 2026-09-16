@@ -44,6 +44,37 @@
             </div>
         @endif
 
+        @if (!empty($data['payment_method_label']))
+            <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
+
+            <h2 style="margin: 0 0 16px; font-size: 16px; color: #1a237e; text-transform: uppercase; letter-spacing: 0.5px;">
+                Payment Information
+            </h2>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                <tr>
+                    <td style="padding: 8px 0; width: 130px; color: #666; vertical-align: top;">Cost</td>
+                    <td style="padding: 8px 0; font-weight: 600;">${{ $data['cost'] }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; color: #666; vertical-align: top;">Payment Method</td>
+                    <td style="padding: 8px 0;">{{ $data['payment_method_label'] }}</td>
+                </tr>
+                @if (!empty($data['transfer_date']))
+                    <tr>
+                        <td style="padding: 8px 0; color: #666; vertical-align: top;">Transfer Date</td>
+                        <td style="padding: 8px 0;">{{ $data['transfer_date'] }}</td>
+                    </tr>
+                @endif
+                @if (!empty($data['transaction_id']))
+                    <tr>
+                        <td style="padding: 8px 0; color: #666; vertical-align: top;">Reference</td>
+                        <td style="padding: 8px 0;">{{ $data['transaction_id'] }}</td>
+                    </tr>
+                @endif
+            </table>
+        @endif
+
     </div>
 
     <div style="background-color: #eeeeee; padding: 14px 32px; border-radius: 0 0 4px 4px; font-size: 12px; color: #888; text-align: center;">

@@ -35,6 +35,28 @@
               </div>
             </q-td>
           </template>
+
+          <template #body-cell-payment_method="props">
+            <q-td class="text-left">
+              {{ props.row.payment_method?.label ?? "Free" }}
+            </q-td>
+          </template>
+
+          <template #body-cell-transfer_date="props">
+            <q-td class="text-center">
+              {{ props.row.transfer_date ?? "—" }}
+            </q-td>
+          </template>
+
+          <template #body-cell-confirmed="props">
+            <q-td class="text-center">
+              <q-toggle
+                :model-value="!!props.row.confirmed"
+                :disable="isReadOnly"
+                @update:model-value="(val) => updateConfirmed(props.row, val)"
+              ></q-toggle>
+            </q-td>
+          </template>
         </q-table>
       </q-card-section>
     </q-card>
@@ -47,11 +69,13 @@
 
 <script setup>
 import { matClose } from "@quasar/extras/material-icons";
+import { Notify } from "quasar";
+import callApi from "src/assets/call-api";
 import { ref } from "vue";
 import EnrolleeQuestionsDialog from "./EnrolleeQuestionsDialog.vue";
 
 const model = defineModel();
-const props = defineProps(["contacts"]);
+const props = defineProps(["contacts", "isReadOnly"]);
 
 const enrolleeQuestions = ref({
   visible: false,
@@ -83,6 +107,24 @@ const columns = [
     field: "questions",
     align: "center",
   },
+  {
+    label: "Payment Method",
+    name: "payment_method",
+    field: (row) => row.payment_method?.label ?? "Free",
+    align: "left",
+  },
+  {
+    label: "Transfer Date",
+    name: "transfer_date",
+    field: "transfer_date",
+    align: "center",
+  },
+  {
+    label: "Confirmed",
+    name: "confirmed",
+    field: "confirmed",
+    align: "center",
+  },
 ];
 
 const openQuestions = (questions) => {
@@ -90,5 +132,21 @@ const openQuestions = (questions) => {
     visible: true,
     questions,
   };
+};
+
+const updateConfirmed = async (row, confirmed) => {
+  const response = await callApi({
+    path: `/admin/course-contacts/${row.id}/confirmed`,
+    method: "put",
+    payload: { confirmed },
+    useAuth: true,
+  });
+
+  if (!response || response.status !== "success") {
+    Notify.create({ type: "negative", message: "Failed to update confirmation status." });
+    return;
+  }
+
+  row.confirmed = response.confirmed;
 };
 </script>

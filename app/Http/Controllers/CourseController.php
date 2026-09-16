@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RefId;
 use App\Mail\CourseInquiryConfirmationMailer;
 use App\Mail\CourseInquiryMailer;
 use App\Models\Course;
 use App\Models\CourseContact;
+use App\Models\Patron;
+use App\Models\PaymentMethod;
 use App\Models\SiteConfig;
+use App\Models\StandardButton;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +26,7 @@ class CourseController extends Controller
 {
     public function index(): JsonResponse
     {
-        $courses = Course::with(['sessions', 'contacts'])
+        $courses = Course::with(['sessions', 'contacts.paymentMethod'])
             ->orderBy('enrollment_start', 'desc')
             ->get()
             ->each(function ($course) {
@@ -288,6 +293,30 @@ class CourseController extends Controller
 
         $course['html'] = view("courses.{$slug}")->render();
 
+        // Same standard_buttons-driven payment options as ticket purchases
+        // (ShowController::homeShows()) — filtered to paypal/transfer only,
+        // since flex/questions don't apply to a class enrollment. FixR is a
+        // separate, always-available synthetic entry the frontend adds
+        // itself (only when this course has its own fixr link configured).
+        $course['fixrLabel'] = 'Pay with Credit / Debit';
+        $course['buttons'] = Cache::remember('standard-buttons', 3600, fn () => StandardButton::orderBy('sort_order')->get())
+            ->filter(fn ($rec) => in_array($rec->key, ['paypal', 'transfer']))
+            ->map(function ($rec) use ($course) {
+                $param = "\${$course['cost']} for this class";
+
+                $rec->popupText = Cache::remember(
+                    "standard-button-{$rec->key}-course-{$course['cost']}",
+                    3600,
+                    fn () => view("standard-buttons.{$rec->key}", [
+                        'param' => $param,
+                        'subject' => 'enrolled in this class',
+                    ])->render()
+                );
+
+                return $rec;
+            })
+            ->values();
+
         return response()->json($course);
     }
 
@@ -308,23 +337,64 @@ class CourseController extends Controller
      */
     public function courseContact(Request $request): JsonResponse
     {
-        $validated = CourseContact::validate($request->all());
+        $course = Course::findOrFail($request->input('course_id'));
+
+        $validated = CourseContact::validate($request->all(), $course->cost > 0);
         if (isset($validated['errors'])) {
             return response()->json($validated);
         }
 
-        CourseContact::create($validated);
+        $patron = Patron::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'phone' => $validated['phone'],
+            ]
+        );
+        $validated['patron_id'] = $patron->id;
 
-        $course = Course::find($validated['course_id']);
+        $paymentMethod = null;
+        if (! empty($validated['payment_method_value'])) {
+            $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
+            $validated['payment_method_id'] = $paymentMethod?->id;
+        }
+        unset($validated['payment_method_value']);
+
+        // Nothing to confirm on a free enrollment; a paid one starts
+        // unconfirmed until an admin verifies the PayPal/Transfer payment
+        // actually came through (the Fixr webhook path sets this true
+        // itself, since Fixr clears the payment immediately).
+        $validated['confirmed'] = $course->cost == 0;
+
+        $enrollment = CourseContact::create($validated);
+        $enrollment->transaction_id = RefId::ref_id($enrollment->id);
+        $enrollment->save();
 
         $data = array_merge($validated, [
             'course_name'     => $course->name,
             'instructor_name' => $course->instructor_name,
+            'cost'            => $course->cost,
+            'payment_method_label' => $paymentMethod?->label,
+            'transaction_id'  => $enrollment->transaction_id,
         ]);
 
         Mail::to($course->instructor_email)->send(new CourseInquiryMailer($data));
         Mail::to($validated['email'])->send(new CourseInquiryConfirmationMailer($data));
 
         return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * Admin marks a class enrollment's payment as confirmed (or reverts
+     * it) — same shape as TicketSaleController::updateNoShow().
+     */
+    public function updateConfirmed(Request $request, int $id): JsonResponse
+    {
+        $enrollment = CourseContact::findOrFail($id);
+        $enrollment->confirmed = $request->input('confirmed');
+        $enrollment->save();
+
+        return response()->json(['status' => 'success', 'confirmed' => $enrollment->confirmed]);
     }
 }

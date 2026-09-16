@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ActiveSeason;
 use App\Mail\AngelDonationMailer;
+use App\Mail\CourseInquiryMailer;
 use App\Mail\FlexPurchaseMailer;
 use App\Mail\TicketSaleMailer;
 use App\Models\Angel;
 use App\Models\AngelLevel;
+use App\Models\Course;
+use App\Models\CourseContact;
 use App\Models\FixrWebhookResponse;
 use App\Models\Patron;
 use App\Models\PatronFlexPackage;
@@ -243,11 +246,72 @@ class FixrWebhooksController extends Controller
             ], 200);
         }
 
-        logger()->error('Fixr webhook: no performance or angel level found matching event_id', ['event_id' => $eventId]);
+        $course = $this->findByFixrLink(Course::whereNotNull('fixr')->get(), $eventId);
+
+        if ($course) {
+            $patron = Patron::firstOrCreate(
+                ['email' => $holder['email']],
+                [
+                    'first_name' => $holder['first_name'],
+                    'last_name' => $holder['last_name'],
+                    'phone' => $holder['mobile_number'] ?? null,
+                ]
+            );
+
+            $enrollment = CourseContact::create([
+                'course_id' => $course->id,
+                'patron_id' => $patron->id,
+                'first_name' => $holder['first_name'],
+                'last_name' => $holder['last_name'],
+                'email' => $holder['email'],
+                'phone' => $holder['mobile_number'] ?? null,
+                'payment_method_id' => $creditCardMethod?->id,
+                'transaction_id' => $validated['payload']['order_reference'],
+                // Fixr clears the payment immediately, unlike PayPal/Transfer
+                // enrollments which start unconfirmed until an admin verifies them.
+                'confirmed' => true,
+            ]);
+
+            // Box-office notification only — Fixr sends its own confirmation
+            // to the enrollee as the payment processor, so we don't duplicate it.
+            try {
+                Mail::to(config('mail.admin_to.address'))->send(new CourseInquiryMailer([
+                    'course_name' => $course->name,
+                    'instructor_name' => $course->instructor_name,
+                    'first_name' => $enrollment->first_name,
+                    'last_name' => $enrollment->last_name,
+                    'email' => $enrollment->email,
+                    'phone' => $enrollment->phone,
+                    'questions' => null,
+                    'cost' => $course->cost,
+                    'payment_method_label' => $creditCardMethod?->label,
+                    'transaction_id' => $enrollment->transaction_id,
+                ]));
+            } catch (Exception $e) {
+                logger()->error('Failed to send course enrollment notification email', [
+                    'error' => $e->getMessage(),
+                    'course_contact_id' => $enrollment->id,
+                ]);
+            }
+
+            FixrWebhookResponse::create([
+                'patron_id' => $patron->id,
+                'event' => $validated['event'],
+                'payload' => json_encode($request->all()),
+                'message_id' => $validated['message_id'],
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'course_contact_id' => $enrollment->id,
+            ], 200);
+        }
+
+        logger()->error('Fixr webhook: no matching performance, angel level, flex link, or course found', ['event_id' => $eventId]);
 
         return response()->json([
             'status' => 'error',
-            'message' => 'No matching performance or angel level found',
+            'message' => 'No matching performance, angel level, flex link, or course found',
         ], 422);
     }
 

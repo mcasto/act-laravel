@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -80,5 +81,15 @@ class Course extends Model
     public function contacts()
     {
         return $this->hasMany(CourseContact::class);
+    }
+
+    /**
+     * Alias so FixrWebhooksController::findByFixrLink() — which reads
+     * ->fixr_link on every record type (Performance, AngelLevel, ...) — can
+     * accept a Course unmodified, without touching that shared method.
+     */
+    protected function fixrLink(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->fixr);
     }
 }

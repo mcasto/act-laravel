@@ -55,6 +55,7 @@
     <course-enrollees-dialog
       v-model="enrolleesDialog.visible"
       :contacts="enrolleesDialog.contacts"
+      :is-read-only="isReadOnly"
     ></course-enrollees-dialog>
   </div>
 </template>

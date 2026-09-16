@@ -65,7 +65,7 @@
                 v-slot="scope"
                 buttons
               >
-                <q-time v-model="scope.value" mask="HH:mm:00"></q-time>
+                <time-select v-model="scope.value" />
               </q-popup-edit>
             </div>
           </q-td>
@@ -165,6 +165,7 @@ import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { add, format, formatISO9075, parseISO, sub } from "date-fns";
 import { clone } from "lodash-es";
+import TimeSelect from "src/components/TimeSelect.vue";
 import { computed } from "vue";
 
 const store = useStore();

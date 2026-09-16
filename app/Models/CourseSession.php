@@ -10,4 +10,16 @@ class CourseSession extends Model
 {
     /** @use HasFactory<\Database\Factories\CourseSessionFactory> */
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'course_id',
+        'date',
+        'start',
+        'end',
+    ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
