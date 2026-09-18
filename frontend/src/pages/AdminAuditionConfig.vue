@@ -68,6 +68,7 @@
 </template>
 
 <script setup>
+import { matFontDownload, matFormatSize } from "@quasar/extras/material-icons";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
@@ -87,7 +88,7 @@ const toolbar = [
   [
     {
       label: "Font Size",
-      icon: "format_size",
+      icon: matFormatSize,
       fixedLabel: true,
       fixedIcon: true,
       list: "no-icons",
@@ -103,7 +104,7 @@ const toolbar = [
     },
     {
       label: "Font Family",
-      icon: "font_download",
+      icon: matFontDownload,
       fixedIcon: true,
       list: "no-icons",
       options: [
