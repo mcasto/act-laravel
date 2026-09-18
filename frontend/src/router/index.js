@@ -35,7 +35,7 @@ export default defineRouter(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  Router.beforeEach((to, from, next) => {
+  Router.beforeEach(async (to, from, next) => {
     const store = useStore();
 
     // Admin route navigation (sidebar links, dashboard tiles) often waits on
@@ -59,8 +59,27 @@ export default defineRouter(function (/* { store, ssrContext } */) {
       }
     }
 
-    if (store.admin?.user) {
-      store.refreshPermissions();
+    // A token can go stale server-side (revoked, deleted from
+    // personal_access_tokens, expired) with no client-side signal —
+    // store.admin.user just sits in localStorage until an explicit sign-out.
+    // Confirm it's genuinely still valid before letting the user into
+    // anything gated by requireAuth, rather than trusting its mere
+    // presence — this doubles as the existing permissions refresh.
+    if (to.meta.requireAuth && store.admin?.user) {
+      try {
+        await store.refreshPermissions();
+      } catch (error) {
+        if (error?.status === 401) {
+          store.admin.user = null;
+          if (to.path != "/sign-in") {
+            next("/sign-in");
+            return;
+          }
+        }
+        // Any other failure (network blip, 500, ...) isn't proof the
+        // session itself is invalid — don't lock someone out of a page
+        // they were legitimately signed into over a transient error.
+      }
     }
 
     next();
