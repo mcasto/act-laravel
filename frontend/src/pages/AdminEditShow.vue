@@ -49,7 +49,11 @@
                       </q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable to="/admin/audition-config">
+                  <q-item
+                    v-if="canSeeAuditions"
+                    clickable
+                    :to="`/admin/auditions/${store.admin.show.id}`"
+                  >
                     <q-item-section>
                       <q-item-label>
                         Audition Config
@@ -72,6 +76,17 @@
                     <q-item-section>
                       <q-item-label>
                         Gallery
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item
+                    v-if="canSeeVolunteerNeeds"
+                    clickable
+                    :to="`/admin/volunteer-needs/${store.admin.show.id}`"
+                  >
+                    <q-item-section>
+                      <q-item-label>
+                        Volunteer Needs
                       </q-item-label>
                     </q-item-section>
                   </q-item>
@@ -183,6 +198,16 @@ const store  = useStore();
 
 const isReadOnly = computed(
   () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+);
+
+// Auditions and Volunteer Needs are independently-permissioned sections
+// (not implied by "shows" access) — only show these gear-menu shortcuts
+// when the viewer actually has at least read-only access to them.
+const canSeeAuditions = computed(
+  () => getPermissionLevel(store.admin.user, "auditions") !== "none",
+);
+const canSeeVolunteerNeeds = computed(
+  () => getPermissionLevel(store.admin.user, "volunteer-needs") !== "none",
 );
 
 const uploadHeaders = ref([

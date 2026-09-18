@@ -15,10 +15,23 @@ use Symfony\Component\HttpFoundation\Response;
  * hidden. Not used for the "users" section, which has its own bespoke
  * self-edit/hasFullUsersAccess() logic in UserController — that doesn't
  * fit this generic none/read-only/full shape.
+ *
+ * $sections may list more than one section, e.g.
+ * 'permission:shows,auditions' — used by routes shared across several
+ * independently-gated sections (e.g. a show lookup used by both the Shows
+ * and Auditions admin areas). Laravel splits a comma-separated middleware
+ * parameter into separate positional arguments (same mechanism as
+ * 'throttle:60,1'), which is why this is variadic rather than doing its own
+ * comma-splitting. The user's highest access level across the listed
+ * sections wins (full > read-only > none), then the usual
+ * full/read-only/none logic applies. A single section behaves exactly as
+ * before.
  */
 class CheckSectionPermission
 {
-    public function handle(Request $request, Closure $next, string $section): Response
+    private const RANK = ['none' => 0, 'read-only' => 1, 'full' => 2];
+
+    public function handle(Request $request, Closure $next, string ...$sections): Response
     {
         $user = $request->user();
 
@@ -33,8 +46,12 @@ class CheckSectionPermission
         }
 
         $access = UserPermission::where('user_id', $user->id)
-            ->where('section', $section)
-            ->value('access') ?? 'none';
+            ->whereIn('section', $sections)
+            ->pluck('access')
+            ->reduce(
+                fn ($best, $current) => self::RANK[$current] > self::RANK[$best] ? $current : $best,
+                'none',
+            );
 
         if ($access === 'none') {
             return response()->json([

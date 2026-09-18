@@ -75,7 +75,7 @@ import { computed, ref } from "vue";
 const store = useStore();
 
 const isReadOnly = computed(
-  () => getPermissionLevel(store.admin.user, "shows") === "read-only",
+  () => getPermissionLevel(store.admin.user, "auditions") === "read-only",
 );
 
 const formRef = ref(null);

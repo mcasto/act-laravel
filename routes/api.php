@@ -80,7 +80,7 @@ Route::put('/announcement-banner', [AnnouncementBannerController::class, 'update
 /**
  * Show-related Routes
  */
-Route::middleware(['auth:sanctum', 'permission:shows'])->get('all-shows', [ShowController::class, 'index']);
+Route::middleware(['auth:sanctum', 'permission:shows,auditions,volunteer-needs'])->get('all-shows', [ShowController::class, 'index']);
 Route::get('shows/{id}', [ShowController::class, 'show']);
 Route::get('shows/slug/{slug}', [ShowController::class, 'bySlug']);
 Route::get('season-shows', [ShowController::class, 'seasonShows']);
@@ -91,7 +91,7 @@ Route::middleware(['auth:sanctum', 'permission:shows'])->get('admin/flex-link/{s
 // Protected routes (requires auth)
 Route::middleware(['auth:sanctum', 'permission:shows'])->post('/create-show', [ShowController::class, 'create']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->post('/update-show', [ShowController::class, 'update']);
-Route::middleware(['auth:sanctum', 'permission:shows'])->get('show/{id}', [ShowController::class, 'show']);
+Route::middleware(['auth:sanctum', 'permission:shows,auditions,volunteer-needs'])->get('show/{id}', [ShowController::class, 'show']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->delete('shows/{id}', [ShowController::class, 'destroy']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->get('new-show-template', [ShowController::class, 'newShow']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->put('update-tentative/{id}', [ShowController::class, 'updateTentative']);
@@ -250,11 +250,11 @@ Route::post('/message-us', [MessageUsController::class, 'store']);
  */
 Route::get('/current-audition', [AuditionController::class, 'current']);
 Route::get('/audition/{id}', [AuditionController::class, 'show'])
-    ->middleware(['auth:sanctum', 'permission:shows']);
+    ->middleware(['auth:sanctum', 'permission:auditions']);
 Route::post('/audition', [AuditionController::class, 'store'])
-    ->middleware(['auth:sanctum', 'permission:shows']);
+    ->middleware(['auth:sanctum', 'permission:auditions']);
 Route::put('/audition/{id}', [AuditionController::class, 'update'])
-    ->middleware(['auth:sanctum', 'permission:shows']);
+    ->middleware(['auth:sanctum', 'permission:auditions']);
 Route::post('/audition-contact', [AuditionContactController::class, 'create']);
 
 /**

@@ -1,4 +1,5 @@
 import callApi from "src/assets/call-api";
+import getCurrentShow from "src/assets/get-current-show";
 import { useStore } from "src/stores/store";
 
 const routes = [
@@ -389,6 +390,96 @@ const routes = [
             },
           },
           {
+            // Auditions never apply to a show once it's run its course, so
+            // this never shows a show picker — it jumps straight to
+            // whichever show is currently running or up next (same
+            // "Current Show" definition AdminShows.vue uses). Falls back to
+            // rendering AdminAuditions.vue's own "no upcoming show" message
+            // only in the rare case nothing qualifies.
+            name: "admin-auditions",
+            path: "auditions",
+            component: () => import("src/pages/AdminAuditions.vue"),
+            beforeEnter: async (to, from, next) => {
+              const store = useStore();
+              await store.getAllShows();
+
+              const show = getCurrentShow(store.admin.shows);
+              if (show) {
+                next(`/admin/auditions/${show.id}`);
+                return;
+              }
+              next();
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 16,
+              label: "Auditions",
+            },
+          },
+          {
+            name: "admin-auditions-show",
+            path: "auditions/:id",
+            component: () => import("src/pages/AdminAuditionConfig.vue"),
+            beforeEnter: async (to) => {
+              const store = useStore();
+              await store.editShow(to.params.id);
+              await store.getAuditionConfig();
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              label: "Audition Config",
+              section: "auditions",
+            },
+          },
+          {
+            // Same "jump straight to the current/upcoming show" behavior as
+            // admin-auditions above — volunteer needs are never relevant to
+            // a show that's already run.
+            name: "admin-volunteer-needs",
+            path: "volunteer-needs",
+            component: () => import("src/pages/AdminVolunteerNeeds.vue"),
+            beforeEnter: async (to, from, next) => {
+              const store = useStore();
+              await store.getAllShows();
+
+              const show = getCurrentShow(store.admin.shows);
+              if (show) {
+                next(`/admin/volunteer-needs/${show.id}`);
+                return;
+              }
+              next();
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 17,
+              label: "Volunteer Needs",
+            },
+          },
+          {
+            name: "admin-volunteer-needs-show",
+            path: "volunteer-needs/:id",
+            component: () => import("src/pages/AdminVolunteerNeedsShow.vue"),
+            beforeEnter: async (to) => {
+              const store = useStore();
+              await store.editShow(to.params.id);
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: false,
+              label: "Volunteer Needs",
+              section: "volunteer-needs",
+            },
+          },
+          {
             name: "admin-ticket-sales",
             path: "ticket-sales",
             component: () => import("src/pages/AdminTicketSales.vue"),
@@ -724,22 +815,6 @@ const routes = [
               admin: true,
               nav: false,
               label: "Edit Show",
-              section: "shows",
-            },
-          },
-          {
-            name: "admin-audition-config",
-            path: "audition-config",
-            component: () => import("src/pages/AdminAuditionConfig.vue"),
-            beforeEnter: async () => {
-              const store = useStore();
-              await store.getAuditionConfig();
-            },
-            meta: {
-              requireAuth: true,
-              admin: true,
-              nav: false,
-              label: "Audition Config",
               section: "shows",
             },
           },
