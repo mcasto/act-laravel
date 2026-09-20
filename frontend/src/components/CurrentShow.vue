@@ -9,14 +9,20 @@
   </div>
 
   <div v-else>
-    <q-toolbar class="q-py-none">
-      <q-toolbar-title class="text-center">
+    <div class="hero-band text-white text-center q-py-md q-px-md">
+      <div class="text-h4 text-weight-bold">
         {{ show.active ? "Currently Playing!" : "Up Next" }}
-      </q-toolbar-title>
-    </q-toolbar>
-    <q-separator></q-separator>
+      </div>
+    </div>
 
     <div id="show-details" class="row q-gutter-x-sm q-pa-md">
+      <div class="col-12 text-h6 text-center">
+        {{ show?.name }}
+      </div>
+      <div class="col-12 text-caption q-mb-sm text-center">
+        {{ performanceDates }}
+      </div>
+
       <div class="col-12 text-center">
         <poster-with-banner
           v-if="show?.poster"
@@ -30,13 +36,6 @@
         :class="Screen.gt.md ? 'q-mx-lg' : ''"
         id="show-overview"
       >
-        <div class="text-h6 text-center">
-          {{ show?.name }}
-        </div>
-        <div class="text-caption q-mb-sm text-center">
-          {{ performanceDates }}
-        </div>
-
         <div class="text-subtitle1 text-center text-bold q-mb-sm">
           {{ show?.tagline }}
         </div>

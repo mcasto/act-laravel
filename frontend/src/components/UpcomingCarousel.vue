@@ -1,11 +1,10 @@
 <template>
   <div>
-    <q-toolbar class="q-py-none">
-      <q-toolbar-title class="text-center">
+    <div class="hero-band hero-band-upcoming text-white text-center q-py-md q-px-md">
+      <div class="text-h4 text-weight-bold">
         Upcoming Shows
-      </q-toolbar-title>
-    </q-toolbar>
-    <q-separator></q-separator>
+      </div>
+    </div>
 
     <div v-if="shows?.length == 0">
       <q-img

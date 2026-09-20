@@ -22,6 +22,38 @@
     height: 100vh;
 }
 
+// Gradient title band, introduced on the class detail page (the "Booth
+// Camp" style heading above a course's poster) and reused wherever a
+// section needs that same prominent themed header — e.g. the homepage's
+// "Up Next"/"Currently Playing!" and "Upcoming Shows" toolbars.
+.hero-band {
+    background: linear-gradient(135deg, $secondary, $primary);
+}
+
+// The homepage sits "Up Next" and "Upcoming Shows" side by side once the
+// viewport is wide enough (Quasar's sm breakpoint, 600px — matches the
+// Screen.lt.sm check IndexPage.vue uses to switch its q-splitter between
+// horizontal/vertical). At that width, two identically-angled gradients
+// sitting shoulder to shoulder both "point" the same way, which reads
+// oddly for a mirrored pair of columns — so the right-hand ("Upcoming
+// Shows") band reverses direction there. Stacked on narrower screens, it
+// falls back to matching .hero-band's own direction.
+.hero-band-upcoming {
+    @media (min-width: 600px) {
+        background: linear-gradient(135deg, $primary, $secondary);
+    }
+}
+
+// Small colored header band used atop a card section to label it (e.g.
+// "Class Sessions", "Your Instructor", "About This Class" on the class
+// detail page) — pair with a Quasar bg-*/text-* utility class on the same
+// element for the actual coloring, this just handles the icon+label layout.
+.section-band {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 
 /* support-us */
 .container {

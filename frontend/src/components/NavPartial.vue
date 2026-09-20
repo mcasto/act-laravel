@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar class="bg-primary text-white shadow-4">
+  <q-toolbar class="bg-secondary text-white shadow-4">
     <q-tabs v-if="Screen.gt.md">
       <q-route-tab
         v-for="route of routes"
@@ -41,7 +41,7 @@
   <q-drawer
     v-if="Screen.lt.lg"
     v-model="drawer"
-    class="bg-primary text-white"
+    class="bg-secondary text-white"
     overlay
   >
     <nav-drawer :routes="routes"></nav-drawer>

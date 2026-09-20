@@ -9,7 +9,7 @@
         <router-view />
         <global-items v-if="!adminPath"></global-items>
       </q-page>
-      <q-footer class="flex items-center q-pr-sm">
+      <q-footer class="bg-secondary text-white flex items-center q-pr-sm">
         <q-btn flat :icon="fasToolbox" to="/admin" v-if="!adminPath">
           <q-tooltip>Admin</q-tooltip>
         </q-btn>
