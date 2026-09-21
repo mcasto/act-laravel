@@ -1,7 +1,11 @@
 <template>
   <div class="course-info-page q-mx-auto q-pa-md" style="max-width: 900px;">
     <div class="q-gutter-y-lg">
-      <course-details :course="course" @enroll="openEnroll"></course-details>
+      <course-details
+        :course="course"
+        :enrollment-open="enrollmentOpen"
+        @enroll="openEnroll"
+      ></course-details>
 
       <course-sessions
         v-if="course.sessions?.length > 0"
@@ -19,19 +23,41 @@
       </q-card>
 
       <q-card flat class="cta-banner bg-primary text-white text-center q-pa-lg">
-        <div class="text-h6 q-mb-xs">Ready to join {{ course.name }}?</div>
-        <div class="text-subtitle1 q-mb-md">
-          ${{ course.cost }} · Enrollment through
-          {{ formatDate(course.enrollment_end) }}
-        </div>
-        <q-btn
-          label="Enroll Now"
-          color="white"
-          text-color="primary"
-          size="lg"
-          unelevated
-          @click="openEnroll"
-        ></q-btn>
+        <template v-if="enrollmentOpen">
+          <div class="text-h6 q-mb-xs">Ready to join {{ course.name }}?</div>
+          <div class="text-subtitle1 q-mb-md">
+            ${{ course.cost }} · Enrollment through
+            {{ formatDate(course.enrollment_end) }}
+          </div>
+          <q-btn
+            label="Enroll Now"
+            color="white"
+            text-color="primary"
+            size="lg"
+            unelevated
+            @click="openEnroll"
+          ></q-btn>
+        </template>
+        <template v-else>
+          <div class="text-h6 q-mb-xs">Enrollment Is Not Currently Open</div>
+          <div class="text-subtitle1 q-mb-md">
+            ${{ course.cost }} ·
+            <template v-if="enrollmentStatus === 'upcoming'">
+              Enrollment opens {{ formatDate(course.enrollment_start) }}
+            </template>
+            <template v-else>
+              Enrollment closed {{ formatDate(course.enrollment_end) }}
+            </template>
+          </div>
+          <q-btn
+            label="Enroll Now"
+            color="white"
+            text-color="primary"
+            size="lg"
+            unelevated
+            disable
+          ></q-btn>
+        </template>
       </q-card>
     </div>
   </div>
@@ -74,6 +100,27 @@ const enrollForm = ref(emptyEnrollForm());
 const course = computed(() => {
   return store.course;
 });
+
+// "upcoming"/"open"/"closed" — mirrors the exact enrollment_start <= now <=
+// enrollment_end window CourseController uses to decide whether a class
+// shows up on /classes at all (courseDetails()/previewEnrollment()). Real
+// /class-details pages are only reachable for classes already inside that
+// window, so this is normally "open" there — but /classes/preview
+// deliberately bypasses the window to show the next upcoming class before
+// enrollment starts, so Enroll Now needs its own live check rather than
+// assuming reachability implies eligibility.
+const enrollmentStatus = computed(() => {
+  if (!course.value?.enrollment_start || !course.value?.enrollment_end) {
+    return "closed";
+  }
+
+  const now = new Date();
+  if (now < parseISO(course.value.enrollment_start)) return "upcoming";
+  if (now > parseISO(course.value.enrollment_end)) return "closed";
+  return "open";
+});
+
+const enrollmentOpen = computed(() => enrollmentStatus.value === "open");
 
 const formatDate = (date) => {
   return format(parseISO(date), "PP");

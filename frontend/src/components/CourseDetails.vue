@@ -49,11 +49,12 @@
         </div>
 
         <q-btn
-          label="Enroll Now"
+          :label="enrollmentOpen ? 'Enroll Now' : 'Enrollment Not Yet Open'"
           color="secondary"
           size="lg"
           unelevated
           class="full-width q-mt-md"
+          :disable="!enrollmentOpen"
           @click="$emit('enroll')"
         ></q-btn>
       </div>
@@ -66,7 +67,10 @@ import { matEvent, matPayments, matPlace } from "@quasar/extras/material-icons";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 
-const props = defineProps(["course"]);
+const props = defineProps({
+  course: { type: Object, required: true },
+  enrollmentOpen: { type: Boolean, default: true },
+});
 
 defineEmits(["enroll"]);
 
