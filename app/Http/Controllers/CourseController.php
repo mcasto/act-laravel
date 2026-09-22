@@ -141,6 +141,11 @@ class CourseController extends Controller
         // Write the message content to the blade view file
         file_put_contents($viewPath, $rec['message']);
 
+        // Course::getMessageAttribute() caches the rendered view for an
+        // hour, keyed by slug — clear it defensively in case a prior
+        // (deleted) course ever cached under this same slug.
+        Cache::forget("course-message-{$rec['slug']}");
+
         return response()->json($course);
     }
 
@@ -191,6 +196,13 @@ class CourseController extends Controller
 
         // Write the message content to the blade view file
         file_put_contents($viewPath, $rec['message']);
+
+        // Without this, Course::getMessageAttribute()'s hour-long cache
+        // keeps serving the pre-edit rendered content — the admin form
+        // itself shows what was just typed (it's local state), but
+        // reopening this course (or viewing it publicly) afterward would
+        // show stale content until the cache happened to expire.
+        Cache::forget("course-message-{$course->slug}");
 
         return response()->json($course);
     }
