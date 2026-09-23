@@ -113,6 +113,7 @@ class TicketSaleController extends Controller
             'transfer_date' => 'sometimes|nullable|date',
             'special_request' => 'sometimes|nullable|string',
             'send_mail' => 'sometimes|boolean',
+            'confirmed' => 'sometimes|boolean',
             'tickets' => 'sometimes|array',
             'tickets.*' => 'nullable|string|max:255',
         ]);
@@ -166,6 +167,7 @@ class TicketSaleController extends Controller
             'sold_at'           => now(),
             'quantity'          => $validated['quantity'],
             'payment_method_id' => $paymentMethod->id,
+            'confirmed'         => $validated['confirmed'] ?? false,
         ];
 
         $ticketSale = TicketSale::create($rec);

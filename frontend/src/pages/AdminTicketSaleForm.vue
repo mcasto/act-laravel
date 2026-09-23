@@ -78,9 +78,9 @@
         ></q-input>
 
         <q-checkbox
-          v-if="isEdit"
-          v-model="form.confirmed"
+          :model-value="form.confirmed"
           label="Payment Confirmed"
+          @update:model-value="onConfirmedInput"
         ></q-checkbox>
 
         <q-input
@@ -193,8 +193,14 @@ const form = ref(
         performance: null,
         payment_method: null,
         quantity: 1,
+        confirmed: false,
       },
 );
+
+const onConfirmedInput = (val) => {
+  form.value.confirmed = val;
+  confirmedTouched.value = true;
+};
 
 // A comp row (merged into store.admin.ticket_sales by TicketSaleController::allSales())
 // has no `tickets` array, only a single `number` — this section only applies
@@ -219,7 +225,22 @@ const onTicketNameInput = (index, value) => {
 // that field themselves — after that it's just a normal independent value.
 const ticket0Touched = ref(false);
 
+// Comp & flex tickets are effectively pre-paid/no-cost, so payment is
+// treated as confirmed by default — the admin can still uncheck it
+// manually, which then sticks even if the payment method is changed again.
+const confirmedTouched = ref(false);
+
 if (!isEdit) {
+  watch(
+    () => form.value.payment_method,
+    (pm) => {
+      if (confirmedTouched.value) return;
+      const type = pm?.value?.value;
+      form.value.confirmed = type === "comp" || type === "flex";
+    },
+    { immediate: true },
+  );
+
   watch(
     () => [form.value.first_name, form.value.last_name],
     ([firstName, lastName]) => {
@@ -274,6 +295,7 @@ const onSubmit = async () => {
     performance_id: form.value.performance?.value?.id,
     type: form.value.payment_method?.value?.value,
     quantity: form.value.quantity,
+    confirmed: form.value.confirmed,
     send_mail: store.send_mail,
     transfer_date:
       form.value.type == "transfer"
@@ -283,7 +305,6 @@ const onSubmit = async () => {
 
   if (isEdit) {
     payload.id = existingSale.id;
-    payload.confirmed = form.value.confirmed;
     payload.reason_changed = form.value.reason_changed;
     if (ticketRows.value.length) {
       payload.tickets = ticketRows.value.map((t) => ({ id: t.id, name: t.name }));
