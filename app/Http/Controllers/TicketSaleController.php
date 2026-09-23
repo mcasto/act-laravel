@@ -108,7 +108,7 @@ class TicketSaleController extends Controller
             'first_name' => 'required|string',
             'last_name'  => 'required|string',
             'email'      => 'required|email',
-            'phone'      => 'required|string',
+            'phone'      => 'nullable|string',
             'quantity' => 'required|integer|min:1',
             'transfer_date' => 'sometimes|nullable|date',
             'special_request' => 'sometimes|nullable|string',
