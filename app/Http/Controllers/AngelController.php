@@ -47,7 +47,7 @@ class AngelController extends Controller
         $validated['payment_method_id'] = $paymentMethod->id;
         unset($validated['payment_method_value']);
 
-        $validated['benefit'] = implode("\n", $level->benefits ?? []);
+        $validated['benefit'] = $this->benefitsAsText($level->benefits);
         $validated['season'] = ActiveSeason::get();
         // Founding-angel status is a permanent, patron-level fact granted
         // only by an admin — never self-declared on this public form, only
@@ -112,7 +112,7 @@ class AngelController extends Controller
         $validated['payment_method_id'] = $paymentMethod->id;
         unset($validated['payment_method_value']);
 
-        $validated['benefit'] = implode("\n", $level->benefits ?? []);
+        $validated['benefit'] = $this->benefitsAsText($level->benefits);
         $validated['founding_angel'] = $this->resolveFoundingAngel($patron, $validated['founding_angel'] ?? false);
 
         $angel = Angel::create($validated);
@@ -145,7 +145,7 @@ class AngelController extends Controller
         $validated['payment_method_id'] = $paymentMethod->id;
         unset($validated['payment_method_value']);
 
-        $validated['benefit'] = implode("\n", $level->benefits ?? []);
+        $validated['benefit'] = $this->benefitsAsText($level->benefits);
         // patron_id is deliberately not editable here — delete and re-add if
         // the wrong patron was linked, matching PatronController::updateFlexPackage.
         $validated['founding_angel'] = $this->resolveFoundingAngel($angel->patron, $validated['founding_angel'] ?? false);
@@ -229,5 +229,15 @@ class AngelController extends Controller
             ->values();
 
         return response()->json($angels);
+    }
+
+    /**
+     * Flattens an angel level's benefits (each a {text, concession} object
+     * — see AngelLevel::benefits()) into the plain newline-joined text
+     * snapshot stored on an Angel record at the time it's created/updated.
+     */
+    private function benefitsAsText(?array $benefits): string
+    {
+        return implode("\n", array_map(fn ($benefit) => $benefit->text, $benefits ?? []));
     }
 }

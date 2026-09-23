@@ -42,8 +42,9 @@ class AngelLevelController extends Controller
             'label'      => 'required|string|max:255',
             'min_amount' => 'required|integer|min:0',
             'fixr_link'  => 'nullable|string',
-            'benefits'   => 'nullable|array',
-            'benefits.*' => 'string',
+            'benefits'             => 'nullable|array',
+            'benefits.*.text'      => 'nullable|string',
+            'benefits.*.concession' => 'sometimes|boolean',
         ]);
 
         $benefits = $validated['benefits'] ?? [];
@@ -67,8 +68,9 @@ class AngelLevelController extends Controller
             'label'      => 'required|string|max:255',
             'min_amount' => 'required|integer|min:0',
             'fixr_link'  => 'nullable|string',
-            'benefits'   => 'nullable|array',
-            'benefits.*' => 'string',
+            'benefits'             => 'nullable|array',
+            'benefits.*.text'      => 'nullable|string',
+            'benefits.*.concession' => 'sometimes|boolean',
         ]);
 
         $benefits = $validated['benefits'] ?? [];
@@ -102,13 +104,17 @@ class AngelLevelController extends Controller
     /**
      * Persist an angel level's benefits list, filtering out blank entries
      * (the frontend list editor can leave an empty row while it's being
-     * typed into). Stored as a plain JSON array — see AngelLevel::benefits().
+     * typed into). Stored as a plain JSON array of {text, concession}
+     * objects — see AngelLevel::benefits().
      */
     private function saveBenefits(int $levelId, array $benefits): void
     {
         $benefits = array_values(array_filter(
-            array_map('trim', $benefits),
-            fn ($benefit) => $benefit !== ''
+            array_map(fn ($benefit) => [
+                'text' => trim($benefit['text'] ?? ''),
+                'concession' => (bool) ($benefit['concession'] ?? false),
+            ], $benefits),
+            fn ($benefit) => $benefit['text'] !== ''
         ));
 
         $path = "angel-config/{$levelId}.json";

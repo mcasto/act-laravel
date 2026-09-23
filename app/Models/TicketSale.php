@@ -23,7 +23,6 @@ class TicketSale extends Model
         'no_show',
         'confirmed',
         'reason_changed',
-        'guest_list',
     ];
 
     protected $casts = [
@@ -53,19 +52,28 @@ class TicketSale extends Model
 
     /**
      * Issues one internal ticket ID per unit of quantity, drawn from this
-     * sale's show's shared sequence — the first named after the purchaser,
-     * the rest defaulting to their own zero-padded number as a placeholder
-     * name until an admin knows who they belong to.
+     * sale's show's shared sequence. $names is a positional array of
+     * admin-entered guest names from the "Tickets" section of the New
+     * Ticket Sale form (may be shorter than quantity, or contain blank
+     * entries for any guest not yet known) — index 0 falls back to the
+     * purchaser's own name when left blank, every other index falls back
+     * to its own zero-padded ticket number as a placeholder name until an
+     * admin knows who it belongs to.
      */
-    public function issueTickets(string $purchaserName): void
+    public function issueTickets(string $purchaserName, array $names = []): void
     {
         $show = $this->performance->show;
 
         foreach ($show->reserveTicketNumbers($this->quantity) as $i => $number) {
+            $customName = trim((string) ($names[$i] ?? ''));
+            $formattedNumber = str_pad((string) $number, 3, '0', STR_PAD_LEFT);
+
             $this->tickets()->create([
                 'show_id' => $show->id,
                 'number' => $number,
-                'name' => $i === 0 ? $purchaserName : str_pad((string) $number, 3, '0', STR_PAD_LEFT),
+                'name' => $customName !== ''
+                    ? $customName
+                    : ($i === 0 ? $purchaserName : $formattedNumber),
             ]);
         }
     }

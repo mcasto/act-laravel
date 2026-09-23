@@ -33,7 +33,6 @@ const store = useStore();
 const routes = computed(() =>
   store.router
     .getRoutes()
-    .sort((a, b) => a.meta.order - b.meta.order)
     .filter(({ meta, aliasOf }) => meta.nav && meta.admin && !aliasOf)
     .map(({ meta, path }) => {
       const key = path.replace("/admin/", "");
@@ -48,6 +47,12 @@ const routes = computed(() =>
         permissionLevel,
       };
     })
-    .filter((item) => item.permissionLevel !== "none"),
+    .filter((item) => item.permissionLevel !== "none")
+    // Alphabetical, except Dashboard always leads the list.
+    .sort((a, b) => {
+      if (a.name === "Dashboard") return -1;
+      if (b.name === "Dashboard") return 1;
+      return a.name.localeCompare(b.name);
+    }),
 );
 </script>

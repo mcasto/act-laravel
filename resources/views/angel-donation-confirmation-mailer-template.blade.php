@@ -30,7 +30,7 @@
 
             <div style="background-color: #ffffff; border-left: 4px solid #1a237e; padding: 14px 18px; font-size: 15px; line-height: 1.6; color: #555; border-radius: 0 4px 4px 0;">
                 @foreach ($angel->angelLevel->benefits as $benefit)
-                    <div>{{ $benefit }}</div>
+                    <div>{{ $benefit->text }}</div>
                 @endforeach
             </div>
         @endif

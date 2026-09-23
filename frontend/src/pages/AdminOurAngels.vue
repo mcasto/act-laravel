@@ -78,6 +78,26 @@
       <template #after>
         <q-page class="q-pa-md">
           <div v-if="selectedLevel">
+            <div class="q-mb-lg">
+              <div class="text-subtitle1 text-weight-bold q-mb-xs">
+                {{ selectedLevel.label }} Benefits
+              </div>
+
+              <q-list v-if="selectedLevel.benefits?.length" dense bordered separator>
+                <q-item v-for="(benefit, index) in selectedLevel.benefits" :key="index">
+                  <q-item-section>{{ benefit.text }}</q-item-section>
+                  <q-item-section side v-if="benefit.concession">
+                    <q-badge color="teal" text-color="white">Concession</q-badge>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+              <div v-else class="text-grey text-caption">
+                No benefits configured for this level.
+              </div>
+            </div>
+
+            <q-separator class="q-mb-md" />
+
             <div class="row justify-between items-center q-mb-md">
               <div class="text-h6">{{ selectedLevel.label }} Angels</div>
               <q-btn
@@ -195,11 +215,20 @@
             class="row items-center q-gutter-x-xs q-mb-xs"
           >
             <q-input
-              v-model="levelForm.benefits[index]"
+              v-model="benefit.text"
               dense
               outlined
               class="col"
+              :disable="isReadOnly"
             />
+            <q-checkbox
+              v-model="benefit.concession"
+              label="Concession"
+              dense
+              :disable="isReadOnly"
+            >
+              <q-tooltip>Concession-related (e.g. free drink, free snack)</q-tooltip>
+            </q-checkbox>
             <q-btn
               :icon="matDelete"
               flat
@@ -219,7 +248,7 @@
             :icon="matAdd"
             label="Add Benefit"
             :disable="isReadOnly"
-            @click="levelForm.benefits.push('')"
+            @click="levelForm.benefits.push({ text: '', concession: false })"
           />
         </q-card-section>
 
@@ -453,6 +482,7 @@ import {
   matSearch,
 } from "@quasar/extras/material-icons";
 import { computed, onMounted, ref, watch } from "vue";
+import { cloneDeep } from "lodash-es";
 import { exportFile, Notify } from "quasar";
 import { format, parseISO } from "date-fns";
 import callApi from "src/assets/call-api";
@@ -794,7 +824,10 @@ const openLevelDialog = (level = null) => {
       label: level.label,
       min_amount: level.min_amount,
       fixr_link: level.fixr_link ?? "",
-      benefits: [...(level.benefits ?? [])],
+      // Deep clone — each benefit is now {text, concession}, so a shallow
+      // spread would still alias the same objects the list display reads
+      // from, letting in-progress (or cancelled) edits leak into it.
+      benefits: cloneDeep(level.benefits ?? []),
     };
   } else {
     levelForm.value = {

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ActiveSeason;
 use App\Helpers\RefId;
 use App\Helpers\TheaterSeason;
 use App\Mail\PurchaseConfirmationMailer;
 use App\Mail\TicketSaleMailer;
+use App\Models\Angel;
 use App\Models\Patron;
 use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
@@ -32,6 +34,18 @@ class TicketSaleController extends Controller
     {
         $compPaymentMethod = PaymentMethod::where('value', 'comp')->first();
 
+        // Keyed by patron_id -> that patron's Angel record for the active
+        // season, so each ticket sale can list which of their level's
+        // benefits are concession-related (for the door/box-office print
+        // sheet — see AdminTicketSalesPrint.vue). Scoped to the active
+        // season (not "ever been an angel") since that's what actually
+        // entitles them to perks at a show happening now.
+        $angelByPatron = Angel::whereNotNull('patron_id')
+            ->where('season', ActiveSeason::get())
+            ->with('angelLevel')
+            ->get()
+            ->keyBy('patron_id');
+
         $ticketSales = TicketSale::with([
                 'performance.show',
                 'patron',
@@ -43,7 +57,20 @@ class TicketSaleController extends Controller
             ->orderBy('performances.start_time', 'asc')
             ->select('ticket_sales.*')
             ->get()
-            ->map(fn($sale) => $sale->toArray());
+            ->map(function ($sale) use ($angelByPatron) {
+                $arr = $sale->toArray();
+
+                $angel = $angelByPatron->get($sale->patron_id);
+                $arr['patron']['angel_concession_benefits'] = $angel
+                    ? collect($angel->angelLevel?->benefits ?? [])
+                        ->filter(fn ($benefit) => $benefit->concession ?? false)
+                        ->pluck('text')
+                        ->values()
+                        ->all()
+                    : [];
+
+                return $arr;
+            });
 
         $compTickets = CompTicket::with('performance.show')
             ->join('performances', 'comp_tickets.performance_id', '=', 'performances.id')
@@ -84,7 +111,9 @@ class TicketSaleController extends Controller
             'quantity' => 'required|integer|min:1',
             'transfer_date' => 'sometimes|nullable|date',
             'special_request' => 'sometimes|nullable|string',
-            'send_mail' => 'sometimes|boolean'
+            'send_mail' => 'sometimes|boolean',
+            'tickets' => 'sometimes|array',
+            'tickets.*' => 'nullable|string|max:255',
         ]);
 
         $patron = Patron::firstOrCreate(
@@ -141,7 +170,7 @@ class TicketSaleController extends Controller
         $ticketSale = TicketSale::create($rec);
         $ticketSale->transaction_id = RefId::ref_id($ticketSale->id);
         $ticketSale->save();
-        $ticketSale->issueTickets($patron->first_name . ' ' . $patron->last_name);
+        $ticketSale->issueTickets($patron->first_name . ' ' . $patron->last_name, $validated['tickets'] ?? []);
 
         try {
             $performance = Performance::with('show')->find($validated['performance_id']);
@@ -283,7 +312,6 @@ class TicketSaleController extends Controller
             'no_show'       => 'sometimes|boolean',
             'confirmed'     => 'sometimes|boolean',
             'reason_changed' => 'nullable|string',
-            'guest_list'    => 'nullable|string',
             'tickets'         => 'sometimes|array',
             'tickets.*.id'    => 'required_with:tickets|integer|exists:tickets,id',
             'tickets.*.name'  => 'required_with:tickets|string|max:255',
@@ -310,7 +338,6 @@ class TicketSaleController extends Controller
             'no_show'           => $validated['no_show'] ?? false,
             'confirmed'         => $validated['confirmed'] ?? false,
             'reason_changed'    => $validated['reason_changed'] ?? null,
-            'guest_list'        => $validated['guest_list'] ?? null,
         ]);
 
         foreach ($validated['tickets'] ?? [] as $ticket) {

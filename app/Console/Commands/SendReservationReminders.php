@@ -2,28 +2,35 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\ReservationReminderMailer;
 use App\Models\CompTicket;
 use App\Models\Performance;
 use App\Models\TicketSale;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 
 class SendReservationReminders extends Command
 {
     protected $signature = 'reminders:send';
 
-    protected $description = 'Send reservation reminder emails for performances happening tomorrow';
+    protected $description = 'Log the reservation reminder emails that would be sent for performances happening tomorrow';
+
+    /**
+     * Emails were previously actually sent here, but that path is disabled
+     * for now after an erroneous send caused problems — instead of
+     * Mail::send(), every email this command *would* send is appended as a
+     * row to this CSV so the underlying selection logic (who gets emailed,
+     * for which performance, how many tickets) can be verified against
+     * real data over time before sending is turned back on. To resume
+     * actually sending, swap logWouldSend() calls below for Mail::send()
+     * calls (see git history prior to this change for the exact shape).
+     */
+    private const LOG_PATH = 'app/private/reservation-reminder-log.csv';
 
     public function handle(): void
     {
         $tomorrow = Carbon::tomorrow('America/Guayaquil')->toDateString();
 
-        $performances = Performance::with('show')
-            ->whereDate('date', $tomorrow)
-            ->get();
+        $performances = Performance::whereDate('date', $tomorrow)->get();
 
         if ($performances->isEmpty()) {
             $this->info('No performances tomorrow.');
@@ -31,16 +38,11 @@ class SendReservationReminders extends Command
         }
 
         $performanceIds = $performances->pluck('id');
-        $sent = 0;
-        $failed = 0;
+        $logged = 0;
 
-        // Map performance id -> formatted time for quick lookup
-        $timeByPerformance = $performances->keyBy('id')->map(
-            fn($p) => Carbon::parse($p->start_time)->format('g:i A')
-        );
-
-        $showByPerformance = $performances->keyBy('id')->map(
-            fn($p) => $p->show?->name
+        // Map performance id -> date for quick lookup
+        $dateByPerformance = $performances->keyBy('id')->map(
+            fn($p) => Carbon::parse($p->date)->toDateString()
         );
 
         $sentEmails = [];
@@ -54,21 +56,9 @@ class SendReservationReminders extends Command
             $patron = $sale->patron;
             if (! $patron || in_array($patron->email, $sentEmails)) continue;
 
-            try {
-                Mail::to($patron->email)->send(new ReservationReminderMailer([
-                    'name'             => $patron->first_name . ' ' . $patron->last_name,
-                    'show_name'        => $showByPerformance[$sale->performance_id],
-                    'performance_time' => $timeByPerformance[$sale->performance_id],
-                ]));
-                $sentEmails[] = $patron->email;
-                $sent++;
-            } catch (Exception $e) {
-                $failed++;
-                logger()->error('Failed to send reservation reminder', [
-                    'patron_id' => $patron->id,
-                    'error'     => $e->getMessage(),
-                ]);
-            }
+            $this->logWouldSend($patron->email, $dateByPerformance[$sale->performance_id], $sale->quantity);
+            $sentEmails[] = $patron->email;
+            $logged++;
         }
 
         // Comp tickets (only redeemed ones with a specific performance booked)
@@ -79,23 +69,37 @@ class SendReservationReminders extends Command
         foreach ($compTickets as $comp) {
             if (in_array($comp->email, $sentEmails)) continue;
 
-            try {
-                Mail::to($comp->email)->send(new ReservationReminderMailer([
-                    'name'             => $comp->name,
-                    'show_name'        => $showByPerformance[$comp->performance_id],
-                    'performance_time' => $timeByPerformance[$comp->performance_id],
-                ]));
-                $sentEmails[] = $comp->email;
-                $sent++;
-            } catch (Exception $e) {
-                $failed++;
-                logger()->error('Failed to send comp ticket reminder', [
-                    'comp_ticket_id' => $comp->id,
-                    'error'          => $e->getMessage(),
-                ]);
-            }
+            $this->logWouldSend($comp->email, $dateByPerformance[$comp->performance_id], 1);
+            $sentEmails[] = $comp->email;
+            $logged++;
         }
 
-        $this->info("Reminders sent: {$sent}, failed: {$failed}");
+        $this->info("Reminders logged (not sent): {$logged}");
+    }
+
+    /**
+     * Appends one row to storage/app/private/reservation-reminder-log.csv —
+     * creating it with a header row on first use. $quantity is the number
+     * of tickets on the sale/comp reservation this reminder is for.
+     */
+    private function logWouldSend(string $recipient, string $performanceDate, int $quantity): void
+    {
+        $path = storage_path(self::LOG_PATH);
+        $isNewFile = ! file_exists($path);
+
+        $handle = fopen($path, 'a');
+
+        if ($isNewFile) {
+            fputcsv($handle, ['date_would_have_sent', 'recipient', 'performance_date', 'quantity'], ',', '"', '\\');
+        }
+
+        fputcsv($handle, [
+            now('America/Guayaquil')->toDateString(),
+            $recipient,
+            $performanceDate,
+            $quantity,
+        ], ',', '"', '\\');
+
+        fclose($handle);
     }
 }

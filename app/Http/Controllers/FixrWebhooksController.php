@@ -160,7 +160,7 @@ class FixrWebhooksController extends Controller
                 // the figure that belongs on record.
                 'donation_amount' => $angelLevel->min_amount,
                 'payment_method_id' => $creditCardMethod?->id,
-                'benefit' => implode("\n", $angelLevel->benefits ?? []),
+                'benefit' => implode("\n", array_map(fn ($benefit) => $benefit->text, $angelLevel->benefits ?? [])),
                 'season' => ActiveSeason::get(),
                 // Founding-angel status is a permanent, patron-level fact
                 // granted only by an admin — only inherited here if this

@@ -94,29 +94,19 @@
           v-model="form.reason_changed"
         ></q-input>
 
-        <q-input
-          v-if="isEdit"
-          type="textarea"
-          rows="2"
-          label="Guest List"
-          hint="Only needed for groups larger than 2"
-          stack-label
-          dense
-          outlined
-          v-model="form.guest_list"
-        ></q-input>
-
-        <template v-if="isEdit && ticketRows.length">
+        <template v-if="ticketRows.length">
           <div class="text-caption text-grey-7 q-mt-sm">Tickets</div>
           <q-input
-            v-for="ticket in ticketRows"
-            :key="ticket.id"
+            v-for="(ticket, index) in ticketRows"
+            :key="ticket.id ?? `new-${index}`"
             type="text"
-            :label="`#${ticket.formatted_number}`"
+            :label="isEdit ? `#${ticket.formatted_number}` : `Ticket ${index + 1}`"
+            :hint="!isEdit && index === 0 ? 'Defaults to the purchaser — change if this ticket is for someone else' : undefined"
             stack-label
             dense
             outlined
-            v-model="ticket.name"
+            :model-value="ticket.name"
+            @update:model-value="(val) => onTicketNameInput(index, val)"
           ></q-input>
         </template>
       </div>
@@ -140,7 +130,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
@@ -175,13 +165,6 @@ const paymentMethodOptions = computed(() =>
   })),
 );
 
-// A comp row (merged into store.admin.ticket_sales by TicketSaleController::allSales())
-// has no `tickets` array, only a single `number` — this section only applies
-// to real ticket_sales rows.
-const ticketRows = ref(
-  [...(existingSale?.tickets ?? [])].sort((a, b) => a.number - b.number),
-);
-
 const form = ref(
   isEdit && existingSale
     ? {
@@ -201,7 +184,6 @@ const form = ref(
         quantity: existingSale.quantity,
         confirmed: !!existingSale.confirmed,
         reason_changed: existingSale.reason_changed,
-        guest_list: existingSale.guest_list,
       }
     : {
         email: null,
@@ -213,6 +195,57 @@ const form = ref(
         quantity: 1,
       },
 );
+
+// A comp row (merged into store.admin.ticket_sales by TicketSaleController::allSales())
+// has no `tickets` array, only a single `number` — this section only applies
+// to real ticket_sales rows. On create there's no existingSale at all yet,
+// so seed one blank row per unit of quantity instead — the backend assigns
+// real ticket ids/numbers at save time and autofills anything still blank
+// (see TicketSale::issueTickets()).
+const ticketRows = ref(
+  isEdit
+    ? [...(existingSale?.tickets ?? [])].sort((a, b) => a.number - b.number)
+    : Array.from({ length: form.value.quantity || 1 }, () => ({ name: "" })),
+);
+
+const onTicketNameInput = (index, value) => {
+  ticketRows.value[index].name = value;
+  if (index === 0) ticket0Touched.value = true;
+};
+
+// The first ticket defaults to the purchaser's own name (kept in sync with
+// the First/Last Name fields, in case they're filled in or corrected after
+// quantity is already set) until the admin actually types something into
+// that field themselves — after that it's just a normal independent value.
+const ticket0Touched = ref(false);
+
+if (!isEdit) {
+  watch(
+    () => [form.value.first_name, form.value.last_name],
+    ([firstName, lastName]) => {
+      if (ticket0Touched.value || !ticketRows.value[0]) return;
+      ticketRows.value[0].name = `${firstName ?? ""} ${lastName ?? ""}`.trim();
+    },
+    { immediate: true },
+  );
+
+  // Resize the Tickets section as quantity changes — grow appends blank
+  // rows, shrink drops from the end (preserving already-typed names on the
+  // remaining rows).
+  watch(
+    () => form.value.quantity,
+    (newQty) => {
+      const qty = Math.max(1, Number(newQty) || 1);
+      if (qty > ticketRows.value.length) {
+        while (ticketRows.value.length < qty) {
+          ticketRows.value.push({ name: "" });
+        }
+      } else if (qty < ticketRows.value.length) {
+        ticketRows.value.length = qty;
+      }
+    },
+  );
+}
 
 const getPatron = async () => {
   if (!form.value.email) return;
@@ -252,10 +285,13 @@ const onSubmit = async () => {
     payload.id = existingSale.id;
     payload.confirmed = form.value.confirmed;
     payload.reason_changed = form.value.reason_changed;
-    payload.guest_list = form.value.guest_list;
     if (ticketRows.value.length) {
       payload.tickets = ticketRows.value.map((t) => ({ id: t.id, name: t.name }));
     }
+  } else if (ticketRows.value.length) {
+    // Positional array of guest names, parallel to quantity — blank
+    // entries are autofilled server-side (see TicketSale::issueTickets()).
+    payload.tickets = ticketRows.value.map((t) => t.name);
   }
 
   const response = await callApi({

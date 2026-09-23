@@ -31,7 +31,7 @@
               <th>Last Name</th>
               <th>First Name</th>
               <th class="col-narrow"># Tickets</th>
-              <th>Type</th>
+              <th>Payment Method</th>
               <th class="col-narrow">Amt Due</th>
               <th class="col-narrow">Amt Collected</th>
               <th>Email</th>
@@ -41,6 +41,9 @@
               <th class="col-narrow">Total Paid</th>
               <th class="col-narrow">Comp</th>
               <th class="col-narrow">No Show</th>
+              <th class="col-narrow">Special Seating</th>
+              <th class="col-wrap">Guest List</th>
+              <th class="col-wrap">Angel Benefits</th>
             </tr>
           </thead>
           <tbody>
@@ -72,6 +75,11 @@
                 {{ isComp(rec) ? rec.quantity || 1 : "" }}
               </td>
               <td class="col-narrow"></td>
+              <td class="col-narrow text-center">
+                {{ rec.patron.front_row > 0 ? rec.patron.front_row : "" }}
+              </td>
+              <td>{{ guestList(rec) }}</td>
+              <td>{{ angelBenefits(rec) }}</td>
             </tr>
             <!-- Walk-in blank rows -->
             <tr v-for="i in walkInRows" :key="'wi-' + i" class="walk-in-row">
@@ -86,6 +94,9 @@
               <td class="col-narrow"></td>
               <td class="col-narrow"></td>
               <td class="col-narrow"></td>
+              <td class="col-narrow"></td>
+              <td></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -138,6 +149,19 @@ const sortedRecs = computed(() =>
 const isComp = (rec) => rec.payment_method.value === "comp";
 
 const amountDue = (rec) => ((rec.quantity || 1) * props.ticketPrice).toFixed(2);
+
+// Named guests only — a ticket nobody's put a name to yet is auto-labeled
+// with its own ticket number as a placeholder (see
+// TicketSale::issueTickets()/reconcileTicketCount()), which isn't a guest
+// name worth printing here. Comp rows have no per-ticket breakdown at all.
+const guestList = (rec) =>
+  (rec.tickets ?? [])
+    .filter((ticket) => ticket.name !== ticket.formatted_number)
+    .map((ticket) => ticket.name)
+    .join(", ");
+
+const angelBenefits = (rec) =>
+  (rec.patron?.angel_concession_benefits ?? []).join(", ");
 
 const paidMethods = computed(() =>
   uniqBy(
@@ -192,6 +216,11 @@ const doPrint = () => window.print();
 
 .col-narrow {
   width: 1%;
+}
+
+.col-wrap {
+  white-space: normal;
+  max-width: 220px;
 }
 
 .walk-in-row td {

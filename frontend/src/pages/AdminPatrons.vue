@@ -55,6 +55,43 @@
           </template>
         </q-td>
       </template>
+
+      <template #body-cell-front_row="props">
+        <q-td :props="props">
+          <q-input
+            :model-value="props.value"
+            type="number"
+            dense
+            outlined
+            min="0"
+            max="3"
+            debounce="500"
+            style="max-width: 90px;"
+            :disable="isReadOnly"
+            @update:model-value="(val) => updateFrontRow(props.row, val)"
+          >
+            <q-tooltip>
+              Front-row seats needed (wheelchair, vision-impaired, caretakers, etc.)
+            </q-tooltip>
+          </q-input>
+        </q-td>
+      </template>
+
+      <template #body-cell-comments="props">
+        <q-td :props="props">
+          <q-btn
+            flat
+            round
+            dense
+            :icon="matComment"
+            :color="props.value ? 'primary' : 'grey-5'"
+            @click="openComments(props.row)"
+          >
+            <q-tooltip v-if="props.value">{{ props.value }}</q-tooltip>
+            <q-tooltip v-else>Add a note about this patron</q-tooltip>
+          </q-btn>
+        </q-td>
+      </template>
     </q-table>
 
     <q-dialog v-model="flexHistoryDialog">
@@ -101,16 +138,56 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="commentsDialog.visible">
+      <q-card style="min-width: 420px; max-width: 95vw;">
+        <q-card-section>
+          <div class="text-h6">{{ commentsDialog.patronName }}</div>
+          <div class="text-caption text-grey-7">
+            Admin-only notes — never shown to the patron
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input
+            v-model="commentsDialog.value"
+            type="textarea"
+            outlined
+            autogrow
+            :disable="isReadOnly"
+            placeholder="e.g. Usually ~15 min late — hold their seat if prepaid."
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn
+            flat
+            label="Save"
+            color="primary"
+            :disable="isReadOnly"
+            :loading="commentsDialog.saving"
+            @click="saveComments"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script setup>
-import { matSearch, matStar } from "@quasar/extras/material-icons";
+import { matComment, matSearch, matStar } from "@quasar/extras/material-icons";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
 import callApi from "src/assets/call-api";
+import getPermissionLevel from "src/assets/get-permission-level";
+import { Notify } from "quasar";
 
 const store = useStore();
+
+const isReadOnly = computed(
+  () => getPermissionLevel(store.admin.user, "patrons") === "read-only",
+);
 
 const search = ref("");
 const pagination = ref({ page: 1, rowsPerPage: 15 });
@@ -143,6 +220,19 @@ const columns = [
     field: "flex_remaining",
     align: "center",
     sortable: true,
+  },
+  {
+    name: "front_row",
+    label: "Front Row",
+    field: "front_row",
+    align: "center",
+    sortable: true,
+  },
+  {
+    name: "comments",
+    label: "Notes",
+    field: "comments",
+    align: "center",
   },
 ];
 
@@ -181,5 +271,78 @@ const openFlexHistory = async (patronId) => {
   }
 
   flexHistoryLoading.value = false;
+};
+
+const updateFrontRow = async (row, value) => {
+  const previous = row.front_row;
+  const front_row = value === null || value === "" ? 0 : Number(value);
+
+  if (front_row === previous) return;
+
+  row.front_row = front_row;
+
+  try {
+    const response = await callApi({
+      path: `/admin/patrons/${row.id}`,
+      method: "put",
+      payload: { front_row },
+      useAuth: true,
+      showError: false,
+    });
+
+    if (!response || response.status !== "success") {
+      throw new Error("unexpected response");
+    }
+  } catch (e) {
+    row.front_row = previous;
+    Notify.create({
+      type: "negative",
+      message: "Failed to update front-row seats needed (must be 0-3).",
+    });
+  }
+};
+
+const commentsDialog = ref({
+  visible: false,
+  row: null,
+  patronName: "",
+  value: "",
+  saving: false,
+});
+
+const openComments = (row) => {
+  commentsDialog.value = {
+    visible: true,
+    row,
+    patronName: `${row.first_name} ${row.last_name}`,
+    value: row.comments ?? "",
+    saving: false,
+  };
+};
+
+const saveComments = async () => {
+  const { row, value } = commentsDialog.value;
+  commentsDialog.value.saving = true;
+
+  const response = await callApi({
+    path: `/admin/patrons/${row.id}`,
+    method: "put",
+    payload: { comments: value || null },
+    useAuth: true,
+    showError: false,
+  });
+
+  commentsDialog.value.saving = false;
+
+  if (!response || response.status !== "success") {
+    Notify.create({
+      type: "negative",
+      message: "Failed to save note.",
+    });
+    return;
+  }
+
+  row.comments = response.comments;
+  commentsDialog.value.visible = false;
 };
 </script>

@@ -31,7 +31,7 @@
               :key="`${level.id}-benefit-${index}`"
             >
               <q-item-section>
-                <q-item-label v-html="item"> </q-item-label>
+                <q-item-label v-html="item.text"> </q-item-label>
               </q-item-section>
             </q-item>
           </q-list>

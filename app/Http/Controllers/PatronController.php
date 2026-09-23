@@ -64,10 +64,35 @@ class PatronController extends Controller
                 'flex_remaining' => $hasFlexThisSeason
                     ? $flexPurchased->get($patron->id, 0) - $flexUsed->get($patron->id, 0)
                     : null,
+                'front_row' => $patron->front_row,
+                'comments' => $patron->comments,
             ];
         });
 
         return response()->json($result->values());
+    }
+
+    /**
+     * Update a patron's admin-editable fields from the Patron Management
+     * page — front_row (inline number input) and comments (notes dialog)
+     * are saved independently of each other, so each is "sometimes"
+     * validated rather than both being required on every call.
+     */
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $validated = $request->validate([
+            'front_row' => 'sometimes|required|integer|min:0|max:3',
+            'comments' => 'sometimes|nullable|string',
+        ]);
+
+        $patron = Patron::findOrFail($id);
+        $patron->update($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'front_row' => $patron->front_row,
+            'comments' => $patron->comments,
+        ]);
     }
 
     /**
