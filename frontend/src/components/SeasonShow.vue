@@ -17,14 +17,14 @@
       <q-btn
         label="View Details"
         color="primary"
-        :to="`/show-details/${show.slug}`"
+        @click="store.openShowDetails(show.slug)"
         flat
       ></q-btn>
 
       <q-btn
         label="Gallery"
         color="primary"
-        :to="`/show-details/${show.slug}`"
+        @click="store.openShowDetails(show.slug)"
         class="q-ml-sm"
         flat
         v-if="hasGallery"
@@ -39,6 +39,9 @@ import { format, parseISO } from "date-fns";
 import { cloneDeep } from "lodash-es";
 import { computed } from "vue";
 import PosterWithBanner from "src/components/PosterWithBanner.vue";
+import { useStore } from "src/stores/store";
+
+const store = useStore();
 
 const props = defineProps(["show"]);
 

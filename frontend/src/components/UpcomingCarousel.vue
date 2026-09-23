@@ -45,13 +45,11 @@
           :key="`upcoming-show-${show.id}`"
           class="text-center"
         >
-          <router-link :to="`/show-details/${show.slug}`">
-            <poster-with-banner
-              :src="POSTER_BASE_URL + show.poster"
-              max-height="50vh"
-              :sold-out="isShowSoldOut(show)"
-            />
-          </router-link>
+          <poster-with-banner
+            :src="POSTER_BASE_URL + show.poster"
+            max-height="50vh"
+            :sold-out="isShowSoldOut(show)"
+          />
         </q-carousel-slide>
 
         <template v-slot:control>
@@ -83,6 +81,15 @@
       </q-carousel>
 
       <div class="text-center">
+        <q-btn
+          label="Details"
+          :icon="matInfo"
+          outline
+          color="primary"
+          class="q-mb-sm"
+          @click="store.openShowDetails(curShow.slug)"
+          v-if="curShow"
+        />
         <div v-if="ticketsStart && !curShow?.tentative">
           <span class="text-bold">
             Tickets On Sale:
@@ -104,6 +111,7 @@
 </template>
 
 <script setup>
+import { matInfo } from "@quasar/extras/material-icons";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
 import { Screen } from "quasar";

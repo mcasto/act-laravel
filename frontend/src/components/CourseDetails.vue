@@ -96,32 +96,4 @@ const formatDate = (date) => {
   padding: 2rem 0.75rem 0.75rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
-
-.fact-chip {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba($primary, 0.08);
-  border-radius: 8px;
-  padding: 10px 12px;
-  height: 100%;
-
-  .q-icon {
-    font-size: 1.4rem;
-    color: $primary;
-  }
-}
-
-.fact-label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: $secondary;
-  font-weight: 600;
-}
-
-.fact-value {
-  font-size: 0.95rem;
-  font-weight: 500;
-}
 </style>

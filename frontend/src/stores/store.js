@@ -28,6 +28,8 @@ import announcementBanner from "./actions/announcement-banner";
 import flexshowPurchaseConfig from "./actions/flex-purchase-config";
 import apiLoaded from "./actions/api-loaded";
 import openFixr from "./actions/open-fixr";
+import openShowDetails from "./actions/open-show-details";
+import openFlexShowDetails from "./actions/open-flex-show-details";
 import showPurchaseConfig from "./actions/show-purchase-config";
 import updateAnnouncementBanner from "./actions/update-announcement-banner";
 import refreshPermissions from "./actions/refresh-permissions";
@@ -58,6 +60,20 @@ export const useStore = defineStore(
       paymentMethods: ref(null),
       send_mail: 1,
       show: ref(null),
+      showDetailsDialog: ref(false),
+      // Set by openFlexShowDetails() — the show details dialog hides the
+      // usual "Tickets On Sale: <date>" notice and routes "Reserve
+      // Tickets" to /purchase-tickets?flex=1 when true, since a flex
+      // early-access viewer can buy before the public sale opens.
+      showDetailsIsFlexAccess: ref(false),
+      // Consumed by the router's beforeEach (see router/index.js) — the
+      // show-details/flex-show-details routes open the dialog and then
+      // redirect to home, which is itself a second full navigation that
+      // would otherwise immediately re-trigger the "close the dialog on
+      // navigation" guard and wipe it out before it's ever seen. Set right
+      // before that redirect so that one specific navigation skips the
+      // auto-close.
+      justOpenedShowDetails: ref(false),
       skills: ref([]),
       snippets: ref({}),
       supportUsConfig: ref(null),
@@ -88,6 +104,8 @@ export const useStore = defineStore(
       openCourses,
       previewCourses,
       openFixr,
+      openShowDetails,
+      openFlexShowDetails,
       refreshPermissions,
       saveAuditionConfig,
       saveCompConfig,
@@ -110,7 +128,19 @@ export const useStore = defineStore(
       // patron (email/first_name/last_name/phone/flex_packages) is PII looked
       // up during a purchase flow — keep it in memory for the current session
       // only, never written to localStorage.
-      omit: ["patron"],
+      //
+      // showDetailsDialog/showDetailsIsFlexAccess/justOpenedShowDetails are
+      // transient UI state for ShowDetailsDialog.vue — persisting them would
+      // let a stale "dialog was open"/"just opened" flag survive a full page
+      // reload and either pop the dialog open unexpectedly or (worse) make
+      // the router's close-on-navigate guard wrongly skip itself on the next
+      // real navigation, thinking it's mid-redirect from opening the dialog.
+      omit: [
+        "patron",
+        "showDetailsDialog",
+        "showDetailsIsFlexAccess",
+        "justOpenedShowDetails",
+      ],
     },
   },
 );

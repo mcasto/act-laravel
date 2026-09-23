@@ -227,46 +227,29 @@ const routes = [
       },
 
       {
+        // Show details now render as a dialog (ShowDetailsDialog.vue,
+        // mounted globally in MainLayout.vue) instead of a dedicated page
+        // — a direct/shared link still works, it just opens the dialog and
+        // lands on the home page underneath it instead of a standalone
+        // route.
         name: "flex-show-details",
         path: "show-details/flex/:uid",
-        component: () => import("pages/ShowDetails.vue"),
-        beforeEnter: async (to, from) => {
+        component: () => import("pages/IndexPage.vue"),
+        beforeEnter: async (to) => {
           const store = useStore();
-          const response = await callApi({
-            path: `/shows/flex/${to.params.uid}`,
-            method: "get",
-          });
-          if (!response?.show) return { name: "home" };
-          store.show = response.show;
-          // Needed for isActiveShow (Reserve Tickets visibility) — no-ops
-          // as a background refresh if already loaded.
-          await store.homeShows();
+          await store.openFlexShowDetails(to.params.uid);
+          return { name: "home" };
         },
         meta: { nav: false, label: "Show Details" },
       },
       {
         name: "show-details",
         path: "show-details/:slug",
-        component: () => import("pages/ShowDetails.vue"),
-        beforeEnter: async (to, from) => {
+        component: () => import("pages/IndexPage.vue"),
+        beforeEnter: async (to) => {
           const store = useStore();
-          // Fetched directly by slug (not filtered from store.admin.shows,
-          // which is scoped to the current display season) so this works
-          // for any show, current or historical.
-          const response = await callApi({
-            path: "/shows/slug",
-            method: "get",
-            payload: to.params.slug,
-          });
-
-          if (!response || response.status === "error") {
-            return { path: "/not-found" };
-          }
-
-          store.show = response;
-          // Needed for isActiveShow (Reserve Tickets visibility) — no-ops
-          // as a background refresh if already loaded.
-          await store.homeShows();
+          const opened = await store.openShowDetails(to.params.slug);
+          return opened ? { name: "home" } : { path: "/not-found" };
         },
         meta: { nav: false, label: "Show Details" },
       },

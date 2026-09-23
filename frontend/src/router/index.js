@@ -38,6 +38,19 @@ export default defineRouter(function (/* { store, ssrContext } */) {
   Router.beforeEach(async (to, from, next) => {
     const store = useStore();
 
+    // ShowDetailsDialog is mounted globally (MainLayout.vue), not inside
+    // <router-view>, so it survives route changes on its own — close it on
+    // every navigation so it can't stay open over the wrong page. Skipped
+    // exactly once when this navigation is itself the show-details/
+    // flex-show-details -> home redirect that just opened it a moment ago
+    // (justOpenedShowDetails), since that's a second full navigation cycle
+    // that would otherwise immediately undo the dialog it was meant to show.
+    if (store.justOpenedShowDetails) {
+      store.justOpenedShowDetails = false;
+    } else {
+      store.showDetailsDialog = false;
+    }
+
     // Admin route navigation (sidebar links, dashboard tiles) often waits on
     // a beforeEnter data fetch before the page actually changes — show a
     // spinner for that gap. Cleared unconditionally in afterEach/onError so

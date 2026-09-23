@@ -30,6 +30,15 @@
           max-height="50vh"
           :sold-out="allSoldOut"
         />
+        <div class="q-mt-sm">
+          <q-btn
+            label="Details"
+            :icon="matInfo"
+            outline
+            color="primary"
+            @click="store.openShowDetails(show.slug)"
+          />
+        </div>
       </div>
       <div
         class="col-12 q-px-xl"
@@ -100,6 +109,7 @@
 
 <script setup>
 import { fasTicket } from "@quasar/extras/fontawesome-v6";
+import { matInfo } from "@quasar/extras/material-icons";
 import { Screen } from "quasar";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, formatISO, isFuture, parseISO } from "date-fns";

@@ -456,18 +456,18 @@ const ticketNumbersDisplay = (row) => {
 const allTicketsRedeemed = (row) =>
   !!row.tickets?.length && row.tickets.every((t) => !!t.redeemed_at);
 
+// Order requested: Performance Date : Name : Qty : Ticket #s : Confirmed :
+// Date Sold : No Show. "info" (email/phone popup) stays glued to Name and
+// "payment_method"/"actions" (both unlabeled icon-only columns) stay
+// trailing at the end, same as before — none of the three were named in
+// that order, so they're left in their least-disruptive spot.
 const columns = [
   {
-    name: "no_show",
-    label: "No Show",
-    field: "no_show",
-    align: "center",
-  },
-  {
-    name: "confirmed",
-    label: "Confirmed",
-    field: "confirmed",
-    align: "center",
+    name: "performance",
+    label: "Performance",
+    field: (row) =>
+      `${row.performance.formatted_date} ${row.performance.formatted_time}`,
+    align: "left",
   },
   {
     name: "name",
@@ -496,17 +496,22 @@ const columns = [
     align: "center",
   },
   {
+    name: "confirmed",
+    label: "Confirmed",
+    field: "confirmed",
+    align: "center",
+  },
+  {
     name: "sold_at",
     label: "Date Sold",
     field: (row) => format(parseISO(row.sold_at), "PP"),
     align: "left",
   },
   {
-    name: "performance",
-    label: "Performance",
-    field: (row) =>
-      `${row.performance.formatted_date} ${row.performance.formatted_time}`,
-    align: "left",
+    name: "no_show",
+    label: "No Show",
+    field: "no_show",
+    align: "center",
   },
   {
     name: "payment_method",

@@ -8,6 +8,7 @@
       <q-page>
         <router-view />
         <global-items v-if="!adminPath"></global-items>
+        <show-details-dialog v-if="!adminPath"></show-details-dialog>
       </q-page>
       <q-footer class="bg-secondary text-white flex items-center q-pr-sm">
         <q-btn flat :icon="fasToolbox" to="/admin" v-if="!adminPath">
@@ -37,6 +38,7 @@ import { fasToolbox } from "@quasar/extras/fontawesome-v6";
 import HeaderPartial from "components/HeaderPartial.vue";
 import NavPartial from "components/NavPartial.vue";
 import GlobalItems from "src/components/GlobalItems.vue";
+import ShowDetailsDialog from "src/components/ShowDetailsDialog.vue";
 import { useStore } from "src/stores/store";
 import { computed, onMounted } from "vue";
 import { Screen } from "quasar";

@@ -34,13 +34,6 @@
               <th>Payment Method</th>
               <th class="col-narrow">Amt Due</th>
               <th class="col-narrow">Amt Collected</th>
-              <th>Email</th>
-              <th v-for="m in paidMethods" :key="m" class="col-narrow">
-                {{ m }}
-              </th>
-              <th class="col-narrow">Total Paid</th>
-              <th class="col-narrow">Comp</th>
-              <th class="col-narrow">No Show</th>
               <th class="col-narrow">Special Seating</th>
               <th class="col-wrap">Guest List</th>
               <th class="col-wrap">Angel Benefits</th>
@@ -56,25 +49,6 @@
                 {{ isComp(rec) ? "" : "$" + amountDue(rec) }}
               </td>
               <td class="col-narrow"></td>
-              <td>{{ rec.patron.email }}</td>
-              <td
-                v-for="m in paidMethods"
-                :key="m"
-                class="col-narrow text-center"
-              >
-                {{
-                  !isComp(rec) && rec.payment_method.label === m
-                    ? rec.quantity || 1
-                    : ""
-                }}
-              </td>
-              <td class="col-narrow text-center">
-                {{ isComp(rec) ? "" : rec.quantity || 1 }}
-              </td>
-              <td class="col-narrow text-center">
-                {{ isComp(rec) ? rec.quantity || 1 : "" }}
-              </td>
-              <td class="col-narrow"></td>
               <td class="col-narrow text-center">
                 {{ rec.patron.front_row > 0 ? rec.patron.front_row : "" }}
               </td>
@@ -87,11 +61,6 @@
               <td></td>
               <td class="col-narrow"></td>
               <td></td>
-              <td class="col-narrow"></td>
-              <td class="col-narrow"></td>
-              <td></td>
-              <td v-for="m in paidMethods" :key="m" class="col-narrow"></td>
-              <td class="col-narrow"></td>
               <td class="col-narrow"></td>
               <td class="col-narrow"></td>
               <td class="col-narrow"></td>
@@ -162,13 +131,6 @@ const guestList = (rec) =>
 
 const angelBenefits = (rec) =>
   (rec.patron?.angel_concession_benefits ?? []).join(", ");
-
-const paidMethods = computed(() =>
-  uniqBy(
-    perfRecs.value.filter((r) => !isComp(r)),
-    (r) => r.payment_method.label,
-  ).map((r) => r.payment_method.label),
-);
 
 const doPrint = () => window.print();
 </script>

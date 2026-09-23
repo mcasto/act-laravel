@@ -19,18 +19,22 @@
     </div> -->
 
     <div class="row">
-      <div class="col-12 col-md-4" v-for="route of routes" :key="route.name">
+      <div
+        class="col-6 col-sm-4 col-md-3 col-lg-2"
+        v-for="route of routes"
+        :key="route.name"
+      >
         <q-card
           class="q-ma-sm cursor-pointer"
           @click="store.router.push(route.path)"
         >
-          <q-toolbar>
-            <q-toolbar-title>
+          <q-toolbar dense>
+            <q-toolbar-title class="text-subtitle2">
               {{ route.name }}
             </q-toolbar-title>
           </q-toolbar>
-          <q-card-section>
-            <q-img :src="route.icon" height="30vh" fit="contain"> </q-img>
+          <q-card-section class="q-pa-xs">
+            <q-img :src="route.icon" height="10vh" fit="contain"> </q-img>
           </q-card-section>
         </q-card>
       </div>
@@ -66,7 +70,7 @@ const routes = computed(() =>
         name: meta.label,
         path,
         permissionLevel,
-        icon: `/images/admin-dashboard/${icon}.png`,
+        icon: `/images/admin-dashboard/${icon}.jpeg`,
       };
     })
     .filter((route) => route.permissionLevel !== "none"),

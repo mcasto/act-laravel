@@ -54,6 +54,38 @@
     gap: 8px;
 }
 
+// Icon + label + value "quick facts" tile, introduced on the class detail
+// page (location/enrollment/cost) and reused anywhere a short list of
+// at-a-glance details needs the same treatment (e.g. the show details
+// dialog's performance dates/writer/director).
+.fact-chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba($primary, 0.08);
+    border-radius: 8px;
+    padding: 10px 12px;
+    height: 100%;
+
+    .q-icon {
+        font-size: 1.4rem;
+        color: $primary;
+    }
+}
+
+.fact-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: $secondary;
+    font-weight: 600;
+}
+
+.fact-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
 
 /* support-us */
 .container {

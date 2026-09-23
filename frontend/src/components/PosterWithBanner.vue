@@ -30,15 +30,40 @@ const props = defineProps({
   soldOut: { type: Boolean, default: false },
   // Most show posters are portrait-oriented; used only as a layout hint so
   // the browser can reserve space before the real image loads (avoids CLS).
-  // The image still renders at its own natural aspect ratio once loaded.
+  // The image still renders at its own natural aspect ratio once loaded —
+  // UNLESS aspectRatio is set (below), which crops it to fit instead.
   width: { type: [String, Number], default: 400 },
   height: { type: [String, Number], default: 600 },
+  // Opt-in — when set (e.g. "2/3"), the poster is cropped via object-fit
+  // to always render at exactly this ratio instead of its own natural one,
+  // so a grid of posters with inconsistent real dimensions still lines up
+  // uniformly. Off by default so every existing call site keeps its
+  // current "natural size, just capped" look.
+  aspectRatio: { type: String, default: null },
 });
 
-const imgStyle = computed(() => ({
-  maxHeight: props.maxHeight,
-  maxWidth: props.maxWidth ?? "100%",
-}));
+// A definite aspect-ratio + object-fit on the <img> itself (a replaced
+// element) lets the browser's native sizing algorithm fit it within both
+// maxWidth and maxHeight simultaneously while preserving that ratio — the
+// same mechanism that makes plain "max-width:100%; height:auto" images
+// responsive, just with a forced ratio and cropping instead of the image's
+// own natural one.
+const imgStyle = computed(() => {
+  if (props.aspectRatio) {
+    return {
+      width: "auto",
+      height: "auto",
+      aspectRatio: props.aspectRatio,
+      objectFit: "cover",
+      maxHeight: props.maxHeight,
+      maxWidth: props.maxWidth ?? "100%",
+    };
+  }
+  return {
+    maxHeight: props.maxHeight,
+    maxWidth: props.maxWidth ?? "100%",
+  };
+});
 
 // Starts false so a freshly-mounted card (e.g. a new page of gallery
 // results) shows the spinner immediately; also resets if the same
