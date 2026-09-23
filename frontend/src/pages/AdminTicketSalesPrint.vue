@@ -40,7 +40,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="rec in sortedRecs" :key="rec.id">
+            <tr
+              v-for="rec in sortedRecs"
+              :key="rec.id"
+              :class="{ 'row-comp': isComp(rec), 'row-flex': isFlex(rec) }"
+            >
               <td>{{ rec.patron.last_name }}</td>
               <td>{{ rec.patron.first_name }}</td>
               <td class="col-narrow text-center">{{ rec.quantity || 1 }}</td>
@@ -116,18 +120,28 @@ const sortedRecs = computed(() =>
 );
 
 const isComp = (rec) => rec.payment_method.value === "comp";
+const isFlex = (rec) => rec.payment_method.value === "flex";
 
 const amountDue = (rec) => ((rec.quantity || 1) * props.ticketPrice).toFixed(2);
 
-// Named guests only — a ticket nobody's put a name to yet is auto-labeled
-// with its own ticket number as a placeholder (see
-// TicketSale::issueTickets()/reconcileTicketCount()), which isn't a guest
-// name worth printing here. Comp rows have no per-ticket breakdown at all.
-const guestList = (rec) =>
-  (rec.tickets ?? [])
+// Comp & flex tickets are transferrable: the patron of record (the
+// "-er" — comper/flexer) stays in Last/First Name, but the person who
+// actually shows up at the door (the "-ee" — compee/flexee) belongs in
+// Guest List instead. For flex this already falls out of the normal
+// per-ticket name mechanism below. For comp there's no per-ticket
+// breakdown — the door attendee is captured separately as pickup_name.
+const guestList = (rec) => {
+  if (isComp(rec)) return rec.patron?.pickup_name ?? "";
+
+  // Named guests only — a ticket nobody's put a name to yet is
+  // auto-labeled with its own ticket number as a placeholder (see
+  // TicketSale::issueTickets()/reconcileTicketCount()), which isn't a
+  // guest name worth printing here.
+  return (rec.tickets ?? [])
     .filter((ticket) => ticket.name !== ticket.formatted_number)
     .map((ticket) => ticket.name)
     .join(", ");
+};
 
 const angelBenefits = (rec) =>
   (rec.patron?.angel_concession_benefits ?? []).join(", ");
@@ -188,6 +202,27 @@ const doPrint = () => window.print();
 .walk-in-row td {
   background: #fafafa;
   height: 22px;
+}
+
+/*
+ * Dark backgrounds (not light tints) so comp vs. flex rows stay visibly
+ * distinct from each other and from the plain rows even in grayscale —
+ * the whole point of this sheet is that it's printed. The two colors are
+ * chosen with clearly different luminance, not just different hue, so a
+ * B&W printer still shows two different shades of gray.
+ */
+.row-comp td {
+  background: #7a4a00;
+  color: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.row-flex td {
+  background: #101452;
+  color: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 .print-header {
