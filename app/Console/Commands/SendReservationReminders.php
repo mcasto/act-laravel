@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\CompTicket;
 use App\Models\Performance;
 use App\Models\TicketSale;
 use Carbon\Carbon;
@@ -47,7 +46,9 @@ class SendReservationReminders extends Command
 
         $sentEmails = [];
 
-        // Ticket sales
+        // Comp tickets get their own mirrored TicketSale row on redemption
+        // (see CompTixController::redeemComp()), so this one query already
+        // covers both — no separate CompTicket pass needed anymore.
         $ticketSales = TicketSale::with('patron')
             ->whereIn('performance_id', $performanceIds)
             ->get();
@@ -58,19 +59,6 @@ class SendReservationReminders extends Command
 
             $this->logWouldSend($patron->email, $dateByPerformance[$sale->performance_id], $sale->quantity);
             $sentEmails[] = $patron->email;
-            $logged++;
-        }
-
-        // Comp tickets (only redeemed ones with a specific performance booked)
-        $compTickets = CompTicket::whereIn('performance_id', $performanceIds)
-            ->whereNotNull('redeemed_at')
-            ->get();
-
-        foreach ($compTickets as $comp) {
-            if (in_array($comp->email, $sentEmails)) continue;
-
-            $this->logWouldSend($comp->email, $dateByPerformance[$comp->performance_id], 1);
-            $sentEmails[] = $comp->email;
             $logged++;
         }
 

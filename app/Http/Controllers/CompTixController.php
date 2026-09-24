@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\RefId;
 use App\Mail\CompTicketMailer;
 use App\Models\CompTicket;
+use App\Models\Patron;
+use App\Models\PaymentMethod;
 use App\Models\Show;
 use App\Models\TicketSale;
 use Carbon\Carbon;
@@ -100,20 +102,18 @@ class CompTixController extends Controller
 
         $performanceIds = $compTicket->show->performances->pluck('id');
 
+        // Every redeemed comp now has its own mirrored TicketSale (see
+        // redeemComp()), so this total already reflects comp attendance
+        // too — a separate CompTicket count here would double-count them.
         $ticketSaleTotals = TicketSale::whereIn('performance_id', $performanceIds)
             ->groupBy('performance_id')
             ->select('performance_id', DB::raw('SUM(quantity) as total'))
             ->pluck('total', 'performance_id');
 
-        $compTotals = CompTicket::whereIn('performance_id', $performanceIds)
-            ->groupBy('performance_id')
-            ->select('performance_id', DB::raw('COUNT(*) as total'))
-            ->pluck('total', 'performance_id');
-
         $today = Carbon::today();
 
-        $compTicket->show->performances->each(function ($performance) use ($ticketSaleTotals, $compTotals, $today) {
-            $sold = ($ticketSaleTotals[$performance->id] ?? 0) + ($compTotals[$performance->id] ?? 0);
+        $compTicket->show->performances->each(function ($performance) use ($ticketSaleTotals, $today) {
+            $sold = $ticketSaleTotals[$performance->id] ?? 0;
             $performance->past     = Carbon::parse($performance->date)->lt($today);
             $performance->sold_out = $sold >= $performance->sold_out_target;
         });
@@ -124,11 +124,51 @@ class CompTixController extends Controller
     public function redeemComp(string $uid, int $performanceId, string $pickupName, bool $sendMail = true): CompTicket
     {
         $comp = CompTicket::where('uid', $uid)->firstOrFail();
+        $wasAlreadyRedeemed = (bool) $comp->ticket_sale_id;
+
         $comp->update([
             'performance_id' => $performanceId,
             'pickup_name'    => $pickupName,
-            'redeemed_at'    => now(),
+            'redeemed_at'    => $comp->redeemed_at ?? now(),
         ]);
+
+        if ($wasAlreadyRedeemed) {
+            // Re-redemption — e.g. an admin correcting the performance or
+            // pickup name after the fact via update(). Keep the existing
+            // mirrored TicketSale/Ticket in sync instead of creating a
+            // duplicate sale (and a duplicate ticket number).
+            $ticketSale = TicketSale::find($comp->ticket_sale_id);
+            $ticketSale?->update(['performance_id' => $performanceId]);
+            $ticketSale?->tickets()->update(['name' => $pickupName]);
+        } else {
+            DB::transaction(function () use ($comp, $performanceId, $pickupName) {
+                $patron = $this->resolvePatronForComp($comp);
+                $paymentMethod = PaymentMethod::where('value', 'comp')->first();
+
+                $ticketSale = TicketSale::create([
+                    'patron_id'         => $patron->id,
+                    'performance_id'    => $performanceId,
+                    'payment_method_id' => $paymentMethod->id,
+                    'sold_at'           => now(),
+                    'quantity'          => 1,
+                    'confirmed'         => true,
+                    'transaction_id'    => $comp->uid,
+                ]);
+
+                // Reuse the ticket number already reserved when this comp
+                // was first issued (Show::reserveTicketNumbers(), in
+                // store() above) — not issueTickets(), which would
+                // reserve a second number for the same seat.
+                $ticketSale->tickets()->create([
+                    'show_id' => $comp->show_id,
+                    'number'  => $comp->number,
+                    'name'    => $pickupName,
+                ]);
+
+                $comp->ticket_sale_id = $ticketSale->id;
+                $comp->save();
+            });
+        }
 
         $performance = $comp->fresh()->performance;
 
@@ -172,8 +212,36 @@ class CompTixController extends Controller
     public function destroy(string $id)
     {
         $rec = CompTicket::where('uid', $id)->firstOrFail();
+        $rec->ticketSale?->delete();
         $rec->delete();
 
         return response()->json(['id' => $rec->id]);
+    }
+
+    /**
+     * Finds the Patron this comp's mirrored TicketSale should belong to —
+     * reuses an existing one by email if the box-office "New Ticket Sale"
+     * flow already created it with properly split names (see
+     * TicketSaleController::store()'s comp branch), otherwise creates one
+     * from a best-effort split of this comp's single `name` string. Only
+     * ever imperfect for a multi-word name issued via the legacy
+     * name-only CompTix admin form — no worse than that name going
+     * unsplit everywhere before this.
+     */
+    private function resolvePatronForComp(CompTicket $comp): Patron
+    {
+        $existing = Patron::where('email', $comp->email)->first();
+
+        if ($existing) {
+            return $existing;
+        }
+
+        [$firstName, $lastName] = array_pad(explode(' ', trim($comp->name), 2), 2, '');
+
+        return Patron::create([
+            'first_name' => $firstName,
+            'last_name'  => $lastName,
+            'email'      => $comp->email,
+        ]);
     }
 }

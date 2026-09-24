@@ -21,6 +21,7 @@ class CompTicket extends Model
         'pickup_name',
         'redeemed_at',
         'number',
+        'ticket_sale_id',
     ];
 
     protected $casts = [
@@ -43,5 +44,10 @@ class CompTicket extends Model
     public function performance(): BelongsTo
     {
         return $this->belongsTo(Performance::class);
+    }
+
+    public function ticketSale(): BelongsTo
+    {
+        return $this->belongsTo(TicketSale::class);
     }
 }

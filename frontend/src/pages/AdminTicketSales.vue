@@ -438,9 +438,10 @@ const pagesNumber = computed(() =>
   Math.ceil(filteredRecs.value.length / pagination.value.rowsPerPage),
 );
 
-// A real ticket_sales row carries its individual tickets in `tickets`; a
-// comp row (merged in by TicketSaleController::allSales()) carries a single
-// `number` instead. Legacy rows predating this feature have neither.
+// A ticket_sales row (including a redeemed comp, which gets a real row of
+// its own — see CompTixController::redeemComp()) carries its individual
+// tickets in `tickets`. Legacy rows predating per-ticket tracking have
+// neither `tickets` nor `number`.
 const padNumber = (n) => String(n).padStart(3, "0");
 const ticketNumbersDisplay = (row) => {
   if (row.tickets?.length) {
@@ -596,10 +597,10 @@ const ticketPrice = computed(
   () => recs.value[0]?.performance?.show?.ticket_price ?? 0,
 );
 
-// Comp-ticket rows are merged in from a different table and have no
-// `confirmed` field at all (always treated as real/confirmed); regular
-// ticket_sales rows default to unconfirmed, so only exclude those where
-// it's explicitly false.
+// Comp tickets are confirmed=true from the moment they're redeemed (see
+// CompTixController::redeemComp()) and stay that way; regular ticket_sales
+// rows default to unconfirmed, so only exclude those where it's
+// explicitly false.
 const confirmedRecs = computed(() =>
   recs.value.filter((rec) => rec.confirmed !== false),
 );

@@ -13,8 +13,8 @@
 
 - on edit ticket sale performance date is already available so show that summary
 
-- on printout, "amount collected" needs to be true if "payment confirmed"
-
+✔ on printout, "amount collected" needs to be true if "payment confirmed" @done(26-09-24 14:54)
+✔ @done(26-09-24 14:54)
 
 - "fr" field for front row (on printout)
 - "special seating" = text field and relates to other seating things that aren't front row
@@ -22,3 +22,7 @@
 - make "comment" field multiline with wrap & expand height of
 
 ✔ patrons admin needs full CRUD capabilities @done(26-09-24 12:11)
+
+☐ disconnect patron from ticket sales
+☐ redesign the ticket sales form/data structure
+

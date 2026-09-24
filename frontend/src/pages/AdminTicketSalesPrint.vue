@@ -52,7 +52,9 @@
               <td class="col-narrow text-right">
                 {{ isComp(rec) ? "" : "$" + amountDue(rec) }}
               </td>
-              <td class="col-narrow"></td>
+              <td class="col-narrow text-center">
+                {{ amountCollected(rec) ? "✓" : "" }}
+              </td>
               <td class="col-narrow text-center">
                 {{ specialSeating(rec) > 0 ? specialSeating(rec) : "" }}
               </td>
@@ -124,15 +126,19 @@ const isFlex = (rec) => rec.payment_method.value === "flex";
 
 const amountDue = (rec) => ((rec.quantity || 1) * props.ticketPrice).toFixed(2);
 
+// A comp ticket is confirmed at redemption time (see
+// CompTixController::redeemComp()) and never editable back to
+// unconfirmed, same as every other row — only an explicit `false` counts
+// as unconfirmed.
+const amountCollected = (rec) => rec.confirmed !== false;
+
 // Comp & flex tickets are transferrable: the patron of record (the
 // "-er" — comper/flexer) stays in Last/First Name, but the person who
 // actually shows up at the door (the "-ee" — compee/flexee) belongs in
-// Guest List instead. For flex this already falls out of the normal
-// per-ticket name mechanism below. For comp there's no per-ticket
-// breakdown — the door attendee is captured separately as pickup_name.
+// Guest List instead. Both fall out of the same per-ticket name mechanism
+// — a redeemed comp's one Ticket row is always named after its
+// pickup_name (see redeemComp()), never left as a placeholder.
 const guestList = (rec) => {
-  if (isComp(rec)) return rec.patron?.pickup_name ?? "";
-
   // Named guests only — a ticket nobody's put a name to yet is
   // auto-labeled with its own ticket number as a placeholder (see
   // TicketSale::issueTickets()/reconcileTicketCount()), which isn't a

@@ -31,8 +31,6 @@ class TicketSaleController extends Controller
 
     private function allSales()
     {
-        $compPaymentMethod = PaymentMethod::where('value', 'comp')->first();
-
         // Keyed by patron_id -> that patron's Angel record for the current
         // (calendar) season, so each ticket sale can list which of their
         // level's benefits are concession-related (for the door/box-office
@@ -73,28 +71,11 @@ class TicketSaleController extends Controller
                 return $arr;
             });
 
-        $compTickets = CompTicket::with('performance.show')
-            ->join('performances', 'comp_tickets.performance_id', '=', 'performances.id')
-            ->select('comp_tickets.*')
-            ->get()
-            ->map(fn($comp) => [
-                'id'             => $comp->id,
-                'quantity'       => 1,
-                'number'         => $comp->number,
-                'sold_at'        => $comp->redeemed_at ?? $comp->sent_at,
-                'transaction_id' => $comp->uid,
-                'patron'         => [
-                    'first_name'   => $comp->name,
-                    'last_name'    => '',
-                    'email'        => $comp->email,
-                    'phone'        => null,
-                    'pickup_name'  => $comp->pickup_name,
-                ],
-                'payment_method' => $compPaymentMethod,
-                'performance'    => $comp->performance,
-            ]);
-
-        return $ticketSales->concat($compTickets)
+        // Comp tickets no longer need merging in here — every redeemed
+        // comp gets its own real TicketSale row (payment_method: comp),
+        // created by CompTixController::redeemComp(), so the query above
+        // already includes them.
+        return $ticketSales
             ->sortByDesc(fn($item) => $item['performance']['date'] ?? '')
             ->values();
     }
@@ -306,7 +287,7 @@ class TicketSaleController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'id'            => 'required|integer|exists:ticket_sales,id',
+            'id'            => 'required|integer',
             'type'          => 'required|string',
             'performance_id' => 'required|integer',
             'first_name'    => 'required|string',
@@ -332,6 +313,47 @@ class TicketSaleController extends Controller
                 'phone'      => $validated['phone'],
             ]
         );
+
+        // Comp tickets live in a separate table (see store()'s comp
+        // branch) — `id` here is a comp_tickets.id, not a ticket_sales.id,
+        // so this used to 422 with "The selected id is invalid" (or worse,
+        // could have silently hit an unrelated ticket_sales row if the ids
+        // happened to collide) whenever a comp row was edited and saved.
+        // Looked up by id rather than trusting the submitted `type`, so a
+        // stale/incorrect payment_method value can't misroute this to the
+        // wrong table.
+        $existingComp = CompTicket::find($validated['id']);
+
+        if ($existingComp) {
+            if ($validated['type'] !== 'comp') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => "Changing a Comp ticket to a different payment method isn't supported — delete and re-add it instead.",
+                ]);
+            }
+
+            // Only email/name/performance actually exist on CompTicket —
+            // quantity, confirmed, special_seating, no_show,
+            // reason_changed, and per-ticket names have no equivalent here
+            // and are silently ignored, same as store()'s comp branch.
+            $existingComp->update([
+                'email'          => $patron->email,
+                'name'           => trim("{$patron->first_name} {$patron->last_name}"),
+                'performance_id' => $validated['performance_id'],
+            ]);
+
+            // Keep the mirrored TicketSale in sync too, or it drifts back
+            // out of sync with the comp it belongs to. pickup_name/the
+            // Ticket's own name aren't touched here — those represent the
+            // door attendee, a separate concern from this comp's own
+            // recipient identity.
+            $existingComp->ticketSale?->update([
+                'patron_id'      => $patron->id,
+                'performance_id' => $validated['performance_id'],
+            ]);
+
+            return response()->json($this->allSales());
+        }
 
         $paymentMethod = PaymentMethod::where('value', $validated['type'])->first();
 
@@ -364,7 +386,9 @@ class TicketSaleController extends Controller
         $id = $request->input('id');
 
         if ($request->input('payment_method.value') === 'comp') {
-            CompTicket::findOrFail($id)->delete();
+            $comp = CompTicket::findOrFail($id);
+            $comp->ticketSale?->delete();
+            $comp->delete();
         } else {
             TicketSale::findOrFail($id)->delete();
         }

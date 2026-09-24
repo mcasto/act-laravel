@@ -303,11 +303,13 @@ const getPatron = async () => {
     showError: false,
   }).catch(() => null);
 
-  if (!patron) return;
-
-  form.value.first_name = patron.first_name;
-  form.value.last_name = patron.last_name;
-  form.value.phone = patron.phone;
+  // No match means this email isn't tied to an existing patron — clear the
+  // name/phone fields instead of leaving whatever patron's info happened
+  // to be there before, which would otherwise misleadingly suggest this
+  // email already belongs to that person.
+  form.value.first_name = patron?.first_name ?? "";
+  form.value.last_name = patron?.last_name ?? "";
+  form.value.phone = patron?.phone ?? "";
 };
 
 const onSubmit = async () => {
