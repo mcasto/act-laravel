@@ -62,7 +62,7 @@ class ShowController extends Controller
      * Get shows in the current theater season
      *
      * Retrieves all shows that have performances scheduled within the
-     * current theater season (October 1 - August 31).
+     * current theater season (September 1 - August 31).
      *
      * @return JsonResponse Shows with performances in current season
      *
@@ -70,7 +70,7 @@ class ShowController extends Controller
      */
     public function seasonShows(): JsonResponse
     {
-        // Data-driven, not a blind Oct 1 flip — see activeDisplaySeasonDates().
+        // Data-driven, not a blind Sept 1 flip — see activeDisplaySeasonDates().
         $seasonDates = TheaterSeason::activeDisplaySeasonDates();
 
         $shows = Show::with(["performances", 'galleryImages'])->whereHas('performances', function ($query) use ($seasonDates) {

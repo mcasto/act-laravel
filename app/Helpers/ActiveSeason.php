@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 /**
  * A manually-set override for which season NEW Angel donation records and
  * NEW Flex package purchases get tagged with. Deliberately separate from
- * TheaterSeason's calendar-based Oct 1 - Aug 31 calculation: Angel/Flex
+ * TheaterSeason's calendar-based Sept 1 - Aug 31 calculation: Angel/Flex
  * promotion for a season starts before the previous season's Aug 31 cutoff,
  * but shows and Flex-ticket redemption still need TheaterSeason's real
  * dates, so this must never replace that. Kept as its own file (not part of

@@ -268,13 +268,14 @@ const seasonFilter = ref(seasons.value[0] ?? null);
 // The site's manually-overridable "active season" (App\Helpers\ActiveSeason
 // on the backend) — the same setting new Angel donations use, and now new
 // Flex purchases too. Falls back to real calendar math (theater seasons run
-// October 1 - August 31) only for the brief window before the fetch below
+// September 1 - August 31) only for the brief window before the fetch below
 // resolves, so the dropdown is never blank.
 const activeSeason = ref(null);
 
 const calendarSeasonString = () => {
   const now = new Date();
-  const startYear = now.getMonth() >= 9 ? now.getFullYear() : now.getFullYear() - 1;
+  // getMonth() is 0-indexed, so 8 = September.
+  const startYear = now.getMonth() >= 8 ? now.getFullYear() : now.getFullYear() - 1;
   return `${String(startYear).slice(-2)}-${String(startYear + 1).slice(-2)}`;
 };
 

@@ -86,7 +86,7 @@
           <q-input
             v-model="contentConfig.angels.title"
             label="Page Title"
-            hint="Shown at the top of the Angels page, e.g. mentions the current season"
+            hint="Shown at the top of the Angels page. Use {season} where the current season (e.g. 2026-2027) should go — it fills in automatically and rolls over on its own each year."
             dense
             outlined
           />

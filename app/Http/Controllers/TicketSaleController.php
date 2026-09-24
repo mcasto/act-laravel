@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ActiveSeason;
 use App\Helpers\RefId;
 use App\Helpers\TheaterSeason;
 use App\Mail\PurchaseConfirmationMailer;
@@ -34,14 +33,16 @@ class TicketSaleController extends Controller
     {
         $compPaymentMethod = PaymentMethod::where('value', 'comp')->first();
 
-        // Keyed by patron_id -> that patron's Angel record for the active
-        // season, so each ticket sale can list which of their level's
-        // benefits are concession-related (for the door/box-office print
-        // sheet — see AdminTicketSalesPrint.vue). Scoped to the active
-        // season (not "ever been an angel") since that's what actually
-        // entitles them to perks at a show happening now.
+        // Keyed by patron_id -> that patron's Angel record for the current
+        // (calendar) season, so each ticket sale can list which of their
+        // level's benefits are concession-related (for the door/box-office
+        // print sheet — see AdminTicketSalesPrint.vue). Deliberately the
+        // real calendar-current season, not ActiveSeason::get()'s
+        // early-flip override — that override is only for tagging brand
+        // new donations ahead of time, and a show happening now is always
+        // for the real current season regardless of that promo flip.
         $angelByPatron = Angel::whereNotNull('patron_id')
-            ->where('season', ActiveSeason::get())
+            ->where('season', TheaterSeason::currentString())
             ->with('angelLevel')
             ->get()
             ->keyBy('patron_id');

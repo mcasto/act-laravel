@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ActiveSeason;
+use App\Helpers\TheaterSeason;
 use App\Models\Angel;
 use App\Models\AngelLevel;
 use App\Services\ChangeLogger;
@@ -13,7 +13,12 @@ class AngelLevelController extends Controller
 {
     public function index()
     {
-        $season = ActiveSeason::get();
+        // Real calendar-current season, not ActiveSeason::get()'s
+        // early-flip override — that override only controls which season
+        // NEW donations/purchases get tagged with, and shouldn't move the
+        // public page's displayed donor list until the season actually
+        // turns over (see App\Helpers\ActiveSeason).
+        $season = TheaterSeason::currentString();
 
         $mostRecentAngel = Angel::where('season', $season)
             ->orderBy('created_at', 'desc')
@@ -23,6 +28,12 @@ class AngelLevelController extends Controller
             ? $mostRecentAngel->created_at->format('F Y')
             : null;
 
+        $config = json_decode(Storage::disk('local')->get('angels.config.json'));
+        // The admin-edited title is a template (e.g. "Thank you to our
+        // {season} Angel Donors!") — the season itself is filled in here so
+        // it rolls over automatically instead of needing a manual edit.
+        $config->title = str_replace('{season}', TheaterSeason::currentDisplayString(), $config->title);
+
         return [
             'header' => view('angel-header')->render(),
             'levels' => AngelLevel::orderBy('min_amount', 'desc')
@@ -30,8 +41,7 @@ class AngelLevelController extends Controller
                     'angels' => fn ($query) => $query->where('season', $season)->with('paymentMethod'),
                 ])
                 ->get(),
-            'config' => json_decode(Storage::disk('local')
-                ->get('angels.config.json')),
+            'config' => $config,
             'mostRecent' => $mostRecent
         ];
     }

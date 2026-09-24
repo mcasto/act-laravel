@@ -644,7 +644,8 @@ const activeSeason = ref(null);
 
 const calendarSeasonString = () => {
   const now = new Date();
-  const startYear = now.getMonth() >= 9 ? now.getFullYear() : now.getFullYear() - 1;
+  // getMonth() is 0-indexed, so 8 = September.
+  const startYear = now.getMonth() >= 8 ? now.getFullYear() : now.getFullYear() - 1;
   return `${String(startYear).slice(-2)}-${String(startYear + 1).slice(-2)}`;
 };
 
