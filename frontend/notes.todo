@@ -1,0 +1,24 @@
+- printout doesn't need "special seats" but does need "front row"
+- printout does need comment field
+
+- integer *only* front row (instead of general special seating)
+
+- text field specific to notes for special seating
+
+- comment field (defaults to patron "notes")
+
+- on add ticket sale form:
+    ✔ move performance date to top of form @done(26-09-24 12:24)
+    - after performance date fills, display a summary of front row + total reservations ( / {sold out})
+
+- on edit ticket sale performance date is already available so show that summary
+
+- on printout, "amount collected" needs to be true if "payment confirmed"
+
+
+- "fr" field for front row (on printout)
+- "special seating" = text field and relates to other seating things that aren't front row
+
+- make "comment" field multiline with wrap & expand height of
+
+✔ patrons admin needs full CRUD capabilities @done(26-09-24 12:11)

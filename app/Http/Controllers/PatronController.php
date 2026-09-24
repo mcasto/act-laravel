@@ -11,6 +11,8 @@ use App\Models\PaymentMethod;
 use App\Models\TicketSale;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PatronController extends Controller
 {
@@ -59,6 +61,8 @@ class PatronController extends Controller
                 'first_name' => $patron->first_name,
                 'last_name' => $patron->last_name,
                 'email' => $patron->email,
+                'phone' => $patron->phone,
+                'founding_angel' => $patron->founding_angel,
                 'is_angel' => (bool) $latestAngel,
                 'angel_level' => $latestAngel?->angelLevel?->label,
                 'flex_remaining' => $hasFlexThisSeason
@@ -73,26 +77,104 @@ class PatronController extends Controller
     }
 
     /**
+     * Manual admin create — for a patron who needs a record before any
+     * ticket sale/donation/purchase would otherwise create one via
+     * firstOrCreate(). email is treated as the de facto dedup key
+     * everywhere else in the app (Ticket Sales, Angels, Flex), so it's
+     * enforced unique here too even though the column itself has no DB
+     * constraint (kept loose historically for the many firstOrCreate call
+     * sites that predate this form).
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:patrons,email',
+            'phone' => 'nullable|string|max:255',
+            'founding_angel' => 'sometimes|boolean',
+            'front_row' => 'sometimes|integer|min:0|max:3',
+            'comments' => 'sometimes|nullable|string',
+        ]);
+
+        $patron = Patron::create($validated);
+
+        return response()->json(['status' => 'success', 'patron' => $patron], 201);
+    }
+
+    /**
      * Update a patron's admin-editable fields from the Patron Management
-     * page — front_row (inline number input) and comments (notes dialog)
-     * are saved independently of each other, so each is "sometimes"
-     * validated rather than both being required on every call.
+     * page. Every field is "sometimes" so the inline front_row/comments
+     * editors can keep saving independently of the full Edit Patron
+     * dialog's name/email/phone/founding_angel fields.
      */
     public function update(Request $request, int $id): JsonResponse
     {
+        $patron = Patron::findOrFail($id);
+
         $validated = $request->validate([
+            'first_name' => 'sometimes|required|string|max:255',
+            'last_name' => 'sometimes|required|string|max:255',
+            'email' => ['sometimes', 'required', 'email', 'max:255', Rule::unique('patrons', 'email')->ignore($patron->id)],
+            'phone' => 'sometimes|nullable|string|max:255',
+            'founding_angel' => 'sometimes|boolean',
             'front_row' => 'sometimes|required|integer|min:0|max:3',
             'comments' => 'sometimes|nullable|string',
         ]);
 
-        $patron = Patron::findOrFail($id);
         $patron->update($validated);
 
         return response()->json([
             'status' => 'success',
+            'patron' => $patron,
+            // Kept alongside `patron` for the existing inline front_row/
+            // comments editors, which read these two flat keys directly.
             'front_row' => $patron->front_row,
             'comments' => $patron->comments,
         ]);
+    }
+
+    /**
+     * Soft-deletes a patron — blocked if they have any ticket sales, Angel
+     * donations, or Flex purchases on record, since those rows' `patron`
+     * relation would silently resolve to null once the parent is
+     * soft-deleted (Patron's SoftDeletes global scope excludes trashed
+     * rows from eager loads too), breaking the name shown on historical
+     * records. A patron with no history at all is safe to remove outright
+     * — this is mainly used to clean up test patrons created while trying
+     * something out, so the message names exactly what's still attached,
+     * as a reminder of what to go delete first.
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        $patron = Patron::findOrFail($id);
+
+        $blockers = [];
+        if ($count = $patron->ticketSales()->count()) {
+            $blockers[] = "{$count} " . Str::plural('ticket sale', $count);
+        }
+        if ($count = Angel::where('patron_id', $patron->id)->count()) {
+            $blockers[] = "{$count} " . Str::plural('Angel donation', $count);
+        }
+        if ($count = $patron->flexPackages()->count()) {
+            $blockers[] = "{$count} " . Str::plural('Flex purchase', $count);
+        }
+
+        if ($blockers) {
+            // Deliberately not a 4xx status — {status: 'error', message}
+            // with a normal 200 is this app's convention for an
+            // expected/handled failure, so the frontend's callApi() shows
+            // it via its usual response.status === 'error' branch instead
+            // of throwing (which it only shows for unhandled failures).
+            return response()->json([
+                'status' => 'error',
+                'message' => "Can't delete — this patron still has " . implode(' and ', $blockers) . ' on record. Delete those first.',
+            ]);
+        }
+
+        $patron->delete();
+
+        return response()->json(['status' => 'success']);
     }
 
     /**

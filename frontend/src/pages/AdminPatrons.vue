@@ -25,6 +25,13 @@
                 <q-icon :name="matSearch" />
               </template>
             </q-input>
+            <q-btn
+              color="primary"
+              :icon="matAdd"
+              label="Add Patron"
+              :disable="isReadOnly"
+              @click="openDialog()"
+            />
           </div>
         </div>
       </template>
@@ -92,7 +99,85 @@
           </q-btn>
         </q-td>
       </template>
+
+      <template #body-cell-actions="props">
+        <q-td :props="props" class="text-right">
+          <q-btn
+            :icon="matEdit"
+            flat
+            round
+            dense
+            size="sm"
+            color="primary"
+            :disable="isReadOnly"
+            @click="openDialog(props.row)"
+          />
+          <q-btn
+            :icon="matDelete"
+            flat
+            round
+            dense
+            size="sm"
+            color="negative"
+            :disable="isReadOnly"
+            @click="deletePatron(props.row)"
+          />
+        </q-td>
+      </template>
     </q-table>
+
+    <q-dialog v-model="dialog" persistent>
+      <q-card style="min-width: 400px;">
+        <q-card-section>
+          <div class="text-h6">{{ form.id ? "Edit" : "Add" }} Patron</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input
+            v-model="form.first_name"
+            label="First Name"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          <q-input
+            v-model="form.last_name"
+            label="Last Name"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          <q-input
+            v-model="form.email"
+            type="email"
+            label="Email"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          <q-input
+            v-model="form.phone"
+            label="Phone (optional)"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          <q-checkbox v-model="form.founding_angel" label="Founding Angel" />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn
+            flat
+            label="Save"
+            color="primary"
+            :loading="saving"
+            :disable="!canSave"
+            @click="saveDialog"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <q-dialog v-model="flexHistoryDialog">
       <q-card style="min-width: 500px; max-width: 95vw;">
@@ -176,7 +261,14 @@
 </template>
 
 <script setup>
-import { matComment, matSearch, matStar } from "@quasar/extras/material-icons";
+import {
+  matAdd,
+  matComment,
+  matDelete,
+  matEdit,
+  matSearch,
+  matStar,
+} from "@quasar/extras/material-icons";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
 import callApi from "src/assets/call-api";
@@ -233,6 +325,12 @@ const columns = [
     label: "Notes",
     field: "comments",
     align: "center",
+  },
+  {
+    name: "actions",
+    label: "",
+    field: "",
+    align: "right",
   },
 ];
 
@@ -344,5 +442,131 @@ const saveComments = async () => {
 
   row.comments = response.comments;
   commentsDialog.value.visible = false;
+};
+
+const dialog = ref(false);
+const saving = ref(false);
+const form = ref({
+  id: null,
+  first_name: "",
+  last_name: "",
+  email: "",
+  phone: "",
+  founding_angel: false,
+});
+
+const canSave = computed(
+  () => !!form.value.first_name && !!form.value.last_name && !!form.value.email,
+);
+
+const openDialog = (row = null) => {
+  form.value = row
+    ? {
+        id: row.id,
+        first_name: row.first_name,
+        last_name: row.last_name,
+        email: row.email,
+        phone: row.phone ?? "",
+        founding_angel: !!row.founding_angel,
+      }
+    : {
+        id: null,
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        founding_angel: false,
+      };
+  dialog.value = true;
+};
+
+const reload = async () => {
+  store.admin.patrons = await callApi({
+    path: "/admin/patrons",
+    method: "get",
+    useAuth: true,
+  });
+};
+
+// Laravel's automatic validate() failure (e.g. a duplicate email on
+// create) reaches here as a WretchError whose .message is the raw JSON
+// response text, not a parsed object — this app has no global handler
+// that reshapes it, so it has to be unpacked here or it'd otherwise only
+// ever reach the browser console (see AdminTicketSaleForm.vue's
+// special_seating fix for the same class of bug).
+const parseApiErrorMessage = (error) => {
+  try {
+    const parsed = JSON.parse(error.message);
+    if (parsed.errors) return Object.values(parsed.errors).flat().join(" ");
+    return parsed.message;
+  } catch {
+    return error?.message;
+  }
+};
+
+const saveDialog = async () => {
+  saving.value = true;
+  const isEdit = !!form.value.id;
+
+  const payload = {
+    first_name: form.value.first_name,
+    last_name: form.value.last_name,
+    email: form.value.email,
+    phone: form.value.phone || null,
+    founding_angel: form.value.founding_angel,
+  };
+
+  try {
+    const response = await callApi({
+      path: isEdit ? `/admin/patrons/${form.value.id}` : "/admin/patrons",
+      method: isEdit ? "put" : "post",
+      payload,
+      useAuth: true,
+      showError: false,
+    });
+
+    if (!response || response.status !== "success") {
+      throw new Error(response?.message || "Something went wrong.");
+    }
+
+    Notify.create({
+      type: "positive",
+      message: `Patron ${isEdit ? "updated" : "added"}.`,
+    });
+    dialog.value = false;
+    await reload();
+  } catch (e) {
+    Notify.create({
+      type: "negative",
+      message: parseApiErrorMessage(e) || "Something went wrong.",
+    });
+  } finally {
+    saving.value = false;
+  }
+};
+
+const deletePatron = (row) => {
+  Notify.create({
+    type: "warning",
+    position: "center",
+    message: `Delete ${row.first_name} ${row.last_name}? This can't be undone.`,
+    actions: [
+      { label: "No" },
+      {
+        label: "Yes",
+        handler: async () => {
+          const response = await callApi({
+            path: `/admin/patrons/${row.id}`,
+            method: "delete",
+            useAuth: true,
+          });
+
+          if (!response || response.status !== "success") return;
+
+          await reload();
+        },
+      },
+    ],
+  });
 };
 </script>

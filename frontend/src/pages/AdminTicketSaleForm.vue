@@ -6,6 +6,17 @@
 
     <q-form @submit.prevent="onSubmit" style="max-width: 480px;">
       <div class="q-gutter-y-sm">
+        <q-select
+          label="Performance"
+          stack-label
+          dense
+          outlined
+          v-model="form.performance"
+          :options="performanceOptions"
+          :option-disable="(opt) => opt.disable"
+          :rules="[(val) => !!val || 'Required']"
+        ></q-select>
+
         <q-input
           type="email"
           label="Email"
@@ -44,17 +55,6 @@
           outlined
           v-model="form.phone"
         ></q-input>
-
-        <q-select
-          label="Performance"
-          stack-label
-          dense
-          outlined
-          v-model="form.performance"
-          :options="performanceOptions"
-          :option-disable="(opt) => opt.disable"
-          :rules="[(val) => !!val || 'Required']"
-        ></q-select>
 
         <q-select
           label="Payment Method"
