@@ -77,6 +77,21 @@
           :rules="[(val) => val >= 1 || 'Must be at least 1']"
         ></q-input>
 
+        <q-input
+          type="number"
+          label="Special Seating"
+          hint="Reserved seats for this party (e.g. an Angel level's reserved seating) — not the patron's own accessibility need"
+          stack-label
+          dense
+          outlined
+          :model-value="form.special_seating"
+          min="0"
+          max="20"
+          step="1"
+          @update:model-value="onSpecialSeatingInput"
+          :rules="[(val) => (val >= 0 && val <= 20) || 'Must be a whole number between 0 and 20']"
+        ></q-input>
+
         <q-checkbox
           :model-value="form.confirmed"
           label="Payment Confirmed"
@@ -184,6 +199,7 @@ const form = ref(
         quantity: existingSale.quantity,
         confirmed: !!existingSale.confirmed,
         reason_changed: existingSale.reason_changed,
+        special_seating: existingSale.special_seating || 0,
       }
     : {
         email: null,
@@ -194,12 +210,22 @@ const form = ref(
         payment_method: null,
         quantity: 1,
         confirmed: false,
+        special_seating: 0,
       },
 );
 
 const onConfirmedInput = (val) => {
   form.value.confirmed = val;
   confirmedTouched.value = true;
+};
+
+// Clearing the field (or pasting something non-numeric) emits "" or null
+// rather than a number — normalize that to 0 immediately instead of
+// letting a non-integer value reach submit, where the backend's
+// integer-only validation would silently reject it.
+const onSpecialSeatingInput = (val) => {
+  const num = Number(val);
+  form.value.special_seating = Number.isInteger(num) ? num : 0;
 };
 
 // A comp row (merged into store.admin.ticket_sales by TicketSaleController::allSales())
@@ -296,6 +322,7 @@ const onSubmit = async () => {
     type: form.value.payment_method?.value?.value,
     quantity: form.value.quantity,
     confirmed: form.value.confirmed,
+    special_seating: form.value.special_seating,
     send_mail: store.send_mail,
     transfer_date:
       form.value.type == "transfer"

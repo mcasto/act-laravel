@@ -115,6 +115,7 @@ class TicketSaleController extends Controller
             'special_request' => 'sometimes|nullable|string',
             'send_mail' => 'sometimes|boolean',
             'confirmed' => 'sometimes|boolean',
+            'special_seating' => 'sometimes|integer|min:0|max:20',
             'tickets' => 'sometimes|array',
             'tickets.*' => 'nullable|string|max:255',
         ]);
@@ -169,6 +170,7 @@ class TicketSaleController extends Controller
             'quantity'          => $validated['quantity'],
             'payment_method_id' => $paymentMethod->id,
             'confirmed'         => $validated['confirmed'] ?? false,
+            'special_seating'   => $validated['special_seating'] ?? 0,
         ];
 
         $ticketSale = TicketSale::create($rec);
@@ -316,6 +318,7 @@ class TicketSaleController extends Controller
             'no_show'       => 'sometimes|boolean',
             'confirmed'     => 'sometimes|boolean',
             'reason_changed' => 'nullable|string',
+            'special_seating' => 'sometimes|integer|min:0|max:20',
             'tickets'         => 'sometimes|array',
             'tickets.*.id'    => 'required_with:tickets|integer|exists:tickets,id',
             'tickets.*.name'  => 'required_with:tickets|string|max:255',
@@ -342,6 +345,7 @@ class TicketSaleController extends Controller
             'no_show'           => $validated['no_show'] ?? false,
             'confirmed'         => $validated['confirmed'] ?? false,
             'reason_changed'    => $validated['reason_changed'] ?? null,
+            'special_seating'   => $validated['special_seating'] ?? 0,
         ]);
 
         foreach ($validated['tickets'] ?? [] as $ticket) {

@@ -23,11 +23,13 @@ class TicketSale extends Model
         'no_show',
         'confirmed',
         'reason_changed',
+        'special_seating',
     ];
 
     protected $casts = [
         'no_show' => 'integer',
         'confirmed' => 'boolean',
+        'special_seating' => 'integer',
     ];
 
     public function patron(): BelongsTo

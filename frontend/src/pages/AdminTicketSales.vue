@@ -514,6 +514,12 @@ const columns = [
     align: "center",
   },
   {
+    name: "special_seating",
+    label: "Special Seating",
+    field: (row) => (row.special_seating > 0 ? row.special_seating : ""),
+    align: "center",
+  },
+  {
     name: "payment_method",
     label: "",
     field: "",

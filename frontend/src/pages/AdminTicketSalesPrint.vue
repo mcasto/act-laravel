@@ -54,7 +54,7 @@
               </td>
               <td class="col-narrow"></td>
               <td class="col-narrow text-center">
-                {{ rec.patron.front_row > 0 ? rec.patron.front_row : "" }}
+                {{ specialSeating(rec) > 0 ? specialSeating(rec) : "" }}
               </td>
               <td>{{ guestList(rec) }}</td>
               <td>{{ angelBenefits(rec) }}</td>
@@ -145,6 +145,15 @@ const guestList = (rec) => {
 
 const angelBenefits = (rec) =>
   (rec.patron?.angel_concession_benefits ?? []).join(", ");
+
+// Two distinct sources feed this one column: the patron's own standing
+// accessibility need (front_row) and this sale's own reserved-party
+// seating (special_seating, e.g. an Angel level's reserved seating). Both
+// are rare, so a patron needing both at once is rarer still — simply
+// summing them is good enough until that combination actually happens and
+// proves it needs finer handling.
+const specialSeating = (rec) =>
+  (rec.patron?.front_row || 0) + (rec.special_seating || 0);
 
 const doPrint = () => window.print();
 </script>
