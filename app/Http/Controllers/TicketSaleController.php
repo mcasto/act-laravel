@@ -97,6 +97,8 @@ class TicketSaleController extends Controller
             'send_mail' => 'sometimes|boolean',
             'confirmed' => 'sometimes|boolean',
             'special_seating' => 'sometimes|integer|min:0|max:20',
+            'door_last' => 'sometimes|nullable|string|max:255',
+            'door_first' => 'sometimes|nullable|string|max:255',
             'tickets' => 'sometimes|array',
             'tickets.*' => 'nullable|string|max:255',
         ]);
@@ -152,6 +154,8 @@ class TicketSaleController extends Controller
             'payment_method_id' => $paymentMethod->id,
             'confirmed'         => $validated['confirmed'] ?? false,
             'special_seating'   => $validated['special_seating'] ?? 0,
+            'door_last'         => $validated['door_last'] ?? $patron->last_name,
+            'door_first'        => $validated['door_first'] ?? $patron->first_name,
         ];
 
         $ticketSale = TicketSale::create($rec);
@@ -300,6 +304,8 @@ class TicketSaleController extends Controller
             'confirmed'     => 'sometimes|boolean',
             'reason_changed' => 'nullable|string',
             'special_seating' => 'sometimes|integer|min:0|max:20',
+            'door_last'       => 'sometimes|nullable|string|max:255',
+            'door_first'      => 'sometimes|nullable|string|max:255',
             'tickets'         => 'sometimes|array',
             'tickets.*.id'    => 'required_with:tickets|integer|exists:tickets,id',
             'tickets.*.name'  => 'required_with:tickets|string|max:255',
@@ -334,8 +340,9 @@ class TicketSaleController extends Controller
 
             // Only email/name/performance actually exist on CompTicket —
             // quantity, confirmed, special_seating, no_show,
-            // reason_changed, and per-ticket names have no equivalent here
-            // and are silently ignored, same as store()'s comp branch.
+            // reason_changed, door_last/door_first, and per-ticket names
+            // have no equivalent here and are silently ignored, same as
+            // store()'s comp branch.
             $existingComp->update([
                 'email'          => $patron->email,
                 'name'           => trim("{$patron->first_name} {$patron->last_name}"),
@@ -368,6 +375,8 @@ class TicketSaleController extends Controller
             'confirmed'         => $validated['confirmed'] ?? false,
             'reason_changed'    => $validated['reason_changed'] ?? null,
             'special_seating'   => $validated['special_seating'] ?? 0,
+            'door_last'         => $validated['door_last'] ?? $ticketSale->door_last ?? $patron->last_name,
+            'door_first'        => $validated['door_first'] ?? $ticketSale->door_first ?? $patron->first_name,
         ]);
 
         foreach ($validated['tickets'] ?? [] as $ticket) {

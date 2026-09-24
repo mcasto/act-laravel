@@ -24,6 +24,8 @@ class TicketSale extends Model
         'confirmed',
         'reason_changed',
         'special_seating',
+        'door_last',
+        'door_first',
     ];
 
     protected $casts = [

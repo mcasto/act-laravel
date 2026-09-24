@@ -56,6 +56,30 @@
           v-model="form.phone"
         ></q-input>
 
+        <div class="text-caption text-grey-7 q-mt-sm">Door Name</div>
+        <div class="text-caption text-grey-7 q-mb-xs" v-if="!isEdit">
+          Defaults to the purchaser — change to override what prints at the door
+        </div>
+        <q-input
+          type="text"
+          label="Last Name"
+          stack-label
+          dense
+          outlined
+          :model-value="form.door_last"
+          @update:model-value="onDoorLastInput"
+        ></q-input>
+
+        <q-input
+          type="text"
+          label="First Name"
+          stack-label
+          dense
+          outlined
+          :model-value="form.door_first"
+          @update:model-value="onDoorFirstInput"
+        ></q-input>
+
         <q-select
           label="Payment Method"
           stack-label
@@ -200,6 +224,10 @@ const form = ref(
         confirmed: !!existingSale.confirmed,
         reason_changed: existingSale.reason_changed,
         special_seating: existingSale.special_seating || 0,
+        // Fallback covers a record saved before this field existed and
+        // not yet caught by the one-time backfill command.
+        door_last: existingSale.door_last ?? existingSale.patron.last_name,
+        door_first: existingSale.door_first ?? existingSale.patron.first_name,
       }
     : {
         email: null,
@@ -211,6 +239,8 @@ const form = ref(
         quantity: 1,
         confirmed: false,
         special_seating: 0,
+        door_last: "",
+        door_first: "",
       },
 );
 
@@ -228,12 +258,10 @@ const onSpecialSeatingInput = (val) => {
   form.value.special_seating = Number.isInteger(num) ? num : 0;
 };
 
-// A comp row (merged into store.admin.ticket_sales by TicketSaleController::allSales())
-// has no `tickets` array, only a single `number` — this section only applies
-// to real ticket_sales rows. On create there's no existingSale at all yet,
-// so seed one blank row per unit of quantity instead — the backend assigns
-// real ticket ids/numbers at save time and autofills anything still blank
-// (see TicketSale::issueTickets()).
+// On create there's no existingSale at all yet, so seed one blank row per
+// unit of quantity instead — the backend assigns real ticket ids/numbers
+// at save time and autofills anything still blank (see
+// TicketSale::issueTickets()).
 const ticketRows = ref(
   isEdit
     ? [...(existingSale?.tickets ?? [])].sort((a, b) => a.number - b.number)
@@ -255,6 +283,35 @@ const ticket0Touched = ref(false);
 // treated as confirmed by default — the admin can still uncheck it
 // manually, which then sticks even if the payment method is changed again.
 const confirmedTouched = ref(false);
+
+// Door Name defaults to the purchaser's name (kept in sync as First/Last
+// Name are filled in or corrected) until the admin overrides it — only on
+// create. On edit it's just whatever's already stored; changing the
+// purchaser's name shouldn't silently blow away a door-name override
+// someone already set.
+const doorNameTouched = ref(false);
+
+const onDoorLastInput = (val) => {
+  form.value.door_last = val;
+  doorNameTouched.value = true;
+};
+
+const onDoorFirstInput = (val) => {
+  form.value.door_first = val;
+  doorNameTouched.value = true;
+};
+
+if (!isEdit) {
+  watch(
+    () => [form.value.first_name, form.value.last_name],
+    ([firstName, lastName]) => {
+      if (doorNameTouched.value) return;
+      form.value.door_first = firstName ?? "";
+      form.value.door_last = lastName ?? "";
+    },
+    { immediate: true },
+  );
+}
 
 if (!isEdit) {
   watch(
@@ -325,6 +382,8 @@ const onSubmit = async () => {
     quantity: form.value.quantity,
     confirmed: form.value.confirmed,
     special_seating: form.value.special_seating,
+    door_last: form.value.door_last || null,
+    door_first: form.value.door_first || null,
     send_mail: store.send_mail,
     transfer_date:
       form.value.type == "transfer"

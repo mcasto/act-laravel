@@ -45,8 +45,8 @@
               :key="rec.id"
               :class="{ 'row-comp': isComp(rec), 'row-flex': isFlex(rec) }"
             >
-              <td>{{ rec.patron.last_name }}</td>
-              <td>{{ rec.patron.first_name }}</td>
+              <td>{{ doorLastName(rec) }}</td>
+              <td>{{ doorFirstName(rec) }}</td>
               <td class="col-narrow text-center">{{ rec.quantity || 1 }}</td>
               <td>{{ rec.payment_method.label }}</td>
               <td class="col-narrow text-right">
@@ -117,8 +117,17 @@ const perfRecs = computed(() => {
   );
 });
 
+// door_last/door_first override what prints here — set from the
+// purchaser's name by default but editable independently, so the patron
+// reference (and anything keyed off it, like flex balances) stays intact
+// even when the printed name is overridden. Comp rows don't have these
+// (see TicketSaleController::store()'s comp branch), so they fall back to
+// the patron's own name, same as any not-yet-backfilled legacy row.
+const doorLastName = (rec) => rec.door_last || rec.patron.last_name;
+const doorFirstName = (rec) => rec.door_first || rec.patron.first_name;
+
 const sortedRecs = computed(() =>
-  sortBy(perfRecs.value, (r) => r.patron.last_name.toLowerCase()),
+  sortBy(perfRecs.value, (r) => doorLastName(r).toLowerCase()),
 );
 
 const isComp = (rec) => rec.payment_method.value === "comp";
