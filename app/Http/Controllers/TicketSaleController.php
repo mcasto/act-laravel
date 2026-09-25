@@ -117,7 +117,16 @@ class TicketSaleController extends Controller
 
         if ($validated['type'] === 'comp') {
             $performance = Performance::with('show')->find($validated['performance_id']);
-            $pickupName  = $patron->first_name . ' ' . $patron->last_name;
+            $purchaserName = trim("{$patron->first_name} {$patron->last_name}");
+
+            // Comp tickets are transferable, same as flex — the purchaser
+            // (the "-er") stays on the record as CompTicket::name, but
+            // whoever the Tickets section's one row names (the "-ee") is
+            // who actually shows up at the door. Previously this field was
+            // silently discarded and the purchaser's own name was always
+            // used, even when the admin typed a different door name.
+            $submittedDoorName = trim($validated['tickets'][0] ?? '');
+            $doorName = $submittedDoorName !== '' ? $submittedDoorName : $purchaserName;
 
             $comp = CompTicket::where('email', $patron->email)
                 ->where('show_id', $performance?->show_id)
@@ -126,7 +135,7 @@ class TicketSaleController extends Controller
 
             if (! $comp) {
                 $comp = CompTicket::create([
-                    'name'    => $pickupName,
+                    'name'    => $purchaserName,
                     'email'   => $patron->email,
                     'show_id' => $performance?->show_id,
                 ]);
@@ -138,7 +147,7 @@ class TicketSaleController extends Controller
             app(CompTixController::class)->redeemComp(
                 $comp->uid,
                 $validated['performance_id'],
-                $pickupName,
+                $doorName,
                 $validated['send_mail']
             );
 
@@ -345,26 +354,34 @@ class TicketSaleController extends Controller
                 ]);
             }
 
-            // Only email/name/performance actually exist on CompTicket —
-            // quantity, confirmed, front_row, special_seating, no_show,
-            // reason_changed, door_last/door_first, comments, and
-            // per-ticket names have no equivalent here and are silently
-            // ignored, same as store()'s comp branch.
+            // Only email/name/performance/pickup name actually exist on
+            // CompTicket — quantity, confirmed, front_row, special_seating,
+            // no_show, reason_changed, door_last/door_first, and comments
+            // have no equivalent here and are silently ignored, same as
+            // store()'s comp branch.
+            $purchaserName = trim("{$patron->first_name} {$patron->last_name}");
+
+            // The Tickets section's one row is the door attendee (the
+            // "-ee"), which can differ from the purchaser — same as
+            // store()'s comp branch. Previously this was silently ignored
+            // here too, so an edited door name never actually saved.
+            $submittedDoorName = trim($validated['tickets'][0]['name'] ?? '');
+            $doorName = $submittedDoorName !== '' ? $submittedDoorName : ($existingComp->pickup_name ?: $purchaserName);
+
             $existingComp->update([
                 'email'          => $patron->email,
-                'name'           => trim("{$patron->first_name} {$patron->last_name}"),
+                'name'           => $purchaserName,
                 'performance_id' => $validated['performance_id'],
+                'pickup_name'    => $doorName,
             ]);
 
-            // Keep the mirrored TicketSale in sync too, or it drifts back
-            // out of sync with the comp it belongs to. pickup_name/the
-            // Ticket's own name aren't touched here — those represent the
-            // door attendee, a separate concern from this comp's own
-            // recipient identity.
+            // Keep the mirrored TicketSale/Ticket in sync too, or they
+            // drift back out of sync with the comp they belong to.
             $existingComp->ticketSale?->update([
                 'patron_id'      => $patron->id,
                 'performance_id' => $validated['performance_id'],
             ]);
+            $existingComp->ticketSale?->tickets()->update(['name' => $doorName]);
 
             return response()->json($this->allSales());
         }

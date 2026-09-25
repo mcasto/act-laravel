@@ -172,7 +172,7 @@
             :key="ticket.id ?? `new-${index}`"
             type="text"
             :label="isEdit ? `#${ticket.formatted_number}` : `Ticket ${index + 1}`"
-            :hint="!isEdit && index === 0 ? 'Defaults to the purchaser — change if this ticket is for someone else' : undefined"
+            :hint="!isEdit && index === 0 ? 'Defaults to Door Name — change if this ticket is for someone else' : undefined"
             stack-label
             dense
             outlined
@@ -364,10 +364,12 @@ const onTicketNameInput = (index, value) => {
   if (index === 0) ticket0Touched.value = true;
 };
 
-// The first ticket defaults to the purchaser's own name (kept in sync with
-// the First/Last Name fields, in case they're filled in or corrected after
-// quantity is already set) until the admin actually types something into
-// that field themselves — after that it's just a normal independent value.
+// The first ticket defaults to Door Name (not the purchaser's First/Last
+// Name directly) — chained: patron lookup -> Door Name -> Ticket 1, each
+// link overridable independently. So Ticket 1 keeps following Door Name
+// (even after Door Name itself has been overridden) right up until the
+// admin actually types into Ticket 1 themselves — after that it's just a
+// normal independent value, and typing into it never touches Door Name.
 const ticket0Touched = ref(false);
 
 // Comp & flex tickets are effectively pre-paid/no-cost, so payment is
@@ -411,6 +413,18 @@ if (!isEdit) {
     },
     { immediate: true },
   );
+
+  // Chained off Door Name (not directly off First/Last Name) — keeps
+  // following Door Name even after Door Name has itself been overridden,
+  // since Door Name -> Ticket 1 is its own independent default link.
+  watch(
+    () => [form.value.door_first, form.value.door_last],
+    ([doorFirst, doorLast]) => {
+      if (ticket0Touched.value || !ticketRows.value[0]) return;
+      ticketRows.value[0].name = `${doorFirst ?? ""} ${doorLast ?? ""}`.trim();
+    },
+    { immediate: true },
+  );
 }
 
 if (!isEdit) {
@@ -420,15 +434,6 @@ if (!isEdit) {
       if (confirmedTouched.value) return;
       const type = pm?.value?.value;
       form.value.confirmed = type === "comp" || type === "flex";
-    },
-    { immediate: true },
-  );
-
-  watch(
-    () => [form.value.first_name, form.value.last_name],
-    ([firstName, lastName]) => {
-      if (ticket0Touched.value || !ticketRows.value[0]) return;
-      ticketRows.value[0].name = `${firstName ?? ""} ${lastName ?? ""}`.trim();
     },
     { immediate: true },
   );
