@@ -4,185 +4,281 @@
       {{ isEdit ? "Edit Ticket Sale" : "New Ticket Sale" }}
     </div>
 
-    <div class="row q-col-gutter-xl">
-      <q-form @submit.prevent="onSubmit" class="col-auto" style="width: 480px; max-width: 100%;">
-      <div class="q-gutter-y-sm">
-        <q-select
-          label="Performance"
-          stack-label
-          dense
-          outlined
-          v-model="form.performance"
-          :options="performanceOptions"
-          :option-disable="(opt) => opt.disable"
-          :rules="[(val) => !!val || 'Required']"
-        ></q-select>
+    <q-form @submit.prevent="onSubmit">
+      <q-select
+        label="Performance"
+        stack-label
+        dense
+        outlined
+        bg-color="white"
+        class="q-mb-md"
+        style="max-width: 560px;"
+        v-model="form.performance"
+        :options="performanceOptions"
+        :option-disable="(opt) => opt.disable"
+        :rules="[(val) => !!val || 'Required']"
+      ></q-select>
 
-        <q-input
-          type="email"
-          label="Email"
-          stack-label
-          dense
-          outlined
-          v-model="form.email"
-          @blur="getPatron"
-        ></q-input>
+      <div class="row q-col-gutter-lg">
+        <div class="col-12 col-md-4">
+          <div class="q-gutter-y-md">
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="row items-center q-gutter-x-sm text-subtitle1 text-weight-medium q-mb-md">
+                <q-icon :name="matPerson" color="primary" size="xs" />
+                <div>Purchaser</div>
+              </div>
 
-        <q-input
-          type="text"
-          label="First Name"
-          :hint="patronFound ? 'An existing patron uses this email — edit their record on Patron Management instead' : undefined"
-          stack-label
-          dense
-          outlined
-          v-model="form.first_name"
-          :disable="patronFound"
-          :rules="[(val) => !!val || 'Required']"
-        ></q-input>
+              <div class="q-gutter-y-sm">
+                <q-input
+                  type="email"
+                  label="Email"
+                  stack-label
+                  dense
+                  outlined
+                  v-model="form.email"
+                  @blur="getPatron"
+                ></q-input>
 
-        <q-input
-          type="text"
-          label="Last Name"
-          :hint="patronFound ? 'An existing patron uses this email — edit their record on Patron Management instead' : undefined"
-          stack-label
-          dense
-          outlined
-          v-model="form.last_name"
-          :disable="patronFound"
-          :rules="[(val) => !!val || 'Required']"
-        ></q-input>
+                <div class="row q-col-gutter-sm">
+                  <q-input
+                    class="col-6"
+                    type="text"
+                    label="First Name"
+                    :hint="patronFound ? 'Existing patron — edit on Patron Management' : undefined"
+                    stack-label
+                    dense
+                    outlined
+                    v-model="form.first_name"
+                    :disable="patronFound"
+                    :rules="[(val) => !!val || 'Required']"
+                  ></q-input>
 
-        <q-input
-          type="tel"
-          label="Phone / WhatsApp"
-          :hint="patronFound ? 'An existing patron uses this email — edit their record on Patron Management instead' : undefined"
-          stack-label
-          dense
-          outlined
-          v-model="form.phone"
-          :disable="patronFound"
-        ></q-input>
+                  <q-input
+                    class="col-6"
+                    type="text"
+                    label="Last Name"
+                    :hint="patronFound ? 'Existing patron — edit on Patron Management' : undefined"
+                    stack-label
+                    dense
+                    outlined
+                    v-model="form.last_name"
+                    :disable="patronFound"
+                    :rules="[(val) => !!val || 'Required']"
+                  ></q-input>
+                </div>
 
-        <div class="text-caption text-grey-7 q-mt-sm">Door Name</div>
-        <div class="text-caption text-grey-7 q-mb-xs" v-if="!isEdit">
-          Defaults to the purchaser — change to override what prints at the door
+                <q-input
+                  type="tel"
+                  label="Phone / WhatsApp"
+                  :hint="patronFound ? 'Existing patron — edit on Patron Management' : undefined"
+                  stack-label
+                  dense
+                  outlined
+                  v-model="form.phone"
+                  :disable="patronFound"
+                ></q-input>
+              </div>
+            </q-card-section>
+          </q-card>
+
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="row items-center q-gutter-x-sm text-subtitle1 text-weight-medium">
+                <q-icon :name="matBadge" color="primary" size="xs" />
+                <div>Door Name</div>
+              </div>
+              <div class="text-caption text-grey-7 q-mb-sm" v-if="!isEdit">
+                Defaults to the purchaser — change to override what prints at the door
+              </div>
+
+              <div class="row q-col-gutter-sm q-mt-none">
+                <q-input
+                  class="col-6"
+                  type="text"
+                  label="First Name"
+                  stack-label
+                  dense
+                  outlined
+                  :model-value="form.door_first"
+                  @update:model-value="onDoorFirstInput"
+                ></q-input>
+
+                <q-input
+                  class="col-6"
+                  type="text"
+                  label="Last Name"
+                  stack-label
+                  dense
+                  outlined
+                  :model-value="form.door_last"
+                  @update:model-value="onDoorLastInput"
+                ></q-input>
+              </div>
+            </q-card-section>
+          </q-card>
+          </div>
         </div>
-        <q-input
-          type="text"
-          label="Last Name"
-          stack-label
-          dense
-          outlined
-          :model-value="form.door_last"
-          @update:model-value="onDoorLastInput"
-        ></q-input>
 
-        <q-input
-          type="text"
-          label="First Name"
-          stack-label
-          dense
-          outlined
-          :model-value="form.door_first"
-          @update:model-value="onDoorFirstInput"
-        ></q-input>
+        <div class="col-12 col-md-4">
+          <div class="q-gutter-y-md">
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="row items-center q-gutter-x-sm text-subtitle1 text-weight-medium q-mb-md">
+                <q-icon :name="matPayment" color="primary" size="xs" />
+                <div>Payment</div>
+              </div>
 
-        <q-select
-          label="Payment Method"
-          stack-label
-          dense
-          outlined
-          v-model="form.payment_method"
-          :options="paymentMethodOptions"
-          :rules="[(val) => !!val || 'Required']"
-        ></q-select>
+              <div class="q-gutter-y-sm">
+                <div class="row q-col-gutter-sm">
+                  <q-select
+                    class="col-7"
+                    label="Payment Method"
+                    stack-label
+                    dense
+                    outlined
+                    v-model="form.payment_method"
+                    :options="paymentMethodOptions"
+                    :rules="[(val) => !!val || 'Required']"
+                  ></q-select>
 
-        <q-input
-          type="number"
-          label="Quantity"
-          stack-label
-          dense
-          outlined
-          v-model.number="form.quantity"
-          min="1"
-          :rules="[(val) => val >= 1 || 'Must be at least 1']"
-        ></q-input>
+                  <q-input
+                    class="col-5"
+                    type="number"
+                    label="Quantity"
+                    stack-label
+                    dense
+                    outlined
+                    v-model.number="form.quantity"
+                    min="1"
+                    :rules="[(val) => val >= 1 || 'Must be at least 1']"
+                  ></q-input>
+                </div>
 
-        <q-input
-          type="number"
-          label="Front Row"
-          hint="Reserved front-row seats for this party (e.g. an Angel level's reserved seating) — not the patron's own accessibility need"
-          stack-label
-          dense
-          outlined
-          :model-value="form.front_row"
-          min="0"
-          max="20"
-          step="1"
-          @update:model-value="onFrontRowInput"
-          :rules="[(val) => (val >= 0 && val <= 20) || 'Must be a whole number between 0 and 20']"
-        ></q-input>
+                <q-checkbox
+                  :model-value="form.confirmed"
+                  label="Payment Confirmed"
+                  @update:model-value="onConfirmedInput"
+                ></q-checkbox>
 
-        <q-input
-          type="textarea"
-          rows="2"
-          label="Special Seating"
-          hint="Notes about seating other than front row, e.g. aisle seat"
-          stack-label
-          dense
-          outlined
-          class="q-mt-md"
-          v-model="form.special_seating"
-        ></q-input>
+                <q-input
+                  v-if="isEdit"
+                  type="textarea"
+                  rows="2"
+                  label="Reason Changed"
+                  stack-label
+                  dense
+                  outlined
+                  class="q-mt-sm"
+                  v-model="form.reason_changed"
+                ></q-input>
+              </div>
+            </q-card-section>
+          </q-card>
 
-        <q-input
-          type="textarea"
-          rows="2"
-          label="Comments"
-          hint="Defaults to the patron's notes — change to override for this sale"
-          stack-label
-          dense
-          outlined
-          class="q-mt-md"
-          :model-value="form.comments"
-          @update:model-value="onCommentsInput"
-        ></q-input>
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="row items-center q-gutter-x-sm text-subtitle1 text-weight-medium q-mb-md">
+                <q-icon :name="matEventSeat" color="primary" size="xs" />
+                <div>Seating &amp; Notes</div>
+              </div>
 
-        <q-checkbox
-          :model-value="form.confirmed"
-          label="Payment Confirmed"
-          @update:model-value="onConfirmedInput"
-        ></q-checkbox>
+              <div class="q-gutter-y-sm">
+                <q-input
+                  type="number"
+                  label="Front Row"
+                  hint="Reserved front-row seats for this party (e.g. an Angel level's reserved seating) — not the patron's own accessibility need"
+                  stack-label
+                  dense
+                  outlined
+                  :model-value="form.front_row"
+                  min="0"
+                  max="20"
+                  step="1"
+                  @update:model-value="onFrontRowInput"
+                  :rules="[(val) => (val >= 0 && val <= 20) || 'Must be a whole number between 0 and 20']"
+                ></q-input>
 
-        <q-input
-          v-if="isEdit"
-          type="textarea"
-          rows="2"
-          label="Reason Changed"
-          stack-label
-          dense
-          outlined
-          v-model="form.reason_changed"
-        ></q-input>
+                <q-input
+                  type="textarea"
+                  rows="2"
+                  label="Special Seating"
+                  hint="Notes about seating other than front row, e.g. aisle seat"
+                  stack-label
+                  dense
+                  outlined
+                  class="q-mt-md"
+                  v-model="form.special_seating"
+                ></q-input>
 
-        <template v-if="ticketRows.length">
-          <div class="text-caption text-grey-7 q-mt-sm">Tickets</div>
-          <q-input
-            v-for="(ticket, index) in ticketRows"
-            :key="ticket.id ?? `new-${index}`"
-            type="text"
-            :label="isEdit ? `#${ticket.formatted_number}` : `Ticket ${index + 1}`"
-            :hint="!isEdit && index === 0 ? 'Defaults to Door Name — change if this ticket is for someone else' : undefined"
-            stack-label
-            dense
-            outlined
-            :model-value="ticket.name"
-            @update:model-value="(val) => onTicketNameInput(index, val)"
-          ></q-input>
-        </template>
+                <q-input
+                  type="textarea"
+                  rows="2"
+                  label="Comments"
+                  hint="Defaults to the patron's notes — change to override for this sale"
+                  stack-label
+                  dense
+                  outlined
+                  class="q-mt-md"
+                  :model-value="form.comments"
+                  @update:model-value="onCommentsInput"
+                ></q-input>
+              </div>
+            </q-card-section>
+          </q-card>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="q-gutter-y-md">
+          <q-card v-if="seatingSummary" flat bordered class="bg-blue-1">
+            <q-card-section>
+              <div class="text-subtitle2 text-grey-8">Seating Summary</div>
+              <div class="row q-gutter-x-xl q-mt-sm">
+                <div>
+                  <div class="text-h3 text-weight-bold text-primary">
+                    {{ seatingSummary.front_row_total }}
+                  </div>
+                  <div class="text-caption text-grey-7">Front Row</div>
+                </div>
+                <div>
+                  <div class="text-h3 text-weight-bold">
+                    {{ seatingSummary.reservations_total }}<span class="text-h5 text-grey-6">/{{ seatingSummary.sold_out_target }}</span>
+                  </div>
+                  <div class="text-caption text-grey-7">Reservations</div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+
+          <q-card flat bordered v-if="ticketRows.length">
+            <q-card-section>
+              <div class="row items-center q-gutter-x-sm text-subtitle1 text-weight-medium q-mb-md">
+                <q-icon :name="matConfirmationNumber" color="primary" size="xs" />
+                <div>Tickets</div>
+              </div>
+
+              <div class="q-gutter-y-sm">
+                <q-input
+                  v-for="(ticket, index) in ticketRows"
+                  :key="ticket.id ?? `new-${index}`"
+                  type="text"
+                  :label="isEdit ? `#${ticket.formatted_number}` : `Ticket ${index + 1}`"
+                  :hint="!isEdit && index === 0 ? 'Defaults to Door Name — change if this ticket is for someone else' : undefined"
+                  stack-label
+                  dense
+                  outlined
+                  :model-value="ticket.name"
+                  @update:model-value="(val) => onTicketNameInput(index, val)"
+                ></q-input>
+              </div>
+            </q-card-section>
+          </q-card>
+          </div>
+        </div>
       </div>
 
-      <div class="flex justify-end q-mt-md q-gutter-x-sm">
+      <div class="flex justify-end q-mt-lg q-gutter-x-sm">
         <q-btn
           flat
           label="Cancel"
@@ -197,34 +293,18 @@
         ></q-btn>
       </div>
     </q-form>
-
-    <div v-if="seatingSummary" class="col-auto">
-      <q-card flat bordered class="bg-blue-1" style="min-width: 260px;">
-        <q-card-section>
-          <div class="text-subtitle2 text-grey-8">Seating Summary</div>
-          <div class="row q-gutter-x-xl q-mt-sm">
-            <div>
-              <div class="text-h3 text-weight-bold text-primary">
-                {{ seatingSummary.front_row_total }}
-              </div>
-              <div class="text-caption text-grey-7">Front Row</div>
-            </div>
-            <div>
-              <div class="text-h3 text-weight-bold">
-                {{ seatingSummary.reservations_total }}<span class="text-h5 text-grey-6">/{{ seatingSummary.sold_out_target }}</span>
-              </div>
-              <div class="text-caption text-grey-7">Reservations</div>
-            </div>
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { computed, ref, watch } from "vue";
+import {
+  matBadge,
+  matConfirmationNumber,
+  matEventSeat,
+  matPayment,
+  matPerson,
+} from "@quasar/extras/material-icons";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
