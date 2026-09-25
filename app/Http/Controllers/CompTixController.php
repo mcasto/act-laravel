@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PatronMail;
 use App\Helpers\RefId;
 use App\Mail\CompTicketMailer;
 use App\Models\CompTicket;
@@ -13,7 +14,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class CompTixController extends Controller
 {
@@ -75,7 +75,7 @@ class CompTixController extends Controller
     {
         $rec = CompTicket::where('uid', $id)->firstOrFail();
 
-        Mail::to($rec['email'])->send(new CompTicketMailer([
+        PatronMail::to($rec['email'])->send(new CompTicketMailer([
             'view'  => 'comp-ticket-notice',
             'name'  => $rec['name'],
             'uid'   => $rec['uid'],
@@ -174,7 +174,7 @@ class CompTixController extends Controller
 
         if ($sendMail) {
             try {
-                Mail::to($comp->email)->send(new CompTicketMailer([
+                PatronMail::to($comp->email)->send(new CompTicketMailer([
                     'view'             => 'comp-ticket-confirm',
                     'name'             => $comp->name,
                     'pickup_name'      => $pickupName,

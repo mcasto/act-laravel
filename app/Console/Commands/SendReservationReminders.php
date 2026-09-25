@@ -21,7 +21,10 @@ class SendReservationReminders extends Command
      * for which performance, how many tickets) can be verified against
      * real data over time before sending is turned back on. To resume
      * actually sending, swap logWouldSend() calls below for Mail::send()
-     * calls (see git history prior to this change for the exact shape).
+     * calls (see git history prior to this change for the exact shape) —
+     * and send via App\Helpers\PatronMail::to() instead of the raw Mail
+     * facade, so these reminders also respect the CC/CC_EMAIL patron-cc
+     * setting like every other patron-facing email does.
      */
     private const LOG_PATH = 'app/private/reservation-reminder-log.csv';
 

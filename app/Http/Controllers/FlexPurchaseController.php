@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ActiveSeason;
+use App\Helpers\PatronMail;
 use App\Mail\FlexPurchaseConfirmationMailer;
 use App\Mail\FlexPurchaseMailer;
 use App\Models\Patron;
@@ -179,7 +180,7 @@ class FlexPurchaseController extends Controller
         }
 
         try {
-            Mail::to($patron->email)
+            PatronMail::to($patron->email)
                 ->send(new FlexPurchaseConfirmationMailer($package));
         } catch (Exception $e) {
             logger()->error('Failed to send Flex purchase confirmation email', [

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PatronMail;
 use App\Helpers\RefId;
 use App\Mail\CourseInquiryConfirmationMailer;
 use App\Mail\CourseInquiryMailer;
@@ -411,7 +412,7 @@ class CourseController extends Controller
         ]);
 
         Mail::to($course->instructor_email)->send(new CourseInquiryMailer($data));
-        Mail::to($validated['email'])->send(new CourseInquiryConfirmationMailer($data));
+        PatronMail::to($validated['email'])->send(new CourseInquiryConfirmationMailer($data));
 
         return response()->json(['status' => 'success']);
     }

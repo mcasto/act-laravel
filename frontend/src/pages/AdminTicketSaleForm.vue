@@ -40,7 +40,7 @@
                   @blur="getPatron"
                 ></q-input>
 
-                <div class="row q-col-gutter-sm">
+                <div class="row q-col-gutter-sm q-mt-md">
                   <q-input
                     class="col-6"
                     type="text"
@@ -75,6 +75,7 @@
                   stack-label
                   dense
                   outlined
+                  class="q-mt-md"
                   v-model="form.phone"
                   :disable="patronFound"
                 ></q-input>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PatronMail;
 use App\Helpers\RefId;
 use App\Helpers\TheaterSeason;
 use App\Mail\PurchaseConfirmationMailer;
@@ -238,7 +239,7 @@ class TicketSaleController extends Controller
 
             if ($validated['send_mail']) {
                 Mail::to(config('mail.admin_to.address'))->send(new TicketSaleMailer($ticketData));
-                Mail::to($patron->email)->send(new PurchaseConfirmationMailer($confirmationData));
+                PatronMail::to($patron->email)->send(new PurchaseConfirmationMailer($confirmationData));
             }
         } catch (Exception $e) {
             logger()->error('Failed to send ticket sale email', [

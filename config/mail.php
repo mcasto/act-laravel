@@ -140,5 +140,23 @@ return [
     'volunteer_to' => [
         'address' => env('MAIL_TO_ADDRESS'),
         'name' => env('MAIL_TO_NAME')
-    ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | CC on patron-facing emails
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, every email sent to a patron (purchase/comp/flex/angel/
+    | course confirmations — see App\Helpers\PatronMail) is also CC'd to this
+    | address. Deliberately separate from admin_to — this is for someone who
+    | wants visibility into what patrons themselves are receiving, not the
+    | box-office's own notification emails.
+    |
+    */
+
+    'cc_patrons' => [
+        'enabled' => env('CC', false),
+        'address' => env('CC_EMAIL'),
+    ],
 ];
