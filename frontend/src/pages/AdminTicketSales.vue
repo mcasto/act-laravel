@@ -231,6 +231,14 @@
         </q-td>
       </template>
 
+      <template #body-cell-special_seating="props">
+        <q-td :props="props" class="text-center">
+          <q-icon v-if="props.value" :name="matComment" color="primary">
+            <q-tooltip>{{ props.value }}</q-tooltip>
+          </q-icon>
+        </q-td>
+      </template>
+
       <template #body-cell-info="props">
         <q-td :props="props">
           <q-btn :icon="matInfo" flat round size="sm">
@@ -385,6 +393,7 @@
 <script setup>
 import {
   matAdd,
+  matComment,
   matDelete,
   matEdit,
   matEvent,
@@ -515,9 +524,15 @@ const columns = [
     align: "center",
   },
   {
+    name: "front_row",
+    label: "Front Row",
+    field: (row) => (row.front_row > 0 ? row.front_row : ""),
+    align: "center",
+  },
+  {
     name: "special_seating",
     label: "Special Seating",
-    field: (row) => (row.special_seating > 0 ? row.special_seating : ""),
+    field: "special_seating",
     align: "center",
   },
   {

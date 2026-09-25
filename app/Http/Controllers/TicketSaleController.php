@@ -96,9 +96,11 @@ class TicketSaleController extends Controller
             'special_request' => 'sometimes|nullable|string',
             'send_mail' => 'sometimes|boolean',
             'confirmed' => 'sometimes|boolean',
-            'special_seating' => 'sometimes|integer|min:0|max:20',
+            'front_row' => 'sometimes|integer|min:0|max:20',
+            'special_seating' => 'sometimes|nullable|string|max:1000',
             'door_last' => 'sometimes|nullable|string|max:255',
             'door_first' => 'sometimes|nullable|string|max:255',
+            'comments' => 'sometimes|nullable|string',
             'tickets' => 'sometimes|array',
             'tickets.*' => 'nullable|string|max:255',
         ]);
@@ -153,9 +155,11 @@ class TicketSaleController extends Controller
             'quantity'          => $validated['quantity'],
             'payment_method_id' => $paymentMethod->id,
             'confirmed'         => $validated['confirmed'] ?? false,
-            'special_seating'   => $validated['special_seating'] ?? 0,
+            'front_row'         => $validated['front_row'] ?? 0,
+            'special_seating'   => $validated['special_seating'] ?? null,
             'door_last'         => $validated['door_last'] ?? $patron->last_name,
             'door_first'        => $validated['door_first'] ?? $patron->first_name,
+            'comments'          => $validated['comments'] ?? $patron->comments,
         ];
 
         $ticketSale = TicketSale::create($rec);
@@ -303,9 +307,11 @@ class TicketSaleController extends Controller
             'no_show'       => 'sometimes|boolean',
             'confirmed'     => 'sometimes|boolean',
             'reason_changed' => 'nullable|string',
-            'special_seating' => 'sometimes|integer|min:0|max:20',
+            'front_row'       => 'sometimes|integer|min:0|max:20',
+            'special_seating' => 'sometimes|nullable|string|max:1000',
             'door_last'       => 'sometimes|nullable|string|max:255',
             'door_first'      => 'sometimes|nullable|string|max:255',
+            'comments'        => 'sometimes|nullable|string',
             'tickets'         => 'sometimes|array',
             'tickets.*.id'    => 'required_with:tickets|integer|exists:tickets,id',
             'tickets.*.name'  => 'required_with:tickets|string|max:255',
@@ -339,10 +345,10 @@ class TicketSaleController extends Controller
             }
 
             // Only email/name/performance actually exist on CompTicket —
-            // quantity, confirmed, special_seating, no_show,
-            // reason_changed, door_last/door_first, and per-ticket names
-            // have no equivalent here and are silently ignored, same as
-            // store()'s comp branch.
+            // quantity, confirmed, front_row, special_seating, no_show,
+            // reason_changed, door_last/door_first, comments, and
+            // per-ticket names have no equivalent here and are silently
+            // ignored, same as store()'s comp branch.
             $existingComp->update([
                 'email'          => $patron->email,
                 'name'           => trim("{$patron->first_name} {$patron->last_name}"),
@@ -374,9 +380,11 @@ class TicketSaleController extends Controller
             'no_show'           => $validated['no_show'] ?? false,
             'confirmed'         => $validated['confirmed'] ?? false,
             'reason_changed'    => $validated['reason_changed'] ?? null,
-            'special_seating'   => $validated['special_seating'] ?? 0,
+            'front_row'         => $validated['front_row'] ?? 0,
+            'special_seating'   => $validated['special_seating'] ?? null,
             'door_last'         => $validated['door_last'] ?? $ticketSale->door_last ?? $patron->last_name,
             'door_first'        => $validated['door_first'] ?? $ticketSale->door_first ?? $patron->first_name,
+            'comments'          => $validated['comments'] ?? $ticketSale->comments ?? $patron->comments,
         ]);
 
         foreach ($validated['tickets'] ?? [] as $ticket) {

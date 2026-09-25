@@ -30,30 +30,36 @@
         <q-input
           type="text"
           label="First Name"
+          :hint="patronFound ? 'An existing patron uses this email — edit their record on Patron Management instead' : undefined"
           stack-label
           dense
           outlined
           v-model="form.first_name"
+          :disable="patronFound"
           :rules="[(val) => !!val || 'Required']"
         ></q-input>
 
         <q-input
           type="text"
           label="Last Name"
+          :hint="patronFound ? 'An existing patron uses this email — edit their record on Patron Management instead' : undefined"
           stack-label
           dense
           outlined
           v-model="form.last_name"
+          :disable="patronFound"
           :rules="[(val) => !!val || 'Required']"
         ></q-input>
 
         <q-input
           type="tel"
           label="Phone / WhatsApp"
+          :hint="patronFound ? 'An existing patron uses this email — edit their record on Patron Management instead' : undefined"
           stack-label
           dense
           outlined
           v-model="form.phone"
+          :disable="patronFound"
         ></q-input>
 
         <div class="text-caption text-grey-7 q-mt-sm">Door Name</div>
@@ -103,17 +109,42 @@
 
         <q-input
           type="number"
-          label="Special Seating"
-          hint="Reserved seats for this party (e.g. an Angel level's reserved seating) — not the patron's own accessibility need"
+          label="Front Row"
+          hint="Reserved front-row seats for this party (e.g. an Angel level's reserved seating) — not the patron's own accessibility need"
           stack-label
           dense
           outlined
-          :model-value="form.special_seating"
+          :model-value="form.front_row"
           min="0"
           max="20"
           step="1"
-          @update:model-value="onSpecialSeatingInput"
+          @update:model-value="onFrontRowInput"
           :rules="[(val) => (val >= 0 && val <= 20) || 'Must be a whole number between 0 and 20']"
+        ></q-input>
+
+        <q-input
+          type="textarea"
+          rows="2"
+          label="Special Seating"
+          hint="Notes about seating other than front row, e.g. aisle seat"
+          stack-label
+          dense
+          outlined
+          class="q-mt-md"
+          v-model="form.special_seating"
+        ></q-input>
+
+        <q-input
+          type="textarea"
+          rows="2"
+          label="Comments"
+          hint="Defaults to the patron's notes — change to override for this sale"
+          stack-label
+          dense
+          outlined
+          class="q-mt-md"
+          :model-value="form.comments"
+          @update:model-value="onCommentsInput"
         ></q-input>
 
         <q-checkbox
@@ -189,6 +220,14 @@ const existingSale = isEdit
   ? store.admin.ticket_sales.find((s) => s.id == route.params.id)
   : null;
 
+// firstOrCreate() on the backend only uses submitted first/last name when
+// CREATING a brand new patron — editing them is silently ignored once a
+// patron with that email already exists, so those fields are disabled
+// whenever one's found rather than let the admin type changes that won't
+// actually save. An edit always starts against an existing sale's
+// already-known patron.
+const patronFound = ref(isEdit);
+
 const performanceOptions = computed(() => {
   const now = new Date();
   return (store.admin.show?.performances ?? []).map((p) => {
@@ -223,11 +262,13 @@ const form = ref(
         quantity: existingSale.quantity,
         confirmed: !!existingSale.confirmed,
         reason_changed: existingSale.reason_changed,
-        special_seating: existingSale.special_seating || 0,
+        front_row: existingSale.front_row || 0,
+        special_seating: existingSale.special_seating || "",
         // Fallback covers a record saved before this field existed and
         // not yet caught by the one-time backfill command.
         door_last: existingSale.door_last ?? existingSale.patron.last_name,
         door_first: existingSale.door_first ?? existingSale.patron.first_name,
+        comments: existingSale.comments ?? existingSale.patron.comments ?? "",
       }
     : {
         email: null,
@@ -238,9 +279,11 @@ const form = ref(
         payment_method: null,
         quantity: 1,
         confirmed: false,
-        special_seating: 0,
+        front_row: 0,
+        special_seating: "",
         door_last: "",
         door_first: "",
+        comments: "",
       },
 );
 
@@ -253,9 +296,9 @@ const onConfirmedInput = (val) => {
 // rather than a number — normalize that to 0 immediately instead of
 // letting a non-integer value reach submit, where the backend's
 // integer-only validation would silently reject it.
-const onSpecialSeatingInput = (val) => {
+const onFrontRowInput = (val) => {
   const num = Number(val);
-  form.value.special_seating = Number.isInteger(num) ? num : 0;
+  form.value.front_row = Number.isInteger(num) ? num : 0;
 };
 
 // On create there's no existingSale at all yet, so seed one blank row per
@@ -299,6 +342,15 @@ const onDoorLastInput = (val) => {
 const onDoorFirstInput = (val) => {
   form.value.door_first = val;
   doorNameTouched.value = true;
+};
+
+// Comments defaults to the found patron's own notes (see getPatron()
+// below) until the admin overrides it for this sale specifically.
+const commentsTouched = ref(false);
+
+const onCommentsInput = (val) => {
+  form.value.comments = val;
+  commentsTouched.value = true;
 };
 
 if (!isEdit) {
@@ -352,13 +404,18 @@ if (!isEdit) {
 }
 
 const getPatron = async () => {
-  if (!form.value.email) return;
+  if (!form.value.email) {
+    patronFound.value = false;
+    return;
+  }
 
   const patron = await callApi({
     path: `/patrons/lookup?email=${form.value.email}`,
     method: "get",
     showError: false,
   }).catch(() => null);
+
+  patronFound.value = !!patron;
 
   // No match means this email isn't tied to an existing patron — clear the
   // name/phone fields instead of leaving whatever patron's info happened
@@ -367,6 +424,10 @@ const getPatron = async () => {
   form.value.first_name = patron?.first_name ?? "";
   form.value.last_name = patron?.last_name ?? "";
   form.value.phone = patron?.phone ?? "";
+
+  if (!commentsTouched.value) {
+    form.value.comments = patron?.comments ?? "";
+  }
 };
 
 const onSubmit = async () => {
@@ -381,9 +442,11 @@ const onSubmit = async () => {
     type: form.value.payment_method?.value?.value,
     quantity: form.value.quantity,
     confirmed: form.value.confirmed,
-    special_seating: form.value.special_seating,
+    front_row: form.value.front_row,
+    special_seating: form.value.special_seating || null,
     door_last: form.value.door_last || null,
     door_first: form.value.door_first || null,
+    comments: form.value.comments || null,
     send_mail: store.send_mail,
     transfer_date:
       form.value.type == "transfer"

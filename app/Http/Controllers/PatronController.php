@@ -399,6 +399,7 @@ class PatronController extends Controller
             'first_name'   => $patron->first_name,
             'phone'        => $patron->phone,
             'founding_angel' => $patron->founding_angel,
+            'comments'     => $patron->comments,
             'flex_packages' => $flexPackages,
         ]);
     }

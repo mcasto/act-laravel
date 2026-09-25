@@ -1,11 +1,11 @@
 - printout doesn't need "special seats" but does need "front row"
 - printout does need comment field
 
-- integer *only* front row (instead of general special seating)
+✔ integer *only* front row (instead of general special seating) @done(26-09-25 03:50)
 
-- text field specific to notes for special seating
+✔ text field specific to notes for special seating @done(26-09-25 03:50)
 
-- comment field (defaults to patron "notes")
+✔ comment field (defaults to patron "notes") @done(26-09-25 04:04)
 
 - on add ticket sale form:
     ✔ move performance date to top of form @done(26-09-24 12:24)

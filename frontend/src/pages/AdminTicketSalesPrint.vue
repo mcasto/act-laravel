@@ -56,7 +56,7 @@
                 {{ amountCollected(rec) ? "✓" : "" }}
               </td>
               <td class="col-narrow text-center">
-                {{ specialSeating(rec) > 0 ? specialSeating(rec) : "" }}
+                {{ frontRowCount(rec) > 0 ? frontRowCount(rec) : "" }}
               </td>
               <td>{{ guestList(rec) }}</td>
               <td>{{ angelBenefits(rec) }}</td>
@@ -162,13 +162,15 @@ const angelBenefits = (rec) =>
   (rec.patron?.angel_concession_benefits ?? []).join(", ");
 
 // Two distinct sources feed this one column: the patron's own standing
-// accessibility need (front_row) and this sale's own reserved-party
-// seating (special_seating, e.g. an Angel level's reserved seating). Both
-// are rare, so a patron needing both at once is rarer still — simply
-// summing them is good enough until that combination actually happens and
-// proves it needs finer handling.
-const specialSeating = (rec) =>
-  (rec.patron?.front_row || 0) + (rec.special_seating || 0);
+// accessibility need (front_row) and this sale's own reserved front-row
+// count for the party (also front_row, e.g. an Angel level's reserved
+// seating — see ticket_sales.front_row). Both are rare, so a patron
+// needing both at once is rarer still — simply summing them is good
+// enough until that combination actually happens and proves it needs
+// finer handling. This is distinct from ticket_sales.special_seating,
+// which is now free-text notes (e.g. "aisle seat"), not a count.
+const frontRowCount = (rec) =>
+  (rec.patron?.front_row || 0) + (rec.front_row || 0);
 
 const doPrint = () => window.print();
 </script>
