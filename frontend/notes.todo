@@ -7,11 +7,11 @@
 
 ✔ comment field (defaults to patron "notes") @done(26-09-25 04:04)
 
-- on add ticket sale form:
+✔ on add ticket sale form: @done(26-09-25 04:15)
     ✔ move performance date to top of form @done(26-09-24 12:24)
-    - after performance date fills, display a summary of front row + total reservations ( / {sold out})
+    ✔ after performance date fills, display a summary of front row + total reservations ( / {sold out}) @done(26-09-25 04:15)
 
-- on edit ticket sale performance date is already available so show that summary
+✔ on edit ticket sale performance date is already available so show that summary @done(26-09-25 04:15)
 
 ✔ on printout, "amount collected" needs to be true if "payment confirmed" @done(26-09-24 14:54)
 ✔ @done(26-09-24 14:54)

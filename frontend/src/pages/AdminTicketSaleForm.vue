@@ -4,7 +4,8 @@
       {{ isEdit ? "Edit Ticket Sale" : "New Ticket Sale" }}
     </div>
 
-    <q-form @submit.prevent="onSubmit" style="max-width: 480px;">
+    <div class="row q-col-gutter-xl">
+      <q-form @submit.prevent="onSubmit" class="col-auto" style="width: 480px; max-width: 100%;">
       <div class="q-gutter-y-sm">
         <q-select
           label="Performance"
@@ -196,6 +197,29 @@
         ></q-btn>
       </div>
     </q-form>
+
+    <div v-if="seatingSummary" class="col-auto">
+      <q-card flat bordered class="bg-blue-1" style="min-width: 260px;">
+        <q-card-section>
+          <div class="text-subtitle2 text-grey-8">Seating Summary</div>
+          <div class="row q-gutter-x-xl q-mt-sm">
+            <div>
+              <div class="text-h3 text-weight-bold text-primary">
+                {{ seatingSummary.front_row_total }}
+              </div>
+              <div class="text-caption text-grey-7">Front Row</div>
+            </div>
+            <div>
+              <div class="text-h3 text-weight-bold">
+                {{ seatingSummary.reservations_total }}<span class="text-h5 text-grey-6">/{{ seatingSummary.sold_out_target }}</span>
+              </div>
+              <div class="text-caption text-grey-7">Reservations</div>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -285,6 +309,30 @@ const form = ref(
         door_first: "",
         comments: "",
       },
+);
+
+// Shown once a performance is picked (or immediately on edit, where it's
+// already picked) — how many front-row seats are already committed for
+// that performance and how full it is, so the admin has that context
+// before adding another sale.
+const seatingSummary = ref(null);
+
+watch(
+  () => form.value.performance?.value?.id,
+  async (performanceId) => {
+    if (!performanceId) {
+      seatingSummary.value = null;
+      return;
+    }
+
+    seatingSummary.value = await callApi({
+      path: `/admin/performances/${performanceId}/seating-summary`,
+      method: "get",
+      useAuth: true,
+      showError: false,
+    }).catch(() => null);
+  },
+  { immediate: true },
 );
 
 const onConfirmedInput = (val) => {

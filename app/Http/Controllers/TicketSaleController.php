@@ -17,6 +17,7 @@ use App\Models\Ticket;
 use App\Models\TicketSale;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Mail;
@@ -411,5 +412,34 @@ class TicketSaleController extends Controller
         }
 
         return response()->json($this->allSales());
+    }
+
+    /**
+     * Seating summary for a performance — shown on the New/Edit Ticket
+     * Sale form once a performance is picked, so the admin can see how
+     * many front-row seats are already committed and how full the show
+     * is before adding another sale. front_row is cumulative across two
+     * sources: each patron's own standing accessibility need
+     * (Patron::front_row, counted once per distinct patron even if they
+     * have multiple sales for this performance) and each sale's own
+     * reserved-party count (TicketSale::front_row, summed per sale since
+     * each represents an independent reservation).
+     */
+    public function seatingSummary(int $performanceId): JsonResponse
+    {
+        $performance = Performance::findOrFail($performanceId);
+
+        $sales = TicketSale::where('performance_id', $performanceId)
+            ->with('patron')
+            ->get();
+
+        $patronFrontRow = $sales->pluck('patron')->filter()->unique('id')->sum('front_row');
+        $saleFrontRow = $sales->sum('front_row');
+
+        return response()->json([
+            'front_row_total' => $patronFrontRow + $saleFrontRow,
+            'reservations_total' => $sales->sum('quantity'),
+            'sold_out_target' => $performance->sold_out_target,
+        ]);
     }
 }
