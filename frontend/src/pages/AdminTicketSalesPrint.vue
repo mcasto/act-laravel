@@ -34,9 +34,10 @@
               <th>Payment Method</th>
               <th class="col-narrow">Amt Due</th>
               <th class="col-narrow">Amt Collected</th>
-              <th class="col-narrow">Special Seating</th>
+              <th class="col-narrow">FR</th>
               <th class="col-wrap">Guest List</th>
               <th class="col-wrap">Angel Benefits</th>
+              <th class="col-wrap">Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -52,14 +53,15 @@
               <td class="col-narrow text-right">
                 {{ isComp(rec) ? "" : "$" + amountDue(rec) }}
               </td>
-              <td class="col-narrow text-center">
-                {{ amountCollected(rec) ? "✓" : "" }}
+              <td class="col-narrow text-right">
+                {{ !isComp(rec) && amountCollected(rec) ? "$" + amountDue(rec) : "" }}
               </td>
               <td class="col-narrow text-center">
                 {{ frontRowCount(rec) > 0 ? frontRowCount(rec) : "" }}
               </td>
               <td>{{ guestList(rec) }}</td>
               <td>{{ angelBenefits(rec) }}</td>
+              <td class="col-wrap">{{ comments(rec) }}</td>
             </tr>
             <!-- Walk-in blank rows -->
             <tr v-for="i in walkInRows" :key="'wi-' + i" class="walk-in-row">
@@ -70,6 +72,7 @@
               <td class="col-narrow"></td>
               <td class="col-narrow"></td>
               <td class="col-narrow"></td>
+              <td></td>
               <td></td>
               <td></td>
             </tr>
@@ -171,6 +174,11 @@ const angelBenefits = (rec) =>
 // which is now free-text notes (e.g. "aisle seat"), not a count.
 const frontRowCount = (rec) =>
   (rec.patron?.front_row || 0) + (rec.front_row || 0);
+
+// Falls back to the patron's own notes for older sales saved before
+// ticket_sales.comments existed (there's no backfill for this one, unlike
+// door_last/door_first) — same reasoning as doorLastName/doorFirstName.
+const comments = (rec) => rec.comments || rec.patron?.comments || "";
 
 const doPrint = () => window.print();
 </script>
