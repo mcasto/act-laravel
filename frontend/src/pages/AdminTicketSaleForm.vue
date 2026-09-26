@@ -279,7 +279,18 @@
         </div>
       </div>
 
-      <div class="flex justify-end q-mt-lg q-gutter-x-sm">
+      <div class="flex items-center justify-end q-mt-lg q-gutter-x-sm">
+        <q-toggle
+          v-if="!isEdit"
+          v-model="form.send_mail"
+          label="Send Emails"
+          :disable="isReadOnly"
+        >
+          <q-tooltip>
+            Emails the box office and the buyer right away when this sale is saved.
+            Turn off if you're catching up on data entry or fixing a mistake.
+          </q-tooltip>
+        </q-toggle>
         <q-btn
           flat
           label="Cancel"
@@ -374,6 +385,10 @@ const form = ref(
         door_last: existingSale.door_last ?? existingSale.patron.last_name,
         door_first: existingSale.door_first ?? existingSale.patron.first_name,
         comments: existingSale.comments ?? existingSale.patron.comments ?? "",
+        // Edit never emails (see TicketSaleController::update()) — kept
+        // here only so the payload always has a value, not because it's
+        // shown or meaningful on this branch.
+        send_mail: true,
       }
     : {
         email: null,
@@ -389,6 +404,10 @@ const form = ref(
         door_last: "",
         door_first: "",
         comments: "",
+        // Defaults from the "Send Emails" preference set on the ticket
+        // sales list page (store.send_mail) — still overridable per sale
+        // via the toggle on this form.
+        send_mail: !!store.send_mail,
       },
 );
 
@@ -581,7 +600,7 @@ const onSubmit = async () => {
     door_last: form.value.door_last || null,
     door_first: form.value.door_first || null,
     comments: form.value.comments || null,
-    send_mail: store.send_mail,
+    send_mail: form.value.send_mail,
     transfer_date:
       form.value.type == "transfer"
         ? formatISO(new Date(), { representation: "date" })

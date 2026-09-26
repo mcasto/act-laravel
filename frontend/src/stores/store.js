@@ -58,6 +58,11 @@ export const useStore = defineStore(
       ourAngels: ref(null),
       patron: ref(null),
       paymentMethods: ref(null),
+      // Default state for the "Send Emails" toggle on the New Ticket Sale
+      // form — deliberately a persisted preference (not reset per form),
+      // so a box office catching up on bulk data entry can turn it off
+      // once and have it stay off across sales/sessions until turned back
+      // on, rather than re-toggling on every single form.
       send_mail: 1,
       show: ref(null),
       showDetailsDialog: ref(false),

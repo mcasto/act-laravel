@@ -32,7 +32,13 @@
                 :false-value="0"
                 :true-value="1"
                 :disable="isReadOnly"
-              ></q-toggle>
+              >
+                <q-tooltip>
+                  Default for the "Send Emails" toggle on the New Ticket Sale
+                  form — doesn't send anything by itself. Turn off if you're
+                  catching up on bulk data entry.
+                </q-tooltip>
+              </q-toggle>
               <q-btn
                 :icon="matInfo"
                 flat
@@ -338,12 +344,16 @@
           <div class="text-h6">About "Send Emails"</div>
         </q-card-section>
         <q-card-section class="q-pt-none">
-          When this is on, recording or editing a ticket sale here sends two
-          emails right away: one to the box office letting you know a sale
-          came in, and one to the ticket buyer confirming their purchase.
+          This sets the default for the "Send Emails" toggle on the New
+          Ticket Sale form — it doesn't send anything by itself. When a new
+          sale is saved with that toggle on, two emails go out right away:
+          one to the box office letting you know a sale came in, and one to
+          the ticket buyer confirming their purchase.
           <br /><br />
-          Turn it off if you're catching up on data entry or fixing a mistake
-          and don't want those emails going out again.
+          Turn this off if you're catching up on bulk data entry and don't
+          want those emails going out for sales you're just recording after
+          the fact — it'll stay off for every New Ticket Sale form you open
+          until you turn it back on.
         </q-card-section>
         <q-card-actions align="right">
           <q-btn flat label="Got it" color="primary" v-close-popup />
