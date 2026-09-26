@@ -29,6 +29,11 @@ class CourseContact extends Model
         'confirmed' => 'boolean',
     ];
 
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
+    }
+
     public function patron(): BelongsTo
     {
         return $this->belongsTo(Patron::class);

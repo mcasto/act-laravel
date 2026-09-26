@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ActiveSeason;
 use App\Mail\AngelDonationMailer;
+use App\Mail\CourseEnrollmentConfirmedMailer;
 use App\Mail\CourseInquiryMailer;
 use App\Mail\FlexPurchaseMailer;
 use App\Mail\TicketSaleMailer;
@@ -272,8 +273,8 @@ class FixrWebhooksController extends Controller
                 'confirmed' => true,
             ]);
 
-            // Box-office notification only — Fixr sends its own confirmation
-            // to the enrollee as the payment processor, so we don't duplicate it.
+            // Box office, not the enrollee — Fixr sends its own confirmation
+            // to the buyer as the payment processor, so we don't duplicate it.
             try {
                 Mail::to(config('mail.admin_to.address'))->send(new CourseInquiryMailer([
                     'course_name' => $course->name,
@@ -289,6 +290,27 @@ class FixrWebhooksController extends Controller
                 ]));
             } catch (Exception $e) {
                 logger()->error('Failed to send course enrollment notification email', [
+                    'error' => $e->getMessage(),
+                    'course_contact_id' => $enrollment->id,
+                ]);
+            }
+
+            // Fixr enrollments are always confirmed immediately (see above),
+            // so the instructor hears about it right away too — same rule
+            // as CourseController::courseContact()/updateConfirmed(): only
+            // ever notify the instructor once payment is actually confirmed.
+            try {
+                Mail::to($course->instructor_email)->send(new CourseEnrollmentConfirmedMailer([
+                    'course_name' => $course->name,
+                    'first_name' => $enrollment->first_name,
+                    'last_name' => $enrollment->last_name,
+                    'email' => $enrollment->email,
+                    'phone' => $enrollment->phone,
+                    'payment_method_label' => $creditCardMethod?->label,
+                    'transaction_id' => $enrollment->transaction_id,
+                ]));
+            } catch (Exception $e) {
+                logger()->error('Failed to send course enrollment confirmation email to instructor', [
                     'error' => $e->getMessage(),
                     'course_contact_id' => $enrollment->id,
                 ]);

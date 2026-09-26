@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\PatronMail;
 use App\Helpers\RefId;
+use App\Mail\CourseEnrollmentConfirmedMailer;
 use App\Mail\CourseInquiryConfirmationMailer;
 use App\Mail\CourseInquiryMailer;
 use App\Models\Course;
@@ -91,31 +92,14 @@ class CourseController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
+                'message' => implode(' ', $validator->errors()->all()),
                 'errors' => $validator->errors(),
             ]);
         }
 
         $rec = $validator->validated();
         $baseSlug = Str::slug($rec['name'], '-') . '-' . date("Y");
-        $rec['slug'] = $baseSlug;
-
-        // Check if slug exists and append incremented number if needed
-        if (Course::where('slug', $rec['slug'])->exists()) {
-            // Find the highest number suffix for this slug
-            $existingSlugs = Course::where('slug', 'like', $baseSlug . '%')
-                ->pluck('slug')
-                ->map(function ($slug) use ($baseSlug) {
-                    // Extract the number suffix if it exists
-                    if (preg_match('/^' . preg_quote($baseSlug, '/') . '-(\d+)$/', $slug, $matches)) {
-                        return (int) $matches[1];
-                    }
-                    return 0;
-                })
-                ->max();
-
-            $nextNumber = $existingSlugs ? $existingSlugs + 1 : 1;
-            $rec['slug'] = $baseSlug . '-' . sprintf('%03s', $nextNumber);
-        }
+        $rec['slug'] = $this->resolveUniqueSlug($baseSlug);
 
         if (Storage::disk('local')->exists("uploads/{$rec['poster']}")) {
             $ext = pathinfo($rec['poster'], PATHINFO_EXTENSION);
@@ -174,11 +158,26 @@ class CourseController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
+                'message' => implode(' ', $validator->errors()->all()),
                 'errors' => $validator->errors(),
             ]);
         }
 
         $rec = $validator->validated();
+        $oldSlug = $course->slug;
+
+        // The view file is looked up by slug (Course::getMessageAttribute()),
+        // so renaming the course needs to rename its slug — and the file on
+        // disk — to match, or that lookup silently 404s against the old
+        // file/name forever (this is exactly what happened to this course:
+        // renamed from "Booth Camp" to "Tech Booth Camp" without this, so
+        // its slug moved on but booth-camp-2026.blade.php never did).
+        // Keyed off created_at's year, not today's, so re-saving a course
+        // in a later year than it was created doesn't drift its slug.
+        if ($rec['name'] !== $course->name) {
+            $baseSlug = Str::slug($rec['name'], '-') . '-' . $course->created_at->format('Y');
+            $rec['slug'] = $this->resolveUniqueSlug($baseSlug, $course->id);
+        }
 
         if (Storage::disk('local')->exists("uploads/{$rec['poster']}")) {
             $ext = pathinfo($rec['poster'], PATHINFO_EXTENSION);
@@ -192,8 +191,12 @@ class CourseController extends Controller
 
         $course->update($rec);
 
-        // Update the blade template view file
         $viewPath = resource_path("views/courses/{$course->slug}.blade.php");
+        $oldViewPath = resource_path("views/courses/{$oldSlug}.blade.php");
+
+        if ($course->slug !== $oldSlug && file_exists($oldViewPath)) {
+            rename($oldViewPath, $viewPath);
+        }
 
         // Write the message content to the blade view file
         file_put_contents($viewPath, $rec['message']);
@@ -203,9 +206,42 @@ class CourseController extends Controller
         // itself shows what was just typed (it's local state), but
         // reopening this course (or viewing it publicly) afterward would
         // show stale content until the cache happened to expire.
+        Cache::forget("course-message-{$oldSlug}");
         Cache::forget("course-message-{$course->slug}");
 
         return response()->json($course);
+    }
+
+    /**
+     * Appends a numeric suffix if $baseSlug already belongs to another
+     * course, mirroring the display-name collision a duplicate slug would
+     * otherwise cause. $excludeCourseId lets update() re-check a rename
+     * without the course colliding with its own current row.
+     */
+    private function resolveUniqueSlug(string $baseSlug, ?int $excludeCourseId = null): string
+    {
+        $collision = Course::where('slug', $baseSlug)
+            ->when($excludeCourseId, fn ($query) => $query->where('id', '!=', $excludeCourseId))
+            ->exists();
+
+        if (! $collision) {
+            return $baseSlug;
+        }
+
+        $existingSlugs = Course::where('slug', 'like', $baseSlug . '%')
+            ->when($excludeCourseId, fn ($query) => $query->where('id', '!=', $excludeCourseId))
+            ->pluck('slug')
+            ->map(function ($slug) use ($baseSlug) {
+                if (preg_match('/^' . preg_quote($baseSlug, '/') . '-(\d+)$/', $slug, $matches)) {
+                    return (int) $matches[1];
+                }
+                return 0;
+            })
+            ->max();
+
+        $nextNumber = $existingSlugs ? $existingSlugs + 1 : 1;
+
+        return $baseSlug . '-' . sprintf('%03s', $nextNumber);
     }
 
     private function publishUpload(string $tempFilename, string $dir, string $newFilename): string
@@ -411,22 +447,68 @@ class CourseController extends Controller
             'transaction_id'  => $enrollment->transaction_id,
         ]);
 
-        Mail::to($course->instructor_email)->send(new CourseInquiryMailer($data));
+        // The instructor may not have admin access to verify a PayPal/
+        // Transfer payment, so the box office gets notified of every new
+        // enrollment instead — the instructor only hears about it once it's
+        // actually confirmed (instantly here for a free course; otherwise
+        // via updateConfirmed() below).
+        Mail::to(config('mail.admin_to.address'))->send(new CourseInquiryMailer($data));
         PatronMail::to($validated['email'])->send(new CourseInquiryConfirmationMailer($data));
+
+        if ($enrollment->confirmed) {
+            $this->notifyInstructorOfConfirmedEnrollment($course, $data);
+        }
 
         return response()->json(['status' => 'success']);
     }
 
     /**
      * Admin marks a class enrollment's payment as confirmed (or reverts
-     * it) — same shape as TicketSaleController::updateNoShow().
+     * it) — same shape as TicketSaleController::updateNoShow(). Only the
+     * false -> true transition notifies the instructor (see
+     * notifyInstructorOfConfirmedEnrollment()) — reverting a confirmation,
+     * or saving the same value again, sends nothing.
      */
     public function updateConfirmed(Request $request, int $id): JsonResponse
     {
         $enrollment = CourseContact::findOrFail($id);
+        $wasConfirmed = $enrollment->confirmed;
         $enrollment->confirmed = $request->input('confirmed');
         $enrollment->save();
 
+        if (! $wasConfirmed && $enrollment->confirmed) {
+            $course = $enrollment->course;
+
+            $this->notifyInstructorOfConfirmedEnrollment($course, [
+                'course_name'           => $course->name,
+                'first_name'            => $enrollment->first_name,
+                'last_name'             => $enrollment->last_name,
+                'email'                 => $enrollment->email,
+                'phone'                 => $enrollment->phone,
+                'payment_method_label'  => $enrollment->paymentMethod?->label,
+                'transaction_id'        => $enrollment->transaction_id,
+            ]);
+        }
+
         return response()->json(['status' => 'success', 'confirmed' => $enrollment->confirmed]);
+    }
+
+    /**
+     * The one place that actually emails the instructor about an
+     * enrollment — deliberately only reached once payment is confirmed
+     * (see courseContact() and updateConfirmed() above, and the Fixr
+     * webhook's course branch, which calls this same mailer directly since
+     * it lives in a different controller).
+     */
+    private function notifyInstructorOfConfirmedEnrollment(Course $course, array $data): void
+    {
+        try {
+            Mail::to($course->instructor_email)->send(new CourseEnrollmentConfirmedMailer($data));
+        } catch (\Exception $e) {
+            logger()->error('Failed to send course enrollment confirmation email to instructor', [
+                'error' => $e->getMessage(),
+                'course_id' => $course->id,
+            ]);
+        }
     }
 }
