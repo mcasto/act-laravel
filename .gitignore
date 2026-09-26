@@ -3,6 +3,11 @@
 /public/build
 /public/hot
 /public/storage
+
+# Per-course view files are generated/edited independently by
+# CourseController::store()/update() on each environment (like uploaded
+# posters) — they should never be committed or pulled between dev/prod.
+/resources/views/courses/*
 /storage/*.key
 /storage/pail
 /vendor
