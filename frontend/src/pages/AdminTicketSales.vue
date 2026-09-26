@@ -63,29 +63,62 @@
               <q-btn :icon="matEvent" color="info" flat>
                 <q-tooltip>Tickets Sold By Date</q-tooltip>
                 <q-menu>
-                  <q-list dense style="min-width: 220px;">
+                  <q-list dense style="min-width: 380px;">
                     <q-item-label header class="text-weight-bold"
                       >Tickets Sold By Date</q-item-label
                     >
+                    <q-item v-if="ticketsByDate.length">
+                      <q-item-section />
+                      <q-item-section
+                        side
+                        class="text-caption text-grey-7 tsbd-col"
+                        >Confirmed</q-item-section
+                      >
+                      <q-item-section
+                        side
+                        class="text-caption text-grey-7 tsbd-col"
+                        >Reserved</q-item-section
+                      >
+                      <q-item-section
+                        side
+                        class="text-caption text-grey-7 tsbd-rev"
+                        >Projected</q-item-section
+                      >
+                    </q-item>
                     <q-item v-for="row in ticketsByDate" :key="row.id">
                       <q-item-section>{{ row.label }}</q-item-section>
-                      <q-item-section side class="text-weight-medium">
-                        {{ row.count }}
+                      <q-item-section side class="tsbd-col">
+                        {{ row.confirmed }}
+                      </q-item-section>
+                      <q-item-section side class="text-weight-medium tsbd-col">
+                        {{ row.total }}
+                      </q-item-section>
+                      <q-item-section side class="text-positive tsbd-rev">
+                        ${{ row.revenue.toFixed(2) }}
                       </q-item-section>
                     </q-item>
                     <div
                       v-if="ticketsByDate.length === 0"
                       class="text-caption text-grey-7 q-pa-sm"
                     >
-                      No confirmed sales yet.
+                      No reservations yet.
                     </div>
                     <q-separator v-if="ticketsByDate.length" />
                     <q-item v-if="ticketsByDate.length">
                       <q-item-section class="text-weight-bold"
                         >Total</q-item-section
                       >
-                      <q-item-section side class="text-weight-bold">
+                      <q-item-section side class="text-weight-bold tsbd-col">
                         {{ confirmedTicketCount }}
+                      </q-item-section>
+                      <q-item-section side class="text-weight-bold tsbd-col">
+                        {{ totalTickets }}
+                      </q-item-section>
+                      <q-item-section
+                        side
+                        class="text-positive text-weight-bold tsbd-rev"
+                      >
+                        ${{ projectedRevenueAll.toFixed(2) }}
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -250,6 +283,15 @@
           <q-btn :icon="matInfo" flat round size="sm">
             <q-menu>
               <q-list dense separator>
+                <q-item>
+                  <q-item-section side>Purchaser:</q-item-section>
+                  <q-item-section>
+                    <q-item-label
+                      >{{ props.row.patron.first_name }}
+                      {{ props.row.patron.last_name }}</q-item-label
+                    >
+                  </q-item-section>
+                </q-item>
                 <q-item>
                   <q-item-section side>Email:</q-item-section>
                   <q-item-section>
@@ -445,14 +487,28 @@ watch(show, (val) => {
   store.admin.selectedShow = val;
 });
 
-const search = ref("");
-const performanceFilter = ref(null);
+// search and performanceFilter live in the store (sessionStorage-persisted)
+// so they survive the trip to the add/edit ticket form and back, and stay
+// set until cleared manually (performanceFilter also resets on show change).
+const search = computed({
+  get: () => store.ticketSalesSearch,
+  set: (val) => {
+    store.ticketSalesSearch = val;
+  },
+});
+
+const performanceFilter = computed({
+  get: () => store.ticketSalesPerformanceFilter,
+  set: (val) => {
+    store.ticketSalesPerformanceFilter = val;
+  },
+});
 
 watch(show, () => {
   performanceFilter.value = null;
 });
 
-const pagination = ref({ page: 1, rowsPerPage: 12, sortBy: "name", descending: false });
+const pagination = ref({ page: 1, rowsPerPage: 12, sortBy: "last", descending: false });
 const pagesNumber = computed(() =>
   Math.ceil(filteredRecs.value.length / pagination.value.rowsPerPage),
 );
@@ -473,11 +529,22 @@ const ticketNumbersDisplay = (row) => {
   return "—";
 };
 
+// Same fallback as AdminTicketSalesPrint.vue: comps and not-yet-backfilled
+// legacy rows have no door_first/door_last, so use the purchaser's name.
+const doorLast = (row) => row.door_last || row.patron.last_name;
+const doorFirst = (row) => row.door_first || row.patron.first_name;
+const doorName = (row) => `${doorFirst(row)} ${doorLast(row)}`;
+
+const compareNames = (a, b) =>
+  a[0].localeCompare(b[0], undefined, { sensitivity: "base" }) ||
+  a[1].localeCompare(b[1], undefined, { sensitivity: "base" });
+
 const allTicketsRedeemed = (row) =>
   !!row.tickets?.length && row.tickets.every((t) => !!t.redeemed_at);
 
 // Order requested: Performance Date : Name : Qty : Ticket #s : Confirmed :
-// Date Sold : No Show. "info" (email/phone popup) stays glued to Name and
+// Date Sold : No Show — Name since split into Last/First. "info"
+// (purchaser/email/phone popup) stays glued to Last/First and
 // "payment_method"/"actions" (both unlabeled icon-only columns) stay
 // trailing at the end, same as before — none of the three were named in
 // that order, so they're left in their least-disruptive spot.
@@ -489,10 +556,31 @@ const columns = [
       `${row.performance.formatted_date} ${row.performance.formatted_time}`,
     align: "left",
   },
+  // Door Name (not the purchaser) split into Last/First, to match the box
+  // office's spreadsheet and the printed door sheet
+  // (AdminTicketSalesPrint.vue) — the purchaser is in the info popup.
+  // Each sorts by its own name, then the other as a tiebreaker.
   {
-    name: "name",
-    label: "Name",
-    field: (row) => `${row.patron.first_name} ${row.patron.last_name}`,
+    name: "last",
+    label: "Last",
+    field: (row) => doorLast(row),
+    sort: (_a, _b, rowA, rowB) =>
+      compareNames(
+        [doorLast(rowA), doorFirst(rowA)],
+        [doorLast(rowB), doorFirst(rowB)],
+      ),
+    align: "left",
+    sortable: true,
+  },
+  {
+    name: "first",
+    label: "First",
+    field: (row) => doorFirst(row),
+    sort: (_a, _b, rowA, rowB) =>
+      compareNames(
+        [doorFirst(rowA), doorLast(rowA)],
+        [doorFirst(rowB), doorLast(rowB)],
+      ),
     align: "left",
     sortable: true,
   },
@@ -579,10 +667,15 @@ const filteredRecs = computed(() => {
 
   if (search.value) {
     const q = search.value.toLowerCase();
-    result = result.filter((rec) =>
-      `${rec.patron.first_name} ${rec.patron.last_name}`
-        .toLowerCase()
-        .includes(q),
+    // Matches either the door name shown in the table or the purchaser
+    // (in the info popup), so a search still finds a sale whose door name
+    // was overridden to someone else.
+    result = result.filter(
+      (rec) =>
+        doorName(rec).toLowerCase().includes(q) ||
+        `${rec.patron.first_name} ${rec.patron.last_name}`
+          .toLowerCase()
+          .includes(q),
     );
   }
 
@@ -680,25 +773,38 @@ const soldOutPct = computed(() => {
   return ((totalTickets.value / soldOutCapacity.value) * 100).toFixed(1);
 });
 
-// Confirmed sales grouped by performance date — mirrors revenueByMethod's
-// use of confirmedRecs, and is independent of performanceFilter so the
-// summary always shows every date regardless of which one is filtered to.
+// All reservations grouped by performance date, with the confirmed subset
+// broken out. Revenue is projected across every reservation (as if pending
+// payments all come in), using the same price × multiplier as
+// revenueByMethod. Independent of performanceFilter so the summary always
+// shows every date regardless of which one is filtered to.
 const ticketsByDate = computed(() => {
+  const price = ticketPrice.value;
   const groups = {};
-  for (const rec of confirmedRecs.value) {
+  for (const rec of recs.value) {
     const perf = rec.performance;
     if (!groups[perf.id]) {
       groups[perf.id] = {
         id: perf.id,
         date: perf.date,
         label: `${perf.formatted_date} ${perf.formatted_time}`,
-        count: 0,
+        confirmed: 0,
+        total: 0,
+        revenue: 0,
       };
     }
-    groups[perf.id].count += rec.quantity || 1;
+    const qty = rec.quantity || 1;
+    groups[perf.id].total += qty;
+    if (rec.confirmed !== false) groups[perf.id].confirmed += qty;
+    groups[perf.id].revenue +=
+      qty * price * (rec.payment_method.revenue_multiplier ?? 1);
   }
   return sortBy(Object.values(groups), "date");
 });
+
+const projectedRevenueAll = computed(() =>
+  ticketsByDate.value.reduce((sum, row) => sum + row.revenue, 0),
+);
 
 const paymentMethodColors = computed(() => {
   const methods = uniqBy(recs.value, (rec) => rec.payment_method.id).map(
@@ -788,3 +894,14 @@ const saveTicketRedemptions = async () => {
   ticketsDialog.value = false;
 };
 </script>
+
+<style scoped>
+.tsbd-col {
+  min-width: 70px;
+  align-items: flex-end;
+}
+.tsbd-rev {
+  min-width: 90px;
+  align-items: flex-end;
+}
+</style>

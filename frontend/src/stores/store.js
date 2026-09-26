@@ -82,6 +82,13 @@ export const useStore = defineStore(
       skills: ref([]),
       snippets: ref({}),
       supportUsConfig: ref(null),
+      // Performance-date filter and name search on AdminTicketSales.vue —
+      // kept here so they survive the round trip to the add/edit ticket
+      // form and back, and stay set until the user clears them. Persisted
+      // to sessionStorage (see persist below) so they don't outlive the
+      // browser tab.
+      ticketSalesPerformanceFilter: ref(null),
+      ticketSalesSearch: ref(""),
       users: ref(null),
     };
     const getters = { adminRoute: computed(adminRoute) };
@@ -128,24 +135,36 @@ export const useStore = defineStore(
     return { ...state, ...getters, ...actions };
   },
   {
-    persist: {
-      key: "azuay-community-theater",
-      // patron (email/first_name/last_name/phone/flex_packages) is PII looked
-      // up during a purchase flow — keep it in memory for the current session
-      // only, never written to localStorage.
-      //
-      // showDetailsDialog/showDetailsIsFlexAccess/justOpenedShowDetails are
-      // transient UI state for ShowDetailsDialog.vue — persisting them would
-      // let a stale "dialog was open"/"just opened" flag survive a full page
-      // reload and either pop the dialog open unexpectedly or (worse) make
-      // the router's close-on-navigate guard wrongly skip itself on the next
-      // real navigation, thinking it's mid-redirect from opening the dialog.
-      omit: [
-        "patron",
-        "showDetailsDialog",
-        "showDetailsIsFlexAccess",
-        "justOpenedShowDetails",
-      ],
-    },
+    persist: [
+      {
+        key: "azuay-community-theater",
+        // patron (email/first_name/last_name/phone/flex_packages) is PII looked
+        // up during a purchase flow — keep it in memory for the current session
+        // only, never written to localStorage.
+        //
+        // showDetailsDialog/showDetailsIsFlexAccess/justOpenedShowDetails are
+        // transient UI state for ShowDetailsDialog.vue — persisting them would
+        // let a stale "dialog was open"/"just opened" flag survive a full page
+        // reload and either pop the dialog open unexpectedly or (worse) make
+        // the router's close-on-navigate guard wrongly skip itself on the next
+        // real navigation, thinking it's mid-redirect from opening the dialog.
+        //
+        // ticketSalesPerformanceFilter/ticketSalesSearch are persisted by the
+        // sessionStorage config below instead.
+        omit: [
+          "patron",
+          "showDetailsDialog",
+          "showDetailsIsFlexAccess",
+          "justOpenedShowDetails",
+          "ticketSalesPerformanceFilter",
+          "ticketSalesSearch",
+        ],
+      },
+      {
+        key: "azuay-community-theater-session",
+        storage: sessionStorage,
+        pick: ["ticketSalesPerformanceFilter", "ticketSalesSearch"],
+      },
+    ],
   },
 );

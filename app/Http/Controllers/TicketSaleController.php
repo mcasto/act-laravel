@@ -21,6 +21,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -419,15 +420,16 @@ class TicketSaleController extends Controller
 
     public function destroy(Request $request)
     {
-        $id = $request->input('id');
+        // The admin list is all ticket_sales rows — a redeemed comp is its
+        // own TicketSale (see CompTixController::redeemComp()) — so the id
+        // is always a TicketSale id, never a CompTicket id. A comp sale
+        // also takes its linked CompTicket with it.
+        $sale = TicketSale::findOrFail($request->input('id'));
 
-        if ($request->input('payment_method.value') === 'comp') {
-            $comp = CompTicket::findOrFail($id);
-            $comp->ticketSale?->delete();
-            $comp->delete();
-        } else {
-            TicketSale::findOrFail($id)->delete();
-        }
+        DB::transaction(function () use ($sale) {
+            CompTicket::where('ticket_sale_id', $sale->id)->get()->each->delete();
+            $sale->delete();
+        });
 
         return response()->json($this->allSales());
     }
