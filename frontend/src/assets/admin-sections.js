@@ -14,8 +14,9 @@ export default (router) =>
       const key = path.replace("/admin/", "");
       return key !== "dashboard";
     })
-    .sort((a, b) => a.meta.order - b.meta.order)
     .map(({ meta, path }) => ({
       key: path.replace("/admin/", ""),
       label: meta.label,
-    }));
+    }))
+    // Alphabetical for the permissions dialog, not sidebar order.
+    .sort((a, b) => a.label.localeCompare(b.label));
