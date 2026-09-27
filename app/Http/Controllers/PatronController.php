@@ -8,7 +8,6 @@ use App\Models\Angel;
 use App\Models\Patron;
 use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
-use App\Models\Performance;
 use App\Models\TicketSale;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -227,17 +226,13 @@ class PatronController extends Controller
     }
 
     /**
-     * Box-office summary of flex redemptions for one season: every show
-     * with a performance in that season's Sept 1 - Aug 31 window, each
-     * performance (including ones with no flex usage yet), and the flex
-     * ticket sales against it. Defaults to the active season, same as
-     * index() above. `seasons` lists every season with a flex package on
-     * record (plus the active one) for the page's season picker.
-     *
-     * `patrons` is the same season by patron: everyone with a package that
-     * season (including those who haven't used any yet), plus anyone who
-     * redeemed flex that season without one, so a bad balance still shows
-     * up. Purchased/used follow the same rule as ticketsRemaining().
+     * Box-office summary of flex usage by patron for one season: everyone
+     * with a package that season (including those who haven't used any
+     * yet), plus anyone who redeemed flex that season without one, so a bad
+     * balance still shows up. Purchased/used follow the same rule as
+     * PatronFlexPackage::ticketsRemaining(). Defaults to the active season,
+     * same as index() above. `seasons` lists every season with a flex
+     * package on record (plus the active one) for the page's season picker.
      */
     public function flexUsage(Request $request): JsonResponse
     {
@@ -258,57 +253,6 @@ class PatronController extends Controller
             ->whereHas('performance', fn ($q) => $q->whereBetween('date', [$dates['start'], $dates['end']]))
             ->with('patron', 'performance.show')
             ->get();
-        $salesByPerformance = $sales->groupBy('performance_id');
-
-        // whereHas('show') skips any performance still left live under a
-        // soft-deleted show from before Show::booted() cascaded deletes.
-        $performances = Performance::with('show')
-            ->whereHas('show')
-            ->whereBetween('date', [$dates['start'], $dates['end']])
-            ->orderBy('date')
-            ->orderBy('start_time')
-            ->get();
-
-        $shows = $performances
-            ->groupBy('show_id')
-            ->map(function ($showPerformances) use ($salesByPerformance) {
-                $show = $showPerformances->first()->show;
-
-                $performanceRows = $showPerformances->map(function (Performance $performance) use ($salesByPerformance) {
-                    $sales = $salesByPerformance->get($performance->id, collect())
-                        ->sortBy(fn ($sale) => [$sale->patron?->last_name, $sale->patron?->first_name])
-                        ->map(fn (TicketSale $sale) => [
-                            'id'         => $sale->id,
-                            'patron_id'  => $sale->patron_id,
-                            'first_name' => $sale->patron?->first_name,
-                            'last_name'  => $sale->patron?->last_name,
-                            'email'      => $sale->patron?->email,
-                            'quantity'   => $sale->quantity,
-                            'no_show'    => $sale->no_show,
-                            'sold_at'    => $sale->sold_at,
-                        ])
-                        ->values();
-
-                    return [
-                        'id'             => $performance->id,
-                        'date'           => $performance->date,
-                        'start_time'     => $performance->start_time,
-                        'formatted_date' => $performance->formatted_date,
-                        'formatted_time' => $performance->formatted_time,
-                        'tickets_used'   => $sales->sum('quantity'),
-                        'sales'          => $sales,
-                    ];
-                })->values();
-
-                return [
-                    'id'           => $show?->id,
-                    'name'         => $show?->name,
-                    'tickets_used' => $performanceRows->sum('tickets_used'),
-                    'patron_count' => $performanceRows->pluck('sales')->flatten(1)->pluck('patron_id')->unique()->count(),
-                    'performances' => $performanceRows,
-                ];
-            })
-            ->values();
 
         $packagesByPatron = PatronFlexPackage::where('season', $season)
             ->with('patron')
@@ -353,7 +297,6 @@ class PatronController extends Controller
         return response()->json([
             'season'  => $season,
             'seasons' => $seasons,
-            'shows'   => $shows,
             'patrons' => $patrons,
         ]);
     }
