@@ -233,6 +233,11 @@ class PatronController extends Controller
      * ticket sales against it. Defaults to the active season, same as
      * index() above. `seasons` lists every season with a flex package on
      * record (plus the active one) for the page's season picker.
+     *
+     * `patrons` is the same season by patron: everyone with a package that
+     * season (including those who haven't used any yet), plus anyone who
+     * redeemed flex that season without one, so a bad balance still shows
+     * up. Purchased/used follow the same rule as ticketsRemaining().
      */
     public function flexUsage(Request $request): JsonResponse
     {
@@ -249,14 +254,14 @@ class PatronController extends Controller
             ->sortDesc()
             ->values();
 
-        $salesByPerformance = TicketSale::whereHas('paymentMethod', fn ($q) => $q->where('value', 'flex'))
+        $sales = TicketSale::whereHas('paymentMethod', fn ($q) => $q->where('value', 'flex'))
             ->whereHas('performance', fn ($q) => $q->whereBetween('date', [$dates['start'], $dates['end']]))
-            ->with('patron')
-            ->get()
-            ->groupBy('performance_id');
+            ->with('patron', 'performance.show')
+            ->get();
+        $salesByPerformance = $sales->groupBy('performance_id');
 
-        // whereHas('show') skips performances left behind by a soft-deleted
-        // show — ShowController::destroy() doesn't cascade to them.
+        // whereHas('show') skips any performance still left live under a
+        // soft-deleted show from before Show::booted() cascaded deletes.
         $performances = Performance::with('show')
             ->whereHas('show')
             ->whereBetween('date', [$dates['start'], $dates['end']])
@@ -305,10 +310,51 @@ class PatronController extends Controller
             })
             ->values();
 
+        $packagesByPatron = PatronFlexPackage::where('season', $season)
+            ->with('patron')
+            ->get()
+            ->groupBy('patron_id');
+        $salesByPatron = $sales->groupBy('patron_id');
+
+        $patrons = $packagesByPatron->keys()
+            ->merge($salesByPatron->keys())
+            ->unique()
+            ->map(function ($patronId) use ($packagesByPatron, $salesByPatron) {
+                $packages = $packagesByPatron->get($patronId, collect());
+                $patronSales = $salesByPatron->get($patronId, collect());
+                $patron = $packages->first()?->patron ?? $patronSales->first()?->patron;
+                $purchased = $packages->sum('tickets_purchased');
+                $used = $patronSales->sum('quantity');
+
+                return [
+                    'patron_id'         => $patronId,
+                    'first_name'        => $patron?->first_name,
+                    'last_name'         => $patron?->last_name,
+                    'email'             => $patron?->email,
+                    'tickets_purchased' => $purchased,
+                    'tickets_used'      => $used,
+                    'tickets_remaining' => $purchased - $used,
+                    'usage'             => $patronSales
+                        ->sortBy(fn ($sale) => [$sale->performance?->date, $sale->performance?->start_time])
+                        ->map(fn (TicketSale $sale) => [
+                            'id'             => $sale->id,
+                            'show'           => $sale->performance?->show?->name,
+                            'formatted_date' => $sale->performance?->formatted_date,
+                            'formatted_time' => $sale->performance?->formatted_time,
+                            'quantity'       => $sale->quantity,
+                            'no_show'        => $sale->no_show,
+                        ])
+                        ->values(),
+                ];
+            })
+            ->sortBy(fn ($row) => [strtolower($row['last_name'] ?? ''), strtolower($row['first_name'] ?? '')])
+            ->values();
+
         return response()->json([
             'season'  => $season,
             'seasons' => $seasons,
             'shows'   => $shows,
+            'patrons' => $patrons,
         ]);
     }
 
