@@ -21,6 +21,18 @@ class AngelLevel extends Model
 
     protected $appends = ['min_amount_formatted', 'benefits', 'buttons'];
 
+    /**
+     * Deleting a level deletes its angels (the admin confirm dialog says
+     * so) — soft deletes don't trigger the DB's ON DELETE CASCADE, so it
+     * has to happen here.
+     */
+    protected static function booted()
+    {
+        static::deleting(function (AngelLevel $level) {
+            $level->angels()->get()->each->delete();
+        });
+    }
+
     public function angels(): HasMany
     {
         return $this->hasMany(Angel::class);

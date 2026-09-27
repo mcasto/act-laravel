@@ -622,6 +622,28 @@ const routes = [
             },
           },
           {
+            name: "admin-flex-usage",
+            path: "flex-usage",
+            component: () => import("src/pages/AdminFlexUsage.vue"),
+            beforeEnter: async () => {
+              const store = useStore();
+
+              store.admin.flex_usage = await callApi({
+                path: "/admin/flex-usage",
+                method: "get",
+                useAuth: true,
+              });
+            },
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 22.5,
+              label: "Flex Usage",
+            },
+          },
+          {
             name: "admin-classes",
             path: "classes",
             component: () => import("src/pages/AdminClasses.vue"),

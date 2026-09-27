@@ -8,6 +8,7 @@ use App\Models\Angel;
 use App\Models\Patron;
 use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
+use App\Models\Performance;
 use App\Models\TicketSale;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -222,6 +223,92 @@ class PatronController extends Controller
                 'email' => $patron->email,
             ],
             'seasons' => $seasons,
+        ]);
+    }
+
+    /**
+     * Box-office summary of flex redemptions for one season: every show
+     * with a performance in that season's Sept 1 - Aug 31 window, each
+     * performance (including ones with no flex usage yet), and the flex
+     * ticket sales against it. Defaults to the active season, same as
+     * index() above. `seasons` lists every season with a flex package on
+     * record (plus the active one) for the page's season picker.
+     */
+    public function flexUsage(Request $request): JsonResponse
+    {
+        $validated = $request->validate(['season' => ['nullable', 'regex:/^\d{2}-\d{2}$/']]);
+
+        $activeSeason = ActiveSeason::get();
+        $season = $validated['season'] ?? $activeSeason;
+        $dates = TheaterSeason::datesForSeason($season);
+
+        $seasons = PatronFlexPackage::distinct()
+            ->pluck('season')
+            ->push($activeSeason)
+            ->unique()
+            ->sortDesc()
+            ->values();
+
+        $salesByPerformance = TicketSale::whereHas('paymentMethod', fn ($q) => $q->where('value', 'flex'))
+            ->whereHas('performance', fn ($q) => $q->whereBetween('date', [$dates['start'], $dates['end']]))
+            ->with('patron')
+            ->get()
+            ->groupBy('performance_id');
+
+        // whereHas('show') skips performances left behind by a soft-deleted
+        // show — ShowController::destroy() doesn't cascade to them.
+        $performances = Performance::with('show')
+            ->whereHas('show')
+            ->whereBetween('date', [$dates['start'], $dates['end']])
+            ->orderBy('date')
+            ->orderBy('start_time')
+            ->get();
+
+        $shows = $performances
+            ->groupBy('show_id')
+            ->map(function ($showPerformances) use ($salesByPerformance) {
+                $show = $showPerformances->first()->show;
+
+                $performanceRows = $showPerformances->map(function (Performance $performance) use ($salesByPerformance) {
+                    $sales = $salesByPerformance->get($performance->id, collect())
+                        ->sortBy(fn ($sale) => [$sale->patron?->last_name, $sale->patron?->first_name])
+                        ->map(fn (TicketSale $sale) => [
+                            'id'         => $sale->id,
+                            'patron_id'  => $sale->patron_id,
+                            'first_name' => $sale->patron?->first_name,
+                            'last_name'  => $sale->patron?->last_name,
+                            'email'      => $sale->patron?->email,
+                            'quantity'   => $sale->quantity,
+                            'no_show'    => $sale->no_show,
+                            'sold_at'    => $sale->sold_at,
+                        ])
+                        ->values();
+
+                    return [
+                        'id'             => $performance->id,
+                        'date'           => $performance->date,
+                        'start_time'     => $performance->start_time,
+                        'formatted_date' => $performance->formatted_date,
+                        'formatted_time' => $performance->formatted_time,
+                        'tickets_used'   => $sales->sum('quantity'),
+                        'sales'          => $sales,
+                    ];
+                })->values();
+
+                return [
+                    'id'           => $show?->id,
+                    'name'         => $show?->name,
+                    'tickets_used' => $performanceRows->sum('tickets_used'),
+                    'patron_count' => $performanceRows->pluck('sales')->flatten(1)->pluck('patron_id')->unique()->count(),
+                    'performances' => $performanceRows,
+                ];
+            })
+            ->values();
+
+        return response()->json([
+            'season'  => $season,
+            'seasons' => $seasons,
+            'shows'   => $shows,
         ]);
     }
 

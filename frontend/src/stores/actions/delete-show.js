@@ -20,7 +20,9 @@ export default (id) => {
             path: `/shows/${id}`,
             method: "delete",
             useAuth: true,
-          }).then(() => {
+          }).then((response) => {
+            // callApi already showed the error (e.g. show has ticket sales)
+            if (!response) return;
             remove(store.admin.shows, (show) => show.id == id);
           });
         },

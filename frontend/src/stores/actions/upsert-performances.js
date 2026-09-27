@@ -12,6 +12,10 @@ export default () => {
     payload: { performances: store.admin.show.performances },
     useAuth: true,
   }).then((response) => {
+    // callApi already showed the error (e.g. deleting a performance that
+    // has ticket sales) — nothing was saved.
+    if (!response) return;
+
     Notify.create({
       type: "positive",
       message: "Performances Updated",

@@ -234,7 +234,7 @@ const deleteMethod = (method) => {
   Notify.create({
     type: "warning",
     position: "center",
-    message: `Delete "${method.label}"? This can't be undone, and any past ticket sales recorded under it will lose their payment-method label.`,
+    message: `Delete "${method.label}"? This can't be undone. Methods already recorded on sales, Angels, Flex purchases or enrollments can't be deleted.`,
     actions: [
       { label: "No" },
       {

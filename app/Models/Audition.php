@@ -46,6 +46,13 @@ class Audition extends Model
             }
         });
 
+        // Soft deletes don't trigger the DB's ON DELETE CASCADE, so cascade
+        // to sessions and roles here.
+        static::deleting(function ($model) {
+            AuditionSession::where('audition_id', $model->id)->get()->each->delete();
+            AuditionRole::where('audition_id', $model->id)->get()->each->delete();
+        });
+
         // Delete HTML file when model is deleted
         static::deleted(function ($model) {
             $model->deleteHtmlFile();

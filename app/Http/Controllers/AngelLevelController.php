@@ -100,7 +100,7 @@ class AngelLevelController extends Controller
     {
         $level = AngelLevel::findOrFail($id);
 
-        // The cascade delete in the migration will handle deleting associated angels
+        // AngelLevel::booted() soft-deletes the level's angels along with it
         $level->delete();
 
         Storage::disk('local')->delete("angel-config/{$id}.json");

@@ -334,6 +334,8 @@ Route::middleware(['auth:sanctum', 'permission:flex-purchases'])->group(function
     Route::put('/admin/flex-purchases/{id}', [PatronController::class, 'updateFlexPackage']);
     Route::delete('/admin/flex-purchases/{id}', [PatronController::class, 'destroyFlexPackage']);
 });
+Route::middleware(['auth:sanctum', 'permission:flex-usage'])
+    ->get('/admin/flex-usage', [PatronController::class, 'flexUsage']);
 Route::middleware(['auth:sanctum', 'permission:patrons'])->group(function () {
     Route::get('/admin/patrons', [PatronController::class, 'index']);
     Route::get('/admin/patrons/flex-history/{id}', [PatronController::class, 'flexHistory']);

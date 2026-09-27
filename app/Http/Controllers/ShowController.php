@@ -6,10 +6,13 @@ use App\Helpers\TheaterSeason;
 use App\Models\Show;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
+use App\Models\TicketSale;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class ShowController extends Controller
@@ -53,7 +56,20 @@ class ShowController extends Controller
             return response()->json(['status' => 'error', 'message' => 'No matching show found.']);
         }
 
-        $show->delete();
+        // Ticket sales are financial records, so they block the delete
+        // rather than being cascaded away with the show's performances.
+        $salesCount = TicketSale::whereHas('performance', fn ($q) => $q->where('show_id', $show->id))->count();
+        if ($salesCount) {
+            return response()->json([
+                'status' => 'error',
+                'message' => "Can't delete this show — it has {$salesCount} "
+                    . Str::plural('ticket sale', $salesCount) . ' on record. Delete those first.',
+            ]);
+        }
+
+        // Show::booted() cascades to performances, auditions, gallery
+        // images and comp tickets — all or nothing.
+        DB::transaction(fn () => $show->delete());
 
         return response()->json($show);
     }

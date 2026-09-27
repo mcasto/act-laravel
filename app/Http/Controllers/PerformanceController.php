@@ -39,6 +39,21 @@ class PerformanceController extends Controller
             return isset($performance['deleted']) && isset($performance['id']);
         });
 
+        // Refuse the whole save if any performance being removed has ticket
+        // sales — soft-deleting it would leave those sales pointing at a
+        // hidden performance. Checked before anything is written.
+        $blocked = Performance::whereIn('id', array_column($deleteRecs, 'id'))
+            ->whereHas('ticket_sales')
+            ->get();
+        if ($blocked->isNotEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => "Can't delete a performance that has ticket sales ("
+                    . $blocked->map(fn ($p) => "{$p->formatted_date} {$p->formatted_time}")->implode(', ')
+                    . '). Delete or move those sales first. Nothing was saved.',
+            ]);
+        }
+
         // delete those from the database
         foreach ($deleteRecs as $rec) {
             $performance = Performance::find($rec['id']);

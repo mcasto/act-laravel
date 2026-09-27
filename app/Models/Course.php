@@ -44,6 +44,11 @@ class Course extends Model
     protected static function booted()
     {
         static::deleting(function ($course) {
+            // Soft deletes don't trigger the DB's ON DELETE CASCADE, so
+            // cascade to sessions and enrollments here.
+            $course->sessions()->get()->each->delete();
+            $course->contacts()->get()->each->delete();
+
             // Delete the blade template
             $templatePath = resource_path("views/courses/{$course->slug}.blade.php");
             if (file_exists($templatePath)) {

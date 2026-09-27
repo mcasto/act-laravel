@@ -58,6 +58,22 @@ class Show extends Model
     }
 
     /**
+     * A soft delete is an UPDATE, not a DELETE, so the migrations' ON
+     * DELETE CASCADE never fires — cascade to child records here instead.
+     * Ticket sales are deliberately not cascaded: ShowController::destroy()
+     * refuses to delete a show that has any, so there are none by now.
+     */
+    protected static function booted()
+    {
+        static::deleting(function (Show $show) {
+            $show->performances()->get()->each->delete();
+            Audition::where('show_id', $show->id)->get()->each->delete();
+            $show->galleryImages()->get()->each->delete();
+            $show->compTickets()->get()->each->delete();
+        });
+    }
+
+    /**
      * Relationship to gallery_images
      */
     public function galleryImages()

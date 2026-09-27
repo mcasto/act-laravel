@@ -36,6 +36,18 @@ class TicketSale extends Model
         'front_row' => 'integer',
     ];
 
+    /**
+     * Ticket rows have no soft-delete column (reconcileTicketCount() below
+     * hard-deletes them too), and a soft delete never triggers the DB's
+     * ON DELETE CASCADE, so remove them here along with the sale.
+     */
+    protected static function booted()
+    {
+        static::deleting(function (TicketSale $sale) {
+            $sale->tickets()->delete();
+        });
+    }
+
     public function patron(): BelongsTo
     {
         return $this->belongsTo(Patron::class);
