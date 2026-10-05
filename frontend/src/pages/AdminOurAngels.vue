@@ -123,6 +123,10 @@
                       >Founding Angel</q-badge
                     >
                   </q-item-label>
+                  <q-item-label caption v-if="angel.comments" class="row no-wrap items-start">
+                    <q-icon :name="matNotes" class="q-mr-xs q-mt-xs" />
+                    <span style="white-space: pre-line">{{ angel.comments }}</span>
+                  </q-item-label>
                 </q-item-section>
                 <q-item-section side>
                   <div class="row q-gutter-x-xs">
@@ -379,6 +383,16 @@
             dense
             class="q-mb-md"
           />
+          <q-input
+            v-model="angelForm.comments"
+            label="Comments"
+            hint="Internal only — e.g. one patron paying on another's behalf"
+            type="textarea"
+            autogrow
+            outlined
+            dense
+            class="q-mb-md"
+          />
           <q-checkbox
             v-model="angelForm.founding_angel"
             label="Founding Angel"
@@ -479,6 +493,7 @@ import {
   matFileDownload,
   matHistoryEdu,
   matLink,
+  matNotes,
   matSearch,
 } from "@quasar/extras/material-icons";
 import { computed, onMounted, ref, watch } from "vue";
@@ -552,6 +567,13 @@ const seasonColumns = [
     align: "left",
     sortable: true,
   },
+  {
+    name: "comments",
+    label: "Comments",
+    field: "comments",
+    align: "left",
+    style: "white-space: pre-line; max-width: 20rem;",
+  },
 ];
 
 // Standard Quasar CSV-export recipe (see the Quasar docs' "Table -> CSV
@@ -615,6 +637,7 @@ const angelForm = ref({
   donation_amount: null,
   payment_method_value: null,
   season: "",
+  comments: "",
 });
 
 // Keeps recognition_name in sync with first/last name until the admin
@@ -718,7 +741,7 @@ const getPatron = async () => {
   if (!angelForm.value.email) return;
 
   const patron = await callApi({
-    path: `/patrons/lookup?email=${angelForm.value.email}`,
+    path: `/admin/patrons/lookup?email=${angelForm.value.email}`,
     method: "get",
     useAuth: true,
     showError: false,
@@ -790,7 +813,7 @@ onMounted(async () => {
 
 const loadAngelLevels = async () => {
   const response = await callApi({
-    path: "/angels",
+    path: "/admin/angels",
     method: "get",
     useAuth: true,
   });
@@ -913,6 +936,7 @@ const openAngelDialog = (angel = null) => {
       donation_amount: angel.donation_amount,
       payment_method_value: angel.payment_method?.value ?? null,
       season: angel.season ?? currentSeasonString(),
+      comments: angel.comments ?? "",
     };
     originalFoundingAngel.value = !!angel.founding_angel;
     // Existing angels already have a (possibly custom) recognition_name —
@@ -930,6 +954,7 @@ const openAngelDialog = (angel = null) => {
       donation_amount: selectedLevel.value.min_amount,
       payment_method_value: null,
       season: currentSeasonString(),
+      comments: "",
     };
     originalFoundingAngel.value = false;
     recognitionNameEdited.value = false;
@@ -949,6 +974,7 @@ const saveAngel = async () => {
     payment_method_value: angelForm.value.payment_method_value,
     season: angelForm.value.season,
     founding_angel: angelForm.value.founding_angel,
+    comments: angelForm.value.comments || null,
   };
   if (!isEdit) {
     payload.email = angelForm.value.email;

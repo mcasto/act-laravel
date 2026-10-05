@@ -10,6 +10,7 @@ use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
 use App\Models\TicketSale;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -326,6 +327,7 @@ class PatronController extends Controller
                     'label' => $pkg->paymentMethod->label,
                 ] : null,
                 'purchased_at'      => $pkg->purchased_at,
+                'comments'          => $pkg->comments,
             ]);
 
         return response()->json($purchases->values());
@@ -347,6 +349,8 @@ class PatronController extends Controller
             'season' => 'required|string|max:255',
             'tickets_purchased' => 'required|integer|min:1',
             'payment_method_value' => 'required|string|exists:payment_methods,value',
+            'comments' => 'nullable|string',
+            'purchased_at' => 'required|date_format:Y-m-d',
         ]);
 
         $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
@@ -365,7 +369,8 @@ class PatronController extends Controller
             'season' => $validated['season'],
             'tickets_purchased' => $validated['tickets_purchased'],
             'payment_method_id' => $paymentMethod->id,
-            'purchased_at' => now(),
+            'purchased_at' => $this->purchaseDate($validated['purchased_at']),
+            'comments' => $validated['comments'] ?? null,
         ]);
 
         $package->load('patron', 'paymentMethod');
@@ -384,6 +389,10 @@ class PatronController extends Controller
             'season' => 'required|string|max:255',
             'tickets_purchased' => 'required|integer|min:1',
             'payment_method_value' => 'required|string|exists:payment_methods,value',
+            'comments' => 'nullable|string',
+            // Only sent when the admin actually changed the date, so an
+            // edit to anything else keeps the original exact timestamp.
+            'purchased_at' => 'sometimes|date_format:Y-m-d',
         ]);
 
         $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
@@ -393,11 +402,27 @@ class PatronController extends Controller
             'season' => $validated['season'],
             'tickets_purchased' => $validated['tickets_purchased'],
             'payment_method_id' => $paymentMethod->id,
+            'comments' => $validated['comments'] ?? null,
+            ...(isset($validated['purchased_at'])
+                ? ['purchased_at' => $this->purchaseDate($validated['purchased_at'])]
+                : []),
         ]);
 
         $package->load('patron', 'paymentMethod');
 
         return response()->json(['status' => 'success', 'package' => $package]);
+    }
+
+    /**
+     * Admin-picked purchase date (Y-m-d) → timestamp. Today keeps the real
+     * current time; any other date is pinned to noon so it can't roll into
+     * the neighboring day when the admin displays it in local time.
+     */
+    private function purchaseDate(string $date): Carbon
+    {
+        return $date === now()->toDateString()
+            ? now()
+            : Carbon::parse($date)->setTime(12, 0);
     }
 
     public function destroyFlexPackage(int $id): JsonResponse
@@ -431,6 +456,14 @@ class PatronController extends Controller
         return response()->json($patrons);
     }
 
+    /**
+     * Public lookup by email, used by the self-service purchase forms
+     * (PayPal/Transfer/Flex) to pre-fill a returning patron's name and, on
+     * the Flex redemption form, show their balance and history. Anyone can
+     * call this with any email, so it returns only that — never phone,
+     * patron comments, founding-angel status or record ids. The admin pages
+     * use adminLookup() for the full record.
+     */
     public function lookup(Request $request): JsonResponse
     {
         $request->validate(['email' => 'required|email']);
@@ -441,6 +474,52 @@ class PatronController extends Controller
             return response()->json(null, 404);
         }
 
+        return response()->json([
+            'email'         => $patron->email,
+            'first_name'    => $patron->first_name,
+            'last_name'     => $patron->last_name,
+            'flex_packages' => $this->currentFlexPackages($patron)
+                ->map(fn (array $pkg) => [
+                    'season'            => $pkg['season'],
+                    'tickets_purchased' => $pkg['tickets_purchased'],
+                    'tickets_remaining' => $pkg['tickets_remaining'],
+                    'usage'             => $pkg['usage'],
+                ]),
+        ]);
+    }
+
+    /**
+     * Full lookup by email for the admin forms (New Ticket Sale, Add Angel,
+     * Add Flex Purchase) — includes phone, founding-angel status and patron
+     * comments, so it's auth-only.
+     */
+    public function adminLookup(Request $request): JsonResponse
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $patron = Patron::where('email', $request->email)->first();
+
+        if (! $patron) {
+            return response()->json(null, 404);
+        }
+
+        return response()->json([
+            'email'          => $patron->email,
+            'last_name'      => $patron->last_name,
+            'first_name'     => $patron->first_name,
+            'phone'          => $patron->phone,
+            'founding_angel' => $patron->founding_angel,
+            'comments'       => $patron->comments,
+            'flex_packages'  => $this->currentFlexPackages($patron),
+        ]);
+    }
+
+    /**
+     * The patron's flex packages for the real calendar-current season,
+     * each with that season's flex usage attached.
+     */
+    private function currentFlexPackages(Patron $patron)
+    {
         $season = TheaterSeason::currentString();
         $seasonDates = TheaterSeason::currentDates();
         $seasonStart = $seasonDates['start'];
@@ -457,7 +536,7 @@ class PatronController extends Controller
                 'quantity'  => $sale->quantity,
             ]);
 
-        $flexPackages = $patron->flexPackages()
+        return $patron->flexPackages()
             ->where('season', $season)
             ->get()
             ->map(fn($pkg) => [
@@ -468,15 +547,5 @@ class PatronController extends Controller
                 'purchased_at'      => $pkg->purchased_at,
                 'usage'             => $flexUsage,
             ]);
-
-        return response()->json([
-            'email' => $patron->email,
-            'last_name'    => $patron->last_name,
-            'first_name'   => $patron->first_name,
-            'phone'        => $patron->phone,
-            'founding_angel' => $patron->founding_angel,
-            'comments'     => $patron->comments,
-            'flex_packages' => $flexPackages,
-        ]);
     }
 }

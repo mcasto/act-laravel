@@ -11,7 +11,40 @@ use Illuminate\Support\Facades\Storage;
 
 class AngelLevelController extends Controller
 {
+    /**
+     * Public Angels page data. Each angel is trimmed to just what the donor
+     * list displays — the full record carries the donor's email, donation
+     * amount, payment method, internal comments, and (via Angel::email())
+     * the whole linked Patron, none of which belong on a public endpoint.
+     * The admin page gets the full records from adminIndex() instead.
+     */
     public function index()
+    {
+        $data = $this->levelsWithAngels();
+
+        $data['levels'] = $data['levels']->map(function (AngelLevel $level) {
+            $angels = $level->angels->map(fn (Angel $angel) => [
+                'id' => $angel->id,
+                'recognition_name' => $angel->recognition_name,
+                'founding_angel' => $angel->founding_angel,
+            ]);
+
+            return array_merge($level->withoutRelations()->toArray(), ['angels' => $angels]);
+        });
+
+        return $data;
+    }
+
+    /**
+     * Same as index(), with full angel records — for the admin Our Angels
+     * page (auth + our-angels permission).
+     */
+    public function adminIndex()
+    {
+        return $this->levelsWithAngels();
+    }
+
+    private function levelsWithAngels(): array
     {
         // Real calendar-current season, not ActiveSeason::get()'s
         // early-flip override — that override only controls which season

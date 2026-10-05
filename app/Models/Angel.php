@@ -22,6 +22,7 @@ class Angel extends Model
         'payment_method_id',
         'founding_angel',
         'season',
+        'comments',
     ];
 
     protected $casts = [

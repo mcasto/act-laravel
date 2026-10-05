@@ -563,8 +563,9 @@ const getPatron = async () => {
   }
 
   const patron = await callApi({
-    path: `/patrons/lookup?email=${form.value.email}`,
+    path: `/admin/patrons/lookup?email=${form.value.email}`,
     method: "get",
+    useAuth: true,
     showError: false,
   }).catch(() => null);
 

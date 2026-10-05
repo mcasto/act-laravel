@@ -117,7 +117,8 @@ const getPatron = async () => {
 
   form.value.first_name = patron.first_name;
   form.value.last_name = patron.last_name;
-  form.value.phone = patron.phone;
+  // Phone isn't returned by the public lookup (anyone can look up any
+  // email), so returning patrons re-enter it.
 
   store.patron = patron;
 };

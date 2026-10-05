@@ -299,6 +299,7 @@ Route::middleware(['auth:sanctum', 'permission:our-angels'])->group(function () 
     Route::delete('/angel-levels/{id}', [AngelLevelController::class, 'destroy']);
 
     // Angels
+    Route::get('/admin/angels', [AngelLevelController::class, 'adminIndex']);
     Route::post('/angels', [AngelController::class, 'store']);
     Route::put('/angels/{id}', [AngelController::class, 'update']);
     Route::delete('/angels/{id}', [AngelController::class, 'destroy']);
@@ -328,6 +329,7 @@ Route::controller(TicketSaleController::class)
  */
 Route::get('/patrons/lookup', [PatronController::class, 'lookup']);
 Route::middleware('auth:sanctum')->get('/admin/patrons/search', [PatronController::class, 'search']);
+Route::middleware('auth:sanctum')->get('/admin/patrons/lookup', [PatronController::class, 'adminLookup']);
 Route::middleware(['auth:sanctum', 'permission:flex-purchases'])->group(function () {
     Route::get('/admin/flex-purchases', [PatronController::class, 'flexPurchases']);
     Route::post('/admin/flex-purchases', [PatronController::class, 'storeFlexPackage']);

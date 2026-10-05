@@ -17,6 +17,7 @@ class PatronFlexPackage extends Model
         'tickets_purchased',
         'payment_method_id',
         'purchased_at',
+        'comments',
     ];
 
     protected $casts = [

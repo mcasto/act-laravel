@@ -98,6 +98,7 @@ class AngelController extends Controller
             'payment_method_value' => 'required|string|exists:payment_methods,value',
             'season' => 'required|string',
             'founding_angel' => 'boolean',
+            'comments' => 'nullable|string',
         ]);
 
         $level = AngelLevel::findOrFail($validated['angel_level_id']);
@@ -138,6 +139,7 @@ class AngelController extends Controller
             'payment_method_value' => 'required|string|exists:payment_methods,value',
             'season' => 'required|string',
             'founding_angel' => 'boolean',
+            'comments' => 'nullable|string',
         ]);
 
         $level = AngelLevel::findOrFail($validated['angel_level_id']);
@@ -225,6 +227,7 @@ class AngelController extends Controller
                 'donation_amount' => $angel->donation_amount,
                 'payment_method' => $angel->paymentMethod?->label,
                 'donated_at' => $angel->created_at?->toDateString(),
+                'comments' => $angel->comments,
             ])
             ->sortByDesc('donation_amount')
             ->values();

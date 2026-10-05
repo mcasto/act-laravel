@@ -221,6 +221,36 @@
             map-options
             outlined
             dense
+            class="q-mb-md"
+          />
+          <q-input
+            v-model="form.purchased_at"
+            label="Purchase Date"
+            outlined
+            dense
+            mask="####-##-##"
+          >
+            <template #prepend>
+              <q-icon :name="matEvent" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-date v-model="form.purchased_at" mask="YYYY-MM-DD">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+          <q-input
+            v-model="form.comments"
+            label="Comments"
+            hint="Internal only — e.g. one patron paying on another's behalf"
+            type="textarea"
+            autogrow
+            outlined
+            dense
+            class="q-mt-md"
           />
         </q-card-section>
 
@@ -240,7 +270,7 @@
 </template>
 
 <script setup>
-import { matAdd, matDelete, matEdit, matFileDownload, matSearch } from "@quasar/extras/material-icons";
+import { matAdd, matDelete, matEdit, matEvent, matFileDownload, matSearch } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
 import { exportFile, Notify } from "quasar";
 import callApi from "src/assets/call-api";
@@ -343,6 +373,13 @@ const columns = [
     format: (val) => (val ? format(parseISO(val), "PP") : "—"),
   },
   {
+    name: "comments",
+    label: "Comments",
+    field: "comments",
+    align: "left",
+    style: "white-space: pre-line; max-width: 20rem;",
+  },
+  {
     name: "actions",
     label: "",
     field: "",
@@ -441,7 +478,15 @@ const form = ref({
   season: "",
   tickets_purchased: null,
   payment_method_value: null,
+  comments: "",
+  purchased_at: "",
 });
+
+// Date-only, in the admin's local time — same day the table shows.
+const toDateInput = (val) => format(val ? parseISO(val) : new Date(), "yyyy-MM-dd");
+// The edited record's date as loaded, so save() only sends purchased_at
+// when it actually changed (keeping the original exact timestamp otherwise).
+const originalPurchasedAt = ref(null);
 
 const patronMode = ref("existing");
 const selectedPatron = ref(null);
@@ -477,6 +522,7 @@ const canSave = computed(() => {
   if (!form.value.season || !form.value.tickets_purchased || !form.value.payment_method_value) {
     return false;
   }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(form.value.purchased_at ?? "")) return false;
   if (!form.value.id) {
     if (patronMode.value === "existing") return !!selectedPatron.value;
     return !!form.value.email && !!form.value.first_name && !!form.value.last_name;
@@ -499,6 +545,8 @@ const openDialog = (pkg = null) => {
         season: pkg.season,
         tickets_purchased: pkg.tickets_purchased,
         payment_method_value: pkg.payment_method?.value ?? null,
+        comments: pkg.comments ?? "",
+        purchased_at: toDateInput(pkg.purchased_at),
       }
     : {
         id: null,
@@ -509,7 +557,10 @@ const openDialog = (pkg = null) => {
         season: currentSeasonString(),
         tickets_purchased: null,
         payment_method_value: null,
+        comments: "",
+        purchased_at: toDateInput(null),
       };
+  originalPurchasedAt.value = form.value.purchased_at;
   dialog.value = true;
 };
 
@@ -517,7 +568,7 @@ const getPatron = async () => {
   if (!form.value.email) return;
 
   const patron = await callApi({
-    path: `/patrons/lookup?email=${form.value.email}`,
+    path: `/admin/patrons/lookup?email=${form.value.email}`,
     method: "get",
     useAuth: true,
     showError: false,
@@ -546,6 +597,10 @@ const save = async () => {
         season: form.value.season,
         tickets_purchased: form.value.tickets_purchased,
         payment_method_value: form.value.payment_method_value,
+        comments: form.value.comments || null,
+        ...(form.value.purchased_at !== originalPurchasedAt.value
+          ? { purchased_at: form.value.purchased_at }
+          : {}),
       }
     : {
         email: form.value.email,
@@ -555,6 +610,8 @@ const save = async () => {
         season: form.value.season,
         tickets_purchased: form.value.tickets_purchased,
         payment_method_value: form.value.payment_method_value,
+        comments: form.value.comments || null,
+        purchased_at: form.value.purchased_at,
       };
 
   const response = await callApi({
