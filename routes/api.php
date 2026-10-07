@@ -320,6 +320,7 @@ Route::controller(TicketSaleController::class)
         Route::delete('/ticket-sales', 'destroy');
         Route::put('/ticket-sales/no-show/{id}', 'updateNoShow');
         Route::put('/ticket-sales/{id}/tickets', 'redeemTickets');
+        Route::post('/ticket-sales/payment-reminders', 'sendPaymentReminders');
         Route::post('/admin/ticket-sales', 'store');
         Route::get('/admin/performances/{id}/seating-summary', 'seatingSummary');
     });

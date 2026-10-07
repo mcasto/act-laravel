@@ -60,6 +60,18 @@
                 :ticket-price="ticketPrice"
                 :show-name="show.label"
               />
+              <q-btn
+                v-if="currentShow"
+                :icon="mdiCashClock"
+                color="warning"
+                flat
+                @click="unconfirmedDialog = true"
+              >
+                <q-badge v-if="unconfirmedRecs.length" color="negative" floating>
+                  {{ unconfirmedRecs.length }}
+                </q-badge>
+                <q-tooltip>Unconfirmed PayPal / Bank Transfer Payments</q-tooltip>
+              </q-btn>
               <q-btn :icon="matEvent" color="info" flat>
                 <q-tooltip>Tickets Sold By Date</q-tooltip>
                 <q-menu>
@@ -403,6 +415,163 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog v-model="unconfirmedDialog">
+      <q-card style="min-width: 360px; max-width: 900px; width: 100%;">
+        <q-card-section class="flex items-center">
+          <div>
+            <div class="text-h6">Unconfirmed Payments</div>
+            <div class="text-caption text-grey-7">
+              {{ currentShow?.name }} — PayPal and Bank Transfer reservations
+              still awaiting payment confirmation
+            </div>
+          </div>
+          <q-space />
+          <q-btn
+            v-if="unconfirmedRecs.length"
+            :icon="matEmail"
+            label="Send Reminder"
+            flat
+            dense
+            color="primary"
+            :disable="isReadOnly || reminderSelected.length === 0"
+            @click="openReminderDialog"
+          >
+            <q-tooltip>
+              Emails each checked patron individually
+            </q-tooltip>
+          </q-btn>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <div v-if="unconfirmedRecs.length === 0" class="text-grey-7">
+            Nothing outstanding — every PayPal and Bank Transfer payment is
+            confirmed.
+          </div>
+          <q-markup-table v-else dense flat bordered wrap-cells>
+            <thead>
+              <tr>
+                <th class="text-center">
+                  <q-checkbox
+                    :model-value="reminderAllState"
+                    dense
+                    @update:model-value="toggleAllReminders"
+                  />
+                </th>
+                <th class="text-left">Performance</th>
+                <th class="text-left">Purchaser</th>
+                <th class="text-left">Contact</th>
+                <th class="text-center">Qty</th>
+                <th class="text-center">Tickets</th>
+                <th class="text-left">Method</th>
+                <th class="text-left">Date Sold</th>
+                <th class="text-left">Transfer Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in unconfirmedRecs" :key="row.id">
+                <td class="text-center">
+                  <q-checkbox v-model="reminderSelected" :val="row.id" dense />
+                </td>
+                <td>
+                  {{ row.performance.formatted_date }}
+                  {{ row.performance.formatted_time }}
+                </td>
+                <td>{{ row.patron.first_name }} {{ row.patron.last_name }}</td>
+                <td>
+                  <a
+                    :href="`mailto:${row.patron.first_name} ${row.patron.last_name} <${row.patron.email}>`"
+                    >{{ row.patron.email }}</a
+                  >
+                  <div v-if="row.patron.phone" class="text-caption">
+                    {{ row.patron.phone }}
+                  </div>
+                </td>
+                <td class="text-center">{{ row.quantity || "?" }}</td>
+                <td class="text-center">{{ ticketNumbersDisplay(row) }}</td>
+                <td>{{ row.payment_method.label }}</td>
+                <td>{{ format(parseISO(row.sold_at), "PP") }}</td>
+                <td>
+                  {{
+                    row.transfer_date
+                      ? format(parseISO(row.transfer_date), "PP")
+                      : ""
+                  }}
+                </td>
+                <td>
+                  <q-btn
+                    :icon="matEdit"
+                    flat
+                    round
+                    color="primary"
+                    size="sm"
+                    :disable="isReadOnly"
+                    @click="onEditSale(row)"
+                  >
+                    <q-tooltip>Edit / mark confirmed</q-tooltip>
+                  </q-btn>
+                </td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="reminderDialog" persistent>
+      <q-card style="min-width: 360px; max-width: 600px; width: 100%;">
+        <q-card-section>
+          <div class="text-h6">Send Payment Reminder</div>
+          <div class="text-caption text-grey-7">
+            Goes to {{ reminderPatronCount }} patron{{
+              reminderPatronCount === 1 ? "" : "s"
+            }}, each as their own email. Each one starts with "Hello
+            <i>name</i>," and ends with a list of their pending reservations,
+            so just write the part in between.
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none q-gutter-y-md">
+          <q-input
+            v-model="reminderSubject"
+            label="Subject"
+            outlined
+            dense
+            maxlength="255"
+          />
+          <q-input
+            v-model="reminderBody"
+            label="Message"
+            type="textarea"
+            outlined
+            autogrow
+            maxlength="5000"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Cancel"
+            :disable="reminderSending"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="Send"
+            color="primary"
+            :loading="reminderSending"
+            :disable="!reminderSubject.trim() || !reminderBody.trim()"
+            @click="sendReminders"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <q-dialog v-model="ticketsDialog">
       <q-card style="min-width: 350px;">
         <q-card-section>
@@ -448,11 +617,13 @@ import {
   matComment,
   matDelete,
   matEdit,
+  matEmail,
   matEvent,
   matInfo,
   matSearch,
 } from "@quasar/extras/material-icons";
 import {
+  mdiCashClock,
   mdiCashMultiple,
   mdiCheckBold,
   mdiCircle,
@@ -801,6 +972,115 @@ const ticketsByDate = computed(() => {
   }
   return sortBy(Object.values(groups), "date");
 });
+
+// PayPal and Bank Transfer are the only methods that sit pending until the
+// box office sees the money arrive — this is the box office's "who to
+// chase" list. Always the current show (tickets are only ever on sale for
+// one show at a time, and past shows' stragglers don't matter), regardless
+// of which show is picked in the selector or the search/performance filters.
+const PENDING_PAYMENT_METHODS = ["paypal", "transfer"];
+const unconfirmedDialog = ref(false);
+
+const unconfirmedRecs = computed(() => {
+  if (!currentShow) return [];
+  return sortBy(
+    store.admin.ticket_sales.filter(
+      (rec) =>
+        rec.performance.show.id == currentShow.id &&
+        !rec.confirmed &&
+        PENDING_PAYMENT_METHODS.includes(rec.payment_method?.value),
+    ),
+    [
+      (rec) => rec.performance.date,
+      (rec) => rec.performance.start_time,
+      (rec) => rec.patron.last_name?.toLowerCase(),
+    ],
+  );
+});
+
+// Checked rows to remind — everyone by default each time the list opens.
+const reminderSelected = ref([]);
+watch(unconfirmedDialog, (open) => {
+  if (open) reminderSelected.value = unconfirmedRecs.value.map((r) => r.id);
+});
+
+const reminderAllState = computed(() => {
+  if (reminderSelected.value.length === 0) return false;
+  if (reminderSelected.value.length === unconfirmedRecs.value.length) return true;
+  return null;
+});
+
+const toggleAllReminders = (val) => {
+  reminderSelected.value = val ? unconfirmedRecs.value.map((r) => r.id) : [];
+};
+
+// The server sends one email per patron, so a patron with two pending
+// sales counts once.
+const reminderPatronCount = computed(
+  () =>
+    new Set(
+      unconfirmedRecs.value
+        .filter((r) => reminderSelected.value.includes(r.id))
+        .map((r) => r.patron.id),
+    ).size,
+);
+
+const reminderDialog = ref(false);
+const reminderSending = ref(false);
+const reminderSubject = ref("");
+const reminderBody = ref(
+  "We have your reservation, but we haven't received your payment yet. " +
+    "If you've already sent it, thank you! Please reply and let us know " +
+    "when and how it was sent so we can match it up.",
+);
+
+const openReminderDialog = () => {
+  if (!reminderSubject.value) {
+    reminderSubject.value = `Payment Reminder - ${currentShow?.name ?? ""}`;
+  }
+  reminderDialog.value = true;
+};
+
+const sendReminders = async () => {
+  reminderSending.value = true;
+  try {
+    const response = await callApi({
+      path: "/ticket-sales/payment-reminders",
+      method: "post",
+      useAuth: true,
+      payload: {
+        ticket_sale_ids: reminderSelected.value,
+        subject: reminderSubject.value,
+        body: reminderBody.value,
+      },
+    });
+
+    if (!response || response.status !== "success") {
+      Notify.create({
+        type: "negative",
+        message: response?.message || "Something went wrong.",
+      });
+      return;
+    }
+
+    if (response.failed?.length) {
+      Notify.create({
+        type: "warning",
+        timeout: 0,
+        actions: [{ label: "Dismiss", color: "white" }],
+        message: `Sent ${response.sent}, but these failed: ${response.failed.join(", ")}`,
+      });
+    } else {
+      Notify.create({
+        type: "positive",
+        message: `Sent ${response.sent} reminder${response.sent === 1 ? "" : "s"}.`,
+      });
+    }
+    reminderDialog.value = false;
+  } finally {
+    reminderSending.value = false;
+  }
+};
 
 const projectedRevenueAll = computed(() =>
   ticketsByDate.value.reduce((sum, row) => sum + row.revenue, 0),

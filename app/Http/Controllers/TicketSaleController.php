@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\PatronMail;
 use App\Helpers\RefId;
 use App\Helpers\TheaterSeason;
+use App\Mail\PaymentReminderMailer;
 use App\Mail\PurchaseConfirmationMailer;
 use App\Mail\TicketSaleMailer;
 use App\Models\Angel;
@@ -16,6 +17,7 @@ use App\Models\CompTicket;
 use App\Models\StandardButton;
 use App\Models\Ticket;
 use App\Models\TicketSale;
+use App\Services\ChangeLogger;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -432,6 +434,85 @@ class TicketSaleController extends Controller
         });
 
         return response()->json($this->allSales());
+    }
+
+    /**
+     * Payment reminders for unconfirmed PayPal / Bank Transfer reservations,
+     * from the Unconfirmed Payments dialog in AdminTicketSales.vue. One
+     * email per patron (a patron with several pending sales gets one email
+     * listing them all), sent individually through the default mailer
+     * rather than as a BCC blast, which gets rejected or spam-foldered once
+     * the list is long. Sales are re-checked here, so one that was
+     * confirmed after the dialog loaded is skipped rather than nagged.
+     */
+    public function sendPaymentReminders(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'ticket_sale_ids'   => 'required|array|min:1',
+            'ticket_sale_ids.*' => 'integer',
+            'subject'           => 'required|string|max:255',
+            'body'              => 'required|string|max:5000',
+        ]);
+
+        $sales = TicketSale::with([
+                'performance.show',
+                'patron',
+                'paymentMethod',
+                'tickets' => fn ($query) => $query->orderBy('number'),
+            ])
+            ->whereIn('id', $validated['ticket_sale_ids'])
+            ->where('confirmed', false)
+            ->whereHas('paymentMethod', fn ($query) => $query->whereIn('value', ['paypal', 'transfer']))
+            ->get()
+            ->filter(fn ($sale) => $sale->patron?->email);
+
+        $sent = [];
+        $failed = [];
+
+        foreach ($sales->groupBy('patron_id') as $patronSales) {
+            $patron = $patronSales->first()->patron;
+
+            $reservations = $patronSales
+                ->sortBy(fn ($sale) => $sale->performance?->date . ' ' . $sale->performance?->start_time)
+                ->map(fn ($sale) => [
+                    'show_name'        => $sale->performance?->show?->name,
+                    'performance_date' => $sale->performance ? Carbon::parse($sale->performance->date)->format('F j, Y') : null,
+                    'performance_time' => $sale->performance ? Carbon::parse($sale->performance->start_time)->format('g:i A') : null,
+                    'num_tickets'      => $sale->quantity,
+                    'payment_method'   => $sale->paymentMethod?->label,
+                    'reference_number' => $sale->tickets->pluck('formatted_number')->implode(', '),
+                ])
+                ->values()
+                ->all();
+
+            try {
+                PatronMail::to($patron->email)->send(new PaymentReminderMailer([
+                    'subject'      => $validated['subject'],
+                    'body'         => $validated['body'],
+                    'name'         => trim("{$patron->first_name} {$patron->last_name}"),
+                    'reservations' => $reservations,
+                ]));
+                $sent[] = $patron->email;
+            } catch (Exception $e) {
+                logger()->error('Failed to send payment reminder email', [
+                    'error'     => $e->getMessage(),
+                    'patron_id' => $patron->id,
+                ]);
+                $failed[] = $patron->email;
+            }
+        }
+
+        ChangeLogger::record('Sent payment reminders for unconfirmed ticket sales', [
+            'subject' => $validated['subject'],
+            'sent'    => $sent,
+            'failed'  => $failed,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'sent'   => count($sent),
+            'failed' => $failed,
+        ]);
     }
 
     /**

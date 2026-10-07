@@ -1,9 +1,14 @@
 <div>
+    {{-- The salutation lives here, outside the admin-editable confirmation
+         body, so a custom body can't leave patrons without one. Skipped only
+         when that body already opens with its own greeting. --}}
+    @if (empty($confirmation_body) || !preg_match('/^\s*(hello|hi|dear|greetings)\b/iu', html_entity_decode(strip_tags($confirmation_body))))
+        <p>Hello {{ $name }},</p>
+    @endif
+
     @if (!empty($confirmation_body))
         {!! $confirmation_body !!}
     @else
-        <p>Hello {{ $name }},</p>
-
         <p>
             This is to confirm your purchase of {{ $num_tickets }} ticket(s) to our {{ $performance_date }} performance of
             {{ $show_name }}, starting at {{ $performance_time }}.
@@ -28,6 +33,9 @@
     @endif
 
     @if (!empty($reference_number))
-        <p><strong>Reference number{{ str_contains($reference_number, ',') ? 's' : '' }}:</strong> {{ $reference_number }}</p>
+        <p>
+            <strong>Reference number{{ str_contains($reference_number, ',') ? 's' : '' }}:</strong> {{ $reference_number }}<br>
+            <span style="font-size: 12px; color: #757575;">For our records. If you contact us about this reservation, including {{ str_contains($reference_number, ',') ? 'them' : 'it' }} helps us find it quickly.</span>
+        </p>
     @endif
 </div>

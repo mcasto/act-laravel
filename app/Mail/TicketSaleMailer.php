@@ -30,8 +30,22 @@ class TicketSaleMailer extends Mailable
                 config('mail.ticket_sale_from.address'),
                 config('mail.ticket_sale_from.name')
             ),
-            subject: 'Ticket Sale Notification - ' . $this->ticketData['show'],
+            subject: 'Ticket Sale Notification - ' . $this->ticketData['show']
+                . self::ticketNumbersSuffix($this->ticketData['ticket_numbers'] ?? []),
         );
+    }
+
+    /**
+     * " - #118, #119" — ticket numbers in the subject keep Gmail from
+     * threading every sale for the same show into one conversation.
+     */
+    public static function ticketNumbersSuffix(array $ticketNumbers): string
+    {
+        if (empty($ticketNumbers)) {
+            return '';
+        }
+
+        return ' - ' . implode(', ', array_map(fn ($n) => "#{$n}", $ticketNumbers));
     }
     /**
      * Get the message content definition.

@@ -211,7 +211,7 @@
             />
           </div>
           <div class="col-12 flex justify-end">
-            <q-btn label="Save Button" color="primary" @click="saveButton" :disable="isReadOnly" />
+            <q-btn label="Save" color="primary" @click="saveButton" :disable="isReadOnly" />
           </div>
         </div>
       </div>
