@@ -24,7 +24,12 @@ class CompTicketMailer extends Mailable
                 config('mail.comp_from.address'),
                 config('mail.comp_from.name')
             ),
-            subject: 'Your Comp Ticket',
+            // Only the redemption confirmation carries a reference_number —
+            // the initial comp-ticket-notice invite has no ticket yet.
+            subject: PurchaseConfirmationMailer::withReference(
+                'Your Comp Ticket',
+                $this->data['reference_number'] ?? null
+            ),
         );
     }
 

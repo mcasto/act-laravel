@@ -41,7 +41,13 @@ class PaymentReminderMailer extends Mailable
                     config('mail.admin_to.name')
                 ),
             ],
-            subject: $this->data['subject'],
+            subject: PurchaseConfirmationMailer::withReference(
+                $this->data['subject'],
+                collect($this->data['reservations'] ?? [])
+                    ->pluck('reference_number')
+                    ->filter()
+                    ->implode(', ')
+            ),
         );
     }
 

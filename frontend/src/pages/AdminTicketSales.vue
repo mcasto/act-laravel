@@ -531,7 +531,8 @@
               reminderPatronCount === 1 ? "" : "s"
             }}, each as their own email. Each one starts with "Hello
             <i>name</i>," and ends with a list of their pending reservations,
-            so just write the part in between.
+            so just write the part in between. Each patron's ticket numbers
+            are added to the end of the subject as "(Reference: …)".
           </div>
         </q-card-section>
 

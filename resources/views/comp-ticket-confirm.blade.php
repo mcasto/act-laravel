@@ -10,4 +10,11 @@
     <p>
         Thank you for all of your hard work and <span style="color: red;"><strong>HAVE A GREAT SHOW</strong></span>.
     </p>
+
+    @if (!empty($reference_number))
+        <p>
+            <strong>Reference number:</strong> {{ $reference_number }}<br>
+            <span style="font-size: 12px; color: #757575;">For our records. If you contact us about this reservation, including it helps us find it quickly.</span>
+        </p>
+    @endif
 </div>

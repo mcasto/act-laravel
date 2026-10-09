@@ -180,6 +180,9 @@ class CompTixController extends Controller
                     'pickup_name'      => $pickupName,
                     'performance_date' => Carbon::parse($performance->date)->format('F j, Y'),
                     'performance_time' => Carbon::parse($performance->start_time)->format('g:i A'),
+                    'reference_number' => $comp->number !== null
+                        ? str_pad((string) $comp->number, 3, '0', STR_PAD_LEFT)
+                        : null,
                 ]));
             } catch (Exception $e) {
                 logger()->error('Failed to send comp ticket confirmation', ['error' => $e->getMessage()]);

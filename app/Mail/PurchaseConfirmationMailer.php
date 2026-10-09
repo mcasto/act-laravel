@@ -24,8 +24,23 @@ class PurchaseConfirmationMailer extends Mailable
                 config('mail.ticket_sale_from.address'),
                 config('mail.ticket_sale_from.name')
             ),
-            subject: 'Your Ticket Confirmation - ' . $this->data['show_name'],
+            subject: self::withReference(
+                'Your Ticket Confirmation - ' . $this->data['show_name'],
+                $this->data['reference_number'] ?? null
+            ),
         );
+    }
+
+    /**
+     * "{subject} (Reference: 118, 119)" — the box office wants the ticket
+     * numbers in patron-facing subjects too, so a patron's emails don't
+     * all thread together in Gmail.
+     */
+    public static function withReference(string $subject, ?string $referenceNumber): string
+    {
+        return empty($referenceNumber)
+            ? $subject
+            : "{$subject} (Reference: {$referenceNumber})";
     }
 
     public function content(): Content
