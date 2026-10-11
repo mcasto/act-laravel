@@ -481,6 +481,29 @@
             flat
             bordered
           >
+            <template #body-cell-actions="props">
+              <q-td :props="props">
+                <div class="row no-wrap q-gutter-x-xs justify-end">
+                  <q-btn
+                    :icon="matEdit"
+                    flat
+                    dense
+                    size="sm"
+                    :disable="isReadOnly"
+                    @click="editSeasonAngel(props.row)"
+                  />
+                  <q-btn
+                    :icon="matDelete"
+                    flat
+                    dense
+                    size="sm"
+                    color="negative"
+                    :disable="isReadOnly"
+                    @click="deleteAngel(props.row)"
+                  />
+                </div>
+              </q-td>
+            </template>
             <template #no-data>
               <div class="full-width text-center text-grey q-pa-md">
                 No angels recorded for this season.
@@ -586,7 +609,11 @@ const seasonColumns = [
     align: "left",
     style: "white-space: pre-line; max-width: 20rem;",
   },
+  // Edit/delete buttons — excluded from the CSV export below.
+  { name: "actions", label: "", field: "id", align: "right", csv: false },
 ];
+
+const csvColumns = seasonColumns.filter((col) => col.csv !== false);
 
 // Standard Quasar CSV-export recipe (see the Quasar docs' "Table -> CSV
 // export" example) — wraps each value in quotes and escapes embedded
@@ -604,10 +631,10 @@ const exportSeasonAngelsCsv = () => {
   // download always matches what's currently visible in the table.
   const rows = seasonTableRef.value?.filteredSortedRows ?? seasonAngels.value;
 
-  const content = [seasonColumns.map((col) => wrapCsvValue(col.label))]
+  const content = [csvColumns.map((col) => wrapCsvValue(col.label))]
     .concat(
       rows.map((row) =>
-        seasonColumns
+        csvColumns
           .map((col) =>
             wrapCsvValue(
               typeof col.field === "function" ? col.field(row) : row[col.field ?? col.name],
@@ -1007,7 +1034,7 @@ const saveAngel = async () => {
     });
 
     angelDialog.value = false;
-    await loadAngelLevels();
+    await refreshAngels();
   }
 };
 
@@ -1026,10 +1053,8 @@ const openSeasonDialog = async () => {
   }
 };
 
-watch(selectedSeason, async (season) => {
-  seasonAngelsFilter.value = "";
-
-  if (!season) {
+const loadSeasonAngels = async () => {
+  if (!selectedSeason.value) {
     seasonAngels.value = [];
     return;
   }
@@ -1038,18 +1063,44 @@ watch(selectedSeason, async (season) => {
   const response = await callApi({
     path: "/angels/by-season",
     method: "get",
-    payload: season,
+    payload: selectedSeason.value,
     useAuth: true,
   });
   seasonAngels.value = response || [];
   seasonAngelsLoading.value = false;
+};
+
+watch(selectedSeason, () => {
+  seasonAngelsFilter.value = "";
+  loadSeasonAngels();
 });
+
+// by-season rows are flattened for the table (payment_method is a label
+// string there), so reshape into what openAngelDialog() expects from a
+// full angel record.
+const editSeasonAngel = (row) => {
+  openAngelDialog({
+    ...row,
+    payment_method: { value: row.payment_method_value },
+    patron: row.patron_email ? { email: row.patron_email } : null,
+  });
+};
+
+// After an add/edit/delete from either the level list or the by-season
+// table, refresh both so neither shows stale rows.
+const refreshAngels = async () => {
+  await loadAngelLevels();
+
+  if (seasonDialog.value) {
+    await loadSeasonAngels();
+  }
+};
 
 const deleteAngel = async (angel) => {
   Notify.create({
     type: "warning",
     position: "center",
-    message: `Are you sure you want to delete "${angel.name}"?`,
+    message: `Are you sure you want to delete "${angel.recognition_name}"?`,
     actions: [
       { label: "No" },
       {
@@ -1067,7 +1118,7 @@ const deleteAngel = async (angel) => {
               message: "Angel deleted successfully",
             });
 
-            await loadAngelLevels();
+            await refreshAngels();
           }
         },
       },

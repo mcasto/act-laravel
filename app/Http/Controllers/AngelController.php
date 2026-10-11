@@ -217,7 +217,7 @@ class AngelController extends Controller
      */
     public function bySeason(string $season)
     {
-        $angels = Angel::with(['angelLevel', 'paymentMethod'])
+        $angels = Angel::with(['angelLevel', 'paymentMethod', 'patron:id,email'])
             ->where('season', $season)
             ->get()
             ->map(fn (Angel $angel) => [
@@ -228,6 +228,15 @@ class AngelController extends Controller
                 'payment_method' => $angel->paymentMethod?->label,
                 'donated_at' => $angel->created_at?->toDateString(),
                 'comments' => $angel->comments,
+                // Raw fields for the table's Edit button, which reuses the
+                // main Add/Edit Angel dialog (AdminOurAngels.vue).
+                'first_name' => $angel->first_name,
+                'last_name' => $angel->last_name,
+                'angel_level_id' => $angel->angel_level_id,
+                'payment_method_value' => $angel->paymentMethod?->value,
+                'founding_angel' => $angel->founding_angel,
+                'season' => $angel->season,
+                'patron_email' => $angel->patron?->email,
             ])
             ->sortByDesc('donation_amount')
             ->values();

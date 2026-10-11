@@ -127,6 +127,7 @@ into the entries around them.
 > records.
 
 ### October 2026
+- Angels by Season table: edit and delete buttons for each row.
 - README rewritten for the actual site, with this changelog.
 - Linked current-season Angel records that were entered before Angels had patron links,
   so their benefits show on ticket sales.
