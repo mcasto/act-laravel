@@ -270,6 +270,12 @@ const routes = [
         meta: { nav: false, label: "Ticket Confirmation" },
       },
       {
+        name: "flex-redemption-confirm",
+        path: "flex-confirm/:token",
+        component: () => import("pages/FlexRedemptionConfirm.vue"),
+        meta: { nav: false, label: "Confirm Flex Tickets" },
+      },
+      {
         name: "comp-ticket-confirm",
         path: "comp/:uuid",
         component: () => import("pages/CompTicketConfirm.vue"),

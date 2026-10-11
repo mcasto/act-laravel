@@ -85,6 +85,46 @@ class TicketSaleController extends Controller
             ->values();
     }
 
+    /**
+     * Public self-service purchase (PayPal/Transfer/Flex forms on the
+     * ticket purchase page). Unauthenticated, so it only accepts the fields
+     * those forms actually send — admin-only fields like confirmed,
+     * send_mail, front_row and tickets are dropped before handing off to
+     * store(), otherwise anyone could post confirmed: true to skip payment,
+     * send_mail: false to suppress the patron/admin emails, or type: comp
+     * to mint free tickets. Admin entry goes through the auth-gated
+     * /admin/ticket-sales route straight to store() instead.
+     */
+    public function publicStore(Request $request)
+    {
+        $validated = $request->validate([
+            'type'     => 'required|in:paypal,transfer,flex',
+            'email'    => 'required|email',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $request->replace($request->only([
+            'type',
+            'performance_id',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'quantity',
+            'transfer_date',
+            'special_request',
+        ]));
+
+        // Flex is held until the patron confirms via an emailed link (and
+        // the balance is enforced server-side there) — see
+        // FlexRedemptionController.
+        if ($validated['type'] === 'flex') {
+            return app(FlexRedemptionController::class)->request($request);
+        }
+
+        return $this->store($request);
+    }
+
     public function store(Request $request)
     {
         $request->mergeIfMissing(['send_mail' => true]);

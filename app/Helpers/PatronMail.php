@@ -18,9 +18,13 @@ class PatronMail
     public static function to(string $email): PendingMail
     {
         $mail = Mail::to($email);
+        $cc = config('mail.cc_patrons.address');
 
-        if (config('mail.cc_patrons.enabled') && config('mail.cc_patrons.address')) {
-            $mail->cc(config('mail.cc_patrons.address'));
+        // Skipped when the patron IS the CC address (e.g. staff buying
+        // their own tickets, or testing with your own email) — MailerSend
+        // rejects the whole send if an address is both To and CC.
+        if (config('mail.cc_patrons.enabled') && $cc && strcasecmp(trim($cc), trim($email)) !== 0) {
+            $mail->cc($cc);
         }
 
         return $mail;

@@ -34,6 +34,23 @@ class PatronFlexPackage extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
+    /**
+     * Current-season flex balance for a patron — 0 when they have no
+     * package (or no patron record at all). Used by the public flex
+     * redemption flow, which has to enforce this server-side.
+     */
+    public static function remainingForPatron(?Patron $patron): int
+    {
+        if (! $patron) {
+            return 0;
+        }
+
+        return self::where('patron_id', $patron->id)
+            ->where('season', TheaterSeason::currentString())
+            ->first()
+            ?->ticketsRemaining() ?? 0;
+    }
+
     public function ticketsRemaining(): int
     {
         $dates = TheaterSeason::datesForSeason($this->season);

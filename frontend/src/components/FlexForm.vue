@@ -73,7 +73,20 @@
           </q-toolbar>
         </template>
 
-        <q-form v-if="hasTickets" @submit.prevent="onSubmit">
+        <q-card-section v-if="requestSent" class="q-gutter-y-sm">
+          <div class="text-h6 text-positive">Check your email</div>
+          <div class="text-body1">
+            We've sent a confirmation link to <strong>{{ form.email }}</strong>.
+            <strong>Your Flex tickets are not reserved yet</strong> — please
+            open that email and click the link to confirm your request.
+          </div>
+          <div class="text-caption text-grey">
+            Don't see it? Check your spam or junk folder. The link expires in
+            48 hours.
+          </div>
+        </q-card-section>
+
+        <q-form v-else-if="hasTickets" @submit.prevent="onSubmit">
           <q-card-section class="q-gutter-y-sm">
             <q-input
               type="number"
@@ -142,6 +155,7 @@ const props = defineProps(["performance"]);
 const store = useStore();
 
 const loading = ref(false);
+const requestSent = ref(false);
 const verifying = ref(false);
 const verified = ref(!!store.patron);
 
@@ -244,6 +258,7 @@ const verify = async () => {
 
 const resetVerification = () => {
   verified.value = false;
+  requestSent.value = false;
   store.patron = null;
   form.value.email = null;
   form.value.first_name = null;
@@ -265,11 +280,10 @@ const onSubmit = async () => {
       payload,
     });
 
-    if (response.transaction_id) {
-      store.router.push({
-        name: "ticket-confirmation",
-        params: { uuid: response.transaction_id },
-      });
+    // Held server-side until the patron clicks the emailed confirm link
+    // (FlexRedemptionConfirm.vue) — nothing is booked yet.
+    if (response.status === "pending") {
+      requestSent.value = true;
     }
   } catch (error) {
     notifySubmitError(error, "Something went wrong submitting your request.");

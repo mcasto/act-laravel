@@ -14,6 +14,7 @@ use App\Http\Controllers\CourseSessionController;
 use App\Http\Controllers\FixrWebhooksController;
 use App\Http\Controllers\FlexLinkController;
 use App\Http\Controllers\FlexPurchaseController;
+use App\Http\Controllers\FlexRedemptionController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MessageUsController;
@@ -348,10 +349,19 @@ Route::middleware(['auth:sanctum', 'permission:patrons'])->group(function () {
 });
 
 // Public self-service purchase (PayPal/transfer/flex forms). Admin manual
-// entry uses the auth-gated /admin/ticket-sales route above instead.
+// entry uses the auth-gated /admin/ticket-sales route above instead —
+// publicStore() strips admin-only fields before delegating to store().
 Route::controller(TicketSaleController::class)
     ->group(function () {
-        Route::post('/ticket-sales', 'store');
+        Route::post('/ticket-sales', 'publicStore');
+    });
+
+// Emailed confirm link for a public flex redemption (FlexRedemptionConfirm.vue).
+Route::controller(FlexRedemptionController::class)
+    ->group(function () {
+        Route::get('/flex-redemptions/{token}', 'show');
+        Route::post('/flex-redemptions/{token}/confirm', 'confirm');
+        Route::post('/flex-redemptions/{token}/cancel', 'cancel');
     });
 
 /**
