@@ -64,14 +64,12 @@ class TicketSaleController extends Controller
             ->map(function ($sale) use ($angelByPatron) {
                 $arr = $sale->toArray();
 
+                // angel_level lets the ticket sale form tell "Angel with no
+                // concession benefits" apart from "not recognized as an
+                // Angel" (e.g. Angel record under a spouse's email).
                 $angel = $angelByPatron->get($sale->patron_id);
-                $arr['patron']['angel_concession_benefits'] = $angel
-                    ? collect($angel->angelLevel?->benefits ?? [])
-                        ->filter(fn ($benefit) => $benefit->concession ?? false)
-                        ->pluck('text')
-                        ->values()
-                        ->all()
-                    : [];
+                $arr['patron']['angel_level'] = $angel?->angelLevel?->label;
+                $arr['patron']['angel_concession_benefits'] = $angel?->concessionBenefits() ?? [];
 
                 return $arr;
             });

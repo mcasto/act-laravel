@@ -79,6 +79,31 @@
                   v-model="form.phone"
                   :disable="patronFound"
                 ></q-input>
+
+                <div v-if="patronFound" class="row no-wrap items-start q-gutter-x-sm q-mt-md">
+                  <q-icon
+                    :name="matVolunteerActivism"
+                    :color="angel.level ? 'primary' : 'grey-6'"
+                    size="xs"
+                    class="q-mt-xs"
+                  />
+                  <div v-if="angel.level">
+                    <div class="text-body2">
+                      <span class="text-weight-medium">Angel:</span>
+                      {{ angel.level }}
+                    </div>
+                    <div class="text-caption text-grey-8">
+                      {{
+                        angel.benefits.length
+                          ? angel.benefits.join(", ")
+                          : "No concession benefits at this level"
+                      }}
+                    </div>
+                  </div>
+                  <div v-else class="text-caption text-grey-7">
+                    Not an Angel this season (under this email)
+                  </div>
+                </div>
               </div>
             </q-card-section>
           </q-card>
@@ -316,6 +341,7 @@ import {
   matEventSeat,
   matPayment,
   matPerson,
+  matVolunteerActivism,
 } from "@quasar/extras/material-icons";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
@@ -343,6 +369,15 @@ const existingSale = isEdit
 // actually save. An edit always starts against an existing sale's
 // already-known patron.
 const patronFound = ref(isEdit);
+
+// Read-only: this season's Angel level + concession benefits for the
+// purchaser's email. Lets the box office spot an Angel whose Angel record
+// is under a different email (spouse, work) — level shows "Not an Angel"
+// even though they know the patron is one.
+const angel = ref({
+  level: existingSale?.patron?.angel_level ?? null,
+  benefits: existingSale?.patron?.angel_concession_benefits ?? [],
+});
 
 const performanceOptions = computed(() => {
   const now = new Date();
@@ -578,6 +613,10 @@ const getPatron = async () => {
   form.value.first_name = patron?.first_name ?? "";
   form.value.last_name = patron?.last_name ?? "";
   form.value.phone = patron?.phone ?? "";
+  angel.value = {
+    level: patron?.angel_level ?? null,
+    benefits: patron?.angel_concession_benefits ?? [],
+  };
 
   if (!commentsTouched.value) {
     form.value.comments = patron?.comments ?? "";

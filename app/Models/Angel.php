@@ -44,6 +44,20 @@ class Angel extends Model
         return $this->belongsTo(Patron::class);
     }
 
+    /**
+     * Texts of this angel's level benefits that apply at the concession
+     * stand (drinks/snacks) — shown on the ticket sales print sheet and
+     * the ticket sale form.
+     */
+    public function concessionBenefits(): array
+    {
+        return collect($this->angelLevel?->benefits ?? [])
+            ->filter(fn ($benefit) => $benefit->concession ?? false)
+            ->pluck('text')
+            ->values()
+            ->all();
+    }
+
     protected function email(): Attribute
     {
         return Attribute::make(

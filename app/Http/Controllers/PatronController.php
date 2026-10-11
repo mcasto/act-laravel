@@ -503,14 +503,24 @@ class PatronController extends Controller
             return response()->json(null, 404);
         }
 
+        // Same real calendar-current season as TicketSaleController's
+        // allSales() — see the comment there on why not ActiveSeason.
+        $angel = Angel::where('patron_id', $patron->id)
+            ->where('season', TheaterSeason::currentString())
+            ->with('angelLevel')
+            ->orderByDesc('id')
+            ->first();
+
         return response()->json([
-            'email'          => $patron->email,
-            'last_name'      => $patron->last_name,
-            'first_name'     => $patron->first_name,
-            'phone'          => $patron->phone,
-            'founding_angel' => $patron->founding_angel,
-            'comments'       => $patron->comments,
-            'flex_packages'  => $this->currentFlexPackages($patron),
+            'email'                     => $patron->email,
+            'last_name'                 => $patron->last_name,
+            'first_name'                => $patron->first_name,
+            'phone'                     => $patron->phone,
+            'founding_angel'            => $patron->founding_angel,
+            'comments'                  => $patron->comments,
+            'flex_packages'             => $this->currentFlexPackages($patron),
+            'angel_level'               => $angel?->angelLevel?->label,
+            'angel_concession_benefits' => $angel?->concessionBenefits() ?? [],
         ]);
     }
 
