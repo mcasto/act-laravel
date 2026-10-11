@@ -334,6 +334,18 @@
             </template>
           </template>
 
+          <!-- Read-only: patron_id isn't editable (delete and re-add to
+               change it) — shown so admins can check which email this
+               Angel's benefits are tied to on ticket sales. -->
+          <div v-else-if="angelForm.patron_email" class="q-mb-md">
+            <div class="text-caption text-grey-7">Patron Email</div>
+            <div class="text-body2">{{ angelForm.patron_email }}</div>
+          </div>
+          <q-banner v-else dense rounded class="bg-orange-1 text-orange-10 q-mb-md">
+            Not linked to a patron — this Angel's benefits won't show on
+            ticket sales. Delete and re-add it under the right patron to fix.
+          </q-banner>
+
           <q-input
             v-model="angelForm.first_name"
             label="First Name"
@@ -933,6 +945,7 @@ const openAngelDialog = (angel = null) => {
       founding_angel: !!angel.founding_angel,
       angel_level_id: angel.angel_level_id,
       email: "",
+      patron_email: angel.patron?.email ?? null,
       donation_amount: angel.donation_amount,
       payment_method_value: angel.payment_method?.value ?? null,
       season: angel.season ?? currentSeasonString(),

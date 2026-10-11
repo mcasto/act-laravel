@@ -71,7 +71,7 @@ class AngelLevelController extends Controller
             'header' => view('angel-header')->render(),
             'levels' => AngelLevel::orderBy('min_amount', 'desc')
                 ->with([
-                    'angels' => fn ($query) => $query->where('season', $season)->with('paymentMethod'),
+                    'angels' => fn ($query) => $query->where('season', $season)->with('paymentMethod', 'patron:id,email'),
                 ])
                 ->get(),
             'config' => $config,
