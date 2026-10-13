@@ -130,8 +130,10 @@ const paymentOptions = computed(() => {
     popupText: button.popupText,
   }));
 
+  // First, same as every other payment list on the site — it's how most
+  // patrons pay.
   if (store.course.fixr) {
-    options.push({ label: store.course.fixrLabel, value: "fixr" });
+    options.unshift({ label: store.course.fixrLabel, value: "fixr" });
   }
 
   return options;
