@@ -158,7 +158,11 @@ class CompTixController extends Controller
                 // Reuse the ticket number already reserved when this comp
                 // was first issued (Show::reserveTicketNumbers(), in
                 // store() above) — not issueTickets(), which would
-                // reserve a second number for the same seat.
+                // reserve a second number for the same seat. A comp whose
+                // sale was deleted (TicketSaleController::destroy()) had
+                // its number released, so it gets a fresh one.
+                $comp->number ??= $comp->show->reserveTicketNumbers(1)[0];
+
                 $ticketSale->tickets()->create([
                     'show_id' => $comp->show_id,
                     'number'  => $comp->number,

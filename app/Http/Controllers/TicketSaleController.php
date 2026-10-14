@@ -486,12 +486,21 @@ class TicketSaleController extends Controller
     {
         // The admin list is all ticket_sales rows — a redeemed comp is its
         // own TicketSale (see CompTixController::redeemComp()) — so the id
-        // is always a TicketSale id, never a CompTicket id. A comp sale
-        // also takes its linked CompTicket with it.
+        // is always a TicketSale id, never a CompTicket id. Deleting a comp
+        // sale hands the comp back to the person: their CompTicket stays on
+        // the show's Comp Tickets list as unredeemed, with its ticket number
+        // released (a fresh one is reserved if it's redeemed again — see
+        // CompTixController::redeemComp()).
         $sale = TicketSale::findOrFail($request->input('id'));
 
         DB::transaction(function () use ($sale) {
-            CompTicket::where('ticket_sale_id', $sale->id)->get()->each->delete();
+            CompTicket::where('ticket_sale_id', $sale->id)->update([
+                'ticket_sale_id' => null,
+                'redeemed_at'    => null,
+                'performance_id' => null,
+                'pickup_name'    => null,
+                'number'         => null,
+            ]);
             $sale->delete();
         });
 
