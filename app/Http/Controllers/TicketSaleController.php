@@ -113,9 +113,8 @@ class TicketSaleController extends Controller
             'special_request',
         ]));
 
-        // Flex is held until the patron confirms via an emailed link (and
-        // the balance is enforced server-side there) — see
-        // FlexRedemptionController.
+        // Flex balance is enforced server-side, and the booking is optionally
+        // held for email confirmation — see FlexRedemptionController.
         if ($validated['type'] === 'flex') {
             return app(FlexRedemptionController::class)->request($request);
         }

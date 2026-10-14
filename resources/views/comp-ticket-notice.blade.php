@@ -3,10 +3,10 @@
 
     <p>
         As a member of the Cast or Crew you are entitled to one (1) Comp Ticket to any performance of the show.
-        To redeem your Comp Ticket, click on <a href="{{ env('FRONTEND_URL') }}/comp/{{ $uid }}">this link</a>
+        To redeem your Comp Ticket, click on <a href="{{ rtrim(config('app.frontend_url'), '/') }}/comp/{{ $uid }}">this link</a>
         no less than 48 hours before the requested performance and fill out the form.
         If the link is not clickable, copy and paste the following URL into your browser:
-        <br>{{ env('FRONTEND_URL') }}/comp/{{ $uid }}
+        <br>{{ rtrim(config('app.frontend_url'), '/') }}/comp/{{ $uid }}
     </p>
 
     <p>

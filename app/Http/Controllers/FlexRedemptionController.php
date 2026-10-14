@@ -18,7 +18,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Public "Use Your Flex Package" redemptions are held until the patron
+ * Public "Use Your Flex Package" redemptions. When
+ * config('app.flex_requires_email_confirmation') is false they book
+ * immediately (bookNow()). When true, they are held until the patron
  * clicks a link emailed to the address on file — otherwise anyone who
  * knows a flex holder's email could spend their tickets. The link lands on
  * FlexRedemptionConfirm.vue, which needs an explicit Confirm click rather
@@ -61,6 +63,10 @@ class FlexRedemptionController extends Controller
             throw ValidationException::withMessages([
                 'performance_id' => 'That performance has already started.',
             ]);
+        }
+
+        if (! config('app.flex_requires_email_confirmation')) {
+            return $this->bookNow($patron, $performance, $validated);
         }
 
         $pending = PendingFlexRedemption::create([
@@ -142,14 +148,9 @@ class FlexRedemptionController extends Controller
             // since the request was submitted.
             $this->ensureBalance($pending->patron, $pending->quantity);
 
-            if ($pending->performance?->sold_out) {
-                throw ValidationException::withMessages([
-                    'performance_id' => 'Sorry, that performance has sold out.',
-                ]);
-            }
+            $this->ensureNotSoldOut($pending->performance);
 
-            $response = app(TicketSaleController::class)->store(new Request([
-                'type'            => 'flex',
+            $transactionId = $this->book([
                 'performance_id'  => $pending->performance_id,
                 'first_name'      => $pending->first_name,
                 'last_name'       => $pending->last_name,
@@ -157,9 +158,7 @@ class FlexRedemptionController extends Controller
                 'phone'           => $pending->phone,
                 'quantity'        => $pending->quantity,
                 'special_request' => $pending->special_request,
-            ]));
-
-            $transactionId = $response->getData(true)['transaction_id'];
+            ]);
 
             $pending->update([
                 'confirmed_at'   => now(),
@@ -182,6 +181,51 @@ class FlexRedemptionController extends Controller
         }
 
         return response()->json($this->present($pending->fresh()));
+    }
+
+    /**
+     * Used when email confirmation is off: books straight away.
+     */
+    private function bookNow(Patron $patron, Performance $performance, array $validated): JsonResponse
+    {
+        // Patron row locked so a double-submit can't spend the same balance twice.
+        return DB::transaction(function () use ($patron, $performance, $validated) {
+            $patron = Patron::whereKey($patron->id)->lockForUpdate()->first();
+
+            $this->ensureBalance($patron, $validated['quantity']);
+            $this->ensureNotSoldOut($performance);
+
+            $transactionId = $this->book([
+                'performance_id'  => $performance->id,
+                'first_name'      => $validated['first_name'],
+                'last_name'       => $validated['last_name'],
+                'email'           => $patron->email,
+                'phone'           => $validated['phone'] ?? null,
+                'quantity'        => $validated['quantity'],
+                'special_request' => $validated['special_request'] ?? null,
+            ]);
+
+            return response()->json(['transaction_id' => $transactionId]);
+        });
+    }
+
+    /**
+     * Creates the flex ticket sale and returns its transaction_id.
+     */
+    private function book(array $data): string
+    {
+        $response = app(TicketSaleController::class)->store(new Request(['type' => 'flex'] + $data));
+
+        return $response->getData(true)['transaction_id'];
+    }
+
+    private function ensureNotSoldOut(?Performance $performance): void
+    {
+        if ($performance?->sold_out) {
+            throw ValidationException::withMessages([
+                'performance_id' => 'Sorry, that performance has sold out.',
+            ]);
+        }
     }
 
     private function find(string $token): PendingFlexRedemption

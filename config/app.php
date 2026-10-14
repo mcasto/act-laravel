@@ -58,6 +58,11 @@ return [
     // SPA is served from the same domain as the API, so this falls back to APP_URL.
     'frontend_url'    => env('FRONTEND_URL', env('APP_URL', 'http://localhost')),
 
+    // When true, public Flex redemptions are held until the patron clicks a
+    // link emailed to them (see FlexRedemptionController). When false they
+    // book immediately.
+    'flex_requires_email_confirmation' => (bool) env('FLEX_REQUIRE_EMAIL_CONFIRMATION', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

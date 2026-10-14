@@ -280,9 +280,15 @@ const onSubmit = async () => {
       payload,
     });
 
-    // Held server-side until the patron clicks the emailed confirm link
-    // (FlexRedemptionConfirm.vue) — nothing is booked yet.
-    if (response.status === "pending") {
+    if (response.transaction_id) {
+      store.router.push({
+        name: "ticket-confirmation",
+        params: { uuid: response.transaction_id },
+      });
+    } else if (response.status === "pending") {
+      // Email confirmation is on (config app.flex_requires_email_confirmation):
+      // held server-side until the patron clicks the emailed confirm link
+      // (FlexRedemptionConfirm.vue) — nothing is booked yet.
       requestSent.value = true;
     }
   } catch (error) {
