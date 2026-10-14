@@ -54,6 +54,10 @@ return [
 
     'url'             => env('APP_URL', 'http://localhost'),
 
+    // Base URL of the SPA, used for links in patron emails. In production the
+    // SPA is served from the same domain as the API, so this falls back to APP_URL.
+    'frontend_url'    => env('FRONTEND_URL', env('APP_URL', 'http://localhost')),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

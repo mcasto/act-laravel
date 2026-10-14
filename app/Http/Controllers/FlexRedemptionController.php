@@ -83,7 +83,7 @@ class FlexRedemptionController extends Controller
                 'num_tickets'      => $pending->quantity,
                 'performance_date' => Carbon::parse($performance->date)->format('F j, Y'),
                 'performance_time' => Carbon::parse($performance->start_time)->format('g:i A'),
-                'link'             => env('FRONTEND_URL') . '/flex-confirm/' . $pending->token,
+                'link'             => rtrim(config('app.frontend_url'), '/') . '/flex-confirm/' . $pending->token,
             ]));
         } catch (Exception $e) {
             logger()->error('Failed to send flex redemption verification email', [
