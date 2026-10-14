@@ -137,6 +137,7 @@ class TicketSaleController extends Controller
             'transfer_date' => 'sometimes|nullable|date',
             'special_request' => 'sometimes|nullable|string',
             'send_mail' => 'sometimes|boolean',
+            'extra_comp' => 'sometimes|boolean',
             'confirmed' => 'sometimes|boolean',
             'front_row' => 'sometimes|integer|min:0|max:20',
             'special_seating' => 'sometimes|nullable|string|max:1000',
@@ -169,10 +170,34 @@ class TicketSaleController extends Controller
             $submittedDoorName = trim($validated['tickets'][0] ?? '');
             $doorName = $submittedDoorName !== '' ? $submittedDoorName : $purchaserName;
 
-            $comp = CompTicket::where('email', $patron->email)
+            // Each person gets one comp per show. An unredeemed one (e.g.
+            // assigned on the Comp Tickets page but not yet used) is redeemed
+            // here rather than issuing a second. If theirs is already used,
+            // a new one is only created when the admin explicitly ticks
+            // "Issue an additional comp" — otherwise it's refused, since
+            // that's how duplicate comps were getting created by mistake.
+            $existingComps = CompTicket::with('performance')
+                ->where('email', $patron->email)
                 ->where('show_id', $performance?->show_id)
-                ->whereNull('redeemed_at')
-                ->first();
+                ->get();
+
+            $comp = $existingComps->firstWhere('redeemed_at', null);
+            $usedComp = $existingComps->whereNotNull('redeemed_at')->sortBy('redeemed_at')->first();
+
+            if (! $comp && $usedComp && ! ($validated['extra_comp'] ?? false)) {
+                $number = $usedComp->number !== null
+                    ? ' (#' . str_pad((string) $usedComp->number, 3, '0', STR_PAD_LEFT) . ')'
+                    : '';
+                $when = $usedComp->performance
+                    ? " for the {$usedComp->performance->formatted_date} performance"
+                    : '';
+
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => "{$purchaserName} already used their comp ticket{$number}{$when}. "
+                        . 'To move it, edit that sale instead. To give them another, check "Issue an additional comp" and save again.',
+                ]);
+            }
 
             if (! $comp) {
                 $comp = CompTicket::create([

@@ -187,6 +187,18 @@
                   @update:model-value="onConfirmedInput"
                 ></q-checkbox>
 
+                <q-checkbox
+                  v-if="!isEdit && form.payment_method?.value?.value === 'comp'"
+                  v-model="form.extra_comp"
+                  label="Issue an additional comp"
+                >
+                  <q-tooltip>
+                    Each person gets one comp per show — saving reuses theirs.
+                    Check this only if they've already used it and you're
+                    intentionally giving them another.
+                  </q-tooltip>
+                </q-checkbox>
+
                 <q-input
                   v-if="isEdit"
                   type="textarea"
@@ -443,6 +455,7 @@ const form = ref(
         // sales list page (store.send_mail) — still overridable per sale
         // via the toggle on this form.
         send_mail: !!store.send_mail,
+        extra_comp: false,
       },
 );
 
@@ -657,6 +670,10 @@ const onSubmit = async () => {
     // Positional array of guest names, parallel to quantity — blank
     // entries are autofilled server-side (see TicketSale::issueTickets()).
     payload.tickets = ticketRows.value.map((t) => t.name);
+  }
+
+  if (!isEdit && payload.type === "comp") {
+    payload.extra_comp = !!form.value.extra_comp;
   }
 
   const response = await callApi({
