@@ -195,7 +195,7 @@
               v-model="search"
               dense
               outlined
-              placeholder="Search by name..."
+              placeholder="Search by name or ticket #..."
               clearable
               style="min-width: 200px;"
               debounce="300"
@@ -216,6 +216,29 @@
               map-options
               style="min-width: 220px;"
             />
+            <q-select
+              v-if="show"
+              :options="paymentMethodOptions"
+              v-model="paymentFilter"
+              label="Payment Method"
+              dense
+              outlined
+              clearable
+              emit-value
+              map-options
+              style="min-width: 180px;"
+            >
+              <template #option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section side>
+                    <div
+                      :style="`width: 10px; height: 10px; border-radius: 50%; background: ${scope.opt.color};`"
+                    ></div>
+                  </q-item-section>
+                  <q-item-section>{{ scope.opt.label }}</q-item-section>
+                </q-item>
+              </template>
+            </q-select>
             <q-space />
             <template v-if="show">
               <div
@@ -676,11 +699,25 @@ const performanceFilter = computed({
   },
 });
 
+// Payment method id. Unlike performanceFilter it's kept across show
+// changes — methods aren't show-specific, so "all comps" stays meaningful.
+const paymentFilter = computed({
+  get: () => store.ticketSalesPaymentFilter,
+  set: (val) => {
+    store.ticketSalesPaymentFilter = val;
+  },
+});
+
 watch(show, () => {
   performanceFilter.value = null;
 });
 
 const pagination = ref({ page: 1, rowsPerPage: 12, sortBy: "last", descending: false });
+// Back to page 1 when the result set changes, or a later page may be empty.
+watch([search, performanceFilter, paymentFilter, show], () => {
+  pagination.value.page = 1;
+});
+
 const pagesNumber = computed(() =>
   Math.ceil(filteredRecs.value.length / pagination.value.rowsPerPage),
 );
@@ -837,13 +874,28 @@ const filteredRecs = computed(() => {
     );
   }
 
+  if (paymentFilter.value) {
+    result = result.filter(
+      (rec) => rec.payment_method?.id === paymentFilter.value,
+    );
+  }
+
   if (search.value) {
     const q = search.value.toLowerCase();
-    // Matches either the door name shown in the table or the purchaser
-    // (in the info popup), so a search still finds a sale whose door name
-    // was overridden to someone else.
+    // A ticket number ("7", "007" or "#007") matches the sale holding that
+    // ticket, including one in the middle of a range like 005–009. Numbers
+    // are per show, so this only searches the selected show.
+    const ticketNum = /^#?\d+$/.test(q.trim())
+      ? Number(q.trim().replace("#", ""))
+      : null;
+    // Otherwise matches either the door name shown in the table or the
+    // purchaser (in the info popup), so a search still finds a sale whose
+    // door name was overridden to someone else.
     result = result.filter(
       (rec) =>
+        (ticketNum !== null &&
+          (rec.tickets?.some((t) => Number(t.number) === ticketNum) ||
+            (rec.number != null && Number(rec.number) === ticketNum))) ||
         doorName(rec).toLowerCase().includes(q) ||
         `${rec.patron.first_name} ${rec.patron.last_name}`
           .toLowerCase()
@@ -865,6 +917,22 @@ const performanceOptions = computed(() => {
   }));
   return sortBy(uniq, "date");
 });
+
+// Drawn from every sale (not just this show's) so the options — and a
+// filter kept from another show — stay put when the show changes.
+const paymentMethodOptions = computed(() =>
+  sortBy(
+    uniqBy(
+      store.admin.ticket_sales.filter((rec) => rec.payment_method),
+      (rec) => rec.payment_method.id,
+    ).map((rec) => ({
+      label: rec.payment_method.label,
+      value: rec.payment_method.id,
+      color: rec.payment_method.color,
+    })),
+    "label",
+  ),
+);
 
 const shows = computed(() => {
   const fromSales = uniqBy(
