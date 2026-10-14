@@ -463,6 +463,81 @@ class CourseController extends Controller
     }
 
     /**
+     * Admin manually adds an enrollee (walk-in, cash payment, comp, etc.).
+     * Unlike courseContact(), the admin chooses whether it's confirmed and
+     * neither the box office nor the enrollee is emailed — the admin doing
+     * this is the box office. The instructor still hears about it once it's
+     * confirmed, same rule as everywhere else.
+     */
+    public function adminStoreContact(Request $request, int $id): JsonResponse
+    {
+        $course = Course::findOrFail($id);
+
+        $validated = $request->validate([
+            'first_name'           => 'required|string|max:255',
+            'last_name'            => 'required|string|max:255',
+            'email'                => 'required|email|max:255',
+            'phone'                => 'nullable|string|max:20',
+            'questions'            => 'nullable|string',
+            'payment_method_value' => 'nullable|string|exists:payment_methods,value',
+            'transfer_date'        => 'nullable|date',
+            'confirmed'            => 'required|boolean',
+        ]);
+
+        if ($course->contacts()->where('email', $validated['email'])->exists()) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => "{$validated['email']} is already enrolled in this class.",
+            ]);
+        }
+
+        $patron = Patron::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'first_name' => $validated['first_name'],
+                'last_name'  => $validated['last_name'],
+                'phone'      => $validated['phone'] ?? null,
+            ]
+        );
+
+        $paymentMethod = ! empty($validated['payment_method_value'])
+            ? PaymentMethod::where('value', $validated['payment_method_value'])->first()
+            : null;
+
+        $enrollment = CourseContact::create([
+            'course_id'         => $course->id,
+            'patron_id'         => $patron->id,
+            'first_name'        => $validated['first_name'],
+            'last_name'         => $validated['last_name'],
+            'email'             => $validated['email'],
+            // Column isn't nullable.
+            'phone'             => $validated['phone'] ?? '',
+            'questions'         => $validated['questions'] ?? null,
+            'payment_method_id' => $paymentMethod?->id,
+            'transfer_date'     => $validated['transfer_date'] ?? null,
+            'confirmed'         => $validated['confirmed'],
+        ]);
+        $enrollment->transaction_id = RefId::ref_id($enrollment->id);
+        $enrollment->save();
+
+        if ($enrollment->confirmed) {
+            $this->notifyInstructorOfConfirmedEnrollment($course, [
+                'course_name'          => $course->name,
+                'first_name'           => $enrollment->first_name,
+                'last_name'            => $enrollment->last_name,
+                'email'                => $enrollment->email,
+                'phone'                => $enrollment->phone,
+                'payment_method_label' => $paymentMethod?->label,
+                'transaction_id'       => $enrollment->transaction_id,
+            ]);
+        }
+
+        $enrollment->load('paymentMethod');
+
+        return response()->json(['status' => 'success', 'contact' => $enrollment]);
+    }
+
+    /**
      * Admin marks a class enrollment's payment as confirmed (or reverts
      * it) — same shape as TicketSaleController::updateNoShow(). Only the
      * false -> true transition notifies the instructor (see

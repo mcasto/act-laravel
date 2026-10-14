@@ -25,7 +25,7 @@
           <q-btn
             color="primary"
             size="sm"
-            @click="openEnrolleesDialog(props.row.contacts)"
+            @click="openEnrolleesDialog(props.row)"
           >
             {{ props.row.contacts.length }}
           </q-btn>
@@ -54,7 +54,7 @@
 
     <course-enrollees-dialog
       v-model="enrolleesDialog.visible"
-      :contacts="enrolleesDialog.contacts"
+      :course="enrolleesDialog.course"
       :is-read-only="isReadOnly"
     ></course-enrollees-dialog>
   </div>
@@ -78,7 +78,7 @@ const isReadOnly = computed(
 
 const enrolleesDialog = ref({
   visible: false,
-  contacts: null,
+  course: null,
 });
 
 const columns = [
@@ -115,10 +115,10 @@ const columns = [
 
 const editing = ref(null);
 
-const openEnrolleesDialog = (contacts) => {
+const openEnrolleesDialog = (course) => {
   enrolleesDialog.value = {
     visible: true,
-    contacts,
+    course,
   };
 };
 

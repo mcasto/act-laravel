@@ -213,6 +213,8 @@ Route::middleware(['auth:sanctum', 'permission:classes'])
     ->post('/upsert-course-sessions', [CourseSessionController::class, 'upsert']);
 Route::middleware(['auth:sanctum', 'permission:classes'])
     ->put('/admin/course-contacts/{id}/confirmed', [CourseController::class, 'updateConfirmed']);
+Route::middleware(['auth:sanctum', 'permission:classes'])
+    ->post('/admin/courses/{id}/contacts', [CourseController::class, 'adminStoreContact']);
 
 /**
  * Gallery Routes
