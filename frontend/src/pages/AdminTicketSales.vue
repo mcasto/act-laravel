@@ -70,7 +70,7 @@
                 <q-badge v-if="unconfirmedRecs.length" color="negative" floating>
                   {{ unconfirmedRecs.length }}
                 </q-badge>
-                <q-tooltip>Unconfirmed PayPal / Bank Transfer Payments</q-tooltip>
+                <q-tooltip>Unconfirmed Payments</q-tooltip>
               </q-btn>
               <q-btn :icon="matEvent" color="info" flat>
                 <q-tooltip>Tickets Sold By Date</q-tooltip>
@@ -444,8 +444,8 @@
           <div>
             <div class="text-h6">Unconfirmed Payments</div>
             <div class="text-caption text-grey-7">
-              {{ currentShow?.name }} — PayPal and Bank Transfer reservations
-              still awaiting payment confirmation
+              {{ currentShow?.name }} — reservations still awaiting payment
+              confirmation
             </div>
           </div>
           <q-space />
@@ -467,8 +467,7 @@
 
         <q-card-section class="q-pt-none">
           <div v-if="unconfirmedRecs.length === 0" class="text-grey-7">
-            Nothing outstanding — every PayPal and Bank Transfer payment is
-            confirmed.
+            Nothing outstanding — every payment is confirmed.
           </div>
           <q-markup-table v-else dense flat bordered wrap-cells>
             <thead>
@@ -1042,12 +1041,11 @@ const ticketsByDate = computed(() => {
   return sortBy(Object.values(groups), "date");
 });
 
-// PayPal and Bank Transfer are the only methods that sit pending until the
-// box office sees the money arrive — this is the box office's "who to
-// chase" list. Always the current show (tickets are only ever on sale for
-// one show at a time, and past shows' stragglers don't matter), regardless
-// of which show is picked in the selector or the search/performance filters.
-const PENDING_PAYMENT_METHODS = ["paypal", "transfer"];
+// Every sale still marked unconfirmed, whatever the payment method — this is
+// the box office's "who to chase" list. Always the current show (tickets are
+// only ever on sale for one show at a time, and past shows' stragglers don't
+// matter), regardless of which show is picked in the selector or the
+// search/performance filters.
 const unconfirmedDialog = ref(false);
 
 const unconfirmedRecs = computed(() => {
@@ -1055,9 +1053,7 @@ const unconfirmedRecs = computed(() => {
   return sortBy(
     store.admin.ticket_sales.filter(
       (rec) =>
-        rec.performance.show.id == currentShow.id &&
-        !rec.confirmed &&
-        PENDING_PAYMENT_METHODS.includes(rec.payment_method?.value),
+        rec.performance.show.id == currentShow.id && !rec.confirmed,
     ),
     [
       (rec) => rec.performance.date,

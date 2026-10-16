@@ -508,7 +508,7 @@ class TicketSaleController extends Controller
     }
 
     /**
-     * Payment reminders for unconfirmed PayPal / Bank Transfer reservations,
+     * Payment reminders for unconfirmed reservations (any payment method),
      * from the Unconfirmed Payments dialog in AdminTicketSales.vue. One
      * email per patron (a patron with several pending sales gets one email
      * listing them all), sent individually through the default mailer
@@ -533,7 +533,6 @@ class TicketSaleController extends Controller
             ])
             ->whereIn('id', $validated['ticket_sale_ids'])
             ->where('confirmed', false)
-            ->whereHas('paymentMethod', fn ($query) => $query->whereIn('value', ['paypal', 'transfer']))
             ->get()
             ->filter(fn ($sale) => $sale->patron?->email);
 
