@@ -1,9 +1,9 @@
 <template>
   <div>
     <q-table
-      :rows="filteredLogs"
+      :rows="filteredRows"
       :columns="columns"
-      row-key="id"
+      row-key="key"
       dense
       v-model:pagination="pagination"
     >
@@ -16,7 +16,7 @@
             dense
             outlined
             clearable
-            placeholder="Search by user, section, or description..."
+            placeholder="Search by user, section, field, or value..."
             style="min-width: 260px;"
             debounce="300"
           >
@@ -35,65 +35,29 @@
         </q-td>
       </template>
 
-      <template #body-cell-details="props">
-        <q-td :props="props" class="text-center">
-          <q-btn
-            v-if="props.row.changes && Object.keys(props.row.changes).length"
-            :icon="matInfo"
-            flat
-            round
-            size="sm"
-            @click="detailsDialog = { visible: true, row: props.row }"
-          />
+      <template #body-cell-old="props">
+        <q-td :props="props" class="value-cell">
+          {{ props.value }}
+          <q-tooltip v-if="props.value.length > VALUE_TOOLTIP_AT" max-width="600px">
+            <div style="white-space: pre-wrap;">{{ props.value }}</div>
+          </q-tooltip>
+        </q-td>
+      </template>
+
+      <template #body-cell-new="props">
+        <q-td :props="props" class="value-cell">
+          {{ props.value }}
+          <q-tooltip v-if="props.value.length > VALUE_TOOLTIP_AT" max-width="600px">
+            <div style="white-space: pre-wrap;">{{ props.value }}</div>
+          </q-tooltip>
         </q-td>
       </template>
     </q-table>
-
-    <q-dialog v-model="detailsDialog.visible">
-      <q-card style="min-width: 400px; max-width: 700px;">
-        <q-card-section>
-          <div class="text-h6">{{ summaryFor(detailsDialog.row) }}</div>
-          <div class="text-caption text-grey-7" v-if="detailsDialog.row">
-            {{ format(parseISO(detailsDialog.row.created_at), "PPpp") }} —
-            {{ detailsDialog.row.user?.name ?? "Unknown user" }}
-          </div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section style="max-height: 60vh; overflow-y: auto;">
-          <q-markup-table dense flat>
-            <thead>
-              <tr>
-                <th class="text-left">Field</th>
-                <th v-if="isDiff(detailsDialog.row)" class="text-left">Old</th>
-                <th class="text-left">{{ isDiff(detailsDialog.row) ? "New" : "Value" }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(value, key) in detailsDialog.row?.changes" :key="key">
-                <td class="text-left text-weight-medium">{{ key }}</td>
-                <td v-if="isDiff(detailsDialog.row)" class="text-left">
-                  {{ formatValue(value?.old) }}
-                </td>
-                <td class="text-left">
-                  {{ formatValue(isDiff(detailsDialog.row) ? value?.new : value) }}
-                </td>
-              </tr>
-            </tbody>
-          </q-markup-table>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="Close" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 
 <script setup>
-import { matInfo, matSearch } from "@quasar/extras/material-icons";
+import { matSearch } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
@@ -101,8 +65,15 @@ import { computed, ref } from "vue";
 const store = useStore();
 
 const search = ref("");
-const pagination = ref({ page: 1, rowsPerPage: 20 });
-const detailsDialog = ref({ visible: false, row: null });
+const pagination = ref({
+  page: 1,
+  rowsPerPage: 20,
+  sortBy: "created_at",
+  descending: true,
+});
+
+// Values longer than this are cut off in the cell; hover shows the full text.
+const VALUE_TOOLTIP_AT = 60;
 
 const actionColors = {
   created: "positive",
@@ -114,53 +85,71 @@ const columns = [
   {
     name: "created_at",
     label: "Date",
-    field: (row) => format(parseISO(row.created_at), "PPp"),
+    field: "created_at",
+    format: (val) => format(parseISO(val), "PPp"),
     align: "left",
     sortable: true,
   },
   {
     name: "user",
     label: "User",
-    field: (row) => row.user?.name ?? "Unknown",
+    field: "user",
     align: "left",
+    sortable: true,
   },
   {
     name: "action",
     label: "Action",
     field: "action",
     align: "center",
+    sortable: true,
   },
   {
-    name: "summary",
-    label: "Section / Change",
-    field: (row) => summaryFor(row),
+    name: "section",
+    label: "Section",
+    field: "section",
     align: "left",
+    sortable: true,
   },
   {
-    name: "details",
-    label: "",
-    field: "",
-    align: "center",
-    style: "width: 48px;",
+    name: "field",
+    label: "Field",
+    field: "field",
+    align: "left",
+    sortable: true,
+  },
+  {
+    name: "old",
+    label: "Old Value",
+    field: "old",
+    align: "left",
+    sortable: true,
+  },
+  {
+    name: "new",
+    label: "New Value",
+    field: "new",
+    align: "left",
+    sortable: true,
   },
 ];
 
-const summaryFor = (row) => {
-  if (!row) return "";
-  if (row.description) return row.description;
-  const target = [row.model_type, row.model_id ? `#${row.model_id}` : null]
+// Bookkeeping columns that every created/deleted record carries and that
+// say nothing about what was actually entered.
+const NOISE_FIELDS = ["id", "created_at", "updated_at", "deleted_at"];
+
+const sectionFor = (log) => {
+  if (log.description) return log.description;
+  return [log.model_type, log.model_id ? `#${log.model_id}` : null]
     .filter(Boolean)
     .join(" ");
-  return `${row.action} ${target}`.trim();
 };
 
-// Update-style entries store { field: { old, new } }; create/delete entries
-// store the record's full attributes as plain field: value pairs.
-const isDiff = (row) =>
-  !!row?.changes &&
-  Object.values(row.changes).every(
-    (v) => v && typeof v === "object" && "old" in v && "new" in v,
-  );
+// "recognition_name" -> "Recognition Name"
+const humanize = (key) =>
+  String(key)
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 
 const formatValue = (value) => {
   if (value === null || value === undefined || value === "") return "—";
@@ -168,13 +157,94 @@ const formatValue = (value) => {
   return String(value);
 };
 
-const filteredLogs = computed(() => {
+const isPlainObject = (v) => !!v && typeof v === "object" && !Array.isArray(v);
+const isOldNewPair = (v) => isPlainObject(v) && "old" in v && "new" in v;
+
+// One { field, old, new } per changed field. Entries come in a few shapes:
+//  - model updates and button templates: { field: { old, new } }
+//  - flat-file config saves: { old: {...}, new: {...} } (whole config) or
+//    { old: x, new: y } (a single setting like the active season)
+//  - model creates/deletes and one-off actions: { field: value }
+const fieldChanges = (log) => {
+  const changes = log.changes;
+  if (!isPlainObject(changes) || !Object.keys(changes).length) {
+    return [{ field: "", old: "", new: "" }];
+  }
+
+  if (isOldNewPair(changes) && Object.keys(changes).length === 2) {
+    const { old: oldVal, new: newVal } = changes;
+    if (isPlainObject(oldVal) || isPlainObject(newVal)) {
+      const keys = new Set([
+        ...Object.keys(oldVal ?? {}),
+        ...Object.keys(newVal ?? {}),
+      ]);
+      const rows = [...keys]
+        .filter(
+          (k) =>
+            JSON.stringify(oldVal?.[k]) !== JSON.stringify(newVal?.[k]),
+        )
+        .map((k) => ({ field: k, old: oldVal?.[k], new: newVal?.[k] }));
+      return rows.length ? rows : [{ field: "", old: "", new: "" }];
+    }
+    return [{ field: "", old: oldVal, new: newVal }];
+  }
+
+  return Object.entries(changes)
+    .filter(([k]) => log.action === "updated" || !NOISE_FIELDS.includes(k))
+    .map(([k, v]) => {
+      if (isOldNewPair(v)) return { field: k, old: v.old, new: v.new };
+      if (log.action === "deleted") return { field: k, old: v, new: null };
+      return { field: k, old: null, new: v };
+    });
+};
+
+const rows = computed(() =>
+  (store.admin.change_logs ?? []).flatMap((log) => {
+    const base = {
+      created_at: log.created_at,
+      user: log.user?.name ?? "Unknown",
+      action: log.action,
+      section: sectionFor(log),
+    };
+    return fieldChanges(log).map((change, i) => {
+      // A bare description entry (nothing recorded but the section) shows
+      // empty value cells rather than a pair of dashes.
+      const hasValues =
+        !!change.field || change.old != null || change.new != null;
+      return {
+        ...base,
+        key: `${log.id}-${i}`,
+        field: change.field ? humanize(change.field) : "",
+        rawField: change.field ?? "",
+        old: hasValues ? formatValue(change.old) : "",
+        new: hasValues ? formatValue(change.new) : "",
+      };
+    });
+  }),
+);
+
+const filteredRows = computed(() => {
   const q = search.value?.toLowerCase().trim();
-  if (!q) return store.admin.change_logs ?? [];
-  return (store.admin.change_logs ?? []).filter((row) =>
-    [row.user?.name, row.model_type, row.description, row.action].some((f) =>
-      f?.toLowerCase().includes(q),
-    ),
+  if (!q) return rows.value;
+  return rows.value.filter((row) =>
+    [
+      row.user,
+      row.action,
+      row.section,
+      row.field,
+      row.rawField,
+      row.old,
+      row.new,
+    ].some((f) => f?.toLowerCase().includes(q)),
   );
 });
 </script>
+
+<style scoped>
+.value-cell {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

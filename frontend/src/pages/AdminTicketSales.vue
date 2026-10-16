@@ -70,7 +70,7 @@
                 <q-badge v-if="unconfirmedRecs.length" color="negative" floating>
                   {{ unconfirmedRecs.length }}
                 </q-badge>
-                <q-tooltip>Unconfirmed PayPal / Bank Transfer Payments</q-tooltip>
+                <q-tooltip>Pending PayPal / Bank Transfer Payments</q-tooltip>
               </q-btn>
               <q-btn :icon="matEvent" color="info" flat>
                 <q-tooltip>Tickets Sold By Date</q-tooltip>
@@ -442,10 +442,9 @@
       <q-card style="min-width: 360px; max-width: 900px; width: 100%;">
         <q-card-section class="flex items-center">
           <div>
-            <div class="text-h6">Unconfirmed Payments</div>
+            <div class="text-h6">Pending Confirmation</div>
             <div class="text-caption text-grey-7">
-              {{ currentShow?.name }} — PayPal and Bank Transfer reservations
-              still awaiting payment confirmation
+              {{ currentShow?.name }} — PayPal and Bank Transfers
             </div>
           </div>
           <q-space />
@@ -466,7 +465,10 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <div v-if="unconfirmedRecs.length === 0" class="text-grey-7">
+          <div
+            v-if="unconfirmedRecs.length === 0 && !unconfirmedCash.sales"
+            class="text-grey-7"
+          >
             Nothing outstanding — every PayPal and Bank Transfer payment is
             confirmed.
           </div>
@@ -534,6 +536,70 @@
                     <q-tooltip>Edit / mark confirmed</q-tooltip>
                   </q-btn>
                 </td>
+              </tr>
+              <tr v-if="unconfirmedCash.sales" class="text-weight-medium">
+                <td></td>
+                <td>All performances</td>
+                <td>Cash/Door</td>
+                <td class="text-grey-7">
+                  {{ unconfirmedCash.sales }}
+                  {{ unconfirmedCash.sales === 1 ? "sale" : "sales" }}
+                </td>
+                <td class="text-center">{{ unconfirmedCash.qty }}</td>
+                <td></td>
+                <td>Cash / Door</td>
+                <td colspan="2"></td>
+                <td>
+                  <q-btn
+                    :icon="matListAlt"
+                    flat
+                    round
+                    color="primary"
+                    size="sm"
+                    @click="cashDoorDialog = true"
+                  >
+                    <q-tooltip>Breakdown by performance</q-tooltip>
+                  </q-btn>
+                </td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="cashDoorDialog">
+      <q-card style="min-width: 320px; max-width: 500px; width: 100%;">
+        <q-card-section>
+          <div class="text-h6">Cash / Door</div>
+          <div class="text-caption text-grey-7">
+            {{ currentShow?.name }} — unconfirmed, by performance
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-markup-table dense flat bordered>
+            <thead>
+              <tr>
+                <th class="text-left">Performance</th>
+                <th class="text-center">Sales</th>
+                <th class="text-center">Qty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="perf in unconfirmedCash.byPerformance" :key="perf.id">
+                <td>{{ perf.formatted_date }} {{ perf.formatted_time }}</td>
+                <td class="text-center">{{ perf.sales }}</td>
+                <td class="text-center">{{ perf.qty }}</td>
+              </tr>
+              <tr class="text-weight-bold">
+                <td>Total</td>
+                <td class="text-center">{{ unconfirmedCash.sales }}</td>
+                <td class="text-center">{{ unconfirmedCash.qty }}</td>
               </tr>
             </tbody>
           </q-markup-table>
@@ -644,6 +710,7 @@ import {
   matEmail,
   matEvent,
   matInfo,
+  matListAlt,
   matSearch,
 } from "@quasar/extras/material-icons";
 import {
@@ -1066,6 +1133,42 @@ const unconfirmedRecs = computed(() => {
     ],
   );
 });
+
+// Unconfirmed Cash and Door sales are mostly walk-ups with no one to chase,
+// so the dialog shows them together as one totals line rather than per
+// purchaser, and they stay out of the reminder selection.
+const CASH_DOOR_METHODS = ["cash", "door"];
+const unconfirmedCash = computed(() => {
+  const sales = currentShow
+    ? store.admin.ticket_sales.filter(
+        (rec) =>
+          rec.performance.show.id == currentShow.id &&
+          !rec.confirmed &&
+          CASH_DOOR_METHODS.includes(rec.payment_method?.value),
+      )
+    : [];
+  const byPerformance = {};
+  for (const rec of sales) {
+    const perf = rec.performance;
+    byPerformance[perf.id] ??= {
+      id: perf.id,
+      date: perf.date,
+      start_time: perf.start_time,
+      formatted_date: perf.formatted_date,
+      formatted_time: perf.formatted_time,
+      sales: 0,
+      qty: 0,
+    };
+    byPerformance[perf.id].sales += 1;
+    byPerformance[perf.id].qty += Number(rec.quantity) || 0;
+  }
+  return {
+    sales: sales.length,
+    qty: sales.reduce((sum, rec) => sum + (Number(rec.quantity) || 0), 0),
+    byPerformance: sortBy(Object.values(byPerformance), ["date", "start_time"]),
+  };
+});
+const cashDoorDialog = ref(false);
 
 // Checked rows to remind — everyone by default each time the list opens.
 const reminderSelected = ref([]);
