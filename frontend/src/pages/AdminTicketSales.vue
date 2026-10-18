@@ -151,7 +151,9 @@
                       </q-item-section>
                       <q-item-section>{{ row.label }}</q-item-section>
                       <q-item-section side
-                        >{{ row.count }} × ${{ ticketPrice }}</q-item-section
+                        >{{ row.count }} × ${{
+                          effectivePrice(row.multiplier)
+                        }}</q-item-section
                       >
                       <q-item-section
                         side
@@ -166,7 +168,7 @@
                         >Total</q-item-section
                       >
                       <q-item-section side class="text-weight-bold">
-                        {{ confirmedTicketCount }} tickets
+                        {{ totalTickets }} tickets
                       </q-item-section>
                       <q-item-section
                         side
@@ -1030,10 +1032,13 @@ const confirmedRecs = computed(() =>
   recs.value.filter((rec) => rec.confirmed !== false),
 );
 
+// Projected across every reservation, confirmed or not (as if pending
+// payments all come in) — matches the box office's projected-income
+// spreadsheet and the Projected column in Tickets Sold By Date.
 const revenueByMethod = computed(() => {
   const price = ticketPrice.value;
   const groups = {};
-  for (const rec of confirmedRecs.value) {
+  for (const rec of recs.value) {
     const { label, color, revenue_multiplier } = rec.payment_method;
     if (!groups[label])
       groups[label] = {
@@ -1054,10 +1059,17 @@ const totalRevenue = computed(() =>
   revenueByMethod.value.reduce((sum, m) => sum + m.revenue, 0),
 );
 
-// Confirmed-only, matches the Projected Revenue breakdown above.
+// Confirmed-only — the Confirmed total in Tickets Sold By Date.
 const confirmedTicketCount = computed(() =>
-  revenueByMethod.value.reduce((sum, m) => sum + m.count, 0),
+  confirmedRecs.value.reduce((sum, rec) => sum + (rec.quantity || 1), 0),
 );
+
+// Per-ticket price after a payment method's revenue multiplier (e.g. Fixr's
+// fee), shown in the Projected Revenue formula: $15, $13.80, $12, $0.
+const effectivePrice = (multiplier) => {
+  const amount = ticketPrice.value * multiplier;
+  return Number.isInteger(amount) ? amount : amount.toFixed(2);
+};
 
 // All reservations regardless of confirmation — a pending sale still
 // occupies a seat, so sold-out capacity shouldn't exclude it.
