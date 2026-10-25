@@ -4,7 +4,11 @@
       <template #before>
         <q-page>
           <div class="column q-gutter-y-sm">
-            <div class="flex justify-end">
+            <div class="flex justify-end items-center">
+              <div class="text-caption" v-if="gallery.length > 0 && liveDate">
+                Gallery Live: {{ liveDate }}
+              </div>
+              <q-space />
               <q-btn round flat :icon="matAdd" size="sm" :disable="isReadOnly">
                 <q-menu v-model="uploaderRef">
                   <q-uploader
@@ -105,6 +109,7 @@
 <script setup>
 import { matAdd, matDelete } from "@quasar/extras/material-icons";
 import { mdiArrowDown, mdiArrowUp } from "@quasar/extras/mdi-v7";
+import { addDays, format, parseISO } from "date-fns";
 import { remove } from "lodash-es";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
@@ -125,6 +130,17 @@ const show = computed(() => {
 });
 
 const gallery = ref(show.value.gallery_images);
+
+// Mirrors Show::galleryVisible() — the gallery goes public the day after the final performance.
+const liveDate = computed(() => {
+  const dates = (show.value.performances ?? []).map(({ date }) => date.slice(0, 10));
+
+  if (dates.length == 0) {
+    return null;
+  }
+
+  return format(addDays(parseISO(dates.sort().at(-1)), 1), "PP");
+});
 
 const photo = ref(
   gallery.value.length > 0 ? { ...gallery.value[0], idx: 0 } : null
