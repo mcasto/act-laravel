@@ -161,8 +161,27 @@ const guestList = (rec) => {
     .join(", ");
 };
 
+// Angel benefits belong to the Angel themselves, not whoever they bought
+// tickets for — so they're only printed when the purchaser's own name is
+// on one of this sale's tickets (case/whitespace-insensitive, since ticket
+// names are free-text "First Last").
+const normalizeName = (name) =>
+  (name ?? "").trim().replace(/\s+/g, " ").toLowerCase();
+
+const purchaserHoldsTicket = (rec) => {
+  const purchaser = normalizeName(
+    `${rec.patron?.first_name ?? ""} ${rec.patron?.last_name ?? ""}`,
+  );
+  return (
+    purchaser !== "" &&
+    (rec.tickets ?? []).some((ticket) => normalizeName(ticket.name) === purchaser)
+  );
+};
+
 const angelBenefits = (rec) =>
-  (rec.patron?.angel_concession_benefits ?? []).join(", ");
+  purchaserHoldsTicket(rec)
+    ? (rec.patron?.angel_concession_benefits ?? []).join(", ")
+    : "";
 
 // Two distinct sources feed this one column: the patron's own standing
 // accessibility need (front_row) and this sale's own reserved front-row
