@@ -49,12 +49,12 @@
         </div>
 
         <q-btn
-          :label="enrollmentOpen ? 'Enroll Now' : 'Enrollment Not Yet Open'"
+          :label="buttonLabel"
           color="secondary"
           size="lg"
           unelevated
           class="full-width q-mt-md"
-          :disable="!enrollmentOpen"
+          :disable="!enrollmentOpen || isFull"
           @click="$emit('enroll')"
         ></q-btn>
       </div>
@@ -66,13 +66,21 @@
 import { matEvent, matPayments, matPlace } from "@quasar/extras/material-icons";
 import { POSTER_BASE_URL } from "src/assets/constants";
 import { format, parseISO } from "date-fns";
+import { computed } from "vue";
 
 const props = defineProps({
   course: { type: Object, required: true },
   enrollmentOpen: { type: Boolean, default: true },
+  isFull: { type: Boolean, default: false },
 });
 
 defineEmits(["enroll"]);
+
+const buttonLabel = computed(() => {
+  if (!props.enrollmentOpen) return "Enrollment Not Yet Open";
+  if (props.isFull) return "Class Full";
+  return "Enroll Now";
+});
 
 const formatDate = (date) => {
   return format(parseISO(date), "PP");

@@ -113,6 +113,18 @@ class Course extends Model
     }
 
     /**
+     * Whether the class has hit max_participants. Every (non-deleted)
+     * enrollment counts, confirmed or not — an unconfirmed PayPal/Transfer
+     * enrollment is still holding a seat until an admin removes it. A null
+     * max_participants means unlimited.
+     */
+    public function isFull(): bool
+    {
+        return $this->max_participants !== null
+            && $this->contacts()->count() >= $this->max_participants;
+    }
+
+    /**
      * Alias so FixrWebhooksController::findByFixrLink() — which reads
      * ->fixr_link on every record type (Performance, AngelLevel, ...) — can
      * accept a Course unmodified, without touching that shared method.

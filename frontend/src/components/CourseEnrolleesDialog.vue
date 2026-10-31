@@ -2,7 +2,12 @@
   <q-dialog v-model="model" full-width>
     <q-card>
       <q-card-actions class="justify-between">
-        Enrollees
+        <div>
+          Enrollees
+          <span v-if="course?.max_participants" class="text-grey-7">
+            ({{ course.contacts.length }} of {{ course.max_participants }})
+          </span>
+        </div>
         <div>
           <q-btn
             color="primary"
@@ -23,6 +28,7 @@
           bordered
           :rows="course?.contacts ?? []"
           :columns="columns"
+          :pagination="{ rowsPerPage: 0 }"
           hide-bottom
         >
           <template #body-cell-email="props">
@@ -68,6 +74,29 @@
               ></q-toggle>
             </q-td>
           </template>
+
+          <template #body-cell-actions="props">
+            <q-td class="text-right">
+              <q-btn
+                color="negative"
+                :icon="matDelete"
+                round
+                flat
+                size="sm"
+                :disable="isReadOnly"
+                @click="onDeleteEnrollee(props.row)"
+              />
+              <q-btn
+                color="primary"
+                :icon="matEdit"
+                round
+                flat
+                size="sm"
+                :disable="isReadOnly"
+                @click="openEditDialog(props.row)"
+              />
+            </q-td>
+          </template>
         </q-table>
       </q-card-section>
     </q-card>
@@ -79,12 +108,13 @@
     <q-dialog v-model="addDialog" persistent>
       <q-card style="min-width: 400px;">
         <q-card-section>
-          <div class="text-h6">Add Enrollee</div>
+          <div class="text-h6">{{ editingId ? "Edit Enrollee" : "Add Enrollee" }}</div>
           <div class="text-caption text-grey-7">{{ course?.name }}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
           <q-btn-toggle
+            v-if="!editingId"
             v-model="patronMode"
             spread
             no-caps
@@ -135,7 +165,7 @@
               dense
               class="q-mb-md"
               @blur="getPatron"
-              hint="If this email already exists, we'll use that patron instead of creating a duplicate."
+              :hint="editingId ? undefined : `If this email already exists, we'll use that patron instead of creating a duplicate.`"
             />
             <q-input
               v-model="form.first_name"
@@ -202,20 +232,22 @@
             dense
             class="q-mb-md"
           />
-          <q-toggle
-            v-model="form.confirmed"
-            label="Payment confirmed"
-          />
-          <div class="text-caption text-grey-7">
-            The instructor is emailed when the enrollment is confirmed.
-          </div>
+          <template v-if="!editingId">
+            <q-toggle
+              v-model="form.confirmed"
+              label="Payment confirmed"
+            />
+            <div class="text-caption text-grey-7">
+              The instructor is emailed when the enrollment is confirmed.
+            </div>
+          </template>
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" v-close-popup />
           <q-btn
             flat
-            label="Add"
+            :label="editingId ? 'Save' : 'Add'"
             color="primary"
             :loading="saving"
             :disable="!canSave"
@@ -228,7 +260,13 @@
 </template>
 
 <script setup>
-import { matAdd, matClose, matEvent } from "@quasar/extras/material-icons";
+import {
+  matAdd,
+  matClose,
+  matDelete,
+  matEdit,
+  matEvent,
+} from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { computed, ref } from "vue";
@@ -285,6 +323,11 @@ const columns = [
     field: "confirmed",
     align: "center",
   },
+  {
+    label: "",
+    name: "actions",
+    align: "right",
+  },
 ];
 
 const openQuestions = (questions) => {
@@ -311,6 +354,8 @@ const updateConfirmed = async (row, confirmed) => {
 };
 
 const addDialog = ref(false);
+// Set while the add dialog is editing an existing enrollment instead.
+const editingId = ref(null);
 const saving = ref(false);
 const patronMode = ref("existing");
 const selectedPatron = ref(null);
@@ -337,13 +382,7 @@ const paymentMethodOptions = computed(() =>
     .map((pm) => ({ label: pm.label, value: pm.value })),
 );
 
-const openAddDialog = async () => {
-  patronMode.value = "existing";
-  selectedPatron.value = null;
-  patronSearchResults.value = [];
-  form.value = emptyForm();
-  addDialog.value = true;
-
+const loadPaymentMethods = async () => {
   if (paymentMethods.value.length === 0) {
     paymentMethods.value = await callApi({
       path: "/payment-methods",
@@ -351,6 +390,75 @@ const openAddDialog = async () => {
       useAuth: true,
     }).catch(() => []);
   }
+};
+
+const openAddDialog = async () => {
+  editingId.value = null;
+  patronMode.value = "existing";
+  selectedPatron.value = null;
+  patronSearchResults.value = [];
+  form.value = emptyForm();
+  addDialog.value = true;
+
+  await loadPaymentMethods();
+};
+
+const openEditDialog = async (row) => {
+  editingId.value = row.id;
+  // "new" shows the plain name/email/phone inputs.
+  patronMode.value = "new";
+  form.value = {
+    email: row.email,
+    first_name: row.first_name,
+    last_name: row.last_name,
+    phone: row.phone ?? "",
+    payment_method_value: row.payment_method?.value ?? null,
+    transfer_date: row.transfer_date ?? "",
+    questions: row.questions ?? "",
+    confirmed: row.confirmed,
+  };
+  addDialog.value = true;
+
+  await loadPaymentMethods();
+};
+
+const onDeleteEnrollee = (row) => {
+  const name = `${row.first_name} ${row.last_name}`;
+
+  Notify.create({
+    type: "warning",
+    position: "center",
+    html: true,
+    message: `Remove <em>${name}</em> from this class?`,
+    actions: [
+      {
+        label: "No",
+        color: "negative",
+      },
+      {
+        color: "positive",
+        label: "Yes",
+        handler: async () => {
+          const response = await callApi({
+            path: `/admin/course-contacts/${row.id}`,
+            method: "delete",
+            useAuth: true,
+          }).catch(() => null);
+
+          if (!response || response.status !== "success") {
+            Notify.create({ type: "negative", message: "Failed to remove enrollee." });
+            return;
+          }
+
+          // Mutating the store's row keeps the classes table count in sync.
+          const index = props.course.contacts.findIndex((c) => c.id === row.id);
+          if (index !== -1) props.course.contacts.splice(index, 1);
+
+          Notify.create({ type: "positive", message: `${name} removed.` });
+        },
+      },
+    ],
+  });
 };
 
 const onPatronFilter = (val, update) => {
@@ -380,7 +488,8 @@ const onPatronSelected = (patron) => {
 };
 
 const getPatron = async () => {
-  if (!form.value.email) return;
+  // When editing, don't overwrite the name the admin may be correcting.
+  if (!form.value.email || editingId.value) return;
 
   const patron = await callApi({
     path: `/admin/patrons/lookup?email=${encodeURIComponent(form.value.email)}`,
@@ -404,41 +513,59 @@ const canSave = computed(() => {
 const saveEnrollee = async () => {
   saving.value = true;
 
-  const response = await callApi({
-    path: `/admin/courses/${props.course.id}/contacts`,
-    method: "post",
-    payload: {
-      email: form.value.email,
-      first_name: form.value.first_name,
-      last_name: form.value.last_name,
-      phone: form.value.phone || null,
-      payment_method_value: form.value.payment_method_value || null,
-      transfer_date:
-        form.value.payment_method_value === "transfer" && form.value.transfer_date
-          ? form.value.transfer_date
-          : null,
-      questions: form.value.questions || null,
-      confirmed: form.value.confirmed,
-    },
-    useAuth: true,
-  }).catch(() => null);
+  const payload = {
+    email: form.value.email,
+    first_name: form.value.first_name,
+    last_name: form.value.last_name,
+    phone: form.value.phone || null,
+    payment_method_value: form.value.payment_method_value || null,
+    transfer_date:
+      form.value.payment_method_value === "transfer" && form.value.transfer_date
+        ? form.value.transfer_date
+        : null,
+    questions: form.value.questions || null,
+  };
+
+  const response = await callApi(
+    editingId.value
+      ? {
+          path: `/admin/course-contacts/${editingId.value}`,
+          method: "put",
+          payload,
+          useAuth: true,
+        }
+      : {
+          path: `/admin/courses/${props.course.id}/contacts`,
+          method: "post",
+          payload: { ...payload, confirmed: form.value.confirmed },
+          useAuth: true,
+        },
+  ).catch(() => null);
 
   saving.value = false;
 
   // A status "error" response (e.g. already enrolled) is shown by callApi itself.
   if (response === false) return;
 
+  const verb = editingId.value ? "update" : "add";
+
   if (!response || response.status !== "success") {
-    Notify.create({ type: "negative", message: "Failed to add enrollee." });
+    Notify.create({ type: "negative", message: `Failed to ${verb} enrollee.` });
     return;
   }
 
   // course is the row from store.admin.courses, so this also updates the
   // enrollee count on the classes table.
-  props.course.contacts.push(response.contact);
+  const index = props.course.contacts.findIndex((c) => c.id === response.contact.id);
+  if (index !== -1) {
+    props.course.contacts.splice(index, 1, response.contact);
+  } else {
+    props.course.contacts.push(response.contact);
+  }
+
   Notify.create({
     type: "positive",
-    message: `${response.contact.first_name} ${response.contact.last_name} added.`,
+    message: `${response.contact.first_name} ${response.contact.last_name} ${verb === "update" ? "updated" : "added"}.`,
   });
   addDialog.value = false;
 };

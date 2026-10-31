@@ -215,6 +215,10 @@ Route::middleware(['auth:sanctum', 'permission:classes'])
     ->put('/admin/course-contacts/{id}/confirmed', [CourseController::class, 'updateConfirmed']);
 Route::middleware(['auth:sanctum', 'permission:classes'])
     ->post('/admin/courses/{id}/contacts', [CourseController::class, 'adminStoreContact']);
+Route::middleware(['auth:sanctum', 'permission:classes'])
+    ->put('/admin/course-contacts/{id}', [CourseController::class, 'adminUpdateContact']);
+Route::middleware(['auth:sanctum', 'permission:classes'])
+    ->delete('/admin/course-contacts/{id}', [CourseController::class, 'adminDestroyContact']);
 
 /**
  * Gallery Routes

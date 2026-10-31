@@ -357,7 +357,9 @@ class CourseController extends Controller
      */
     public function courseDetails(string $slug): JsonResponse
     {
-        $course = Course::with(['sessions'])->where('slug', '=', $slug)->first()->toArray();
+        $courseModel = Course::with(['sessions'])->where('slug', '=', $slug)->first();
+        $course = $courseModel->toArray();
+        $course['is_full'] = $courseModel->isFull();
 
         $course['html'] = view("courses.{$slug}")->render();
 
@@ -406,6 +408,14 @@ class CourseController extends Controller
     public function courseContact(Request $request): JsonResponse
     {
         $course = Course::findOrFail($request->input('course_id'));
+
+        // The frontend disables Enroll Now once full, but the page may have
+        // been loaded before the last seat went.
+        if ($course->isFull()) {
+            return response()->json([
+                'errors' => ['course_id' => ['Sorry, this class is full.']],
+            ]);
+        }
 
         $validated = CourseContact::validate($request->all(), $course->cost > 0);
         if (isset($validated['errors'])) {
@@ -535,6 +545,67 @@ class CourseController extends Controller
         $enrollment->load('paymentMethod');
 
         return response()->json(['status' => 'success', 'contact' => $enrollment]);
+    }
+
+    /**
+     * Admin edits an enrollment's details. Confirmation has its own toggle
+     * (updateConfirmed()), so it isn't touched here.
+     */
+    public function adminUpdateContact(Request $request, int $id): JsonResponse
+    {
+        $enrollment = CourseContact::findOrFail($id);
+
+        $validated = $request->validate([
+            'first_name'           => 'required|string|max:255',
+            'last_name'            => 'required|string|max:255',
+            'email'                => 'required|email|max:255',
+            'phone'                => 'nullable|string|max:20',
+            'questions'            => 'nullable|string',
+            'payment_method_value' => 'nullable|string|exists:payment_methods,value',
+            'transfer_date'        => 'nullable|date',
+        ]);
+
+        $duplicate = CourseContact::where('course_id', $enrollment->course_id)
+            ->where('email', $validated['email'])
+            ->where('id', '!=', $enrollment->id)
+            ->exists();
+
+        if ($duplicate) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => "{$validated['email']} is already enrolled in this class.",
+            ]);
+        }
+
+        $paymentMethod = ! empty($validated['payment_method_value'])
+            ? PaymentMethod::where('value', $validated['payment_method_value'])->first()
+            : null;
+
+        $enrollment->update([
+            'first_name'        => $validated['first_name'],
+            'last_name'         => $validated['last_name'],
+            'email'             => $validated['email'],
+            // Column isn't nullable.
+            'phone'             => $validated['phone'] ?? '',
+            'questions'         => $validated['questions'] ?? null,
+            'payment_method_id' => $paymentMethod?->id,
+            'transfer_date'     => $validated['transfer_date'] ?? null,
+        ]);
+
+        $enrollment->load('paymentMethod');
+
+        return response()->json(['status' => 'success', 'contact' => $enrollment]);
+    }
+
+    /**
+     * Soft-deletes the enrollment, which also frees its seat for
+     * Course::isFull().
+     */
+    public function adminDestroyContact(int $id): JsonResponse
+    {
+        CourseContact::findOrFail($id)->delete();
+
+        return response()->json(['status' => 'success']);
     }
 
     /**

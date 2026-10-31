@@ -4,6 +4,7 @@
       <course-details
         :course="course"
         :enrollment-open="enrollmentOpen"
+        :is-full="isFull"
         @enroll="openEnroll"
       ></course-details>
 
@@ -23,7 +24,21 @@
       </q-card>
 
       <q-card flat class="cta-banner bg-primary text-white text-center q-pa-lg">
-        <template v-if="enrollmentOpen">
+        <template v-if="enrollmentOpen && isFull">
+          <div class="text-h6 q-mb-xs">This Class Is Full</div>
+          <div class="text-subtitle1 q-mb-md">
+            ${{ course.cost }} · All spots have been taken
+          </div>
+          <q-btn
+            label="Enroll Now"
+            color="white"
+            text-color="primary"
+            size="lg"
+            unelevated
+            disable
+          ></q-btn>
+        </template>
+        <template v-else-if="enrollmentOpen">
           <div class="text-h6 q-mb-xs">Ready to join {{ course.name }}?</div>
           <div class="text-subtitle1 q-mb-md">
             ${{ course.cost }} · Enrollment through
@@ -121,6 +136,8 @@ const enrollmentStatus = computed(() => {
 });
 
 const enrollmentOpen = computed(() => enrollmentStatus.value === "open");
+
+const isFull = computed(() => !!course.value?.is_full);
 
 const formatDate = (date) => {
   return format(parseISO(date), "PP");
