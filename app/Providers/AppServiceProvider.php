@@ -2,6 +2,9 @@
 namespace App\Providers;
 
 use App\Services\ChangeLogger;
+use App\Services\MailLogger;
+use Illuminate\Mail\Events\MessageSending;
+use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,5 +36,10 @@ class AppServiceProvider extends ServiceProvider
   Event::listen('eloquent.deleted: *', function ($event, $data) {
    ChangeLogger::recordModelEvent('deleted', $data[0]);
   });
+
+  // Mail log: our own record of every outgoing email. See
+  // App\Services\MailLogger.
+  Event::listen(MessageSending::class, [MailLogger::class, 'handleSending']);
+  Event::listen(MessageSent::class, [MailLogger::class, 'handleSent']);
  }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\AuditionContactController;
 use App\Http\Controllers\AuditionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChangeLogController;
+use App\Http\Controllers\MailLogController;
 use App\Http\Controllers\CompTixController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
@@ -178,6 +179,7 @@ Route::middleware('auth:sanctum')->put('/users/{id}/permissions', [UserControlle
  * Change Log Routes
  */
 Route::middleware(['auth:sanctum', 'permission:change-log'])->get('/change-logs', [ChangeLogController::class, 'index']);
+Route::middleware(['auth:sanctum', 'permission:mail-log'])->get('/mail-logs', [MailLogController::class, 'index']);
 
 /**
  * Snippet Routes

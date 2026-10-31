@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ChangeLog;
+use App\Models\MailLog;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -33,10 +34,12 @@ class ChangeLogger
      * Models that mutate as a side effect of the framework itself rather
      * than a user taking an action — e.g. Sanctum bumps a token's
      * last_used_at on every authenticated request, which isn't a change
-     * anyone made on purpose.
+     * anyone made on purpose. MailLog is written for every email an admin
+     * action happens to send, and is its own log already.
      */
     private const IGNORED_MODELS = [
         PersonalAccessToken::class,
+        MailLog::class,
     ];
 
     public static function recordModelEvent(string $action, Model $model): void
