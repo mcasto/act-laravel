@@ -31,7 +31,7 @@
         ></q-input>
         <q-input
           type="text"
-          label="First Name"
+          label="Your First Name"
           stack-label
           dense
           outlined
@@ -40,7 +40,7 @@
         ></q-input>
         <q-input
           type="text"
-          label="Last Name"
+          label="Your Last Name"
           stack-label
           dense
           outlined
