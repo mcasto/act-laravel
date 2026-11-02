@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -110,6 +111,52 @@ class Course extends Model
     public function contacts()
     {
         return $this->hasMany(CourseContact::class);
+    }
+
+    /**
+     * Enrollment dates and session times are local Cuenca time, while the
+     * app runs in UTC — so every "is it open yet / still showing" check
+     * goes through this zone rather than now().
+     */
+    public const TIMEZONE = 'America/Guayaquil';
+
+    /**
+     * Inclusive of both enrollment dates — enrollment runs through the end
+     * of enrollment_end, not up to its first moment. (Comparing the date
+     * column straight against now() did the latter, closing a class the
+     * evening before its last enrollment day.)
+     */
+    public function enrollmentOpen(): bool
+    {
+        $today = now(self::TIMEZONE)->toDateString();
+
+        return $this->enrollment_start <= $today && $this->enrollment_end >= $today;
+    }
+
+    /**
+     * When the class drops out of the public nav: once its final session
+     * has ended, so enrollees can keep looking up times after enrollment
+     * closes. Falls back to the end of enrollment_end if it has no sessions.
+     */
+    public function visibleUntil(): Carbon
+    {
+        $lastSession = $this->sessions->sortBy(fn ($session) => $session->date . ' ' . $session->end)->last();
+
+        if ($lastSession) {
+            return Carbon::parse(
+                Carbon::parse($lastSession->date)->toDateString() . ' ' . $lastSession->end,
+                self::TIMEZONE
+            );
+        }
+
+        return Carbon::parse($this->enrollment_end, self::TIMEZONE)->endOfDay();
+    }
+
+    /** Shown publicly from the start of enrollment until visibleUntil(). */
+    public function isPubliclyVisible(): bool
+    {
+        return $this->enrollment_start <= now(self::TIMEZONE)->toDateString()
+            && now()->lt($this->visibleUntil());
     }
 
     /**

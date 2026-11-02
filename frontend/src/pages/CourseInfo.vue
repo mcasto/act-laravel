@@ -3,7 +3,7 @@
     <div class="q-gutter-y-lg">
       <course-details
         :course="course"
-        :enrollment-open="enrollmentOpen"
+        :enrollment-status="enrollmentStatus"
         :is-full="isFull"
         @enroll="openEnroll"
       ></course-details>
@@ -116,23 +116,18 @@ const course = computed(() => {
   return store.course;
 });
 
-// "upcoming"/"open"/"closed" — mirrors the exact enrollment_start <= now <=
-// enrollment_end window CourseController uses to decide whether a class
-// shows up on /classes at all (courseDetails()/previewEnrollment()). Real
-// /class-details pages are only reachable for classes already inside that
-// window, so this is normally "open" there — but /classes/preview
-// deliberately bypasses the window to show the next upcoming class before
-// enrollment starts, so Enroll Now needs its own live check rather than
-// assuming reachability implies eligibility.
+// "upcoming"/"open"/"closed". A class page stays reachable from enrollment
+// start through its final session (Course::isPubliclyVisible()), and
+// /classes/preview shows the next class before enrollment even starts — so
+// reachability says nothing about whether Enroll Now should work. "open"
+// comes from the server (Course::enrollmentOpen(), which counts the whole
+// enrollment_end day in Cuenca time); upcoming vs closed is just which side
+// of the window we're on.
 const enrollmentStatus = computed(() => {
-  if (!course.value?.enrollment_start || !course.value?.enrollment_end) {
-    return "closed";
-  }
-
-  const now = new Date();
-  if (now < parseISO(course.value.enrollment_start)) return "upcoming";
-  if (now > parseISO(course.value.enrollment_end)) return "closed";
-  return "open";
+  if (course.value?.enrollment_open) return "open";
+  if (!course.value?.enrollment_start) return "closed";
+  if (new Date() < parseISO(course.value.enrollment_start)) return "upcoming";
+  return "closed";
 });
 
 const enrollmentOpen = computed(() => enrollmentStatus.value === "open");

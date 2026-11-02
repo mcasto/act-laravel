@@ -306,10 +306,13 @@ class CourseController extends Controller
     }
 
     /**
-     * Get courses with open enrollment
+     * Get publicly visible courses
      *
-     * Retrieves all courses that are currently accepting enrollments
-     * (between enrollment_start and enrollment_end dates).
+     * Drives the public Classes nav item and /classes page. A course shows
+     * from its enrollment start until its final session ends (see
+     * Course::isPubliclyVisible()) — not just while enrollment is open — so
+     * enrollees can still look up session times after enrollment closes.
+     * Whether Enroll Now is usable is decided separately on the class page.
      *
      * @return JsonResponse Courses with their sessions
      *
@@ -317,8 +320,11 @@ class CourseController extends Controller
      */
     public function openEnrollment(): JsonResponse
     {
-        $courses = Course::with(['sessions'])->where('enrollment_start', '<=', now())
-            ->where('enrollment_end', '>=', now())->get();
+        $courses = Course::with(['sessions'])
+            ->where('enrollment_start', '<=', now(Course::TIMEZONE)->toDateString())
+            ->get()
+            ->filter(fn ($course) => $course->isPubliclyVisible())
+            ->values();
 
         return response()->json($courses);
     }
@@ -334,7 +340,7 @@ class CourseController extends Controller
     public function previewEnrollment(): JsonResponse
     {
         $courses = Course::with(['sessions'])
-            ->where('enrollment_end', '>=', now())
+            ->where('enrollment_end', '>=', now(Course::TIMEZONE)->toDateString())
             ->orderBy('enrollment_start')
             ->limit(1)
             ->get();
@@ -360,6 +366,7 @@ class CourseController extends Controller
         $courseModel = Course::with(['sessions'])->where('slug', '=', $slug)->first();
         $course = $courseModel->toArray();
         $course['is_full'] = $courseModel->isFull();
+        $course['enrollment_open'] = $courseModel->enrollmentOpen();
 
         $course['html'] = view("courses.{$slug}")->render();
 
@@ -408,6 +415,14 @@ class CourseController extends Controller
     public function courseContact(Request $request): JsonResponse
     {
         $course = Course::findOrFail($request->input('course_id'));
+
+        // The class page stays up after enrollment closes (through the
+        // final session), so a page left open could still submit.
+        if (! $course->enrollmentOpen()) {
+            return response()->json([
+                'errors' => ['course_id' => ['Sorry, enrollment for this class has closed.']],
+            ]);
+        }
 
         // The frontend disables Enroll Now once full, but the page may have
         // been loaded before the last seat went.

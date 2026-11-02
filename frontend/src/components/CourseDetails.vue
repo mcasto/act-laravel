@@ -54,7 +54,7 @@
           size="lg"
           unelevated
           class="full-width q-mt-md"
-          :disable="!enrollmentOpen || isFull"
+          :disable="enrollmentStatus !== 'open' || isFull"
           @click="$emit('enroll')"
         ></q-btn>
       </div>
@@ -70,14 +70,16 @@ import { computed } from "vue";
 
 const props = defineProps({
   course: { type: Object, required: true },
-  enrollmentOpen: { type: Boolean, default: true },
+  // "upcoming" | "open" | "closed" — see CourseInfo.vue.
+  enrollmentStatus: { type: String, default: "open" },
   isFull: { type: Boolean, default: false },
 });
 
 defineEmits(["enroll"]);
 
 const buttonLabel = computed(() => {
-  if (!props.enrollmentOpen) return "Enrollment Not Yet Open";
+  if (props.enrollmentStatus === "upcoming") return "Enrollment Not Yet Open";
+  if (props.enrollmentStatus === "closed") return "Enrollment Closed";
   if (props.isFull) return "Class Full";
   return "Enroll Now";
 });
