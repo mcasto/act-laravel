@@ -11,6 +11,15 @@
         <div>
           <q-btn
             color="primary"
+            :icon="matEmail"
+            label="Email All"
+            size="sm"
+            class="q-mr-sm"
+            :disable="isReadOnly || !course?.contacts?.length"
+            @click="openEmailDialog(null)"
+          ></q-btn>
+          <q-btn
+            color="primary"
             :icon="matAdd"
             label="Add Enrollee"
             size="sm"
@@ -88,6 +97,15 @@
               />
               <q-btn
                 color="primary"
+                :icon="matEmail"
+                round
+                flat
+                size="sm"
+                :disable="isReadOnly"
+                @click="openEmailDialog(props.row)"
+              />
+              <q-btn
+                color="primary"
                 :icon="matEdit"
                 round
                 flat
@@ -104,6 +122,12 @@
       v-model="enrolleeQuestions.visible"
       :questions="enrolleeQuestions.questions"
     ></EnrolleeQuestionsDialog>
+
+    <CourseEmailDialog
+      v-model="emailDialog.visible"
+      :course="course"
+      :enrollee="emailDialog.enrollee"
+    ></CourseEmailDialog>
 
     <q-dialog v-model="addDialog" persistent>
       <q-card style="min-width: 400px;">
@@ -265,12 +289,14 @@ import {
   matClose,
   matDelete,
   matEdit,
+  matEmail,
   matEvent,
 } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { computed, ref } from "vue";
 import EnrolleeQuestionsDialog from "./EnrolleeQuestionsDialog.vue";
+import CourseEmailDialog from "./CourseEmailDialog.vue";
 
 const model = defineModel();
 const props = defineProps(["course", "isReadOnly"]);
@@ -329,6 +355,16 @@ const columns = [
     align: "right",
   },
 ];
+
+// enrollee null = email the whole class.
+const emailDialog = ref({
+  visible: false,
+  enrollee: null,
+});
+
+const openEmailDialog = (enrollee) => {
+  emailDialog.value = { visible: true, enrollee };
+};
 
 const openQuestions = (questions) => {
   enrolleeQuestions.value = {

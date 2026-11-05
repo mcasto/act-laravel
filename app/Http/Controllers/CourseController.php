@@ -7,12 +7,14 @@ use App\Helpers\RefId;
 use App\Mail\CourseEnrollmentConfirmedMailer;
 use App\Mail\CourseInquiryConfirmationMailer;
 use App\Mail\CourseInquiryMailer;
+use App\Mail\CourseMessageMailer;
 use App\Models\Course;
 use App\Models\CourseContact;
 use App\Models\Patron;
 use App\Models\PaymentMethod;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
+use App\Services\ChangeLogger;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -610,6 +612,90 @@ class CourseController extends Controller
         $enrollment->load('paymentMethod');
 
         return response()->json(['status' => 'success', 'contact' => $enrollment]);
+    }
+
+    /**
+     * Admin emails one, some, or all of a class's enrollees. Sent
+     * individually (one email per enrollee, addressed by first name) rather
+     * than as one BCC blast, same as the ticket-sale payment reminders.
+     */
+    public function sendEnrolleeEmail(Request $request, int $id): JsonResponse
+    {
+        $course = Course::findOrFail($id);
+
+        $validated = $request->validate([
+            'contact_ids'   => 'required|array|min:1',
+            'contact_ids.*' => 'integer',
+            'subject'       => 'required|string|max:255',
+            'body'          => 'required|string|max:50000',
+        ]);
+
+        $body = $this->sanitizeEmailHtml($validated['body']);
+
+        if (trim(strip_tags($body)) === '') {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'The message is empty.',
+            ]);
+        }
+
+        // Scoped to this course so a stray id can't email someone else's enrollee.
+        $enrollees = $course->contacts()->whereIn('id', $validated['contact_ids'])->get();
+
+        $sent = [];
+        $failed = [];
+
+        foreach ($enrollees as $enrollee) {
+            try {
+                PatronMail::to($enrollee->email)->send(new CourseMessageMailer([
+                    'subject'          => $validated['subject'],
+                    'body'             => $body,
+                    'name'             => $enrollee->first_name,
+                    'course_name'      => $course->name,
+                    'instructor_name'  => $course->instructor_name,
+                    'instructor_email' => $course->instructor_email,
+                ]));
+                $sent[] = $enrollee->email;
+            } catch (\Exception $e) {
+                logger()->error('Failed to send class enrollee email', [
+                    'error'             => $e->getMessage(),
+                    'course_contact_id' => $enrollee->id,
+                ]);
+                $failed[] = $enrollee->email;
+            }
+        }
+
+        ChangeLogger::record("Emailed enrollees of {$course->name}", [
+            'subject' => $validated['subject'],
+            'sent'    => $sent,
+            'failed'  => $failed,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'sent'   => count($sent),
+            'failed' => $failed,
+        ]);
+    }
+
+    /**
+     * The body comes from the admin's q-editor as HTML. Only admins can
+     * send these, but it still lands in patrons' inboxes, so keep just the
+     * formatting tags the editor produces and drop event handlers, inline
+     * javascript: links and anything script-like.
+     */
+    private function sanitizeEmailHtml(string $html): string
+    {
+        $allowed = '<p><div><br><b><strong><i><em><u><s><strike><ul><ol><li>'
+            . '<h1><h2><h3><h4><h5><h6><blockquote><pre><code><a><font><span><hr><sub><sup>';
+
+        // strip_tags() alone would keep a <script>'s contents as visible text.
+        $html = preg_replace('#<(script|style)\b[^>]*>.*?</\1\s*>#is', '', $html);
+        $html = strip_tags($html, $allowed);
+        $html = preg_replace('/\s+on\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html);
+        $html = preg_replace('/(href|src)\s*=\s*(["\']?)\s*(javascript|vbscript|data):[^"\'>\s]*\2/i', '$1="#"', $html);
+
+        return $html;
     }
 
     /**
