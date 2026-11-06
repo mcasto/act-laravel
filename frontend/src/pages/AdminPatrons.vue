@@ -63,6 +63,21 @@
         </q-td>
       </template>
 
+      <template #body-cell-history="props">
+        <q-td :props="props">
+          <q-btn
+            flat
+            round
+            dense
+            :icon="matReceiptLong"
+            color="primary"
+            @click="openPurchaseHistory(props.row.id)"
+          >
+            <q-tooltip>Ticket purchase history (all shows/seasons)</q-tooltip>
+          </q-btn>
+        </q-td>
+      </template>
+
       <template #body-cell-front_row="props">
         <q-td :props="props">
           <q-input
@@ -224,6 +239,144 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog v-model="purchaseHistory.visible">
+      <q-card style="min-width: 600px; max-width: 95vw;">
+        <q-card-section>
+          <div class="text-h6">{{ purchaseHistory.patronName }}</div>
+          <div class="text-caption text-grey-7">
+            Ticket Purchase History
+            <template v-if="!purchaseHistory.loading && purchaseHistory.totalSales">
+              &nbsp;•&nbsp; {{ purchaseHistory.totalSales }}
+              {{ purchaseHistory.totalSales === 1 ? "purchase" : "purchases" }},
+              {{ purchaseHistory.totalTickets }}
+              {{ purchaseHistory.totalTickets === 1 ? "ticket" : "tickets" }}
+            </template>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <div v-if="purchaseHistory.loading" class="text-center q-pa-md">
+            <q-spinner color="primary" size="2em" />
+          </div>
+
+          <div
+            v-else-if="purchaseHistory.seasons.length === 0"
+            class="text-grey text-center q-pa-md"
+          >
+            No ticket purchases found.
+          </div>
+
+          <div
+            v-for="season in purchaseHistory.seasons"
+            :key="season.season"
+            class="q-mb-md"
+          >
+            <div class="text-subtitle1 text-bold">
+              {{ season.season }}
+              <span class="text-caption text-grey-7">
+                ({{ season.tickets }} {{ season.tickets === 1 ? "ticket" : "tickets" }})
+              </span>
+            </div>
+
+            <q-markup-table dense flat bordered separator="horizontal">
+              <thead>
+                <tr>
+                  <th class="text-left">Show</th>
+                  <th class="text-left">Performance</th>
+                  <th class="text-center">Qty</th>
+                  <th class="text-left">Payment</th>
+                  <th class="text-left">Purchased</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="sale in season.sales" :key="sale.id">
+                  <td class="text-left">
+                    <a href="#" @click.prevent="openSaleDetails(sale)">
+                      {{ sale.show ?? "—" }}
+                    </a>
+                  </td>
+                  <td class="text-left">
+                    {{ sale.formatted_date }} {{ sale.formatted_time }}
+                  </td>
+                  <td class="text-center">
+                    {{ sale.quantity }}
+                    <q-badge v-if="sale.no_show" color="negative" class="q-ml-xs">
+                      {{ sale.no_show }} no-show
+                    </q-badge>
+                  </td>
+                  <td class="text-left">{{ sale.payment_method ?? "—" }}</td>
+                  <td class="text-left">{{ formatSoldAt(sale.sold_at) }}</td>
+                </tr>
+              </tbody>
+            </q-markup-table>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="saleDetails.visible">
+      <q-card v-if="saleDetails.sale" style="min-width: 480px; max-width: 95vw;">
+        <q-card-section>
+          <div class="text-h6">{{ saleDetails.sale.show ?? "Unknown show" }}</div>
+          <div class="text-caption text-grey-7">
+            {{ saleDetails.sale.formatted_date }} {{ saleDetails.sale.formatted_time }}
+            &nbsp;•&nbsp; Purchase #{{ saleDetails.sale.id }}
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-markup-table dense flat bordered separator="horizontal" class="q-mb-md">
+            <tbody>
+              <tr v-for="field in saleDetailFields" :key="field.label">
+                <td class="text-left text-weight-medium" style="width: 40%;">
+                  {{ field.label }}
+                </td>
+                <td class="text-left" style="white-space: pre-wrap;">{{ field.value }}</td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+
+          <div class="text-subtitle2 q-mb-xs">Tickets</div>
+          <q-markup-table
+            v-if="saleDetails.sale.tickets.length"
+            dense
+            flat
+            bordered
+            separator="horizontal"
+          >
+            <thead>
+              <tr>
+                <th class="text-left">#</th>
+                <th class="text-left">Name</th>
+                <th class="text-left">Redeemed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="ticket in saleDetails.sale.tickets" :key="ticket.id">
+                <td class="text-left">{{ ticket.number }}</td>
+                <td class="text-left">{{ ticket.name }}</td>
+                <td class="text-left">
+                  <template v-if="ticket.redeemed_at">
+                    {{ formatSoldAt(ticket.redeemed_at) }}
+                  </template>
+                  <span v-else class="text-grey">No</span>
+                </td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+          <div v-else class="text-grey text-caption">No tickets issued.</div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <q-dialog v-model="commentsDialog.visible">
       <q-card style="min-width: 420px; max-width: 95vw;">
         <q-card-section>
@@ -266,6 +419,7 @@ import {
   matComment,
   matDelete,
   matEdit,
+  matReceiptLong,
   matSearch,
   matStar,
 } from "@quasar/extras/material-icons";
@@ -312,6 +466,12 @@ const columns = [
     field: "flex_remaining",
     align: "center",
     sortable: true,
+  },
+  {
+    name: "history",
+    label: "History",
+    field: "id",
+    align: "center",
   },
   {
     name: "front_row",
@@ -370,6 +530,89 @@ const openFlexHistory = async (patronId) => {
 
   flexHistoryLoading.value = false;
 };
+
+const purchaseHistory = ref({
+  visible: false,
+  loading: false,
+  patronName: "",
+  totalSales: 0,
+  totalTickets: 0,
+  seasons: [],
+});
+
+const openPurchaseHistory = async (patronId) => {
+  purchaseHistory.value = {
+    visible: true,
+    loading: true,
+    patronName: "",
+    totalSales: 0,
+    totalTickets: 0,
+    seasons: [],
+  };
+
+  const response = await callApi({
+    path: "/admin/patrons/purchase-history",
+    method: "get",
+    payload: patronId,
+    useAuth: true,
+  });
+
+  if (response) {
+    purchaseHistory.value.patronName = response.patron.name;
+    purchaseHistory.value.totalSales = response.total_sales;
+    purchaseHistory.value.totalTickets = response.total_tickets;
+    purchaseHistory.value.seasons = response.seasons;
+  }
+
+  purchaseHistory.value.loading = false;
+};
+
+// Handles "Y-m-d H:i:s" (Safari can't parse the space form), full ISO
+// timestamps, and date-only "Y-m-d" (pinned to local noon — bare dates
+// parse as UTC midnight and would show as the previous day in the US).
+const toDate = (value) => {
+  const str = String(value);
+  return new Date(/^\d{4}-\d{2}-\d{2}$/.test(str) ? `${str}T12:00:00` : str.replace(" ", "T"));
+};
+
+const formatSoldAt = (value) =>
+  value
+    ? toDate(value).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "—";
+
+const saleDetails = ref({ visible: false, sale: null });
+
+const openSaleDetails = (sale) => {
+  saleDetails.value = { visible: true, sale };
+};
+
+// Only rows with something to show, so empty optional fields don't pad
+// the dialog out with dashes.
+const saleDetailFields = computed(() => {
+  const s = saleDetails.value.sale;
+  if (!s) return [];
+
+  const doorName = [s.door_first, s.door_last].filter(Boolean).join(" ");
+
+  return [
+    { label: "Quantity", value: s.quantity },
+    { label: "Payment Method", value: s.payment_method },
+    { label: "Purchased", value: formatSoldAt(s.sold_at) },
+    { label: "Payment Confirmed", value: s.confirmed ? "Yes" : "No" },
+    { label: "Transfer Date", value: s.transfer_date ? formatSoldAt(s.transfer_date) : null },
+    { label: "Transaction ID", value: s.transaction_id },
+    { label: "Door List Name", value: doorName },
+    { label: "Front-Row Seats", value: s.front_row || null },
+    { label: "Special Seating", value: s.special_seating },
+    { label: "No-Shows", value: s.no_show || null },
+    { label: "Reason Changed", value: s.reason_changed },
+    { label: "Comments", value: s.comments },
+  ].filter((f) => f.value !== null && f.value !== undefined && f.value !== "");
+});
 
 const updateFrontRow = async (row, value) => {
   const previous = row.front_row;

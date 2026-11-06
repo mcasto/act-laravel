@@ -227,6 +227,78 @@ class PatronController extends Controller
     }
 
     /**
+     * Every ticket sale on record for one patron, across all shows and
+     * seasons — used by the admin Patron Management "History" drill-down.
+     * Grouped by season (derived from the performance date, since shows
+     * carry no season column), newest season first, and within a season
+     * newest performance first.
+     */
+    public function purchaseHistory(int $id): JsonResponse
+    {
+        $patron = Patron::findOrFail($id);
+
+        $sales = TicketSale::where('patron_id', $patron->id)
+            ->with([
+                'performance.show',
+                'paymentMethod',
+                'tickets' => fn ($query) => $query->orderBy('number'),
+            ])
+            ->get()
+            ->sortByDesc(fn (TicketSale $sale) => [$sale->performance?->date, $sale->performance?->start_time])
+            ->values();
+
+        $seasons = $sales
+            ->groupBy(fn (TicketSale $sale) => $sale->performance?->date
+                ? TheaterSeason::seasonForDate($sale->performance->date)
+                : 'Unknown')
+            ->map(fn ($seasonSales, $season) => [
+                'season' => $season,
+                'tickets' => $seasonSales->sum('quantity'),
+                'sales' => $seasonSales->map(fn (TicketSale $sale) => [
+                    'id' => $sale->id,
+                    'show' => $sale->performance?->show?->name,
+                    'formatted_date' => $sale->performance?->formatted_date,
+                    'formatted_time' => $sale->performance?->formatted_time,
+                    'quantity' => $sale->quantity,
+                    'payment_method' => $sale->paymentMethod?->label,
+                    'sold_at' => $sale->sold_at,
+                    'no_show' => $sale->no_show,
+                    // Full-detail fields for the per-purchase drill-down
+                    // dialog — read-only there; editing stays on the
+                    // Ticket Sales screen.
+                    'transaction_id' => $sale->transaction_id,
+                    'transfer_date' => $sale->transfer_date,
+                    'confirmed' => (bool) $sale->confirmed,
+                    'reason_changed' => $sale->reason_changed,
+                    'special_seating' => $sale->special_seating,
+                    'front_row' => $sale->front_row,
+                    'door_last' => $sale->door_last,
+                    'door_first' => $sale->door_first,
+                    'comments' => $sale->comments,
+                    'tickets' => $sale->tickets->map(fn ($ticket) => [
+                        'id' => $ticket->id,
+                        'number' => str_pad((string) $ticket->number, 3, '0', STR_PAD_LEFT),
+                        'name' => $ticket->name,
+                        'redeemed_at' => $ticket->redeemed_at,
+                    ])->values(),
+                ])->values(),
+            ])
+            ->sortByDesc('season')
+            ->values();
+
+        return response()->json([
+            'patron' => [
+                'id' => $patron->id,
+                'name' => trim("{$patron->first_name} {$patron->last_name}"),
+                'email' => $patron->email,
+            ],
+            'total_sales' => $sales->count(),
+            'total_tickets' => $sales->sum('quantity'),
+            'seasons' => $seasons,
+        ]);
+    }
+
+    /**
      * Box-office summary of flex usage by patron for one season: everyone
      * with a package that season (including those who haven't used any
      * yet), plus anyone who redeemed flex that season without one, so a bad

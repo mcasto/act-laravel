@@ -353,6 +353,7 @@ Route::middleware(['auth:sanctum', 'permission:flex-usage'])
 Route::middleware(['auth:sanctum', 'permission:patrons'])->group(function () {
     Route::get('/admin/patrons', [PatronController::class, 'index']);
     Route::get('/admin/patrons/flex-history/{id}', [PatronController::class, 'flexHistory']);
+    Route::get('/admin/patrons/purchase-history/{id}', [PatronController::class, 'purchaseHistory']);
     Route::post('/admin/patrons', [PatronController::class, 'store']);
     Route::put('/admin/patrons/{id}', [PatronController::class, 'update']);
     Route::delete('/admin/patrons/{id}', [PatronController::class, 'destroy']);
