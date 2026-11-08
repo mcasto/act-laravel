@@ -37,6 +37,6 @@ import { computed } from "vue";
 
 const store = useStore();
 
-const hasCurrent = computed(() => !!store.home.currentShow);
-const hasUpcoming = computed(() => (store.home.upcomingShows?.length ?? 0) > 0);
+const hasCurrent = computed(() => !!store.home?.currentShow);
+const hasUpcoming = computed(() => (store.home?.upcomingShows?.length ?? 0) > 0);
 </script>

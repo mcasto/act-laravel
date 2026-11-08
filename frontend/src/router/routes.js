@@ -27,9 +27,16 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
         beforeEnter: async () => {
           const store = useStore();
+          // Neither fetch may reject here — a rejected beforeEnter aborts the
+          // navigation and leaves a blank page (e.g. a 502 from the dev
+          // proxy). announcementBanner() swallows its own errors; homeShows()
+          // still throws for the other routes that need it, so it's caught
+          // here, and IndexPage falls back to the placeholder image.
           await Promise.all([
             store.announcementBanner(),
-            store.homeShows(),
+            store.homeShows().catch((error) => {
+              console.warn("Home shows could not be loaded.", error);
+            }),
           ]);
         },
         meta: { nav: true, label: "Home" },
@@ -577,7 +584,9 @@ const routes = [
             component: () => import("src/pages/AdminAnnouncementBanner.vue"),
             beforeEnter: async () => {
               const store = useStore();
-              store.announcementBanner();
+              // Awaited so the editor opens on the current server copy, not
+              // whatever happened to be persisted in this browser.
+              await store.announcementBanner();
             },
             meta: {
               requireAuth: true,

@@ -42,7 +42,14 @@ const isReadOnly = computed(
   () => getPermissionLevel(store.admin.user, "announcement-banner") === "read-only",
 );
 
-const announcement = ref(store.announcement);
+// Local copy with a guaranteed shape — store.announcement is `false` until
+// a fetch succeeds (fresh browser + failed fetch), and editing the store
+// object directly would change the live banner before Update is clicked.
+const announcement = ref({
+  status: false,
+  html: "",
+  ...(store.announcement || {}),
+});
 
 const toolbar = [
   ["bold", "italic", "strike", "underline", "subscript", "superscript"],
@@ -63,7 +70,7 @@ const updateBanner = () => {
     return;
   }
 
-  store.announcement = announcement.value;
+  store.announcement = { ...announcement.value };
   store.updateAnnouncementBanner();
 };
 </script>

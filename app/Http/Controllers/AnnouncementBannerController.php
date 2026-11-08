@@ -19,14 +19,14 @@ class AnnouncementBannerController extends Controller
      */
     public function show()
     {
-        if (Storage::disk('local')
-            ->exists('announcement-banner.json')
-        ) {
-            return  Storage::disk('local')
-                ->get('announcement-banner.json');
-        } else {
-            return ['status' => false];
-        }
+        $banner = json_decode(
+            Storage::disk('local')->get('announcement-banner.json') ?? '',
+            true
+        );
+
+        // Missing, empty, or unparseable file all mean "no banner" — always
+        // answer with real JSON so the frontend's parse can't choke on it.
+        return is_array($banner) ? $banner : ['status' => false];
     }
 
     /**
