@@ -3,6 +3,7 @@
 use App\Http\Controllers\AngelController;
 use App\Http\Controllers\AngelLevelController;
 use App\Http\Controllers\AnnouncementBannerController;
+use App\Http\Controllers\AppPairingController;
 use App\Http\Controllers\AuditionContactController;
 use App\Http\Controllers\AuditionController;
 use App\Http\Controllers\AuthController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\CompTixController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseSessionController;
+use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\FixrWebhooksController;
 use App\Http\Controllers\FlexLinkController;
 use App\Http\Controllers\FlexPurchaseController;
@@ -46,12 +48,12 @@ Route::get('/login', function () {
 })->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('sign-in');
 Route::get('/refresh-permissions', [AuthController::class, 'refreshPermissions'])
-    ->middleware('auth:sanctum')
+    ->middleware(['auth:sanctum', 'admin-token'])
     ->name('refresh-permissions');
 
 // Protected route (requires auth)
-Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser']);
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+Route::middleware(['auth:sanctum', 'admin-token'])->get('/user', [AuthController::class, 'getUser']);
+Route::middleware(['auth:sanctum', 'admin-token'])->post('/logout', [AuthController::class, 'logout']);
 
 /**
  * Fixr Webhook Handler
@@ -162,18 +164,40 @@ Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/standard-buttons', [SiteConfigController::class, 'updateButtons']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/support', [SiteConfigController::class, 'updateSupport']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/season', [SiteConfigController::class, 'updateSeason']);
-Route::middleware('auth:sanctum')->get('/active-season', [SiteConfigController::class, 'activeSeason']);
+Route::middleware(['auth:sanctum', 'admin-token'])->get('/active-season', [SiteConfigController::class, 'activeSeason']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/angels', [SiteConfigController::class, 'updateAngels']);
 
 /**
  * User Routes
  */
-Route::middleware('auth:sanctum')->get('/get-users', [UserController::class, 'index']);
-Route::middleware('auth:sanctum')->put('/users/{id}', [UserController::class, 'update']);
-Route::middleware('auth:sanctum')->put('/change-password/{id}', [UserController::class, 'changePassword']);
-Route::middleware('auth:sanctum')->post('/create-user', [UserController::class, 'store']);
-Route::middleware('auth:sanctum')->delete('/users/{id}', [UserController::class, 'destroy']);
-Route::middleware('auth:sanctum')->put('/users/{id}/permissions', [UserController::class, 'updatePermissions']);
+Route::middleware(['auth:sanctum', 'admin-token'])->get('/get-users', [UserController::class, 'index']);
+Route::middleware(['auth:sanctum', 'admin-token'])->put('/users/{id}', [UserController::class, 'update']);
+Route::middleware(['auth:sanctum', 'admin-token'])->put('/change-password/{id}', [UserController::class, 'changePassword']);
+Route::middleware(['auth:sanctum', 'admin-token'])->post('/create-user', [UserController::class, 'store']);
+Route::middleware(['auth:sanctum', 'admin-token'])->delete('/users/{id}', [UserController::class, 'destroy']);
+Route::middleware(['auth:sanctum', 'admin-token'])->put('/users/{id}/permissions', [UserController::class, 'updatePermissions']);
+
+/**
+ * Desktop director app: setup codes + paired devices (admin side, gated in
+ * UserController by hasFullUsersAccess()), and the app's own pair/unpair.
+ */
+Route::middleware(['auth:sanctum', 'admin-token'])->post('/admin/app-pairing-codes', [UserController::class, 'createAppPairingCode']);
+Route::middleware(['auth:sanctum', 'admin-token'])->get('/users/{id}/app-devices', [UserController::class, 'appDevices']);
+Route::middleware(['auth:sanctum', 'admin-token'])->delete('/users/{id}/app-devices/{tokenId}', [UserController::class, 'revokeAppDevice']);
+Route::middleware('throttle:10,1')->post('/app/pair', [AppPairingController::class, 'pair']);
+Route::middleware('auth:sanctum')->post('/app/unpair', [AppPairingController::class, 'unpair']);
+Route::get('/app/version', [DirectorController::class, 'version']);
+
+/**
+ * Director API — read-only, director-app tokens only. /director/shows lists
+ * the caller's active grants; per-show routes need an active grant for
+ * {show} (EnsureDirectorShowAccess).
+ */
+Route::middleware('auth:sanctum')->get('/director/shows', [DirectorController::class, 'shows']);
+Route::middleware(['auth:sanctum', 'director-show'])->prefix('/director/shows/{show}')->group(function () {
+    Route::get('/sales', [DirectorController::class, 'sales']);
+    Route::get('/auditions', [DirectorController::class, 'auditions']);
+});
 
 /**
  * Change Log Routes
@@ -340,8 +364,8 @@ Route::controller(TicketSaleController::class)
  * Patron Routes
  */
 Route::get('/patrons/lookup', [PatronController::class, 'lookup']);
-Route::middleware('auth:sanctum')->get('/admin/patrons/search', [PatronController::class, 'search']);
-Route::middleware('auth:sanctum')->get('/admin/patrons/lookup', [PatronController::class, 'adminLookup']);
+Route::middleware(['auth:sanctum', 'admin-token'])->get('/admin/patrons/search', [PatronController::class, 'search']);
+Route::middleware(['auth:sanctum', 'admin-token'])->get('/admin/patrons/lookup', [PatronController::class, 'adminLookup']);
 Route::middleware(['auth:sanctum', 'permission:flex-purchases'])->group(function () {
     Route::get('/admin/flex-purchases', [PatronController::class, 'flexPurchases']);
     Route::post('/admin/flex-purchases', [PatronController::class, 'storeFlexPackage']);
@@ -399,7 +423,7 @@ Route::post('/comp/redeem/{uid}', [CompTixController::class, 'update']);
 // GET is read-only reference data shared by other admin sections (ticket
 // sales, flex purchases) that need the list for a dropdown — only the
 // actual CRUD actions are gated by the payment-methods permission itself.
-Route::middleware('auth:sanctum')->get('/payment-methods', [PaymentMethodController::class, 'index']);
+Route::middleware(['auth:sanctum', 'admin-token'])->get('/payment-methods', [PaymentMethodController::class, 'index']);
 Route::middleware(['auth:sanctum', 'permission:payment-methods'])->group(function () {
     Route::post('/payment-methods', [PaymentMethodController::class, 'store']);
     Route::put('/payment-methods/{id}', [PaymentMethodController::class, 'update']);

@@ -599,19 +599,12 @@ class TicketSaleController extends Controller
      */
     public function seatingSummary(int $performanceId): JsonResponse
     {
-        $performance = Performance::findOrFail($performanceId);
-
-        $sales = TicketSale::where('performance_id', $performanceId)
-            ->with('patron')
-            ->get();
-
-        $patronFrontRow = $sales->pluck('patron')->filter()->unique('id')->sum('front_row');
-        $saleFrontRow = $sales->sum('front_row');
+        $summary = Performance::findOrFail($performanceId)->salesSummary();
 
         return response()->json([
-            'front_row_total' => $patronFrontRow + $saleFrontRow,
-            'reservations_total' => $sales->sum('quantity'),
-            'sold_out_target' => $performance->sold_out_target,
+            'front_row_total' => $summary['front_row_total'],
+            'reservations_total' => $summary['reserved'],
+            'sold_out_target' => $summary['sold_out_target'],
         ]);
     }
 }
