@@ -67,7 +67,8 @@
       </q-tabs>
       <q-separator />
 
-      <q-tab-panels v-model="tab" animated class="bg-transparent">
+      <!-- keep-alive so an unsaved audition edit survives switching tabs -->
+      <q-tab-panels v-model="tab" animated keep-alive class="bg-transparent">
         <!-- Sales -->
         <q-tab-panel name="sales" class="q-pa-md">
           <div class="row items-center q-mb-md">
@@ -155,19 +156,46 @@
           <q-banner v-else-if="auditionsError" dense rounded class="bg-red-1 text-negative">
             {{ auditionsError }}
           </q-banner>
-          <div v-else-if="!audition" class="text-grey-7 text-center q-pa-lg">
-            There's no audition notice for this show.
+          <director-audition-editor
+            v-else-if="editingAudition"
+            :show="show"
+            :audition="audition"
+            @saved="onAuditionSaved"
+            @cancel="editingAudition = false"
+          />
+          <div v-else-if="!audition" class="text-center q-pa-lg">
+            <div class="text-grey-7 q-mb-md">There's no audition notice for this show yet.</div>
+            <q-btn
+              color="secondary"
+              unelevated
+              no-caps
+              :icon="matEdit"
+              label="Create audition notice"
+              :disable="offline || !show"
+              @click="editingAudition = true"
+            />
           </div>
           <template v-else>
             <q-card flat bordered class="q-mb-md">
-              <q-card-section class="text-body2">
-                <q-icon :name="matEvent" class="q-mr-xs" />
-                Shown on the website {{ formatDate(audition.display_date, "MMM d, yyyy") }} –
-                {{ formatDate(audition.end_display_date, "MMM d, yyyy") }}
+              <q-card-section class="row items-center no-wrap text-body2">
+                <div class="col">
+                  <q-icon :name="matEvent" class="q-mr-xs" />
+                  Shown on the website {{ formatDate(audition.display_date, "MMM d, yyyy") }} –
+                  {{ formatDate(audition.end_display_date, "MMM d, yyyy") }}
+                </div>
+                <q-btn
+                  color="secondary"
+                  unelevated
+                  no-caps
+                  :icon="matEdit"
+                  label="Edit"
+                  :disable="offline || !show"
+                  @click="editingAudition = true"
+                />
               </q-card-section>
             </q-card>
             <q-card flat bordered>
-              <!-- Same admin-authored notice the public audition page shows. -->
+              <!-- Same notice the public audition page shows. -->
               <q-card-section class="audition-html" v-html="audition.html || ''" />
             </q-card>
           </template>
@@ -181,6 +209,7 @@
 import {
   matArrowBack,
   matConfirmationNumber,
+  matEdit,
   matEvent,
   matLockClock,
   matRecordVoiceOver,
@@ -192,6 +221,7 @@ import { useRoute, useRouter } from "vue-router";
 import { fetchAuditions, fetchSales, fetchShows, getToken } from "src/director/api";
 import { formatDate, formatTime, localToday, performanceRange } from "src/director/format";
 import { offline, shownAt } from "src/director/state";
+import DirectorAuditionEditor from "src/components/DirectorAuditionEditor.vue";
 
 const REFRESH_MS = 60 * 1000;
 
@@ -217,6 +247,14 @@ const audition = ref(null);
 const auditionsLoading = ref(false);
 const auditionsLoaded = ref(false);
 const auditionsError = ref("");
+const editingAudition = ref(false);
+
+const onAuditionSaved = (result) => {
+  audition.value = result.data.audition;
+  auditionsAt.value = result.at;
+  updateShownAt();
+  editingAudition.value = false;
+};
 
 const isPast = (p) => p.date < localToday();
 
@@ -332,6 +370,7 @@ const loadAll = async () => {
   blocked.value = null;
   sales.value = null;
   auditionsLoaded.value = false;
+  editingAudition.value = false;
   await loadShows();
   if (!getToken()) return;
   salesAt.value = auditionsAt.value = null;

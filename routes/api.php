@@ -197,7 +197,8 @@ Route::middleware('throttle:10,1')->post('/app/pair', [AppPairingController::cla
 Route::middleware('auth:sanctum')->post('/app/unpair', [AppPairingController::class, 'unpair']);
 
 /**
- * Director API — read-only, director-page tokens only. /director/shows lists
+ * Director API — director-page tokens only; read-only except the show's
+ * own audition notice. /director/shows lists
  * the caller's active grants; per-show routes need an active grant for
  * {show} (EnsureDirectorShowAccess).
  */
@@ -205,6 +206,7 @@ Route::middleware('auth:sanctum')->get('/director/shows', [DirectorController::c
 Route::middleware(['auth:sanctum', 'director-show'])->prefix('/director/shows/{show}')->group(function () {
     Route::get('/sales', [DirectorController::class, 'sales']);
     Route::get('/auditions', [DirectorController::class, 'auditions']);
+    Route::put('/auditions', [DirectorController::class, 'updateAuditions']);
 });
 
 /**

@@ -153,6 +153,22 @@ export const fetchShows = () => cachedGet("shows", "/director/shows");
 export const fetchSales = (showId) => cachedGet(`sales:${showId}`, `/director/shows/${showId}/sales`);
 export const fetchAuditions = (showId) => cachedGet(`auditions:${showId}`, `/director/shows/${showId}/auditions`);
 
+/**
+ * Save the show's audition notice ({ display_date, end_display_date, html }).
+ * Resolves to the saved notice in the same shape as fetchAuditions(), and
+ * refreshes the offline copy with it.
+ */
+export const updateAuditions = async (showId, notice) => {
+  const data = await request("PUT", `/director/shows/${showId}/auditions`, {
+    display_date: notice.display_date,
+    end_display_date: notice.end_display_date,
+    html: notice.html ?? "",
+  });
+  const at = Date.now();
+  write(CACHE_PREFIX + `auditions:${showId}`, JSON.stringify({ data, at }));
+  return { data, at, stale: false };
+};
+
 /** A readable default device name, e.g. "Safari on iPhone". */
 export const guessDeviceName = () => {
   const ua = navigator.userAgent;
