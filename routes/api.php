@@ -166,6 +166,7 @@ Route::middleware(['auth:sanctum', 'permission:shows'])->post('/performances/sol
  * Sold Out Notification Recipients
  */
 Route::middleware(['auth:sanctum', 'permission:sold-out-notifications'])->get('/sold-out-notification-recipients', [SoldOutNotificationRecipientController::class, 'index']);
+Route::middleware(['auth:sanctum', 'permission:sold-out-notifications'])->get('/sold-out-notification-recipients/current-director', [SoldOutNotificationRecipientController::class, 'currentDirector']);
 Route::middleware(['auth:sanctum', 'permission:sold-out-notifications'])->post('/sold-out-notification-recipients', [SoldOutNotificationRecipientController::class, 'store']);
 Route::middleware(['auth:sanctum', 'permission:sold-out-notifications'])->put('/sold-out-notification-recipients/{id}', [SoldOutNotificationRecipientController::class, 'update']);
 Route::middleware(['auth:sanctum', 'permission:sold-out-notifications'])->delete('/sold-out-notification-recipients/{id}', [SoldOutNotificationRecipientController::class, 'destroy']);

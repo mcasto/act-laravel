@@ -8,6 +8,16 @@
           Each show's Director (from its Production Team) is emailed automatically
           — no need to add them here.
         </div>
+        <div v-if="current?.show" class="text-caption q-mt-xs">
+          <template v-if="current.directors.length">
+            <b>{{ current.directors.join(" & ") }}</b>, director of
+            <b>{{ current.show }}</b>, will be notified by default.
+          </template>
+          <template v-else>
+            No director has been set for <b>{{ current.show }}</b> yet — add one
+            in the show's Production Team Access to have them notified by default.
+          </template>
+        </div>
       </div>
       <q-btn
         color="primary"
@@ -98,7 +108,7 @@ import { Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const store = useStore();
 
@@ -107,6 +117,20 @@ const isReadOnly = computed(
 );
 
 const recipients = ref(store.admin.sold_out_notification_recipients ?? []);
+
+// The current show and its director(s), who are emailed automatically.
+const current = ref(null);
+onMounted(async () => {
+  try {
+    current.value = await callApi({
+      path: "/sold-out-notification-recipients/current-director",
+      method: "get",
+      useAuth: true,
+    });
+  } catch {
+    // Informational only — leave the note off if it can't be loaded.
+  }
+});
 
 const dialog = ref(false);
 const form = ref({ id: null, name: "", email: "" });
