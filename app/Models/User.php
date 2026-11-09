@@ -18,7 +18,7 @@ class User extends Authenticatable
   *
   * @var list<string>
   */
- /** The only ability carried by desktop director-app tokens. */
+ /** The only ability carried by director-page tokens. */
  public const APP_TOKEN_ABILITY = 'director';
 
  protected $fillable = [
@@ -88,7 +88,7 @@ class User extends Authenticatable
  }
 
  /**
-  * Relationship to show_access_grants (show-scoped director-app access)
+  * Relationship to show_access_grants (show-scoped director-page access)
   */
  public function showAccessGrants()
  {
@@ -96,7 +96,7 @@ class User extends Authenticatable
  }
 
  /**
-  * Sanctum tokens issued to the desktop director app (one per paired
+  * Sanctum tokens issued to the director page (one per paired
   * computer) — distinguished from web-login tokens by the 'director'
   * ability. Web logins issue ['*'].
   */

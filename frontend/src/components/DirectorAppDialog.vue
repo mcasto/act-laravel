@@ -8,7 +8,7 @@
     <q-card style="width: 560px; max-width: 95vw;">
       <q-card-section class="row items-center bg-secondary text-white">
         <div>
-          <div class="text-h6">Director App</div>
+          <div class="text-h6">Director Page Access</div>
           <div class="text-caption">{{ user?.name }} ({{ user?.email }})</div>
         </div>
         <q-space />
@@ -17,13 +17,15 @@
 
       <!-- Setup code -->
       <q-card-section>
-        <div class="text-subtitle1 q-mb-xs">Set up a computer</div>
+        <div class="text-subtitle1 q-mb-xs">Set up a phone or computer</div>
         <div class="text-caption text-grey-7 q-mb-md">
-          Generate a one-time code and give it to {{ user?.name }}. They enter it
-          in the director app to connect it to their account. The code works
-          once and expires after 15 minutes. Making a new code cancels any
-          unused one. The app only lists the shows they've been added to under
-          each show's Production Team Access.
+          Generate a one-time code and give it to {{ user?.name }}. They open
+          <b>{{ directorUrl }}</b> on their phone or computer and enter the code
+          to connect that device. Each code works once and expires after 15
+          minutes, and making a new code cancels any unused one. They'll only
+          see the shows they've been added to under each show's Production Team
+          Access. On an iPhone, they should add the page to their Home Screen
+          first and enter the code there.
         </div>
 
         <div v-if="code && !codeExpired" class="text-center q-mb-md">
@@ -60,7 +62,7 @@
       <!-- Paired devices -->
       <q-card-section>
         <div class="row items-center q-mb-sm">
-          <div class="text-subtitle1">Connected computers</div>
+          <div class="text-subtitle1">Connected devices</div>
           <q-space />
           <q-btn :icon="matRefresh" flat round dense :loading="loadingDevices" @click="loadDevices">
             <q-tooltip>Refresh</q-tooltip>
@@ -68,7 +70,7 @@
         </div>
 
         <div v-if="!loadingDevices && devices.length === 0" class="text-grey text-caption">
-          No computers connected.
+          No devices connected.
         </div>
 
         <q-list v-else separator dense>
@@ -110,6 +112,9 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const code = ref(null); // { code, expires_at }
+
+// Where directors go to enter the code (this site's /director page).
+const directorUrl = `${window.location.host}/director`;
 const generating = ref(false);
 const devices = ref([]);
 const loadingDevices = ref(false);
@@ -201,8 +206,8 @@ const copyCode = async () => {
 
 const revoke = (device) => {
   Dialog.create({
-    title: "Revoke this computer?",
-    message: `The director app on "${device.device_name}" will be signed out and need a new setup code to reconnect. ${props.user.name}'s website login isn't affected.`,
+    title: "Revoke this device?",
+    message: `The director page on "${device.device_name}" will be disconnected and need a new setup code to reconnect. ${props.user.name}'s admin login isn't affected.`,
     cancel: true,
     persistent: true,
   }).onOk(async () => {
@@ -214,7 +219,7 @@ const revoke = (device) => {
       });
       if (!response) return;
       devices.value = devices.value.filter((d) => d.id !== device.id);
-      Notify.create({ type: "positive", message: "Computer revoked" });
+      Notify.create({ type: "positive", message: "Device revoked" });
     } catch (error) {
       Notify.create({ type: "negative", message: errorMessage(error) });
     }

@@ -39,7 +39,7 @@ class CheckSectionPermission
             return response()->json(['status' => 'error', 'message' => 'Unauthenticated'], 401);
         }
 
-        // Director-app tokens never reach section-gated admin routes, not
+        // Director-page tokens never reach section-gated admin routes, not
         // even the owner's — checked before the owner bypass below.
         if ($rejection = EnsureAdminToken::reject($request)) {
             return $rejection;

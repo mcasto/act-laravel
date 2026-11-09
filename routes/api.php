@@ -87,7 +87,7 @@ Route::middleware(['auth:sanctum', 'permission:shows'])->delete('shows/{id}', [S
 Route::middleware(['auth:sanctum', 'permission:shows'])->get('new-show-template', [ShowController::class, 'newShow']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->put('update-tentative/{id}', [ShowController::class, 'updateTentative']);
 
-// Production-team access (director app) — see ShowAccessGrantController
+// Production-team access (director page) — see ShowAccessGrantController
 Route::middleware(['auth:sanctum', 'permission:shows'])->prefix('shows/{showId}/access-grants')->group(function () {
     Route::get('/', [ShowAccessGrantController::class, 'index']);
     Route::post('/', [ShowAccessGrantController::class, 'store']);
@@ -187,7 +187,7 @@ Route::middleware(['auth:sanctum', 'admin-token'])->delete('/users/{id}', [UserC
 Route::middleware(['auth:sanctum', 'admin-token'])->put('/users/{id}/permissions', [UserController::class, 'updatePermissions']);
 
 /**
- * Desktop director app: setup codes + paired devices (admin side, gated in
+ * Director page (/director): setup codes + paired devices (admin side, gated in
  * UserController by hasFullUsersAccess()), and the app's own pair/unpair.
  */
 Route::middleware(['auth:sanctum', 'admin-token'])->post('/admin/app-pairing-codes', [UserController::class, 'createAppPairingCode']);
@@ -195,10 +195,9 @@ Route::middleware(['auth:sanctum', 'admin-token'])->get('/users/{id}/app-devices
 Route::middleware(['auth:sanctum', 'admin-token'])->delete('/users/{id}/app-devices/{tokenId}', [UserController::class, 'revokeAppDevice']);
 Route::middleware('throttle:10,1')->post('/app/pair', [AppPairingController::class, 'pair']);
 Route::middleware('auth:sanctum')->post('/app/unpair', [AppPairingController::class, 'unpair']);
-Route::get('/app/version', [DirectorController::class, 'version']);
 
 /**
- * Director API — read-only, director-app tokens only. /director/shows lists
+ * Director API — read-only, director-page tokens only. /director/shows lists
  * the caller's active grants; per-show routes need an active grant for
  * {show} (EnsureDirectorShowAccess).
  */

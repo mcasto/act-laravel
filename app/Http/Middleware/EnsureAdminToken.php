@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Rejects any Sanctum token that lacks the '*' ability — i.e. desktop
- * director-app tokens (abilities ['director']) — so those can only reach the
+ * Rejects any Sanctum token that lacks the '*' ability — i.e.
+ * director-page tokens (abilities ['director']) — so those can only reach the
  * /api/director/* and /api/app/* routes, never the regular admin API. Web
  * admin logins (AuthController::login) issue ['*'] tokens and pass through
  * unchanged. Applied by CheckSectionPermission to every section-gated route,
@@ -33,7 +33,7 @@ class EnsureAdminToken
         if ($user && ! $user->tokenCan('*')) {
             return response()->json([
                 'status'  => 'error',
-                'message' => 'This token can only be used by the director app',
+                'message' => 'This token can only be used on the director page',
             ], 403);
         }
 

@@ -976,6 +976,43 @@ const routes = [
     ],
   },
 
+  /**
+   * Director page — show-scoped access for a production team (director,
+   * AD, stage manager…), installable as a PWA scoped to /director (see
+   * DirectorLayout.vue, public/director.webmanifest, public/director-sw.js).
+   * Uses its own 'director' token (src/director/api.js), never the admin
+   * login, and has no links out to the rest of the site.
+   */
+  {
+    path: "/director",
+    component: () => import("layouts/DirectorLayout.vue"),
+    meta: { nav: false },
+    children: [
+      {
+        name: "director-home",
+        path: "",
+        component: () => import("pages/director/DirectorHome.vue"),
+        meta: { nav: false },
+      },
+      {
+        name: "director-setup",
+        path: "setup",
+        component: () => import("pages/director/DirectorSetup.vue"),
+        meta: { nav: false },
+      },
+      {
+        name: "director-show",
+        path: "show/:id(\\d+)",
+        component: () => import("pages/director/DirectorShow.vue"),
+        meta: { nav: false },
+      },
+      {
+        path: ":rest(.*)*",
+        redirect: { name: "director-home" },
+      },
+    ],
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

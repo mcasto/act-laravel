@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * Read-only API for the desktop director app. Every response is built
+ * Read-only API for the director page (/director, a PWA). Every response is built
  * field-by-field (never a raw model) so nothing beyond what's listed here can
  * leak — in particular no patron, ticket-sale, or comp-recipient data, only
  * aggregates. Per-show routes are gated by EnsureDirectorShowAccess, which
@@ -118,24 +118,6 @@ class DirectorController extends Controller
                 'end_display_date' => $audition->end_display_date,
                 'html'             => $audition->html,
             ] : null,
-        ]);
-    }
-
-    /**
-     * Latest desktop app version + where to download it
-     *
-     * Public — the app checks this to show its update-available banner.
-     * Values come from config/director-app.php (env-driven).
-     *
-     * @return JsonResponse {latest, download_url}
-     *
-     * @source config('director-app')
-     */
-    public function version(): JsonResponse
-    {
-        return response()->json([
-            'latest'       => config('director-app.latest_version'),
-            'download_url' => config('director-app.download_url'),
         ]);
     }
 

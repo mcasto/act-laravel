@@ -8,7 +8,8 @@
       </q-card-section>
 
       <q-card-section class="text-caption text-grey-7 q-pb-none">
-        These people can see {{ show?.name }} in the ACT director app — seats
+        These people can see {{ show?.name }} on the director page
+        ({{ directorUrl }}) — seats
         reserved, sold-out status and the audition notice — between their start
         and end dates. Leave a date blank for no limit. Every role gets the same
         access; the role is just a label.
@@ -166,6 +167,8 @@ const isReadOnly = computed(
   () => getPermissionLevel(store.admin.user, "shows") === "read-only",
 );
 
+const directorUrl = `${window.location.host}/director`;
+
 const roleOptions = ["Director", "Assistant Director", "Stage Manager"];
 const statusColor = { active: "positive", upcoming: "info", ended: "grey" };
 
@@ -273,7 +276,7 @@ const remove = (row) => {
     title: upcoming ? "Remove access?" : "End access now?",
     message: upcoming
       ? `${row.user_name}'s access hasn't started yet, so it will be removed.`
-      : `${row.user_name} will lose access to ${props.show.name} in the director app right away. The record is kept, and you can re-open it later by changing the end date.`,
+      : `${row.user_name} will lose access to ${props.show.name} on the director page right away. The record is kept, and you can re-open it later by changing the end date.`,
     cancel: true,
     persistent: true,
   }).onOk(async () => {

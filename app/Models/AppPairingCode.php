@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * One-time setup code for pairing the desktop director app with a user.
+ * One-time setup code for pairing the director page with a user.
  * Only the SHA-256 hash is stored; the plain code is returned once, when
  * issued. Valid for 15 minutes, single use, one live code per person.
  */

@@ -64,7 +64,7 @@ class AuthController extends Controller
      * Handle user logout and revoke tokens
      *
      * Deletes all of the authenticated user's web-login API tokens,
-     * logging them out of every browser session. Desktop director-app
+     * logging them out of every browser session. Director-page
      * tokens are left alone.
      *
      * @param Request $request The authenticated request
@@ -74,7 +74,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
-        // Web-login tokens only — director-app devices stay paired until
+        // Web-login tokens only — director-page devices stay paired until
         // revoked individually (UserController::revokeAppDevice).
         $request->user()->tokens()
             ->where('abilities', '!=', json_encode([User::APP_TOKEN_ABILITY]))

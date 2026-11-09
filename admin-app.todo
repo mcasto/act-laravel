@@ -43,21 +43,23 @@ Phase 3 – Web admin UI:
   ✔ 3.4 AdminUsers.vue: "App devices" list per user (device, paired, last used) with Revoke @started(26-11-08 19:01) @done(26-11-08 19:11)
   ✔ 3.5 Verify in browser: add director + AD to a show, generate codes, revoke a device @started(26-11-08 19:05) @done(26-11-08 19:11)
 
-Phase 4 – Desktop app (Go + Wails v2, separate project in ~/go-projects/act-admin-app):
-  ☐ 4.1 Scaffold Wails v2 + Vue 3 template in ~/go-projects/act-admin-app (its own git repo, own go.mod; build output gitignored; nothing goes in act_overhaul)
-  ☐ 4.2 Go API client: token in OS keychain (go-keyring); all HTTP from Go so token never touches JS
-    - bindings: Pair(code), Shows(), Sales(showId), Auditions(showId), Unpair()
-  ☐ 4.3 Setup screen: paste setup code → pair
-  ☐ 4.4 Show picker with poster tiles (only when more than one active grant; otherwise go straight in)
-  ☐ 4.5 My Show: persistent header with poster + show name on every tab (poster cached locally by Go)
-  ☐ 4.6 Sales tab: per-performance cards (reserved / target, remaining, SOLD OUT badge), 60s auto-refresh + manual refresh
-  ☐ 4.7 Auditions tab
-  ☐ 4.8 "Access to <Show> ended on …" and "No active shows" screens; revoked token → back to Setup
-  ☐ 4.9 No navigation outside these screens; app never loads the website
-  ☐ 4.10 Update-available banner from /api/app/version
-  ☐ 4.11 Verify with wails dev against local php artisan serve (pair, sales cards, mark sold out → badge within 60s, revoke → Setup)
-  ☐ 4.12 wails build darwin/universal + windows/amd64; launch on a clean macOS account
-    - unsigned builds show Gatekeeper/SmartScreen warnings; signing ($99/yr Apple) later
+Phase 4 – Director web page + PWA (replaces the Go/Wails app — director turnover makes an installed app overkill):
+  ✔ 4.1 /director section in the existing SPA: own DirectorLayout, no site nav, no links out @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.2 Scoped PWA: /director.webmanifest (scope + start_url /director) + /director-sw.js registered with scope /director; icons from the logo @started(26-11-08 19:25) @done(26-11-08 19:31)
+    - files at site root, not /director/ (a real /director/ folder would bypass the SPA rewrite in .htaccess)
+    - SW is network-only (live numbers); exists so the page is installable
+  ✔ 4.3 Director API client: token in localStorage (separate from admin login), bearer on /api/app/* + /api/director/*; 401 → Setup @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.4 Setup screen: setup code (+ auto device name like "Safari on iPhone", editable) → POST /api/app/pair @started(26-11-08 19:25) @done(26-11-08 19:31)
+    - iOS: home-screen apps have separate storage → prompt to Add to Home Screen first, then enter the code there
+    - install button where the browser offers one (beforeinstallprompt)
+  ✔ 4.5 Show picker with poster tiles (only when more than one active grant; otherwise straight in) @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.6 My Show: persistent header with poster + show name on every tab @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.7 Sales tab: per-performance cards (reserved / target, remaining, comps, SOLD OUT badge), 60s auto-refresh + manual refresh @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.8 Auditions tab (notice dates + content) @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.9 "Access to <Show> ended on …", "starts on …" and "No active shows" screens; revoked token → Setup; Sign out (POST /api/app/unpair) @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.10 Update-available banner: page polls the deployed index.html and offers a reload when the build changed; drop the unused /api/app/version + config/director-app.php @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.11 Admin copy: Users "Director App" dialog + Production Team dialog point to actseats.com/director instead of a desktop app @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.12 Verify in browser (desktop + phone-size viewport): pair, sales cards, mark sold out → badge within 60s, grant ended → ended screen, revoke → Setup, manifest/SW scoped to /director only @started(26-11-08 19:25) @done(26-11-08 19:31)
 
 Later (not this pass):
   ☐ L.1 General-admin mode: same app opens locked webview on actseats.com/admin (no navigation outside /admin, persistent login)

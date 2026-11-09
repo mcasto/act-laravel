@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * Endpoints the desktop director app itself calls to pair / unpair. Setup
+ * Endpoints the director page itself calls to pair / unpair. Setup
  * codes are issued by an admin via UserController::createAppPairingCode().
  */
 class AppPairingController extends Controller
@@ -65,7 +65,7 @@ class AppPairingController extends Controller
         // tokenCan('director') is also true for '*' tokens, so test for
         // the absence of '*' instead — web logins must use /logout.
         if ($request->user()->tokenCan('*') || ! method_exists($token, 'delete')) {
-            return response()->json(['status' => 'error', 'message' => 'Not a director-app token'], 403);
+            return response()->json(['status' => 'error', 'message' => 'Not a director-page token'], 403);
         }
 
         $token->delete();

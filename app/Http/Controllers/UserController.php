@@ -291,7 +291,7 @@ class UserController extends Controller
     }
 
     /**
-     * Issue a one-time desktop-app setup code for a user
+     * Issue a one-time director-page setup code for a user
      *
      * The plain code is returned only here; only its hash is stored. Valid
      * for AppPairingCode::LIFETIME_MINUTES, single use; issuing a new code
@@ -325,7 +325,7 @@ class UserController extends Controller
     }
 
     /**
-     * List a user's paired desktop-app devices (their app tokens)
+     * List a user's paired director-page devices (their app tokens)
      *
      * @return JsonResponse [{id, device_name, paired_at, last_used_at}]
      *
@@ -356,7 +356,7 @@ class UserController extends Controller
     }
 
     /**
-     * Revoke one paired desktop-app device
+     * Revoke one paired director-page device
      *
      * Deletes only that computer's app token — never the user's web-login
      * tokens or other devices.

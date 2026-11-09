@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 /**
  * Web-admin CRUD for a show's production-team access (who can see the show
- * in the desktop director app, and when). Routes are gated by
+ * in the director page, and when). Routes are gated by
  * permission:shows — reads at read-only, writes at full.
  *
  * Grants are history: once a grant has started, "removing" it ends it

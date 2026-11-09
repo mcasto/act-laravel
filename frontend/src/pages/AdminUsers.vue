@@ -78,7 +78,7 @@
             color="primary"
             @click="directorAppDialog = { visible: true, user: row }"
           >
-            <q-tooltip>Director app: setup code &amp; connected computers</q-tooltip>
+            <q-tooltip>Director page: setup code &amp; connected devices</q-tooltip>
           </q-btn>
           <q-btn
             :icon="matDelete"

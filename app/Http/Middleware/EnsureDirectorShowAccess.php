@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Gates /api/director/shows/{show}/* — usage: ->middleware('director-show').
- * Requires a director-app token (the 'director' ability) and an active
+ * Requires a director-page token (the 'director' ability) and an active
  * ShowAccessGrant for the {show} route parameter. Web-login ('*') tokens are
- * refused too, so this API is reachable only through the desktop app and
+ * refused too, so this API is reachable only through the director page and
  * never widens what a regular admin login can see. On success the Show and
  * grant are stashed on the request as attributes 'director_show' and
  * 'director_grant'.
@@ -55,7 +55,7 @@ class EnsureDirectorShowAccess
     }
 
     /**
-     * 403 unless the caller authenticated with a director-app token. Note
+     * 403 unless the caller authenticated with a director-page token. Note
      * tokenCan('director') is also true for '*' tokens, hence the extra
      * '*' check.
      */
@@ -64,7 +64,7 @@ class EnsureDirectorShowAccess
         $user = $request->user();
 
         if (! $user || $user->tokenCan('*') || ! $user->tokenCan(User::APP_TOKEN_ABILITY)) {
-            return self::forbidden('not_app_token', 'This endpoint is only available to the director app');
+            return self::forbidden('not_app_token', 'This endpoint is only available on the director page');
         }
 
         return null;

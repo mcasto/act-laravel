@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Grants one user show-scoped access (via the desktop director app) to one
+ * Grants one user show-scoped access (via the director page) to one
  * show between starts_at and ends_at inclusive; a null bound is open-ended.
  * Days switch over at local (Cuenca) midnight — see LocalTime. All checks
  * compare Y-m-d strings, never Carbon instants (a date cast is midnight UTC).

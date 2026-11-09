@@ -86,7 +86,7 @@ class Performance extends Model
     /**
      * Seat counts for this performance — the single source for both the
      * admin seating summary (TicketSaleController::seatingSummary) and the
-     * director app's sales cards (DirectorController::sales).
+     * director page's sales cards (DirectorController::sales).
      *
      * - reserved: SUM(quantity) across all ticket sales. Redeemed comps are
      *   included — each has its own mirrored TicketSale (see
