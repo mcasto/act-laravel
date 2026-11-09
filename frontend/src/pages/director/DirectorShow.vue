@@ -73,7 +73,7 @@
           <div class="row items-center q-mb-md">
             <div class="text-caption text-grey-7">
               <template v-if="salesUpdatedAt">
-                Updated {{ salesUpdatedAt }} · refreshes every minute
+                Updated {{ salesUpdatedAt }}<template v-if="!offline"> · refreshes every minute</template>
               </template>
             </div>
             <q-space />
@@ -85,6 +85,7 @@
               :icon="matRefresh"
               label="Refresh"
               :loading="salesLoading"
+              :disable="offline"
               @click="loadSales"
             />
           </div>
@@ -190,6 +191,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { fetchAuditions, fetchSales, fetchShows, getToken } from "src/director/api";
 import { formatDate, formatTime, localToday, performanceRange } from "src/director/format";
+import { offline, shownAt } from "src/director/state";
 
 const REFRESH_MS = 60 * 1000;
 
@@ -243,19 +245,39 @@ const handleAuthError = (e) => {
 
 const loadShows = async () => {
   try {
-    shows.value = await fetchShows();
+    shows.value = (await fetchShows()).data;
   } catch (e) {
     handleAuthError(e);
   }
+};
+
+// The offline banner's "last info received" time: the older of the two
+// data sets on screen.
+const salesAt = ref(null);
+const auditionsAt = ref(null);
+const updateShownAt = () => {
+  const times = [salesAt.value, auditionsAt.value].filter(Boolean);
+  shownAt.value = times.length ? Math.min(...times) : null;
+};
+
+const timeLabel = (ms) => {
+  const d = new Date(ms);
+  const time = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  return d.toDateString() === new Date().toDateString()
+    ? time
+    : `${d.toLocaleDateString([], { month: "short", day: "numeric" })}, ${time}`;
 };
 
 const loadSales = async () => {
   if (blocked.value) return;
   salesLoading.value = true;
   try {
-    sales.value = await fetchSales(showId.value);
+    const result = await fetchSales(showId.value);
+    sales.value = result.data;
     salesError.value = "";
-    salesUpdatedAt.value = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    salesAt.value = result.at;
+    salesUpdatedAt.value = timeLabel(result.at);
+    updateShownAt();
   } catch (e) {
     if (!handleAuthError(e)) salesError.value = e.message;
   } finally {
@@ -267,9 +289,12 @@ const loadAuditions = async () => {
   if (blocked.value) return;
   auditionsLoading.value = true;
   try {
-    audition.value = (await fetchAuditions(showId.value)).audition;
+    const result = await fetchAuditions(showId.value);
+    audition.value = result.data.audition;
     auditionsError.value = "";
     auditionsLoaded.value = true;
+    auditionsAt.value = result.at;
+    updateShownAt();
   } catch (e) {
     if (!handleAuthError(e)) auditionsError.value = e.message;
   } finally {
@@ -291,9 +316,17 @@ const stopTimer = () => {
 const onVisible = () => {
   if (document.visibilityState === "visible" && !blocked.value) {
     loadSales();
-    if (tab.value === "auditions") loadAuditions();
+    loadAuditions();
   }
 };
+
+// Back online: refresh both (this also clears the offline banner).
+watch(offline, (isOffline) => {
+  if (!isOffline && !blocked.value) {
+    loadSales();
+    loadAuditions();
+  }
+});
 
 const loadAll = async () => {
   blocked.value = null;
@@ -301,12 +334,12 @@ const loadAll = async () => {
   auditionsLoaded.value = false;
   await loadShows();
   if (!getToken()) return;
-  await loadSales();
-  if (tab.value === "auditions") loadAuditions();
+  salesAt.value = auditionsAt.value = null;
+  // Load both up front so the last-known copy of each is saved for offline.
+  await Promise.all([loadSales(), loadAuditions()]);
   if (!blocked.value) startTimer();
 };
 
-watch(tab, (t) => t === "auditions" && !auditionsLoaded.value && loadAuditions());
 watch(showId, () => loadAll());
 
 onMounted(() => {

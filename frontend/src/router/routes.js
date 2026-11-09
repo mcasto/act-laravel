@@ -979,7 +979,7 @@ const routes = [
   /**
    * Director page — show-scoped access for a production team (director,
    * AD, stage manager…), installable as a PWA scoped to /director (see
-   * DirectorLayout.vue, public/director.webmanifest, public/director-sw.js).
+   * DirectorLayout.vue, public/director-manifest.json, public/director-sw.js).
    * Uses its own 'director' token (src/director/api.js), never the admin
    * login, and has no links out to the rest of the site.
    */

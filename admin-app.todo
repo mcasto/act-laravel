@@ -60,6 +60,8 @@ Phase 4 – Director web page + PWA (replaces the Go/Wails app — director turn
   ✔ 4.10 Update-available banner: page polls the deployed index.html and offers a reload when the build changed; drop the unused /api/app/version + config/director-app.php @started(26-11-08 19:25) @done(26-11-08 19:31)
   ✔ 4.11 Admin copy: Users "Director App" dialog + Production Team dialog point to actseats.com/director instead of a desktop app @started(26-11-08 19:25) @done(26-11-08 19:31)
   ✔ 4.12 Verify in browser (desktop + phone-size viewport): pair, sales cards, mark sold out → badge within 60s, grant ended → ended screen, revoke → Setup, manifest/SW scoped to /director only @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.13 Offline: show last-known shows/sales/auditions read-only with an "offline, may be out of date" note; SW caches the page shell + built assets (API never cached by SW) @started(26-11-08 19:38) @done(26-11-08 19:42)
+    - cached data cleared on disconnect/revoke; manifest renamed to director-manifest.json (same as Quasar's PWA manifest.json, known to work on the LiteSpeed host)
 
 Later (not this pass):
   ☐ L.1 General-admin mode: same app opens locked webview on actseats.com/admin (no navigation outside /admin, persistent login)

@@ -48,10 +48,11 @@
 
 <script setup>
 import { matTheaterComedy } from "@quasar/extras/material-icons";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { fetchShows, getToken } from "src/director/api";
 import { performanceRange } from "src/director/format";
+import { offline, shownAt } from "src/director/state";
 
 const router = useRouter();
 
@@ -65,7 +66,9 @@ const load = async () => {
   loading.value = true;
   error.value = "";
   try {
-    shows.value = await fetchShows();
+    const result = await fetchShows();
+    shows.value = result.data;
+    shownAt.value = result.at;
     // One show: skip the picker entirely.
     if (shows.value.length === 1) {
       router.replace({ name: "director-show", params: { id: shows.value[0].id } });
@@ -80,6 +83,9 @@ const load = async () => {
   }
   loading.value = false;
 };
+
+// Back online: refresh (also clears the offline banner on success).
+watch(offline, (isOffline) => !isOffline && load());
 
 onMounted(() => {
   if (!getToken()) {

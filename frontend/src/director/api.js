@@ -4,8 +4,13 @@
 // refuses on every regular admin route, and it lives under its own
 // localStorage key so it never mixes with an admin login on the same browser.
 
+import { offline } from "src/director/state";
+
 const TOKEN_KEY = "act-director-token";
 const USER_KEY = "act-director-user";
+// Last-known copy of each director API response, for offline viewing.
+// Removed with the token so the next person on a shared device sees nothing.
+const CACHE_PREFIX = "act-director-cache:";
 
 const read = (key) => {
   try {
@@ -36,6 +41,13 @@ export const getUser = () => {
 export const clearSession = () => {
   write(TOKEN_KEY, null);
   write(USER_KEY, null);
+  try {
+    Object.keys(localStorage)
+      .filter((key) => key.startsWith(CACHE_PREFIX))
+      .forEach((key) => localStorage.removeItem(key));
+  } catch {
+    // storage blocked — nothing was cached either
+  }
 };
 
 /**
@@ -69,6 +81,7 @@ const request = async (method, path, payload, { auth = true } = {}) => {
       cache: "no-store",
     });
   } catch {
+    offline.value = true;
     throw new DirectorApiError(0, { message: "Can't reach the server. Check your internet connection." });
   }
 
@@ -78,6 +91,8 @@ const request = async (method, path, payload, { auth = true } = {}) => {
   } catch {
     // non-JSON body
   }
+
+  offline.value = false;
 
   if (!response.ok) {
     // Token revoked/deleted (or user removed): forget it so the page drops
@@ -109,9 +124,34 @@ export const unpair = async () => {
   }
 };
 
-export const fetchShows = () => request("GET", "/director/shows");
-export const fetchSales = (showId) => request("GET", `/director/shows/${showId}/sales`);
-export const fetchAuditions = (showId) => request("GET", `/director/shows/${showId}/auditions`);
+/**
+ * GET with an offline fallback. Resolves to { data, at, stale }: `at` is when
+ * the data was fetched (ms epoch); `stale` is true when the server couldn't
+ * be reached and this is the last-known copy instead. Any other error (401,
+ * 403, no saved copy) is thrown as usual.
+ */
+const cachedGet = async (key, path) => {
+  try {
+    const data = await request("GET", path);
+    const at = Date.now();
+    write(CACHE_PREFIX + key, JSON.stringify({ data, at }));
+    return { data, at, stale: false };
+  } catch (e) {
+    if (e.status === 0) {
+      try {
+        const saved = JSON.parse(read(CACHE_PREFIX + key) || "null");
+        if (saved) return { ...saved, stale: true };
+      } catch {
+        // corrupt entry — fall through to the original error
+      }
+    }
+    throw e;
+  }
+};
+
+export const fetchShows = () => cachedGet("shows", "/director/shows");
+export const fetchSales = (showId) => cachedGet(`sales:${showId}`, `/director/shows/${showId}/sales`);
+export const fetchAuditions = (showId) => cachedGet(`auditions:${showId}`, `/director/shows/${showId}/auditions`);
 
 /** A readable default device name, e.g. "Safari on iPhone". */
 export const guessDeviceName = () => {

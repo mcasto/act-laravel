@@ -5,7 +5,7 @@
         <img src="/director-icons/icon-192.png" alt="" class="director-logo q-mr-sm" />
         <q-toolbar-title class="text-weight-medium">ACT Director</q-toolbar-title>
         <q-btn
-          v-if="installPrompt"
+          v-if="installPrompt && !offline"
           flat
           dense
           no-caps
@@ -14,7 +14,7 @@
           class="q-mr-xs"
           @click="install"
         />
-        <q-btn v-if="paired" flat round dense :icon="matMoreVert">
+        <q-btn v-if="paired" flat round dense :icon="matMoreVert" :disable="offline">
           <q-menu auto-close>
             <q-list style="min-width: 200px">
               <q-item-label header>{{ user?.name }}</q-item-label>
@@ -26,7 +26,13 @@
           </q-menu>
         </q-btn>
       </q-toolbar>
-      <q-banner v-if="updateAvailable" dense class="bg-amber-2 text-black">
+      <q-banner v-if="offline" dense class="bg-grey-9 text-white">
+        <template #avatar><q-icon :name="matCloudOff" /></template>
+        You're offline<template v-if="shownAtLabel">. Showing the last info received
+        {{ shownAtLabel }}</template> — it may be out of date. This will update
+        automatically when you're back online.
+      </q-banner>
+      <q-banner v-else-if="updateAvailable" dense class="bg-amber-2 text-black">
         A new version of this page is available.
         <template #action>
           <q-btn flat dense no-caps color="secondary" label="Reload" @click="reload" />
@@ -41,11 +47,27 @@
 </template>
 
 <script setup>
-import { matInstallMobile, matLogout, matMoreVert } from "@quasar/extras/material-icons";
+import { matCloudOff, matInstallMobile, matLogout, matMoreVert } from "@quasar/extras/material-icons";
 import { Dialog } from "quasar";
 import { computed, onBeforeUnmount, onMounted, provide, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getToken, getUser, unpair } from "src/director/api";
+import { offline, shownAt } from "src/director/state";
+
+// "7:29 PM" today, otherwise "Nov 7, 7:29 PM".
+const shownAtLabel = computed(() => {
+  if (!shownAt.value) return "";
+  const d = new Date(shownAt.value);
+  const time = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  return d.toDateString() === new Date().toDateString()
+    ? `at ${time}`
+    : `on ${d.toLocaleDateString([], { month: "short", day: "numeric" })}, ${time}`;
+});
+
+const onOffline = () => (offline.value = true);
+// Coming back online: pages watch `offline` and reload their data, which
+// flips it back to false on the first successful response.
+const onOnline = () => (offline.value = false);
 
 const router = useRouter();
 const route = useRoute();
@@ -108,9 +130,27 @@ let updateTimer = null;
 
 const reload = () => location.reload();
 
+// Hand the service worker the files this page has loaded so far (and the
+// shell) so it can open offline — the first visit loads them before the
+// worker takes control. Re-sent after each navigation for lazy-loaded pages.
+const rememberLoadedFiles = () => {
+  navigator.serviceWorker.ready
+    .then((registration) => {
+      const urls = performance
+        .getEntriesByType("resource")
+        .map((entry) => entry.name)
+        .filter((name) => name.startsWith(location.origin));
+      registration.active?.postMessage({ type: "cache-urls", urls: ["/director", ...urls] });
+    })
+    .catch(() => {});
+};
+const removeAfterEach = router.afterEach(
+  () => "serviceWorker" in navigator && setTimeout(rememberLoadedFiles, 1500),
+);
+
 onMounted(() => {
   document.title = "ACT Director";
-  addHeadTag("link", { rel: "manifest", href: "/director.webmanifest" });
+  addHeadTag("link", { rel: "manifest", href: "/director-manifest.json" });
   addHeadTag("meta", { name: "theme-color", content: "#2A2670" });
   addHeadTag("link", { rel: "apple-touch-icon", href: "/director-icons/icon-180.png" });
   addHeadTag("meta", { name: "apple-mobile-web-app-capable", content: "yes" });
@@ -119,7 +159,10 @@ onMounted(() => {
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/director-sw.js", { scope: "/director" }).catch(() => {});
+    rememberLoadedFiles();
   }
+  window.addEventListener("offline", onOffline);
+  window.addEventListener("online", onOnline);
   window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
 
   updateTimer = setInterval(checkForUpdate, 5 * 60 * 1000);
@@ -129,6 +172,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
   headTags.forEach((el) => el.remove());
   window.removeEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+  removeAfterEach();
+  window.removeEventListener("offline", onOffline);
+  window.removeEventListener("online", onOnline);
   clearInterval(updateTimer);
   document.removeEventListener("visibilitychange", onVisible);
 });
