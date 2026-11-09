@@ -46,7 +46,8 @@ class AuditionController extends Controller
             'display_date' => 'required|date',
             'end_display_date' => 'required|date',
             'html' => 'nullable|string',
-            'show_id' => 'required|integer'
+            'show_id' => 'required|integer',
+            'preview' => 'sometimes|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -56,6 +57,7 @@ class AuditionController extends Controller
         try {
             // Use the custom createWithHtml method
             $audition = Audition::createWithHtml($validator->validated());
+            $this->clearOtherPreviews($audition);
             return ['status' => 'success', 'audition' => $audition];
         } catch (Exception $e) {
             logger()->error($e->getMessage());
@@ -82,7 +84,8 @@ class AuditionController extends Controller
             'display_date' => 'required|date',
             'end_display_date' => 'required|date',
             'html' => 'nullable|string',
-            'show_id' => 'required|integer'
+            'show_id' => 'required|integer',
+            'preview' => 'sometimes|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -98,6 +101,7 @@ class AuditionController extends Controller
 
             // Use the custom updateWithHtml method
             $audition->updateWithHtml($validator->validated());
+            $this->clearOtherPreviews($audition);
 
             return ['status' => 'success', 'audition' => $audition];
         } catch (Exception $e) {
@@ -124,6 +128,34 @@ class AuditionController extends Controller
             ->first();
 
         return response()->json($currentAudition);
+    }
+
+    /**
+     * Get the audition that has preview turned on, ignoring its display
+     * dates — backs the public /audition/preview page.
+     *
+     * @return JsonResponse The previewed audition with show relationship or null
+     *
+     * @source Database Model: Audition (reads with Show relationship)
+     */
+    public function preview(): JsonResponse
+    {
+        return response()->json(
+            Audition::with(['show'])->where('preview', true)->latest('updated_at')->first()
+        );
+    }
+
+    /**
+     * Only one audition is previewed at a time — turning it on for one
+     * turns it off everywhere else.
+     *
+     * @source Database Model: Audition (updates)
+     */
+    private function clearOtherPreviews(Audition $audition): void
+    {
+        if ($audition->preview) {
+            Audition::where('id', '!=', $audition->id)->where('preview', true)->update(['preview' => false]);
+        }
     }
 
     /**

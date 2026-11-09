@@ -36,7 +36,6 @@ class Show extends Model
             'name'               => ['required', 'string', 'max:255'],
             'writer'             => ['required', 'string', 'max:255'],
             'tagline'            => ['required', 'string', 'max:255'],
-            'director'           => ['required', 'string', 'max:255'],
             'info'               => ['nullable', 'string', 'max:65535'],
             'poster'             => ['required', 'string', 'max:255'],
             'ticket_sales_start' => ['required', 'date'],

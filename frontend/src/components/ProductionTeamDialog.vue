@@ -122,9 +122,7 @@
               :disable="isReadOnly"
               @click="remove(row)"
             >
-              <q-tooltip>
-                {{ row.status === 'upcoming' ? 'Remove' : 'End access now' }}
-              </q-tooltip>
+              <q-tooltip>Remove</q-tooltip>
             </q-btn>
           </div>
         </div>
@@ -192,7 +190,7 @@ const isDirty = (row) =>
   row.ends_at !== row.original.ends_at;
 
 // A person can only have one row per show (ended rows included — re-open
-// those by editing their dates), so hide anyone already listed.
+// those by editing their dates, or remove and re-add), so hide anyone already listed.
 const userOptions = (row) => {
   const taken = new Set(rows.value.filter((r) => r !== row && r.user_id).map((r) => r.user_id));
   return users.value
@@ -271,12 +269,9 @@ const save = async (row) => {
 };
 
 const remove = (row) => {
-  const upcoming = row.status === "upcoming";
   Dialog.create({
-    title: upcoming ? "Remove access?" : "End access now?",
-    message: upcoming
-      ? `${row.user_name}'s access hasn't started yet, so it will be removed.`
-      : `${row.user_name} will lose access to ${props.show.name} on the director page right away. The record is kept, and you can re-open it later by changing the end date.`,
+    title: "Remove from production team?",
+    message: `${row.user_name} will be removed from ${props.show.name} and lose access on the director page right away.`,
     cancel: true,
     persistent: true,
   }).onOk(async () => {
@@ -288,10 +283,7 @@ const remove = (row) => {
       });
       if (!response) return;
       replaceSaved(response.grants);
-      Notify.create({
-        type: "positive",
-        message: response.outcome === "deleted" ? "Access removed" : "Access ended",
-      });
+      Notify.create({ type: "positive", message: "Removed" });
     } catch (error) {
       Notify.create({ type: "negative", message: errorMessage(error) });
     }

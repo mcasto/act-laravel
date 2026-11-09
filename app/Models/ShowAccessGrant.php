@@ -30,6 +30,62 @@ class ShowAccessGrant extends Model
         'ends_at'   => 'date:Y-m-d',
     ];
 
+    /** The role label that marks a show's director (matched case-insensitively). */
+    public const DIRECTOR_ROLE = 'Director';
+
+    /**
+     * Keep shows.director (shown on the public pages) in sync with the
+     * Production Team, which is now where the director is designated.
+     */
+    protected static function booted()
+    {
+        static::saved(fn (ShowAccessGrant $grant) => static::syncShowDirector(
+            $grant->show_id,
+            static::isDirectorRole($grant->role) || static::isDirectorRole($grant->getOriginal('role')),
+        ));
+        static::deleted(fn (ShowAccessGrant $grant) => static::syncShowDirector(
+            $grant->show_id,
+            static::isDirectorRole($grant->role),
+        ));
+    }
+
+    public static function isDirectorRole(?string $role): bool
+    {
+        return strtolower(trim((string) $role)) === strtolower(self::DIRECTOR_ROLE);
+    }
+
+    /**
+     * Sets shows.director to the name(s) of the show's Director-role grants.
+     * If none remain, it's cleared (public pages show "TBA") only when the
+     * change being made involved a Director — otherwise the existing value
+     * is left alone, since older shows were entered by hand and have no
+     * Production Team.
+     */
+    public static function syncShowDirector(int $showId, bool $clearIfNone = false): void
+    {
+        $names = static::where('show_id', $showId)
+            ->director()
+            ->with('user:id,name')
+            ->orderBy('id')
+            ->get()
+            ->map(fn (ShowAccessGrant $g) => $g->user?->name)
+            ->filter()
+            ->unique()
+            ->values();
+
+        if ($names->isNotEmpty()) {
+            Show::where('id', $showId)->update(['director' => $names->join(', ', ' & ')]);
+        } elseif ($clearIfNone) {
+            Show::where('id', $showId)->update(['director' => null]);
+        }
+    }
+
+    /** Grants whose role is Director. */
+    public function scopeDirector(Builder $query): Builder
+    {
+        return $query->whereRaw('LOWER(TRIM(role)) = ?', [strtolower(self::DIRECTOR_ROLE)]);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -26,5 +26,6 @@ export default async () => {
     display_date: formatISO9075(new Date(), { representation: "date" }),
     end_display_date: formatISO9075(new Date(), { representation: "date" }),
     html: "",
+    preview: false,
   };
 };

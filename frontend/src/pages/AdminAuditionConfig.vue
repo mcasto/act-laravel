@@ -27,6 +27,46 @@
           ></q-input>
         </div>
 
+        <div class="col-12 q-px-md row items-center q-gutter-x-md">
+          <q-toggle
+            v-model="store.admin.audition.preview"
+            label="Preview"
+            :disable="isReadOnly"
+          />
+          <q-btn
+            v-if="store.admin.audition.preview"
+            :icon="matOpenInNew"
+            label="Open preview"
+            href="/audition/preview"
+            target="_blank"
+            flat
+            dense
+            no-caps
+            color="primary"
+          />
+          <div class="col text-caption text-grey-7">
+            When on (and saved), the saved page can be viewed at
+            {{ previewUrl }} regardless of the display dates. Only one show's
+            audition can be previewed at a time.
+          </div>
+          <!-- Same as the buttons below the editor, so a quick change
+               (e.g. the Preview toggle) doesn't need a scroll to save. -->
+          <div class="no-wrap">
+            <q-btn
+              label="Reset"
+              @click="store.getAuditionConfig"
+              color="negative"
+            ></q-btn>
+            <q-btn
+              type="submit"
+              label="Save"
+              color="positive"
+              class="q-ml-md text-black"
+              :disable="isReadOnly"
+            ></q-btn>
+          </div>
+        </div>
+
         <div class="col-12 q-pa-md">
           <div class="text-h6">
             Audition Page Content
@@ -80,7 +120,7 @@
 </template>
 
 <script setup>
-import { matContentCopy } from "@quasar/extras/material-icons";
+import { matContentCopy, matOpenInNew } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import {
   auditionFonts,
@@ -99,6 +139,8 @@ const isReadOnly = computed(
 );
 
 const formRef = ref(null);
+
+const previewUrl = `${window.location.host}/audition/preview`;
 
 const copyPrompt = async () => {
   try {

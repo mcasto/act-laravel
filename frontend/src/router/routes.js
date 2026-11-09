@@ -52,6 +52,17 @@ const routes = [
         meta: { nav: true, label: "Season" },
       },
       {
+        // The audition with "Preview" turned on in the admin, shown
+        // regardless of its display dates. Not in the nav; the page loads
+        // its own data so store.audition (which drives the nav item) is
+        // left alone.
+        name: "audition-preview",
+        path: "audition/preview",
+        component: () => import("pages/AuditionPage.vue"),
+        props: { preview: true },
+        meta: { nav: false },
+      },
+      {
         name: "audition",
         path: "audition",
         component: () => import("pages/AuditionPage.vue"),

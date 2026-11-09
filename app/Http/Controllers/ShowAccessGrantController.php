@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Show;
 use App\Models\ShowAccessGrant;
 use App\Models\User;
-use App\Helpers\LocalTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,10 +14,9 @@ use Illuminate\Validation\Rule;
  * in the director page, and when). Routes are gated by
  * permission:shows — reads at read-only, writes at full.
  *
- * Grants are history: once a grant has started, "removing" it ends it
- * (ends_at = yesterday) instead of deleting the row. Only a grant that has
- * never been in effect (starts in the future) can actually be deleted.
- * Dates are saved exactly as submitted — ShowAccessGrant::defaultWindow()
+ * The grants are the history of who worked each show. Removing a person
+ * (entered by mistake, bowed out) deletes their row outright; a grant whose
+ * dates simply run out is kept and shows as "ended". Dates are saved exactly as submitted — ShowAccessGrant::defaultWindow()
  * is only offered to the UI as a pre-fill.
  */
 class ShowAccessGrantController extends Controller
@@ -85,31 +83,20 @@ class ShowAccessGrantController extends Controller
     }
 
     /**
-     * Remove a grant: deletes it if it has never been in effect, otherwise
-     * ends it as of yesterday so the history is kept.
+     * Remove a person from the show's production team. The row is deleted
+     * outright, so access stops immediately and they drop off the list.
      *
-     * @return JsonResponse {status, outcome: 'deleted'|'ended', grants}
+     * @return JsonResponse {status, grants}
      *
-     * @source Database Model: ShowAccessGrant (deletes or updates ends_at)
+     * @source Database Model: ShowAccessGrant (deletes)
      */
     public function destroy(int $showId, int $grantId): JsonResponse
     {
         $show = Show::findOrFail($showId);
         $grant = ShowAccessGrant::where('show_id', $show->id)->findOrFail($grantId);
-        if ($grant->isUpcoming()) {
-            $grant->delete();
-            $outcome = 'deleted';
-        } else {
-            // Yesterday in local (Cuenca) terms, so access stops right now.
-            $yesterday = LocalTime::now()->subDay()->toDateString();
-            // Already ended earlier: leave its real end date alone.
-            if (! $grant->ends_at || $grant->ends_at->toDateString() > $yesterday) {
-                $grant->update(['ends_at' => $yesterday]);
-            }
-            $outcome = 'ended';
-        }
+        $grant->delete();
 
-        return response()->json(['status' => 'success', 'outcome' => $outcome, 'grants' => $this->grantsFor($show)]);
+        return response()->json(['status' => 'success', 'grants' => $this->grantsFor($show)]);
     }
 
     private function rules(): array

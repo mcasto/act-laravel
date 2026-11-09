@@ -16,6 +16,11 @@ class Audition extends Model
         'show_id',
         'display_date',
         'end_display_date',
+        'preview',
+    ];
+
+    protected $casts = [
+        'preview' => 'boolean',
     ];
 
     protected $appends = ['html'];

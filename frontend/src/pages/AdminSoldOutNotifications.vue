@@ -5,6 +5,8 @@
         <div class="text-h6">Sold Out Notifications</div>
         <div class="text-caption text-grey-7">
           Everyone on this list gets emailed when a performance is marked sold out.
+          Each show's Director (from its Production Team) is emailed automatically
+          — no need to add them here.
         </div>
       </div>
       <q-btn

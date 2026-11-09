@@ -60,7 +60,7 @@
           <span class="text-bold">
             Directed By:
           </span>
-          {{ show?.director }}
+          {{ show?.director || "TBA" }}
         </div>
 
         <div class="text-center q-mt-md">

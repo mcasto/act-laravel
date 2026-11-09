@@ -53,12 +53,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-sm-6" v-if="store.show.director">
+                <div class="col-12 col-sm-6">
                   <div class="fact-chip">
                     <q-icon :name="matTheaterComedy" />
                     <div>
                       <div class="fact-label">Directed By</div>
-                      <div class="fact-value">{{ store.show.director }}</div>
+                      <div class="fact-value">{{ store.show.director || "TBA" }}</div>
                     </div>
                   </div>
                 </div>

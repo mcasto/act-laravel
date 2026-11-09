@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\SoldOutNotificationMailer;
 use App\Models\Performance;
+use App\Models\ShowAccessGrant;
 use App\Models\SoldOutNotificationRecipient;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -138,15 +139,15 @@ class PerformanceController extends Controller
         $failed = 0;
 
         foreach ($performances as $performance) {
-            foreach ($recipients as $recipient) {
+            foreach ($this->soldOutEmailsFor($performance, $recipients) as $email) {
                 try {
-                    Mail::to($recipient->email)->send(new SoldOutNotificationMailer($performance));
+                    Mail::to($email)->send(new SoldOutNotificationMailer($performance));
                     $sent++;
                 } catch (Exception $e) {
                     $failed++;
                     logger()->error('Failed to send sold-out notification', [
                         'performance_id' => $performance->id,
-                        'recipient_id' => $recipient->id,
+                        'email' => $email,
                         'error' => $e->getMessage(),
                     ]);
                 }
@@ -154,5 +155,29 @@ class PerformanceController extends Controller
         }
 
         return response()->json(['status' => 'success', 'sent' => $sent, 'failed' => $failed]);
+    }
+
+    /**
+     * The global recipient list plus the show's Director(s) from its
+     * Production Team (grants that haven't ended), de-duplicated by email
+     * so someone on both lists gets one copy.
+     *
+     * @source Database Models: ShowAccessGrant, User (reads)
+     */
+    private function soldOutEmailsFor(Performance $performance, $recipients): array
+    {
+        $directorEmails = ShowAccessGrant::where('show_id', $performance->show_id)
+            ->director()
+            ->with('user:id,email')
+            ->get()
+            ->reject(fn (ShowAccessGrant $g) => ! $g->isActive() && ! $g->isUpcoming())
+            ->map(fn (ShowAccessGrant $g) => $g->user?->email);
+
+        return $recipients->pluck('email')
+            ->concat($directorEmails)
+            ->filter()
+            ->unique(fn ($email) => strtolower(trim($email)))
+            ->values()
+            ->all();
     }
 }

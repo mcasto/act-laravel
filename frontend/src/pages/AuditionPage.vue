@@ -1,11 +1,30 @@
 <template>
-  <div v-if="audition">
+  <div v-if="preview && loading" class="q-pa-xl text-center">
+    <q-spinner size="2em" />
+  </div>
+
+  <div v-else-if="audition?.id">
+    <q-banner v-if="preview" dense class="bg-warning text-black text-center">
+      Preview — this audition page isn't public yet
+      <template v-if="audition.display_date">
+        (scheduled to show {{ audition.display_date }} to {{ audition.end_display_date }}).
+      </template>
+    </q-banner>
     <div v-html="audition.html"></div>
   </div>
 
+  <div v-else-if="preview" class="q-pa-xl">
+    <div class="text-h5">No audition preview is turned on.</div>
+    <p class="q-mt-md">
+      Turn on <b>Preview</b> in the admin Auditions page and save to see it here.
+    </p>
+  </div>
+
   <div v-else class="q-pa-xl">
-    <div class="text-h4">Alas, there are no current auditions.</div>
-    <div class="text-h5 q-mb-md">But we always need help!</div>
+    <div class="text-h4">There are no auditions open right now.</div>
+    <div class="text-h5 q-mb-md">
+      Check back soon — and in the meantime, we can always use a hand!
+    </div>
     <p>
       While the stage is quiet, the buzz backstage never stops! The magic of our
       shows relies on a huge team of dedicated volunteers. If you have a passion
@@ -53,16 +72,31 @@
 </template>
 
 <script setup>
+import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
-import { computed, onBeforeMount, onMounted, ref } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
+
+const props = defineProps({ preview: { type: Boolean, default: false } });
 
 const store = useStore();
 
-const audition = computed(() => {
-  return store.audition;
+// The API sends {} (not null) when there's no audition, so templates test
+// audition?.id rather than truthiness.
+// In preview mode the page fetches its own audition (ignoring display dates)
+// rather than using store.audition, which drives the public nav item.
+const previewAudition = ref(null);
+const loading = ref(props.preview);
+
+onBeforeMount(async () => {
+  if (!props.preview) return;
+  try {
+    previewAudition.value = await callApi({ path: "/audition-preview", method: "get" });
+  } finally {
+    loading.value = false;
+  }
 });
 
-const show = computed(() => {
-  return audition.value.show;
+const audition = computed(() => {
+  return props.preview ? previewAudition.value : store.audition;
 });
 </script>

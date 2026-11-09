@@ -38,18 +38,6 @@
         </div>
         <div class="col-6 q-px-xs">
           <q-input
-            outlined
-            dense
-            type="text"
-            label="Director"
-            v-model="props.show.director"
-            :disable="isReadOnly"
-            required
-          ></q-input>
-        </div>
-
-        <div class="col-6 q-px-xs">
-          <q-input
             type="number"
             v-model.number="store.admin.show.ticket_price"
             label="Ticket Price"
@@ -58,7 +46,7 @@
             :disable="isReadOnly"
           ></q-input>
         </div>
-        <div class="col-6 q-px-xs text-right">
+        <div class="col-12 q-px-xs text-right">
           <div class="q-my-md cursor-pointer">
             Ticket Sales Start:
             {{ format(parseISO(props.show.ticket_sales_start), "PP") }}

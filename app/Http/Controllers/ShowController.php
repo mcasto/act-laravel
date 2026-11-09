@@ -282,7 +282,6 @@ class ShowController extends Controller
             'name'               => null,
             'writer'             => null,
             'tagline'            => null,
-            'director'           => null,
             'info'               => '',
             'poster'             => uniqid(),
             'ticket_sales_start' => LocalTime::now()->addWeeks(6)->toDateString(),
