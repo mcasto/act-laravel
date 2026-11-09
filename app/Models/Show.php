@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Helpers\LocalTime;
 use Illuminate\Support\Facades\DB;
 
 class Show extends Model
@@ -103,8 +104,8 @@ class Show extends Model
     public function audition()
     {
         return $this->hasOne(Audition::class)
-            ->where('display_date', '<=', now()->toDateString())
-            ->where('end_display_date', '>=', now()->toDateString());
+            ->where('display_date', '<=', LocalTime::todayString())
+            ->where('end_display_date', '>=', LocalTime::todayString());
     }
 
     /**
@@ -135,6 +136,6 @@ class Show extends Model
     {
         $lastPerformance = $this->performances->max('date');
 
-        return $lastPerformance && $lastPerformance < now()->toDateString();
+        return $lastPerformance && $lastPerformance < LocalTime::todayString();
     }
 }

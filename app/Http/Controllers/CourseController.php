@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Helpers\PatronMail;
 use App\Helpers\RefId;
 use App\Mail\CourseEnrollmentConfirmedMailer;
@@ -100,7 +101,7 @@ class CourseController extends Controller
         }
 
         $rec = $validator->validated();
-        $baseSlug = Str::slug($rec['name'], '-') . '-' . date("Y");
+        $baseSlug = Str::slug($rec['name'], '-') . '-' . LocalTime::now()->year;
         $rec['slug'] = $this->resolveUniqueSlug($baseSlug);
 
         if (Storage::disk('local')->exists("uploads/{$rec['poster']}")) {
@@ -323,7 +324,7 @@ class CourseController extends Controller
     public function openEnrollment(): JsonResponse
     {
         $courses = Course::with(['sessions'])
-            ->where('enrollment_start', '<=', now(Course::TIMEZONE)->toDateString())
+            ->where('enrollment_start', '<=', LocalTime::todayString())
             ->get()
             ->filter(fn ($course) => $course->isPubliclyVisible())
             ->values();
@@ -342,7 +343,7 @@ class CourseController extends Controller
     public function previewEnrollment(): JsonResponse
     {
         $courses = Course::with(['sessions'])
-            ->where('enrollment_end', '>=', now(Course::TIMEZONE)->toDateString())
+            ->where('enrollment_end', '>=', LocalTime::todayString())
             ->orderBy('enrollment_start')
             ->limit(1)
             ->get();

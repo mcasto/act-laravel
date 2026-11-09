@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Helpers\ActiveSeason;
 use App\Mail\AngelDonationMailer;
 use App\Mail\CourseEnrollmentConfirmedMailer;
@@ -94,7 +95,7 @@ class FixrWebhooksController extends Controller
                 'patron_id' => $patron->id,
                 'performance_id' => $performance->id,
                 'payment_method_id' => $creditCardMethod?->id,
-                'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil'),
+                'sold_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone(LocalTime::zone()),
                 'quantity' => $validated['payload']['quantity'],
                 'transaction_id' => $validated['payload']['order_reference'],
                 'confirmed' => true,
@@ -219,7 +220,9 @@ class FixrWebhooksController extends Controller
                 'season' => ActiveSeason::get(),
                 'tickets_purchased' => $validated['payload']['quantity'] * $flexConfig['num_tickets'],
                 'payment_method_id' => $creditCardMethod?->id,
-                'purchased_at' => Carbon::parse($validated['payload']['sold_at'])->setTimezone('America/Guayaquil'),
+                // purchased_at is datetime-cast and serialized to the admin
+                // as UTC ISO, so it must be stored as UTC (unlike sold_at).
+                'purchased_at' => Carbon::parse($validated['payload']['sold_at'])->utc(),
             ]);
 
             // Box-office notification only — Fixr sends its own confirmation

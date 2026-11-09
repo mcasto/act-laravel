@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Helpers\ActiveSeason;
 use App\Helpers\TheaterSeason;
 use App\Models\Angel;
@@ -492,7 +493,7 @@ class PatronController extends Controller
      */
     private function purchaseDate(string $date): Carbon
     {
-        return $date === now()->toDateString()
+        return $date === LocalTime::todayString()
             ? now()
             : Carbon::parse($date)->setTime(12, 0);
     }

@@ -77,6 +77,13 @@ return [
     'timezone'        => 'UTC',
 
     /*
+    | The theater's own timezone. Storage and the PHP clock stay UTC (above);
+    | every day-boundary decision goes through App\Helpers\LocalTime so it
+    | switches over at local (Cuenca) midnight.
+    */
+    'local_timezone'  => 'America/Guayaquil',
+
+    /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------

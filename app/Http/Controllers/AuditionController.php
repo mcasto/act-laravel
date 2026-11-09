@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Models\Audition;
 use Carbon\Carbon;
 use Exception;
@@ -118,8 +119,8 @@ class AuditionController extends Controller
     public function current(): JsonResponse
     {
         $currentAudition = Audition::with(['show'])
-            ->where('display_date', '<=', Carbon::now())
-            ->where('end_display_date', '>=', Carbon::now())
+            ->where('display_date', '<=', LocalTime::todayString())
+            ->where('end_display_date', '>=', LocalTime::todayString())
             ->first();
 
         return response()->json($currentAudition);
