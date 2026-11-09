@@ -97,6 +97,17 @@
                       </q-item-label>
                     </q-item-section>
                   </q-item>
+                  <q-item
+                    v-if="store.admin.show.id"
+                    clickable
+                    @click="productionTeamDialog = true"
+                  >
+                    <q-item-section>
+                      <q-item-label>
+                        Production Team Access
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
                 </q-list>
               </q-menu>
             </q-btn>
@@ -161,6 +172,11 @@
       </q-card>
     </q-dialog>
 
+    <production-team-dialog
+      v-model="productionTeamDialog"
+      :show="store.admin.show"
+    ></production-team-dialog>
+
     <q-dialog
       v-model="performancesDrawer"
       :maximized="false"
@@ -183,6 +199,7 @@ import { matClose, matContentCopy, matRefresh, matSettings } from "@quasar/extra
 import PerformancesDrawer from "src/components/PerformancesDrawer.vue";
 import ShowPoster from "src/components/ShowPoster.vue";
 import ShowInfoForm from "src/components/ShowInfoForm.vue";
+import ProductionTeamDialog from "src/components/ProductionTeamDialog.vue";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 
@@ -241,6 +258,8 @@ const onPerformancesDrawerHide = () => {
     store.admin.show.performances = performancesSnapshot;
   }
 };
+
+const productionTeamDialog = ref(false);
 
 const flexDialog  = ref(false);
 const flexLoading = ref(false);

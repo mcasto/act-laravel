@@ -25,6 +25,7 @@ use App\Http\Controllers\PatronController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\ProjectCharterController;
+use App\Http\Controllers\ShowAccessGrantController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
@@ -85,6 +86,14 @@ Route::middleware(['auth:sanctum', 'permission:shows,auditions,volunteer-needs']
 Route::middleware(['auth:sanctum', 'permission:shows'])->delete('shows/{id}', [ShowController::class, 'destroy']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->get('new-show-template', [ShowController::class, 'newShow']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->put('update-tentative/{id}', [ShowController::class, 'updateTentative']);
+
+// Production-team access (director app) — see ShowAccessGrantController
+Route::middleware(['auth:sanctum', 'permission:shows'])->prefix('shows/{showId}/access-grants')->group(function () {
+    Route::get('/', [ShowAccessGrantController::class, 'index']);
+    Route::post('/', [ShowAccessGrantController::class, 'store']);
+    Route::put('/{grantId}', [ShowAccessGrantController::class, 'update']);
+    Route::delete('/{grantId}', [ShowAccessGrantController::class, 'destroy']);
+});
 
 /**
  * Serves a storage file with long-lived cache headers (etag derived from
