@@ -19,11 +19,7 @@
         </div>
         <ol class="q-pl-md q-my-none text-body2">
           <li>Click <b>Copy AI prompt</b> (it already includes this show's poster).</li>
-          <li>
-            In ChatGPT, Claude or similar, paste the prompt and attach your .docx — and the
-            poster too (<a :href="posterUrl" target="_blank" rel="noopener">open poster</a>,
-            then save it), in case the AI can't open links.
-          </li>
+          <li>In ChatGPT, Claude or similar, paste the prompt and attach your .docx.</li>
           <li>Copy the HTML it gives you, click the <b>&lt; &gt;</b> button in the editor below, and paste it in.</li>
           <li>Click the <b>&lt; &gt;</b> button again to preview it, then <b>Save</b>.</li>
         </ol>
@@ -72,7 +68,7 @@ import { matAutoAwesome, matContentCopy } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import { computed, ref } from "vue";
 import DateField from "src/components/DateField.vue";
-import { auditionFonts, auditionToolbar, buildAuditionPrompt, posterUrlFor } from "src/assets/audition-editor";
+import { auditionFonts, auditionToolbar, buildAuditionPrompt, posterFor } from "src/assets/audition-editor";
 import { updateAuditions } from "src/director/api";
 import { localToday } from "src/director/format";
 import { offline } from "src/director/state";
@@ -92,12 +88,16 @@ const draft = ref({
 const saving = ref(false);
 const error = ref("");
 
-const posterUrl = computed(() => posterUrlFor(props.show.poster_url));
+const poster = computed(() => posterFor(props.show.poster_url));
 
 const copyPrompt = async () => {
   try {
     await navigator.clipboard.writeText(
-      buildAuditionPrompt({ showName: props.show.name, posterUrl: posterUrl.value }),
+      buildAuditionPrompt({
+        showName: props.show.name,
+        posterPath: poster.value.path,
+        posterUrl: poster.value.url,
+      }),
     );
     Notify.create({ type: "positive", message: "AI prompt copied — paste it into your AI chat with your .docx" });
   } catch {

@@ -41,11 +41,10 @@
           <div class="row items-start q-mt-sm no-wrap">
             <div class="col text-caption">
               You can build directly in the editor, or start from the director's
-              Word document: click <b>Copy AI prompt</b> (it includes this show's
-              poster link), paste it into ChatGPT, Claude or similar along with the
-              .docx (and the poster image, in case the AI can't open links), then
-              click the "&lt; &gt;" icon in the editor's toolbar and paste the
-              AI's HTML there. Production-team members can do the same from the
+              Word document: click <b>Copy AI prompt</b> (it points the HTML at
+              this show's poster on the site), paste it into ChatGPT, Claude or
+              similar and attach the .docx, then click the "&lt; &gt;" icon in
+              the editor's toolbar and paste the AI's HTML there. Production-team members can do the same from the
               Auditions tab on the director page.
             </div>
             <q-btn
@@ -87,7 +86,7 @@ import {
   auditionFonts,
   auditionToolbar,
   buildAuditionPrompt,
-  posterUrlFor,
+  posterFor,
 } from "src/assets/audition-editor";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
@@ -103,10 +102,12 @@ const formRef = ref(null);
 
 const copyPrompt = async () => {
   try {
+    const poster = posterFor(store.admin.show.poster);
     await navigator.clipboard.writeText(
       buildAuditionPrompt({
         showName: store.admin.show.name,
-        posterUrl: posterUrlFor(store.admin.show.poster),
+        posterPath: poster.path,
+        posterUrl: poster.url,
       }),
     );
     Notify.create({ type: "positive", message: "AI prompt copied" });

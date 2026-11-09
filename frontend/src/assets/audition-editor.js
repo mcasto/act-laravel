@@ -52,34 +52,37 @@ export const auditionFonts = {
 };
 
 /**
- * Absolute poster URL without the "?t=…" cache-buster the admin adds after
- * a re-upload. `poster` is either a full URL (director API) or the bare
- * filename stored on the show (admin).
+ * The show's poster as already served by the site, without the "?t=…"
+ * cache-buster the admin adds after a re-upload. `poster` is either a full
+ * URL (director API) or the bare filename stored on the show (admin).
+ *
+ * - path: root-relative ("/api/storage/posters/…"), what the HTML uses, so
+ *   the notice shows the site's own poster instead of a duplicate copy.
+ * - url: the same file as a full address, only so the AI can look at it to
+ *   pick colors.
  */
-export const posterUrlFor = (poster) => {
-  if (!poster) return "";
+export const posterFor = (poster) => {
+  if (!poster) return { path: "", url: "" };
   const url = poster.startsWith("http")
     ? new URL(poster)
     : new URL(`/api/storage/posters/${poster}`, window.location.origin);
   url.search = "";
-  return url.toString();
+  return { path: url.pathname, url: url.toString() };
 };
 
 /**
  * The prompt to give an AI chat (ChatGPT, Claude…) together with the
- * audition .docx (and ideally the poster image itself, since not every
- * chat can open links). Its output is meant to be pasted into the editor's
- * source view as-is.
+ * audition .docx. Only the .docx needs attaching: the poster is referenced
+ * by its root-relative path on our site (`posterPath`), and `posterUrl` is
+ * offered just so the AI can look at it for colors. Its output is meant to
+ * be pasted into the editor's source view as-is.
  */
-export const buildAuditionPrompt = ({ showName, posterUrl }) => `I've attached a Word document (.docx) with the audition information for "${showName}", a production of Azuay Community Theater (ACT) in Cuenca, Ecuador. Please turn it into an HTML fragment for the audition page on our website.
-
-The show's poster is here: ${posterUrl}
-(I may also have attached the poster image itself. If you can't open the link or see the image, ask me to attach it before you start.)
+export const buildAuditionPrompt = ({ showName, posterPath, posterUrl }) => `I've attached a Word document (.docx) with the audition information for "${showName}", a production of Azuay Community Theater (ACT) in Cuenca, Ecuador. Please turn it into an HTML fragment for the audition page on our website.
 
 What to build:
-- A single, attractive audition announcement that features the poster image near the top, using exactly this tag:
-  <img src="${posterUrl}" alt="${showName.replace(/"/g, "&quot;")} poster">
-- Take the theme from the poster: pick a background, a text color and one or two accent colors from it, and match its overall mood. Keep text easy to read (strong contrast) everywhere.
+- A single, attractive audition announcement that features the show's poster near the top. The poster is already on our website, so use exactly this tag (keep the src as this path, don't change it to a full URL or a copy of the image):
+  <img src="${posterPath}" alt="${showName.replace(/"/g, "&quot;")} poster">
+- Theme it from the poster: pick a background, a text color and one or two accent colors from it, and match its overall mood. You can view the poster at ${posterUrl} — if you can't open it, choose a palette that suits the show's title and tone instead, and tell me after the HTML which colors you used so I can adjust them. Keep text easy to read (strong contrast) everywhere.
 - Include everything in the document, accurately, in a sensible order: what the show is about, audition dates/times/location, the roles (with ages, descriptions and requirements where given), rehearsal and performance dates, how to sign up or register, what to prepare (sides, songs, monologues), and who to contact. Don't invent, change or leave out any dates, times, names, places, links or contact details. If something seems missing or contradictory, keep it as written and tell me after the HTML.
 - Make email addresses mailto: links and web addresses real links that open in a new tab (target="_blank" rel="noopener").
 
@@ -87,7 +90,7 @@ Technical rules (the page will reject or break otherwise):
 1. Output ONLY the fragment: one <style> block followed by one <div class="act-audition"> that contains all the content. No <html>, <head>, <body>, <!DOCTYPE>, markdown or explanations inside it.
 2. Every CSS selector must start with .act-audition (for example ".act-audition h2"), so nothing affects the rest of the website. Do not style html, body, :root or * on their own, and don't use class names that might already exist on our site (like text-h4, text-white, bg-*, q-*); invent your own, prefixed with "act-".
 3. No JavaScript of any kind: no <script>, no onclick/onload or other on… attributes, no javascript: links.
-4. No external resources other than the poster image and normal links: no @import, no web fonts, no <link>, <iframe>, <svg> or forms. Use common system fonts (for example Georgia, "Times New Roman", Arial, Helvetica, sans-serif/serif fallbacks).
+4. No external resources other than the poster <img> above and normal links: no @import, no web fonts, no other images, no <link>, <iframe>, <svg> or forms. Use common system fonts (for example Georgia, "Times New Roman", Arial, Helvetica, sans-serif/serif fallbacks).
 5. It must look good on a phone and on a desktop: max-width around 900px centered, images with max-width: 100% and height: auto, no fixed widths wider than a phone, no position: fixed.
 6. Use simple, standard tags (div, section, h1–h4, p, ul/ol/li, strong/em, a, img, table if really needed). Keep the CSS in the <style> block and only use inline style="" attributes where unavoidable.
 
