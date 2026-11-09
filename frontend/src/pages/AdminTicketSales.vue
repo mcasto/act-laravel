@@ -61,7 +61,6 @@
                 :show-name="show.label"
               />
               <q-btn
-                v-if="currentShow"
                 :icon="mdiCashClock"
                 color="warning"
                 flat
@@ -333,7 +332,9 @@
                   <q-item-section side>Email:</q-item-section>
                   <q-item-section>
                     <q-item-label>
+                      <span v-if="isReadOnly">{{ props.row.patron.email }}</span>
                       <a
+                        v-else
                         :href="`mailto:${props.row.patron.first_name} ${props.row.patron.last_name} <${props.row.patron.email}>`"
                       >
                         {{ props.row.patron.email }}
@@ -446,7 +447,7 @@
           <div>
             <div class="text-h6">Pending Confirmation</div>
             <div class="text-caption text-grey-7">
-              {{ currentShow?.name }} — PayPal and Bank Transfers
+              {{ show?.label }} — PayPal and Bank Transfers
             </div>
           </div>
           <q-space />
@@ -481,6 +482,7 @@
                   <q-checkbox
                     :model-value="reminderAllState"
                     dense
+                    :disable="isReadOnly"
                     @update:model-value="toggleAllReminders"
                   />
                 </th>
@@ -498,7 +500,12 @@
             <tbody>
               <tr v-for="row in unconfirmedRecs" :key="row.id">
                 <td class="text-center">
-                  <q-checkbox v-model="reminderSelected" :val="row.id" dense />
+                  <q-checkbox
+                    v-model="reminderSelected"
+                    :val="row.id"
+                    dense
+                    :disable="isReadOnly"
+                  />
                 </td>
                 <td>
                   {{ row.performance.formatted_date }}
@@ -506,7 +513,9 @@
                 </td>
                 <td>{{ row.patron.first_name }} {{ row.patron.last_name }}</td>
                 <td>
+                  <span v-if="isReadOnly">{{ row.patron.email }}</span>
                   <a
+                    v-else
                     :href="`mailto:${row.patron.first_name} ${row.patron.last_name} <${row.patron.email}>`"
                     >{{ row.patron.email }}</a
                   >
@@ -579,7 +588,7 @@
         <q-card-section>
           <div class="text-h6">Cash / Door</div>
           <div class="text-caption text-grey-7">
-            {{ currentShow?.name }} — unconfirmed, by performance
+            {{ show?.label }} — unconfirmed, by performance
           </div>
         </q-card-section>
 
@@ -1123,18 +1132,18 @@ const ticketsByDate = computed(() => {
 
 // PayPal and Bank Transfer are the only methods that sit pending until the
 // box office sees the money arrive — this is the box office's "who to
-// chase" list. Always the current show (tickets are only ever on sale for
-// one show at a time, and past shows' stragglers don't matter), regardless
-// of which show is picked in the selector or the search/performance filters.
+// chase" list. Covers the show picked in the selector (so stragglers from a
+// show that just closed can still be chased), but ignores the
+// search/performance/payment filters.
 const PENDING_PAYMENT_METHODS = ["paypal", "transfer"];
 const unconfirmedDialog = ref(false);
 
 const unconfirmedRecs = computed(() => {
-  if (!currentShow) return [];
+  if (!show.value) return [];
   return sortBy(
     store.admin.ticket_sales.filter(
       (rec) =>
-        rec.performance.show.id == currentShow.id &&
+        rec.performance.show.id == show.value.value &&
         !rec.confirmed &&
         PENDING_PAYMENT_METHODS.includes(rec.payment_method?.value),
     ),
@@ -1151,10 +1160,10 @@ const unconfirmedRecs = computed(() => {
 // purchaser, and they stay out of the reminder selection.
 const CASH_DOOR_METHODS = ["cash", "door"];
 const unconfirmedCash = computed(() => {
-  const sales = currentShow
+  const sales = show.value
     ? store.admin.ticket_sales.filter(
         (rec) =>
-          rec.performance.show.id == currentShow.id &&
+          rec.performance.show.id == show.value.value &&
           !rec.confirmed &&
           CASH_DOOR_METHODS.includes(rec.payment_method?.value),
       )
@@ -1218,9 +1227,14 @@ const reminderBody = ref(
     "when and how it was sent so we can match it up.",
 );
 
+// The default subject names the selected show. It's refreshed on open
+// unless the admin has typed their own, so switching shows doesn't leave
+// the previous show's name in it.
+let autoReminderSubject = "";
 const openReminderDialog = () => {
-  if (!reminderSubject.value) {
-    reminderSubject.value = `Payment Reminder - ${currentShow?.name ?? ""}`;
+  if (!reminderSubject.value || reminderSubject.value === autoReminderSubject) {
+    autoReminderSubject = `Payment Reminder - ${show.value?.label ?? ""}`;
+    reminderSubject.value = autoReminderSubject;
   }
   reminderDialog.value = true;
 };

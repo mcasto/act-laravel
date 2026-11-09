@@ -128,8 +128,13 @@ Route::get('/storage/flex-image', function () use ($cacheableFile) {
 Route::get('/storage/{path}/{filename}', function ($path, $filename) use ($cacheableFile): BinaryFileResponse {
     $path = storage_path("app/public/{$path}/{$filename}");
 
+    // The fallback logo is served at the missing file's own URL, so it must
+    // never be cached — otherwise the browser keeps showing the logo for
+    // that URL even after the real file is uploaded.
     if (! file_exists($path)) {
-        $path = storage_path('app/private/logo.png');
+        return Response::file(storage_path('app/private/logo.png'), [
+            'Cache-Control' => 'no-store',
+        ]);
     }
 
     return $cacheableFile($path);
