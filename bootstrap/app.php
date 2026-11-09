@@ -33,6 +33,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'webhook.verify' => \App\Http\Middleware\VerifyWebhookToken::class,
             'permission' => \App\Http\Middleware\CheckSectionPermission::class,
+            'admin-token' => \App\Http\Middleware\EnsureAdminToken::class,
+            'director-show' => \App\Http\Middleware\EnsureDirectorShowAccess::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

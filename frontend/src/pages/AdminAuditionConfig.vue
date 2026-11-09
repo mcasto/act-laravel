@@ -33,18 +33,30 @@
           </div>
           <q-editor
             v-model="store.admin.audition.html"
-            :toolbar="toolbar"
-            :fonts="fonts"
+            :toolbar="auditionToolbar"
+            :fonts="auditionFonts"
             max-height="35vh"
             :disable="isReadOnly"
           ></q-editor>
-          <div class="text-caption">
-            You can build directly in the editor, or you can go to ChatGPT,
-            upload the poster image and upload or enter the information for the
-            audition, then ask Chat to generate HTML/CSS to display that
-            information with the poster image and use the colors in the poster
-            image as the theme. Then click on the "< >" icon in the toolbar for
-            the editor & paste Chat's output there.
+          <div class="row items-start q-mt-sm no-wrap">
+            <div class="col text-caption">
+              You can build directly in the editor, or start from the director's
+              Word document: click <b>Copy AI prompt</b> (it points the HTML at
+              this show's poster on the site), paste it into ChatGPT, Claude or
+              similar and attach the .docx, then click the "&lt; &gt;" icon in
+              the editor's toolbar and paste the AI's HTML there. Production-team members can do the same from the
+              Auditions tab on the director page.
+            </div>
+            <q-btn
+              :icon="matContentCopy"
+              label="Copy AI prompt"
+              color="secondary"
+              unelevated
+              no-caps
+              size="sm"
+              class="q-ml-md"
+              @click="copyPrompt"
+            />
           </div>
         </div>
       </div>
@@ -68,7 +80,14 @@
 </template>
 
 <script setup>
-import { matFontDownload, matFormatSize } from "@quasar/extras/material-icons";
+import { matContentCopy } from "@quasar/extras/material-icons";
+import { Notify } from "quasar";
+import {
+  auditionFonts,
+  auditionToolbar,
+  buildAuditionPrompt,
+  posterFor,
+} from "src/assets/audition-editor";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
@@ -81,58 +100,19 @@ const isReadOnly = computed(
 
 const formRef = ref(null);
 
-const toolbar = [
-  ["left", "center", "right", "justify"],
-  ["bold", "italic", "underline", "strike"],
-  ["fullscreen"],
-  [
-    {
-      label: "Font Size",
-      icon: matFormatSize,
-      fixedLabel: true,
-      fixedIcon: true,
-      list: "no-icons",
-      options: [
-        "size-1",
-        "size-2",
-        "size-3",
-        "size-4",
-        "size-5",
-        "size-6",
-        "size-7",
-      ],
-    },
-    {
-      label: "Font Family",
-      icon: matFontDownload,
-      fixedIcon: true,
-      list: "no-icons",
-      options: [
-        "arial",
-        "arial_black",
-        "comic_sans",
-        "courier_new",
-        "impact",
-        "lucida_grande",
-        "times_new_roman",
-        "verdana",
-      ],
-    },
-    "removeFormat",
-  ],
-  ["quote", "unordered", "ordered", "outdent", "indent"],
-  ["link", "image"],
-  ["viewsource"], // This allows viewing HTML source
-];
-
-const fonts = {
-  arial: "Arial",
-  arial_black: "Arial Black",
-  comic_sans: "Comic Sans MS",
-  courier_new: "Courier New",
-  impact: "Impact",
-  lucida_grande: "Lucida Grande",
-  times_new_roman: "Times New Roman",
-  verdana: "Verdana",
+const copyPrompt = async () => {
+  try {
+    const poster = posterFor(store.admin.show.poster);
+    await navigator.clipboard.writeText(
+      buildAuditionPrompt({
+        showName: store.admin.show.name,
+        posterPath: poster.path,
+        posterUrl: poster.url,
+      }),
+    );
+    Notify.create({ type: "positive", message: "AI prompt copied" });
+  } catch {
+    Notify.create({ type: "negative", message: "Couldn't copy to the clipboard in this browser." });
+  }
 };
 </script>

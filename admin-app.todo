@@ -1,0 +1,73 @@
+Desktop Admin App + Show-Scoped Director Access:
+  Goal: directors/ADs/stage managers get a Go/Wails app showing ONLY their show (sales numbers, sold-out status, auditions), only during production. Other admins keep the normal web admin, filtered by section permissions. All scoping enforced server-side; the app is just the way in.
+  Stop for review after each phase.
+
+Phase 1 – Backend: grants & tokens:
+  ✔ 1.1 Migration + model ShowAccessGrant: show_access_grants (user_id FK, show_id FK, role label, starts_at, ends_at, timestamps) @done(26-11-08 18:10)
+    - unique (user_id, show_id); any number of people per show (director, AD, SM…)
+    - role is a free-text label (display/history only; every role gets the same access)
+    - active() scope: today within starts_at/ends_at (null = open-ended)
+    - expired grants kept, never deleted
+  ✔ 1.2 Default-window helper: start = show's audition date (else show created), end = last performance + 7 days @done(26-11-08 18:10)
+    - UI pre-fill only; saved dates are what's enforced, never re-derived on save
+  ✔ 1.3 Migration + model AppPairingCode: app_pairing_codes (user_id, code hash, expires_at, used_at) @done(26-11-08 18:10)
+  ✔ 1.4 POST /api/admin/app-pairing-codes — gated by UserController::hasFullUsersAccess() @done(26-11-08 18:10)
+    - one-time 8-char code, valid 15 min, one per person
+  ✔ 1.5 POST /api/app/pair — public, throttled; {code, device_name} → burns code, returns Sanctum token with ['director'] ability, named after the device @done(26-11-08 18:10)
+  ✔ 1.6 CheckSectionPermission: 403 any token lacking the '*' ability, so app tokens can't reach regular admin routes @done(26-11-08 18:10)
+    - web-login tokens (AuthController.php:39) keep ['*'], unchanged
+  ✔ 1.7 App devices endpoints: list a user's app tokens (device name, paired date, last_used_at) + revoke (deletes token) @done(26-11-08 18:10)
+    - revoke affects only that computer's app, never the website login
+  ✔ 1.8 Verify (tinker dispatch in rolled-back transaction): @done(26-11-08 18:10)
+    - pairing code single-use and expires after 15 min
+    - app token → 403 on /api/contacts, /api/ticket-sales; same user's web token unchanged
+
+Phase 2 – Backend: director API:
+  ✔ 2.1 EnsureDirectorShowAccess middleware (alias in bootstrap/app.php) @done(26-11-08 18:47)
+    - requires tokenCan('director') + active grant for {show}
+    - expired grant → 403 with "access ended on X"
+  ✔ 2.2 Move counting from TicketSaleController::seatingSummary() into Performance::salesSummary(); seatingSummary() uses it @done(26-11-08 18:47)
+  ✔ 2.3 DirectorController GET /director/shows → id, name, poster URL, performance date range, grant window, role @done(26-11-08 18:47)
+  ✔ 2.4 GET /director/shows/{show}/sales → per performance: date, start_time, reserved, comps, sold_out_target, remaining, sold_out @done(26-11-08 18:47)
+    - aggregates only, no patron data, read-only
+  ✔ 2.5 GET /director/shows/{show}/auditions (+ detail/contacts) — reuse AuditionController/AuditionContactController logic, constrained to show_id @done(26-11-08 18:47)
+  ✔ 2.6 GET /api/app/version → {latest, download_url} @done(26-11-08 18:47)
+  ✔ 2.7 Add new routes to storage/app/private/admin-section-route-map.json @done(26-11-08 18:47)
+  ✔ 2.8 Verify: own show 200; other show 403; expired 403; no patron fields in any response @done(26-11-08 18:47)
+
+Phase 3 – Web admin UI:
+  ✔ 3.1 Shows edit dialog: "Production team access" panel @started(26-11-08 19:01) @done(26-11-08 19:11)
+    - multiple rows: user picker, role (Director / Assistant Director / Stage Manager / free text), start + end dates pre-filled and individually editable
+  ✔ 3.2 /api/shows/{id}/access-grants CRUD, gated permission:shows (full) @started(26-11-08 19:01) @done(26-11-08 19:11)
+  ✔ 3.3 AdminUsers.vue: "Generate app setup code" button → dialog showing code + expiry @started(26-11-08 19:01) @done(26-11-08 19:11)
+  ✔ 3.4 AdminUsers.vue: "App devices" list per user (device, paired, last used) with Revoke @started(26-11-08 19:01) @done(26-11-08 19:11)
+  ✔ 3.5 Verify in browser: add director + AD to a show, generate codes, revoke a device @started(26-11-08 19:05) @done(26-11-08 19:11)
+
+Phase 4 – Director web page + PWA (replaces the Go/Wails app — director turnover makes an installed app overkill):
+  ✔ 4.1 /director section in the existing SPA: own DirectorLayout, no site nav, no links out @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.2 Scoped PWA: /director.webmanifest (scope + start_url /director) + /director-sw.js registered with scope /director; icons from the logo @started(26-11-08 19:25) @done(26-11-08 19:31)
+    - files at site root, not /director/ (a real /director/ folder would bypass the SPA rewrite in .htaccess)
+    - SW is network-only (live numbers); exists so the page is installable
+  ✔ 4.3 Director API client: token in localStorage (separate from admin login), bearer on /api/app/* + /api/director/*; 401 → Setup @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.4 Setup screen: setup code (+ auto device name like "Safari on iPhone", editable) → POST /api/app/pair @started(26-11-08 19:25) @done(26-11-08 19:31)
+    - iOS: home-screen apps have separate storage → prompt to Add to Home Screen first, then enter the code there
+    - install button where the browser offers one (beforeinstallprompt)
+  ✔ 4.5 Show picker with poster tiles (only when more than one active grant; otherwise straight in) @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.6 My Show: persistent header with poster + show name on every tab @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.7 Sales tab: per-performance cards (reserved / target, remaining, comps, SOLD OUT badge), 60s auto-refresh + manual refresh @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.8 Auditions tab (notice dates + content) @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.9 "Access to <Show> ended on …", "starts on …" and "No active shows" screens; revoked token → Setup; Sign out (POST /api/app/unpair) @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.10 Update-available banner: page polls the deployed index.html and offers a reload when the build changed; drop the unused /api/app/version + config/director-app.php @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.11 Admin copy: Users "Director App" dialog + Production Team dialog point to actseats.com/director instead of a desktop app @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.12 Verify in browser (desktop + phone-size viewport): pair, sales cards, mark sold out → badge within 60s, grant ended → ended screen, revoke → Setup, manifest/SW scoped to /director only @started(26-11-08 19:25) @done(26-11-08 19:31)
+  ✔ 4.13 Offline: show last-known shows/sales/auditions read-only with an "offline, may be out of date" note; SW caches the page shell + built assets (API never cached by SW) @started(26-11-08 19:38) @done(26-11-08 19:42)
+    - cached data cleared on disconnect/revoke; manifest renamed to director-manifest.json (same as Quasar's PWA manifest.json, known to work on the LiteSpeed host)
+  ✔ 4.14 Director Auditions tab: edit the show's audition notice (display dates + q-editor), PUT /api/director/shows/{show}/auditions (HTML saved as submitted, same as admin) @done(26-11-08 20:20)
+    - "Copy AI prompt" (show name + poster URL filled in) to turn the director's .docx into scoped HTML for the editor's < > view; same button on the admin Auditions page
+
+Later (not this pass):
+  ☐ L.1 General-admin mode: same app opens locked webview on actseats.com/admin (no navigation outside /admin, persistent login)
+  ☐ L.2 Read-only UI state in web admin (disable edit controls instead of 403 on submit)
+  ☐ L.3 Audition registrants in the director app, once on-site audition registration ships (replacing the Google Form)
+    - table audition_contacts, possibly renamed audition_registrants; AuditionContact model/controller are leftovers today, no table exists
+    - extend GET /director/shows/{show}/auditions (or add /registrants), still constrained by the grant; add a list to the app's Auditions tab

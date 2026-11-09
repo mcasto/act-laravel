@@ -71,6 +71,16 @@
             </q-tooltip>
           </q-btn>
           <q-btn
+            v-if="canManageDirectorApp(row)"
+            :icon="matDevices"
+            flat
+            round
+            color="primary"
+            @click="directorAppDialog = { visible: true, user: row }"
+          >
+            <q-tooltip>Director page: setup code &amp; connected devices</q-tooltip>
+          </q-btn>
+          <q-btn
             :icon="matDelete"
             flat
             round
@@ -100,6 +110,11 @@
       v-model="changePasswordDialog.visible"
       :row="changePasswordDialog.row"
     ></admin-user-change-password>
+
+    <director-app-dialog
+      v-model="directorAppDialog.visible"
+      :user="directorAppDialog.user"
+    ></director-app-dialog>
 
     <q-dialog v-model="permissionsDialog.visible">
       <q-card style="min-width: 420px; max-width: 90vw;">
@@ -154,7 +169,8 @@
 </template>
 
 <script setup>
-import { matDelete, matVpnKey } from "@quasar/extras/material-icons";
+import { matDelete, matDevices, matVpnKey } from "@quasar/extras/material-icons";
+import DirectorAppDialog from "src/components/DirectorAppDialog.vue";
 import { mdiContentSave, mdiPlusCircle } from "@quasar/extras/mdi-v7";
 import { useStore } from "src/stores/store";
 import { computed, ref } from "vue";
@@ -194,6 +210,13 @@ const usersAccessOptions = [
 const hasFullUsersAccess = computed(
   () => getPermissionLevel(store.admin.user, "users") === "full",
 );
+
+// Mirrors UserController::canManageAppAccess — full Users access, and only
+// the owner can manage the owner's own app devices.
+const canManageDirectorApp = (row) =>
+  hasFullUsersAccess.value && (!row.is_owner || store.admin.user.is_owner);
+
+const directorAppDialog = ref({ visible: false, user: null });
 
 const permissionsDialog = ref({
   visible: false,

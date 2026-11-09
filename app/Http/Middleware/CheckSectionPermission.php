@@ -39,6 +39,12 @@ class CheckSectionPermission
             return response()->json(['status' => 'error', 'message' => 'Unauthenticated'], 401);
         }
 
+        // Director-page tokens never reach section-gated admin routes, not
+        // even the owner's — checked before the owner bypass below.
+        if ($rejection = EnsureAdminToken::reject($request)) {
+            return $rejection;
+        }
+
         // Owner always has full access everywhere, regardless of stored
         // rows — never even looked up, same as the frontend's bypass.
         if ($user->email === config('auth.owner_email')) {

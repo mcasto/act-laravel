@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AppPairingCode;
 use App\Models\User;
 use App\Models\UserPermission;
 use Illuminate\Http\JsonResponse;
@@ -273,5 +274,111 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(['deleted' => $id]);
+    }
+
+    /**
+     * Whether the acting user may issue setup codes for / revoke app devices
+     * of the given target: requires hasFullUsersAccess(), and never the
+     * owner's record unless the actor is the owner.
+     */
+    private function canManageAppAccess(Request $request, User $target): bool
+    {
+        if ($target->email === config('auth.owner_email') && ! $this->isOwner($request)) {
+            return false;
+        }
+
+        return $this->hasFullUsersAccess($request);
+    }
+
+    /**
+     * Issue a one-time director-page setup code for a user
+     *
+     * The plain code is returned only here; only its hash is stored. Valid
+     * for AppPairingCode::LIFETIME_MINUTES, single use; issuing a new code
+     * expires the person's previous unused one.
+     *
+     * @return JsonResponse {code, expires_at}
+     *
+     * @source Database Model: AppPairingCode (creates, expires previous)
+     */
+    public function createAppPairingCode(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'integer'],
+        ]);
+
+        $target = User::find($validated['user_id']);
+        if (! $target) {
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+        }
+
+        if (! $this->canManageAppAccess($request, $target)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to set up the app for this user'], 403);
+        }
+
+        $issued = AppPairingCode::issueFor($target, $request->user());
+
+        return response()->json([
+            'code'       => $issued['code'],
+            'expires_at' => $issued['expires_at']->toIso8601String(),
+        ]);
+    }
+
+    /**
+     * List a user's paired director-page devices (their app tokens)
+     *
+     * @return JsonResponse [{id, device_name, paired_at, last_used_at}]
+     *
+     * @source Database: personal_access_tokens (reads 'director' tokens)
+     */
+    public function appDevices(Request $request, int $id): JsonResponse
+    {
+        $target = User::find($id);
+        if (! $target) {
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+        }
+
+        if (! $this->canManageAppAccess($request, $target)) {
+            return response()->json(['status' => 'error', 'message' => "You do not have permission to view this user's app devices"], 403);
+        }
+
+        $devices = $target->appTokens()
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(fn ($token) => [
+                'id'           => $token->id,
+                'device_name'  => $token->name,
+                'paired_at'    => $token->created_at?->toIso8601String(),
+                'last_used_at' => $token->last_used_at?->toIso8601String(),
+            ]);
+
+        return response()->json($devices);
+    }
+
+    /**
+     * Revoke one paired director-page device
+     *
+     * Deletes only that computer's app token — never the user's web-login
+     * tokens or other devices.
+     *
+     * @source Database: personal_access_tokens (deletes one 'director' token)
+     */
+    public function revokeAppDevice(Request $request, int $id, int $tokenId): JsonResponse
+    {
+        $target = User::find($id);
+        if (! $target) {
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+        }
+
+        if (! $this->canManageAppAccess($request, $target)) {
+            return response()->json(['status' => 'error', 'message' => "You do not have permission to revoke this user's app devices"], 403);
+        }
+
+        $deleted = $target->appTokens()->where('id', $tokenId)->delete();
+        if ($deleted === 0) {
+            return response()->json(['status' => 'error', 'message' => 'Device not found'], 404);
+        }
+
+        return response()->json(['revoked' => $tokenId]);
     }
 }

@@ -18,6 +18,9 @@ class User extends Authenticatable
   *
   * @var list<string>
   */
+ /** The only ability carried by director-page tokens. */
+ public const APP_TOKEN_ABILITY = 'director';
+
  protected $fillable = [
   'name',
   'email',
@@ -82,6 +85,24 @@ class User extends Authenticatable
  public function permissions()
  {
   return $this->hasMany(UserPermission::class);
+ }
+
+ /**
+  * Relationship to show_access_grants (show-scoped director-page access)
+  */
+ public function showAccessGrants()
+ {
+  return $this->hasMany(ShowAccessGrant::class);
+ }
+
+ /**
+  * Sanctum tokens issued to the director page (one per paired
+  * computer) — distinguished from web-login tokens by the 'director'
+  * ability. Web logins issue ['*'].
+  */
+ public function appTokens()
+ {
+  return $this->tokens()->where('abilities', json_encode([self::APP_TOKEN_ABILITY]));
  }
 
  /**

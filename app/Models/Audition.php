@@ -74,7 +74,7 @@ class Audition extends Model
         $filePath = "audition-html/{$this->id}.html";
 
         if ($htmlContent !== null) {
-            $this->attributes['html'] = $htmlContent;
+            $this->attributes['html'] = self::normalizeWhitespace($htmlContent);
         }
 
         if (isset($this->attributes['html']) && !empty($this->attributes['html'])) {
@@ -110,10 +110,48 @@ class Audition extends Model
         $filePath = "audition-html/{$this->id}.html";
 
         if (Storage::disk('local')->exists($filePath)) {
-            return Storage::disk('local')->get($filePath);
+            // Also normalized on read so notices saved before the fix work too.
+            return self::normalizeWhitespace(Storage::disk('local')->get($filePath));
         }
 
         return null;
+    }
+
+    /**
+     * Undo the non-breaking spaces q-editor's source view ("< >") inserts
+     * when indented HTML is pasted into it: the contenteditable keeps runs of
+     * spaces visible by turning them into alternating U+00A0 / space.
+     *
+     * - Inside <style> blocks every U+00A0 (or &nbsp;) becomes a plain space.
+     *   CSS doesn't treat U+00A0 as whitespace, so "\u00a0 color: red;" is an
+     *   invalid declaration and gets dropped — which silently strips most of
+     *   a pasted stylesheet.
+     * - Between tags, a run made only of whitespace/U+00A0 (pasted
+     *   indentation) becomes plain whitespace, so it stops rendering as stray
+     *   spaces.
+     *
+     * Non-breaking spaces inside real text (e.g. "10&nbsp;AM") are kept.
+     * This only touches whitespace; nothing else in the HTML changes.
+     */
+    public static function normalizeWhitespace(?string $html): ?string
+    {
+        if ($html === null || $html === '') {
+            return $html;
+        }
+
+        $nbsp = "\u{00A0}";
+
+        $html = preg_replace_callback(
+            '#(<style\b[^>]*>)(.*?)(</style>)#is',
+            fn ($m) => $m[1] . str_replace([$nbsp, '&nbsp;', '&#160;', '&#xa0;', '&#xA0;'], ' ', $m[2]) . $m[3],
+            $html
+        );
+
+        return preg_replace_callback(
+            '#>((?:\s|\x{00A0}|&nbsp;)+)<#u',
+            fn ($m) => '>' . str_replace([$nbsp, '&nbsp;'], ' ', $m[1]) . '<',
+            $html
+        );
     }
 
     /**
