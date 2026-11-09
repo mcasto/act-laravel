@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Show;
 use App\Models\ShowAccessGrant;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Helpers\LocalTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -96,15 +96,14 @@ class ShowAccessGrantController extends Controller
     {
         $show = Show::findOrFail($showId);
         $grant = ShowAccessGrant::where('show_id', $show->id)->findOrFail($grantId);
-        $today = Carbon::today();
-
-        if ($grant->starts_at && $grant->starts_at->gt($today)) {
+        if ($grant->isUpcoming()) {
             $grant->delete();
             $outcome = 'deleted';
         } else {
-            $yesterday = $today->copy()->subDay();
+            // Yesterday in local (Cuenca) terms, so access stops right now.
+            $yesterday = LocalTime::now()->subDay()->toDateString();
             // Already ended earlier: leave its real end date alone.
-            if (! $grant->ends_at || $grant->ends_at->gt($yesterday)) {
+            if (! $grant->ends_at || $grant->ends_at->toDateString() > $yesterday) {
                 $grant->update(['ends_at' => $yesterday]);
             }
             $outcome = 'ended';
@@ -124,8 +123,6 @@ class ShowAccessGrantController extends Controller
 
     private function grantsFor(Show $show)
     {
-        $today = Carbon::today();
-
         return ShowAccessGrant::where('show_id', $show->id)
             ->with('user:id,name,email')
             ->get()
@@ -137,7 +134,7 @@ class ShowAccessGrantController extends Controller
                 'role'       => $g->role,
                 'starts_at'  => $g->starts_at?->toDateString(),
                 'ends_at'    => $g->ends_at?->toDateString(),
-                'status'     => $g->isActive() ? 'active' : ($g->starts_at && $g->starts_at->gt($today) ? 'upcoming' : 'ended'),
+                'status'     => $g->isActive() ? 'active' : ($g->isUpcoming() ? 'upcoming' : 'ended'),
             ])
             ->sortBy(fn ($g) => [['active' => 0, 'upcoming' => 1, 'ended' => 2][$g['status']], $g['user_name']])
             ->values();

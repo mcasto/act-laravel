@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\LocalTime;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Grants one user show-scoped access (via the desktop director app) to one
  * show between starts_at and ends_at inclusive; a null bound is open-ended.
+ * Days switch over at local (Cuenca) midnight — see LocalTime. All checks
+ * compare Y-m-d strings, never Carbon instants (a date cast is midnight UTC).
  * The saved dates are the source of truth — defaultWindow() only supplies
  * UI pre-fill values and is never applied on save.
  */
@@ -42,7 +45,7 @@ class ShowAccessGrant extends Model
      */
     public function scopeActive(Builder $query): Builder
     {
-        $today = now()->toDateString();
+        $today = LocalTime::todayString();
 
         return $query
             ->where(fn ($q) => $q->whereNull('starts_at')->orWhere('starts_at', '<=', $today))
@@ -51,10 +54,16 @@ class ShowAccessGrant extends Model
 
     public function isActive(): bool
     {
-        $today = now()->startOfDay();
+        $today = LocalTime::todayString();
 
-        return ($this->starts_at === null || $this->starts_at->lte($today))
-            && ($this->ends_at === null || $this->ends_at->gte($today));
+        return ($this->starts_at === null || $this->starts_at->toDateString() <= $today)
+            && ($this->ends_at === null || $this->ends_at->toDateString() >= $today);
+    }
+
+    /** Starts on a future local date (has never been in effect). */
+    public function isUpcoming(): bool
+    {
+        return $this->starts_at !== null && $this->starts_at->toDateString() > LocalTime::todayString();
     }
 
     /**
@@ -75,9 +84,11 @@ class ShowAccessGrant extends Model
 
         // Audition sessions are optional, so fall back to the audition
         // notice's display_date before the show's creation date.
+        // Session/display dates are already local; created_at is a UTC
+        // timestamp, so convert it to the local calendar date.
         $start = $firstAudition
             ?? Audition::where('show_id', $show->id)->min('display_date')
-            ?? $show->created_at;
+            ?? $show->created_at?->copy()->setTimezone(LocalTime::zone())->toDateString();
 
         $lastPerformance = Performance::where('show_id', $show->id)->max('date');
 

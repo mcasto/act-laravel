@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Models\Show;
 use App\Models\ShowAccessGrant;
 use App\Models\User;
-use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,9 +37,7 @@ class EnsureDirectorShowAccess
         }
 
         if (! $grant->isActive()) {
-            $today = Carbon::today();
-
-            if ($grant->starts_at && $grant->starts_at->gt($today)) {
+            if ($grant->isUpcoming()) {
                 return self::forbidden('not_started', "Your access to {$show->name} starts on {$grant->starts_at->format('M j, Y')}", [
                     'starts_at' => $grant->starts_at->toDateString(),
                 ]);
