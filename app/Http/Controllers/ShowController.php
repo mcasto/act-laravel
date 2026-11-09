@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Helpers\TheaterSeason;
 use App\Models\Show;
 use App\Models\SiteConfig;
@@ -138,7 +139,7 @@ class ShowController extends Controller
                 // performance evaluate as already past as soon as any time
                 // has elapsed since midnight, dropping the show off the
                 // homepage while it's still playing today.
-                $query->where('date', '>=', now()->toDateString())
+                $query->where('date', '>=', LocalTime::todayString())
                     ->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]);
             })
             ->get()
@@ -147,7 +148,7 @@ class ShowController extends Controller
             // "current" below rather than whichever happened to be inserted first.
             ->sortBy(function ($show) {
                 return $show->performances
-                    ->where('date', '>=', now()->toDateString())
+                    ->where('date', '>=', LocalTime::todayString())
                     ->min('date');
             })
             ->values()
@@ -284,7 +285,7 @@ class ShowController extends Controller
             'director'           => null,
             'info'               => '',
             'poster'             => uniqid(),
-            'ticket_sales_start' => date("Y-m-d", strtotime("NOW + 6 weeks")),
+            'ticket_sales_start' => LocalTime::now()->addWeeks(6)->toDateString(),
             'ticket_price'       => $config['ticket_price'],
             'performances'       => [],
         ]);

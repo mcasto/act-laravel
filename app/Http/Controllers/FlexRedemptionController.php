@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Helpers\PatronMail;
 use App\Mail\FlexRedemptionVerifyMailer;
 use App\Models\Patron;
@@ -264,6 +265,6 @@ class FlexRedemptionController extends Controller
     private function startsAt(Performance $performance): Carbon
     {
         // Performance date/time are local Cuenca time; the app runs in UTC.
-        return Carbon::parse("{$performance->date} {$performance->start_time}", 'America/Guayaquil');
+        return Carbon::parse("{$performance->date} {$performance->start_time}", LocalTime::zone());
     }
 }

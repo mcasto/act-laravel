@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\LocalTime;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -114,13 +115,6 @@ class Course extends Model
     }
 
     /**
-     * Enrollment dates and session times are local Cuenca time, while the
-     * app runs in UTC — so every "is it open yet / still showing" check
-     * goes through this zone rather than now().
-     */
-    public const TIMEZONE = 'America/Guayaquil';
-
-    /**
      * Inclusive of both enrollment dates — enrollment runs through the end
      * of enrollment_end, not up to its first moment. (Comparing the date
      * column straight against now() did the latter, closing a class the
@@ -128,7 +122,7 @@ class Course extends Model
      */
     public function enrollmentOpen(): bool
     {
-        $today = now(self::TIMEZONE)->toDateString();
+        $today = LocalTime::todayString();
 
         return $this->enrollment_start <= $today && $this->enrollment_end >= $today;
     }
@@ -143,19 +137,19 @@ class Course extends Model
         $lastSession = $this->sessions->sortBy(fn ($session) => $session->date . ' ' . $session->end)->last();
 
         if ($lastSession) {
-            return Carbon::parse(
-                Carbon::parse($lastSession->date)->toDateString() . ' ' . $lastSession->end,
-                self::TIMEZONE
+            // Enrollment dates and session times are local Cuenca time.
+            return LocalTime::parse(
+                Carbon::parse($lastSession->date)->toDateString() . ' ' . $lastSession->end
             );
         }
 
-        return Carbon::parse($this->enrollment_end, self::TIMEZONE)->endOfDay();
+        return LocalTime::parse($this->enrollment_end)->endOfDay();
     }
 
     /** Shown publicly from the start of enrollment until visibleUntil(). */
     public function isPubliclyVisible(): bool
     {
-        return $this->enrollment_start <= now(self::TIMEZONE)->toDateString()
+        return $this->enrollment_start <= LocalTime::todayString()
             && now()->lt($this->visibleUntil());
     }
 

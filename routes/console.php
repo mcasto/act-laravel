@@ -16,11 +16,11 @@ Artisan::command('inspire', function () {
 // Mail::send().
 Schedule::command('reminders:send')
     ->dailyAt('10:00')
-    ->timezone('America/Guayaquil');
+    ->timezone(config('app.local_timezone'));
 
 Schedule::command('storage:cleanup-orphans')
     ->dailyAt('03:00')
-    ->timezone('America/Guayaquil');
+    ->timezone(config('app.local_timezone'));
 
 // sync:flex-sheet retired — The Nightingales was the season finale and is
 // fully sold out, so no further flex usage is possible for 25-26. It was

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Helpers\PatronMail;
 use App\Helpers\RefId;
 use App\Mail\CompTicketMailer;
@@ -110,11 +111,11 @@ class CompTixController extends Controller
             ->select('performance_id', DB::raw('SUM(quantity) as total'))
             ->pluck('total', 'performance_id');
 
-        $today = Carbon::today();
+        $today = LocalTime::todayString();
 
         $compTicket->show->performances->each(function ($performance) use ($ticketSaleTotals, $today) {
             $sold = $ticketSaleTotals[$performance->id] ?? 0;
-            $performance->past     = Carbon::parse($performance->date)->lt($today);
+            $performance->past     = Carbon::parse($performance->date)->toDateString() < $today;
             $performance->sold_out = $sold >= $performance->sold_out_target;
         });
 
@@ -149,7 +150,9 @@ class CompTixController extends Controller
                     'patron_id'         => $patron->id,
                     'performance_id'    => $performanceId,
                     'payment_method_id' => $paymentMethod->id,
-                    'sold_at'           => now(),
+                    // Local wall-clock time, same as Fixr sales (sold_at is
+                    // an uncast DATETIME shown as-is in the admin).
+                    'sold_at'           => LocalTime::now(),
                     'quantity'          => 1,
                     'confirmed'         => true,
                     'transaction_id'    => $comp->uid,

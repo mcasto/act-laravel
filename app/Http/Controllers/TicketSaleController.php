@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LocalTime;
 use App\Helpers\PatronMail;
 use App\Helpers\RefId;
 use App\Helpers\TheaterSeason;
@@ -227,7 +228,9 @@ class TicketSaleController extends Controller
             'patron_id'         => $patron->id,
             'transfer_date'     => $validated['transfer_date'] ?? null,
             'performance_id'    => $validated['performance_id'],
-            'sold_at'           => now(),
+            // Local wall-clock time, same as Fixr sales (sold_at is an
+            // uncast DATETIME shown as-is in the admin).
+            'sold_at'           => LocalTime::now(),
             'quantity'          => $validated['quantity'],
             'payment_method_id' => $paymentMethod->id,
             'confirmed'         => $validated['confirmed'] ?? false,

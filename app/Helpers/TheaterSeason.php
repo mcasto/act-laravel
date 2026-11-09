@@ -63,7 +63,7 @@ class TheaterSeason
 
     private static function startYear(): int
     {
-        $now = Carbon::now();
+        $now = LocalTime::now();
 
         // September or later = current year starts the season
         // August or earlier = previous year started the season
@@ -101,7 +101,7 @@ class TheaterSeason
      */
     public static function activeDisplaySeasonDates(): array
     {
-        $earliestUpcoming = Performance::where('date', '>=', now()->toDateString())
+        $earliestUpcoming = Performance::where('date', '>=', LocalTime::todayString())
             ->orderBy('date')
             ->first();
 

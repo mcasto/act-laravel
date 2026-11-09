@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\LocalTime;
 use App\Models\Performance;
 use App\Models\TicketSale;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class SendReservationReminders extends Command
 
     public function handle(): void
     {
-        $tomorrow = Carbon::tomorrow('America/Guayaquil')->toDateString();
+        $tomorrow = LocalTime::now()->addDay()->toDateString();
 
         $performances = Performance::whereDate('date', $tomorrow)->get();
 
@@ -85,7 +86,7 @@ class SendReservationReminders extends Command
         }
 
         fputcsv($handle, [
-            now('America/Guayaquil')->toDateString(),
+            LocalTime::todayString(),
             $recipient,
             $performanceDate,
             $quantity,
