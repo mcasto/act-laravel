@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\AuditionHtml;
 use App\Http\Middleware\EnsureDirectorShowAccess;
 use App\Models\Audition;
 use App\Models\Performance;
@@ -118,8 +117,7 @@ class DirectorController extends Controller
      *
      * The one write the director API allows: a production-team member can
      * edit their own show's notice (the same record the admin's Auditions
-     * page edits). The HTML is cleaned with AuditionHtml::sanitize() since it
-     * appears on the public audition page.
+     * page edits). The HTML is saved as submitted, same as from the admin.
      *
      * @return JsonResponse Same shape as auditions()
      *
@@ -142,7 +140,7 @@ class DirectorController extends Controller
             'display_date'     => $validated['display_date'],
             'end_display_date' => $validated['end_display_date'],
             // '' (not null) so clearing the content actually removes it.
-            'html'             => AuditionHtml::sanitize($validated['html'] ?? '') ?? '',
+            'html'             => $validated['html'] ?? '',
         ];
 
         $audition = Audition::where('show_id', $show->id)->first();
