@@ -93,5 +93,10 @@ Technical rules (the page will reject or break otherwise):
 4. No external resources other than the poster <img> above and normal links: no @import, no web fonts, no other images, no <link>, <iframe>, <svg> or forms. Use common system fonts (for example Georgia, "Times New Roman", Arial, Helvetica, sans-serif/serif fallbacks).
 5. It must look good on a phone and on a desktop: max-width around 900px centered, images with max-width: 100% and height: auto, no fixed widths wider than a phone, no position: fixed.
 6. Use simple, standard tags (div, section, h1–h4, p, ul/ol/li, strong/em, a, img, table if really needed). Keep the CSS in the <style> block and only use inline style="" attributes where unavoidable.
+7. Do not indent anything. Start every line of the CSS and the HTML at the left margin, with no leading spaces or tabs, and don't use &nbsp; for spacing. Our editor turns pasted indentation into non-breaking spaces, which makes browsers ignore the CSS on those lines and adds stray gaps to the page. Line breaks between rules and tags are fine; for example:
+.act-audition h2 {
+color: #8a1c1c;
+margin: 0 0 8px;
+}
 
 Give me the complete HTML in one code block so I can copy it and paste it into our page editor's source (< >) view.`;
