@@ -164,28 +164,46 @@ class TicketSaleController extends Controller
 
             // Comp tickets are transferable, same as flex — the purchaser
             // (the "-er") stays on the record as CompTicket::name, but
-            // whoever the Tickets section's one row names (the "-ee") is
-            // who actually shows up at the door. Previously this field was
-            // silently discarded and the purchaser's own name was always
-            // used, even when the admin typed a different door name.
-            $submittedDoorName = trim($validated['tickets'][0] ?? '');
-            $doorName = $submittedDoorName !== '' ? $submittedDoorName : $purchaserName;
+            // whoever each Tickets-section row names (the "-ee") is who
+            // actually shows up at the door. A blank row falls back to the
+            // purchaser's own name.
+            $doorNameFor = function (int $i) use ($validated, $purchaserName): string {
+                $submitted = trim($validated['tickets'][$i] ?? '');
 
-            // Each person gets one comp per show. An unredeemed one (e.g.
-            // assigned on the Comp Tickets page but not yet used) is redeemed
-            // here rather than issuing a second. If theirs is already used,
-            // a new one is only created when the admin explicitly ticks
-            // "Issue an additional comp" — otherwise it's refused, since
-            // that's how duplicate comps were getting created by mistake.
+                return $submitted !== '' ? $submitted : $purchaserName;
+            };
+
+            $quantity = (int) $validated['quantity'];
+            $extraComp = (bool) ($validated['extra_comp'] ?? false);
+
+            // Each person gets one comp per show. More than one in a single
+            // sale is only allowed as an explicit override (e.g. a board
+            // member comping a group) — the admin ticks "Issue additional
+            // comps". Without it, quantity > 1 is refused rather than
+            // silently issuing just one and dropping the rest.
+            if ($quantity > 1 && ! $extraComp) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Each person gets one comp per show. To issue '
+                        . $quantity . ' comps, check "Issue additional comps" and save again.',
+                ]);
+            }
+
+            // An unredeemed one (e.g. assigned on the Comp Tickets page but
+            // not yet used) is redeemed here rather than issuing a new one.
+            // If theirs is already used, a new one is only created when the
+            // admin explicitly ticks "Issue additional comps" — otherwise
+            // it's refused, since that's how duplicate comps were getting
+            // created by mistake.
             $existingComps = CompTicket::with('performance')
                 ->where('email', $patron->email)
                 ->where('show_id', $performance?->show_id)
                 ->get();
 
-            $comp = $existingComps->firstWhere('redeemed_at', null);
+            $unredeemed = $existingComps->firstWhere('redeemed_at', null);
             $usedComp = $existingComps->whereNotNull('redeemed_at')->sortBy('redeemed_at')->first();
 
-            if (! $comp && $usedComp && ! ($validated['extra_comp'] ?? false)) {
+            if (! $unredeemed && $usedComp && ! $extraComp) {
                 $number = $usedComp->number !== null
                     ? ' (#' . str_pad((string) $usedComp->number, 3, '0', STR_PAD_LEFT) . ')'
                     : '';
@@ -196,27 +214,34 @@ class TicketSaleController extends Controller
                 return response()->json([
                     'status'  => 'error',
                     'message' => "{$purchaserName} already used their comp ticket{$number}{$when}. "
-                        . 'To move it, edit that sale instead. To give them another, check "Issue an additional comp" and save again.',
+                        . 'To move it, edit that sale instead. To give them another, check "Issue additional comps" and save again.',
                 ]);
             }
 
-            if (! $comp) {
-                $comp = CompTicket::create([
-                    'name'    => $purchaserName,
-                    'email'   => $patron->email,
-                    'show_id' => $performance?->show_id,
-                ]);
-                $comp->uid = RefId::ref_id($comp->id);
-                $comp->number = $performance?->show?->reserveTicketNumbers(1)[0] ?? null;
-                $comp->save();
-            }
+            // One CompTicket per seat — each gets its own ticket number,
+            // mirrored 1-ticket TicketSale, and confirmation email (see
+            // CompTixController::redeemComp()).
+            for ($i = 0; $i < $quantity; $i++) {
+                $comp = $i === 0 ? $unredeemed : null;
 
-            app(CompTixController::class)->redeemComp(
-                $comp->uid,
-                $validated['performance_id'],
-                $doorName,
-                $validated['send_mail']
-            );
+                if (! $comp) {
+                    $comp = CompTicket::create([
+                        'name'    => $purchaserName,
+                        'email'   => $patron->email,
+                        'show_id' => $performance?->show_id,
+                    ]);
+                    $comp->uid = RefId::ref_id($comp->id);
+                    $comp->number = $performance?->show?->reserveTicketNumbers(1)[0] ?? null;
+                    $comp->save();
+                }
+
+                app(CompTixController::class)->redeemComp(
+                    $comp->uid,
+                    $validated['performance_id'],
+                    $doorNameFor($i),
+                    $validated['send_mail']
+                );
+            }
 
             return response()->json(['status' => 'success']);
         }

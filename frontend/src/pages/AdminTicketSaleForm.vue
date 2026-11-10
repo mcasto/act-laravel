@@ -177,6 +177,8 @@
                     outlined
                     v-model.number="form.quantity"
                     min="1"
+                    :disable="compQuantityLocked"
+                    :hint="compQuantityLocked ? 'One comp per person' : undefined"
                     :rules="[(val) => val >= 1 || 'Must be at least 1']"
                   ></q-input>
                 </div>
@@ -190,12 +192,13 @@
                 <q-checkbox
                   v-if="!isEdit && form.payment_method?.value?.value === 'comp'"
                   v-model="form.extra_comp"
-                  label="Issue an additional comp"
+                  label="Issue additional comps"
                 >
                   <q-tooltip>
                     Each person gets one comp per show — saving reuses theirs.
-                    Check this only if they've already used it and you're
-                    intentionally giving them another.
+                    Check this only to override that: to give them another
+                    after they've used theirs, or to comp more than one seat
+                    (unlocks Quantity).
                   </q-tooltip>
                 </q-checkbox>
 
@@ -399,6 +402,13 @@ const performanceOptions = computed(() => {
   });
 });
 
+const compQuantityLocked = computed(
+  () =>
+    !isEdit &&
+    form.value.payment_method?.value?.value === "comp" &&
+    !form.value.extra_comp,
+);
+
 const paymentMethodOptions = computed(() =>
   (store.paymentMethods ?? []).map((m) => ({
     label: m.label,
@@ -585,6 +595,12 @@ if (!isEdit) {
     },
     { immediate: true },
   );
+
+  // Comps are one per person per show, so Quantity is pinned to 1 unless
+  // the admin explicitly overrides with "Issue additional comps".
+  watch(compQuantityLocked, (locked) => {
+    if (locked) form.value.quantity = 1;
+  });
 
   // Resize the Tickets section as quantity changes — grow appends blank
   // rows, shrink drops from the end (preserving already-typed names on the

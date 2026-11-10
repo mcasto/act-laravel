@@ -61,6 +61,18 @@
                 :show-name="show.label"
               />
               <q-btn
+                :icon="mdiFileExcel"
+                color="positive"
+                flat
+                :loading="exporting"
+                @click="exportSales"
+              >
+                <q-tooltip>
+                  Export to Excel (Sales, Tickets and Mailchimp sheets) — honors the
+                  performance and payment filters, not the search box
+                </q-tooltip>
+              </q-btn>
+              <q-btn
                 :icon="mdiCashClock"
                 color="warning"
                 flat
@@ -731,6 +743,7 @@ import {
   mdiCircle,
   mdiCog,
   mdiCurrencyUsd,
+  mdiFileExcel,
 } from "@quasar/extras/mdi-v7";
 import { format, parseISO } from "date-fns";
 import { sortBy, uniqBy } from "lodash-es";
@@ -748,6 +761,43 @@ const isReadOnly = computed(
 );
 
 const sendMailInfoDialog = ref(false);
+
+// Downloads the .xlsx from TicketSaleExportController. Done with fetch
+// rather than callApi, which only handles JSON responses.
+const exporting = ref(false);
+const exportSales = async () => {
+  if (!show.value) return;
+  exporting.value = true;
+  try {
+    const params = new URLSearchParams({ show_id: show.value.value });
+    if (performanceFilter.value) params.set("performance_id", performanceFilter.value);
+    if (paymentFilter.value) params.set("payment_method_id", paymentFilter.value);
+
+    const response = await fetch(`/api/ticket-sales/export?${params}`, {
+      headers: {
+        Authorization: `Bearer ${store.admin.user?.token}`,
+        Accept: "application/json",
+      },
+    });
+    if (!response.ok) throw new Error(`Export failed (${response.status})`);
+
+    const filename =
+      response.headers
+        .get("Content-Disposition")
+        ?.match(/filename="?([^";]+)"?/)?.[1] ?? "ticket-sales.xlsx";
+    const url = URL.createObjectURL(await response.blob());
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error(error);
+    Notify.create({ type: "negative", message: "Couldn't export ticket sales." });
+  } finally {
+    exporting.value = false;
+  }
+};
 
 const currentShow = store.home.currentShow;
 

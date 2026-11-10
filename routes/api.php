@@ -34,6 +34,7 @@ use App\Http\Controllers\SoldOutNotificationRecipientController;
 use App\Http\Controllers\StandardButtonsController;
 use App\Http\Controllers\SupportUsController;
 use App\Http\Controllers\TicketSaleController;
+use App\Http\Controllers\TicketSaleExportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerController;
 use Illuminate\Http\JsonResponse;
@@ -376,6 +377,9 @@ Route::controller(TicketSaleController::class)
         Route::post('/admin/ticket-sales', 'store');
         Route::get('/admin/performances/{id}/seating-summary', 'seatingSummary');
     });
+
+Route::get('/ticket-sales/export', [TicketSaleExportController::class, 'export'])
+    ->middleware(['auth:sanctum', 'permission:ticket-sales']);
 
 /**
  * Patron Routes
