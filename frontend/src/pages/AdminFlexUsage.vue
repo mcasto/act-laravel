@@ -3,9 +3,16 @@
     <div class="text-h6 q-mb-md">Flex Usage</div>
 
     <div class="flex no-wrap items-center q-gutter-x-sm q-mb-md">
-      <q-select :options="usage.seasons ?? []" :model-value="usage.season"
-      label="Season" dense outlined stack-label style="min-width: 8rem;"
-      @update:model-value="loadSeason" /
+      <q-select
+        :options="usage.seasons ?? []"
+        :model-value="usage.season"
+        label="Season"
+        dense
+        outlined
+        stack-label
+        style="min-width: 8rem;"
+        @update:model-value="loadSeason"
+      />
       <q-space />
       <q-input
         v-model="search"
