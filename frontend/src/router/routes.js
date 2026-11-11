@@ -529,6 +529,32 @@ const routes = [
             },
           },
           {
+            name: "admin-box-office-checklist",
+            path: "box-office-checklist",
+            component: () => import("src/pages/AdminBoxOfficeChecklist.vue"),
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 18.7,
+              label: "Box Office Checklist",
+            },
+          },
+          {
+            name: "admin-email-templates",
+            path: "email-templates",
+            component: () => import("src/pages/AdminEmailTemplates.vue"),
+            meta: {
+              requireAuth: true,
+              admin: true,
+              nav: true,
+              dash: true,
+              order: 19.5,
+              label: "Email Templates",
+            },
+          },
+          {
             name: "admin-ticket-sale-new",
             path: "ticket-sale-new/:show_id",
             component: () => import("src/pages/AdminTicketSaleForm.vue"),

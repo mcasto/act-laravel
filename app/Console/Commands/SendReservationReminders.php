@@ -152,13 +152,16 @@ class SendReservationReminders extends Command
     }
 
     /**
-     * One entry per patron email holding tickets for the performance, with
-     * the ticket quantity summed across their sales for it.
+     * One entry per patron email still holding tickets for the
+     * performance, with the seats they hold (quantity - cancelled) summed
+     * across their sales for it. A fully cancelled sale is left out, so a
+     * patron whose every ticket was cancelled gets no reminder.
      */
     private function recipients(Performance $performance): Collection
     {
         return TicketSale::with('patron')
             ->where('performance_id', $performance->id)
+            ->notFullyCancelled()
             ->get()
             ->filter(fn($sale) => $sale->patron && $sale->patron->email)
             ->groupBy(fn($sale) => strtolower(trim($sale->patron->email)))
@@ -166,7 +169,7 @@ class SendReservationReminders extends Command
                 'patron_id' => $sales->first()->patron->id,
                 'email'     => trim($sales->first()->patron->email),
                 'name'      => trim($sales->first()->patron->first_name . ' ' . $sales->first()->patron->last_name),
-                'quantity'  => $sales->sum('quantity'),
+                'quantity'  => $sales->sum('active_quantity'),
             ])
             ->values();
     }

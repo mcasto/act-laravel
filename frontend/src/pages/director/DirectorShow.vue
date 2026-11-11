@@ -123,24 +123,19 @@
                 </q-card-section>
                 <q-card-section class="q-pt-none">
                   <div class="row items-baseline">
-                    <span class="text-h4 text-weight-bold">{{ p.reserved }}</span>
-                    <span class="text-body1 text-grey-7 q-ml-xs">/ {{ p.sold_out_target }} seats</span>
+                    <span class="text-h4 text-weight-bold">{{ p.seats_taken }}</span>
+                    <span class="text-body1 text-grey-7 q-ml-xs">seats taken / {{ p.sold_out_target }} seat capacity</span>
                   </div>
                   <q-linear-progress
-                    :value="p.sold_out_target ? Math.min(1, p.reserved / p.sold_out_target) : 0"
+                    :value="p.sold_out_target ? Math.min(1, p.seats_taken / p.sold_out_target) : 0"
                     :color="p.sold_out ? 'negative' : 'secondary'"
                     track-color="grey-3"
                     size="10px"
                     rounded
                     class="q-my-sm"
                   />
-                  <div class="row text-body2">
-                    <div class="col">
-                      <b>{{ p.remaining }}</b> remaining
-                    </div>
-                    <div class="col text-right text-grey-7">
-                      incl. {{ p.comps }} comp{{ p.comps === 1 ? "" : "s" }}
-                    </div>
+                  <div class="text-body2">
+                    <b>{{ p.remaining }}</b> seats remaining
                   </div>
                 </q-card-section>
               </q-card>

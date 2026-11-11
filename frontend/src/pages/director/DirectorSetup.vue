@@ -113,7 +113,7 @@
               <li>
                 <b>Shows &rarr; edit your show &rarr; the gear (&#9881;) menu &rarr;
                 Production Team Access:</b> they click <b>Add person</b>, pick you, set
-                your role (Director, Assistant Director, Stage Manager…) and check the
+                your role (Director, Assistant Director, Miscellaneous) and check the
                 start and end dates, then save. You'll see the show only between those
                 dates.
               </li>

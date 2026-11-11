@@ -379,7 +379,7 @@ class CourseController extends Controller
         // separate, always-available synthetic entry the frontend adds
         // itself (only when this course has its own fixr link configured).
         $course['fixrLabel'] = 'Pay with Credit / Debit';
-        $course['buttons'] = Cache::remember('standard-buttons', 3600, fn () => StandardButton::orderBy('sort_order')->get())
+        $course['buttons'] = StandardButton::forPatrons()
             ->filter(fn ($rec) => in_array($rec->key, ['paypal', 'transfer']))
             ->map(function ($rec) use ($course) {
                 $param = "\${$course['cost']} for this class";
@@ -440,8 +440,8 @@ class CourseController extends Controller
             return response()->json($validated);
         }
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             [
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
@@ -519,8 +519,8 @@ class CourseController extends Controller
             ]);
         }
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             [
                 'first_name' => $validated['first_name'],
                 'last_name'  => $validated['last_name'],
@@ -648,7 +648,8 @@ class CourseController extends Controller
 
         foreach ($enrollees as $enrollee) {
             try {
-                PatronMail::to($enrollee->email)->send(new CourseMessageMailer([
+                // Class messages aren't copied to the admin address.
+                PatronMail::to($enrollee->email, ccAdmin: false)->send(new CourseMessageMailer([
                     'subject'          => $validated['subject'],
                     'body'             => $body,
                     'name'             => $enrollee->first_name,

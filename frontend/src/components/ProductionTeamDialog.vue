@@ -167,7 +167,7 @@ const isReadOnly = computed(
 
 const directorUrl = `${window.location.host}/director`;
 
-const roleOptions = ["Director", "Assistant Director", "Stage Manager"];
+const roleOptions = ["Director", "Assistant Director", "Miscellaneous"];
 const statusColor = { active: "positive", upcoming: "info", ended: "grey" };
 
 const loading = ref(false);

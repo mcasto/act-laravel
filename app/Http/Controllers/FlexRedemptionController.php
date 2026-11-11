@@ -54,7 +54,7 @@ class FlexRedemptionController extends Controller
             'special_request' => 'sometimes|nullable|string',
         ]);
 
-        $patron = Patron::where('email', $validated['email'])->first();
+        $patron = Patron::findByEmail($validated['email']);
         $this->ensureBalance($patron, $validated['quantity']);
 
         $performance = Performance::with('show')->find($validated['performance_id']);

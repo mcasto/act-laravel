@@ -15,6 +15,11 @@ class PaymentMethod extends Model
   'value',
   'color',
   'revenue_multiplier',
+  'per_show',
+ ];
+
+ protected $casts = [
+  'per_show' => 'boolean',
  ];
 
 /**

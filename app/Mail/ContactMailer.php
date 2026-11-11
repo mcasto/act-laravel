@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactMailer extends Mailable
+class ContactMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 
@@ -24,6 +24,12 @@ class ContactMailer extends Mailable
     /**
      * Get the message envelope.
      */
+    /** Replies go to the person who submitted it (see TemplatedMailable::submitter()). */
+    protected function submitter(): ?array
+    {
+        return [$this->contact->email, $this->contact->name];
+    }
+
     public function envelope(): Envelope
     {
         return new Envelope(

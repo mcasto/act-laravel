@@ -23,7 +23,8 @@ class Show extends Model
         'ticket_sales_start',
         'slug',
         'tentative',
-        'ticket_price'
+        'ticket_price',
+        'sold_out_target',
     ];
 
     protected $casts = [
@@ -40,7 +41,9 @@ class Show extends Model
             'poster'             => ['required', 'string', 'max:255'],
             'ticket_sales_start' => ['required', 'date'],
             'slug'               => ['required', 'string', 'max:255'],
-            'ticket_price'      => ['sometimes', 'integer']
+            'ticket_price'      => ['sometimes', 'integer'],
+            // Optional override — null follows the global Site Config target.
+            'sold_out_target'   => ['sometimes', 'nullable', 'integer', 'min:1'],
         ];
 
         $validator = validator($data, $rules);
@@ -65,6 +68,10 @@ class Show extends Model
      */
     protected static function booted()
     {
+        // A new show freezes the current multiplier of each per-show
+        // payment method (see ShowPaymentRate).
+        static::created(fn (Show $show) => ShowPaymentRate::addMissing([$show->id]));
+
         static::deleting(function (Show $show) {
             $show->performances()->get()->each->delete();
             Audition::where('show_id', $show->id)->get()->each->delete();
@@ -84,6 +91,12 @@ class Show extends Model
     /**
      * Relationship to performances
      */
+    /** This show's own revenue multipliers (see ShowPaymentRate). */
+    public function paymentRates()
+    {
+        return $this->hasMany(ShowPaymentRate::class);
+    }
+
     public function performances()
     {
         return $this->hasMany(Performance::class)->orderBy('date');

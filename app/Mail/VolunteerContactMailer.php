@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 
-class VolunteerContactMailer extends Mailable
+class VolunteerContactMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 
@@ -20,6 +20,12 @@ class VolunteerContactMailer extends Mailable
         public string $phone,
         public Collection $skills,
     ) {}
+
+    /** Replies go to the person who submitted it (see TemplatedMailable::submitter()). */
+    protected function submitter(): ?array
+    {
+        return [$this->email, $this->name];
+    }
 
     public function envelope(): Envelope
     {

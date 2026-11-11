@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TicketSaleMailer extends Mailable
+class TicketSaleMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 
@@ -23,6 +23,12 @@ class TicketSaleMailer extends Mailable
     /**
      * Get the message envelope.
      */
+    /** Replies go to the person who submitted it (see TemplatedMailable::submitter()). */
+    protected function submitter(): ?array
+    {
+        return [$this->ticketData['email'] ?? null, trim(($this->ticketData['first_name'] ?? '') . ' ' . ($this->ticketData['last_name'] ?? ''))];
+    }
+
     public function envelope(): Envelope
     {
         return new Envelope(

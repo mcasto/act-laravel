@@ -15,7 +15,7 @@ use Illuminate\Queue\SerializesModels;
  * TicketSaleController::sendPaymentReminders()) rather than one BCC blast,
  * which trips spam filters once the list gets long.
  */
-class PaymentReminderMailer extends Mailable
+class PaymentReminderMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 
@@ -35,12 +35,6 @@ class PaymentReminderMailer extends Mailable
                 config('mail.ticket_sale_from.address'),
                 config('mail.ticket_sale_from.name')
             ),
-            replyTo: [
-                new Address(
-                    config('mail.admin_to.address'),
-                    config('mail.admin_to.name')
-                ),
-            ],
             subject: PurchaseConfirmationMailer::withReference(
                 $this->data['subject'],
                 collect($this->data['reservations'] ?? [])

@@ -21,6 +21,12 @@ Schedule::command('reminders:send --same-day')
     ->everyFiveMinutes()
     ->withoutOverlapping();
 
+// Box office checklist: email to-dos that just went overdue (see
+// NotifyOverdueChecklist).
+Schedule::command('checklist:notify-overdue')
+    ->everyFiveMinutes()
+    ->withoutOverlapping();
+
 Schedule::command('storage:cleanup-orphans')
     ->dailyAt('03:00')
     ->timezone(config('app.local_timezone'));

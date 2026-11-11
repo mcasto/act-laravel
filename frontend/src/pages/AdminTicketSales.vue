@@ -11,6 +11,9 @@
       row-key="id"
       dense
       v-model:pagination="pagination"
+      :table-row-class-fn="
+        (row) => (isFullyCancelled(row) ? 'row-cancelled' : '')
+      "
     >
       <template #top>
         <div class="full-width">
@@ -68,8 +71,9 @@
                 @click="exportSales"
               >
                 <q-tooltip>
-                  Export to Excel (Sales, Tickets and Mailchimp sheets) — honors the
-                  performance and payment filters, not the search box
+                  Export to Excel (Sales, Tickets and Mailchimp sheets) — honors
+                  the Performance and Payment Method search criteria, not the
+                  others
                 </q-tooltip>
               </q-btn>
               <q-btn
@@ -204,19 +208,6 @@
             </template>
           </div>
           <div class="flex no-wrap items-center q-gutter-x-md">
-            <q-input
-              v-model="search"
-              dense
-              outlined
-              placeholder="Search by name or ticket #..."
-              clearable
-              style="min-width: 200px;"
-              debounce="300"
-            >
-              <template #prepend>
-                <q-icon :name="matSearch" />
-              </template>
-            </q-input>
             <q-select
               v-if="show"
               :options="performanceOptions"
@@ -229,29 +220,38 @@
               map-options
               style="min-width: 220px;"
             />
-            <q-select
-              v-if="show"
-              :options="paymentMethodOptions"
-              v-model="paymentFilter"
-              label="Payment Method"
-              dense
-              outlined
-              clearable
-              emit-value
-              map-options
-              style="min-width: 180px;"
-            >
-              <template #option="scope">
-                <q-item v-bind="scope.itemProps">
-                  <q-item-section side>
-                    <div
-                      :style="`width: 10px; height: 10px; border-radius: 50%; background: ${scope.opt.color};`"
-                    ></div>
-                  </q-item-section>
-                  <q-item-section>{{ scope.opt.label }}</q-item-section>
-                </q-item>
-              </template>
-            </q-select>
+            <q-btn
+              :icon="matSearch"
+              label="Search"
+              color="primary"
+              outline
+              no-caps
+              :disable="!show"
+              @click="openSearchDialog"
+            />
+            <div class="flex items-center q-gutter-xs">
+              <q-chip
+                v-for="chip in criteriaChips"
+                :key="chip.key"
+                dense
+                removable
+                color="primary"
+                text-color="white"
+                @remove="removeCriterion(chip.key)"
+              >
+                {{ chip.label }}
+              </q-chip>
+              <q-btn
+                v-if="criteriaChips.length > 1"
+                label="Clear all"
+                flat
+                dense
+                no-caps
+                size="sm"
+                color="primary"
+                @click="criteria = {}"
+              />
+            </div>
             <q-space />
             <template v-if="show">
               <div
@@ -287,6 +287,13 @@
         </q-th>
       </template>
 
+      <template #header-cell-front_row="props">
+        <q-th :props="props">
+          FR
+          <q-tooltip>Front Row</q-tooltip>
+        </q-th>
+      </template>
+
       <template #header-cell-actions="props">
         <q-th :props="props">
           <q-icon :name="mdiCog" />
@@ -294,75 +301,104 @@
       </template>
 
       <template #body-cell-no_show="props">
-        <q-td :props="props">
-          <q-toggle
-            label="No Show"
-            v-model="props.row.no_show"
-            :false-value="0"
-            :true-value="1"
+        <q-td :props="props" class="text-center">
+          <q-input
+            :model-value="props.row.no_show || 0"
+            type="number"
+            min="0"
+            :max="activeQty(props.row)"
+            dense
+            borderless
+            input-class="text-center"
+            style="width: 56px; display: inline-block"
+            :class="{ 'text-negative text-weight-bold': props.row.no_show > 0 }"
             :disable="isReadOnly"
-            @update:model-value="updateNoShow(props.row)"
-          ></q-toggle>
+            debounce="500"
+            @update:model-value="(value) => updateNoShow(props.row, value)"
+          >
+            <q-tooltip>
+              How many of this party of {{ activeQty(props.row) }} didn't show
+            </q-tooltip>
+          </q-input>
+        </q-td>
+      </template>
+
+      <template #body-cell-cancelled="props">
+        <q-td :props="props" class="text-center">
+          <q-input
+            :model-value="props.row.cancelled || 0"
+            type="number"
+            min="0"
+            :max="props.row.quantity || 1"
+            dense
+            borderless
+            input-class="text-center"
+            style="width: 56px; display: inline-block"
+            :class="{
+              'text-negative text-weight-bold': props.row.cancelled > 0,
+            }"
+            :disable="isReadOnly"
+            debounce="500"
+            @update:model-value="(value) => updateCancelled(props.row, value)"
+          >
+            <q-tooltip>
+              How many of this sale's {{ props.row.quantity || 1 }} tickets were
+              cancelled. The sale is kept either way — only delete a sale
+              entered by mistake.
+            </q-tooltip>
+          </q-input>
+          <q-icon
+            v-if="props.row.cancelled_returned > 0"
+            :name="mdiUndoVariant"
+            color="positive"
+            size="xs"
+          >
+            <q-tooltip>
+              {{
+                props.row.payment_method?.value === "comp"
+                  ? "Comp returned to the patron"
+                  : `${props.row.cancelled_returned} returned to the Flex balance`
+              }}
+            </q-tooltip>
+          </q-icon>
+        </q-td>
+      </template>
+
+      <template #body-cell-resold="props">
+        <q-td :props="props" class="text-center">
+          <q-input
+            v-if="props.row.cancelled > 0"
+            :model-value="props.row.resold || 0"
+            type="number"
+            min="0"
+            :max="props.row.cancelled"
+            dense
+            borderless
+            input-class="text-center"
+            style="width: 56px; display: inline-block"
+            :class="{ 'text-positive text-weight-bold': props.row.resold > 0 }"
+            :disable="isReadOnly"
+            debounce="500"
+            @update:model-value="(value) => updateResold(props.row, value)"
+          >
+            <q-tooltip>
+              How many of the {{ props.row.cancelled }} cancelled seats were put
+              back on sale. Cancelled seats that aren't resold still count as
+              taken.
+            </q-tooltip>
+          </q-input>
         </q-td>
       </template>
 
       <template #body-cell-confirmed="props">
         <q-td :props="props" class="text-center">
-          <q-icon
-            v-if="props.row.confirmed"
-            :name="mdiCheckBold"
+          <q-toggle
+            :model-value="!!props.row.confirmed"
             color="positive"
-          >
-            <q-tooltip>Payment confirmed</q-tooltip>
-          </q-icon>
-        </q-td>
-      </template>
-
-      <template #body-cell-special_seating="props">
-        <q-td :props="props" class="text-center">
-          <q-icon v-if="props.value" :name="matComment" color="primary">
-            <q-tooltip>{{ props.value }}</q-tooltip>
-          </q-icon>
-        </q-td>
-      </template>
-
-      <template #body-cell-info="props">
-        <q-td :props="props">
-          <q-btn :icon="matInfo" flat round size="sm">
-            <q-menu>
-              <q-list dense separator>
-                <q-item>
-                  <q-item-section side>Purchaser:</q-item-section>
-                  <q-item-section>
-                    <q-item-label
-                      >{{ props.row.patron.first_name }}
-                      {{ props.row.patron.last_name }}</q-item-label
-                    >
-                  </q-item-section>
-                </q-item>
-                <q-item>
-                  <q-item-section side>Email:</q-item-section>
-                  <q-item-section>
-                    <q-item-label>
-                      <span v-if="isReadOnly">{{ props.row.patron.email }}</span>
-                      <a
-                        v-else
-                        :href="`mailto:${props.row.patron.first_name} ${props.row.patron.last_name} <${props.row.patron.email}>`"
-                      >
-                        {{ props.row.patron.email }}
-                      </a>
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-                <q-item>
-                  <q-item-section side>Phone:</q-item-section>
-                  <q-item-section>
-                    <q-item-label>{{ props.row.patron.phone }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
+            dense
+            :disable="isReadOnly"
+            @update:model-value="(value) => updatePaid(props.row, value)"
+          />
         </q-td>
       </template>
 
@@ -394,6 +430,15 @@
 
       <template #body-cell-actions="props">
         <q-td :props="props">
+          <q-icon
+            v-if="props.row.reason_changed"
+            :name="matHistory"
+            color="grey-7"
+            size="xs"
+            class="q-mr-xs"
+          >
+            <q-tooltip>{{ props.row.reason_changed }}</q-tooltip>
+          </q-icon>
           <q-btn
             :icon="matEdit"
             flat
@@ -403,6 +448,23 @@
             :disable="isReadOnly"
             @click="onEditSale(props.row)"
           />
+          <q-btn
+            :icon="mdiCalendarSync"
+            flat
+            round
+            color="primary"
+            size="sm"
+            :disable="isReadOnly || !Number(props.row.quantity)"
+            @click="openReschedule(props.row)"
+          >
+            <q-tooltip>
+              {{
+                Number(props.row.quantity)
+                  ? "Reschedule to another performance"
+                  : "Already rescheduled"
+              }}
+            </q-tooltip>
+          </q-btn>
           <q-btn
             :icon="matDelete"
             flat
@@ -429,6 +491,240 @@
         </div>
       </template>
     </q-table>
+
+    <q-dialog v-model="searchDialog">
+      <q-card style="width: 640px; max-width: 95vw">
+        <q-form @submit.prevent="applySearch">
+          <q-card-section>
+            <div class="text-h6">Search Ticket Sales</div>
+            <div class="text-caption text-grey-7">
+              {{ show?.label }} — fill in any fields; a sale must match all of
+              them.
+            </div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <div class="row q-col-gutter-md">
+              <div class="col-12 col-sm-6">
+                <q-input
+                  v-model="draft.name"
+                  label="Name"
+                  hint="Door name or purchaser"
+                  dense
+                  outlined
+                  autofocus
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-input v-model="draft.email" label="Email" dense outlined />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-input v-model="draft.phone" label="Phone" dense outlined />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-input
+                  v-model="draft.ticket"
+                  label="Ticket #"
+                  hint="e.g. 7, 007 or #007"
+                  dense
+                  outlined
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="draft.performance_id"
+                  :options="performanceOptions"
+                  label="Performance"
+                  dense
+                  outlined
+                  clearable
+                  emit-value
+                  map-options
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="draft.payment_method_id"
+                  :options="paymentMethodOptions"
+                  label="Payment Method"
+                  dense
+                  outlined
+                  clearable
+                  emit-value
+                  map-options
+                >
+                  <template #option="scope">
+                    <q-item v-bind="scope.itemProps">
+                      <q-item-section side>
+                        <div
+                          :style="`width: 10px; height: 10px; border-radius: 50%; background: ${scope.opt.color};`"
+                        ></div>
+                      </q-item-section>
+                      <q-item-section>{{ scope.opt.label }}</q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="draft.angel_level"
+                  :options="angelLevelOptions"
+                  label="Angel Level"
+                  hint="Current season"
+                  dense
+                  outlined
+                  clearable
+                  emit-value
+                  map-options
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-input
+                  v-model="draft.notes"
+                  label="Special Seating / Comments"
+                  dense
+                  outlined
+                />
+              </div>
+              <div class="col-6 col-sm-3">
+                <q-input
+                  v-model="draft.sold_from"
+                  type="date"
+                  label="Sold From"
+                  stack-label
+                  dense
+                  outlined
+                />
+              </div>
+              <div class="col-6 col-sm-3">
+                <q-input
+                  v-model="draft.sold_to"
+                  type="date"
+                  label="Sold To"
+                  stack-label
+                  dense
+                  outlined
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="draft.confirmed"
+                  :options="yesNoOptions"
+                  label="Paid"
+                  dense
+                  outlined
+                  clearable
+                  emit-value
+                  map-options
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="draft.no_show"
+                  :options="yesNoOptions"
+                  label="Has No Shows"
+                  dense
+                  outlined
+                  clearable
+                  emit-value
+                  map-options
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="draft.cancelled"
+                  :options="yesNoOptions"
+                  label="Has Cancellations"
+                  dense
+                  outlined
+                  clearable
+                  emit-value
+                  map-options
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="draft.front_row"
+                  :options="yesNoOptions"
+                  label="Front Row"
+                  dense
+                  outlined
+                  clearable
+                  emit-value
+                  map-options
+                />
+              </div>
+            </div>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Clear" @click="draft = {}" />
+            <q-btn flat label="Cancel" v-close-popup />
+            <q-btn type="submit" flat label="Search" color="primary" />
+          </q-card-actions>
+        </q-form>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="rescheduleDialog" persistent>
+      <q-card style="width: 460px; max-width: 95vw">
+        <q-card-section>
+          <div class="text-h6">Reschedule</div>
+          <div v-if="rescheduleRow" class="text-caption text-grey-7">
+            {{ doorName(rescheduleRow) }} —
+            {{ rescheduleRow.quantity }} ticket{{
+              rescheduleRow.quantity == 1 ? "" : "s"
+            }}, now
+            {{ rescheduleRow.performance.formatted_date }}
+            {{ rescheduleRow.performance.formatted_time }}
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none q-gutter-y-md">
+          <q-select
+            v-model="rescheduleTo"
+            :options="rescheduleOptions"
+            :loading="rescheduleLoading"
+            label="New performance"
+            dense
+            outlined
+            emit-value
+            map-options
+            option-disable="disable"
+          />
+          <q-input
+            v-model="rescheduleNote"
+            label="Note (optional)"
+            hint="e.g. Was sick — added to the reason on both records"
+            dense
+            outlined
+            maxlength="500"
+          />
+          <div class="text-caption text-grey-7">
+            The purchase moves to the new performance with its ticket numbers.
+            The original is kept with quantity 0, and both get a reason for the
+            change.
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Cancel"
+            :disable="rescheduleSaving"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="Reschedule"
+            color="primary"
+            :loading="rescheduleSaving"
+            :disable="!rescheduleTo"
+            @click="saveReschedule"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <q-dialog v-model="sendMailInfoDialog">
       <q-card style="max-width: 420px;">
@@ -535,7 +831,7 @@
                     {{ row.patron.phone }}
                   </div>
                 </td>
-                <td class="text-center">{{ row.quantity || "?" }}</td>
+                <td class="text-center">{{ activeQty(row) }}</td>
                 <td class="text-center">{{ ticketNumbersDisplay(row) }}</td>
                 <td>{{ row.payment_method.label }}</td>
                 <td>{{ format(parseISO(row.sold_at), "PP") }}</td>
@@ -727,23 +1023,24 @@
 <script setup>
 import {
   matAdd,
-  matComment,
   matDelete,
   matEdit,
   matEmail,
   matEvent,
   matInfo,
+  matHistory,
   matListAlt,
   matSearch,
 } from "@quasar/extras/material-icons";
 import {
   mdiCashClock,
+  mdiCalendarSync,
   mdiCashMultiple,
-  mdiCheckBold,
   mdiCircle,
   mdiCog,
   mdiCurrencyUsd,
   mdiFileExcel,
+  mdiUndoVariant,
 } from "@quasar/extras/mdi-v7";
 import { format, parseISO } from "date-fns";
 import { sortBy, uniqBy } from "lodash-es";
@@ -751,7 +1048,7 @@ import { Dialog, Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import AdminTicketSalesPrint from "./AdminTicketSalesPrint.vue";
 
 const store = useStore();
@@ -770,8 +1067,10 @@ const exportSales = async () => {
   exporting.value = true;
   try {
     const params = new URLSearchParams({ show_id: show.value.value });
-    if (performanceFilter.value) params.set("performance_id", performanceFilter.value);
-    if (paymentFilter.value) params.set("payment_method_id", paymentFilter.value);
+    if (criteria.value.performance_id)
+      params.set("performance_id", criteria.value.performance_id);
+    if (criteria.value.payment_method_id)
+      params.set("payment_method_id", criteria.value.payment_method_id);
 
     const response = await fetch(`/api/ticket-sales/export?${params}`, {
       headers: {
@@ -810,39 +1109,113 @@ watch(show, (val) => {
   store.admin.selectedShow = val;
 });
 
-// search and performanceFilter live in the store (sessionStorage-persisted)
-// so they survive the trip to the add/edit ticket form and back, and stay
-// set until cleared manually (performanceFilter also resets on show change).
-const search = computed({
-  get: () => store.ticketSalesSearch,
+// Search criteria from the Search dialog live in the store
+// (sessionStorage-persisted) so they survive the trip to the add/edit
+// ticket form and back, and stay set until cleared. Keys:
+//   name, email, phone, notes — case-insensitive "contains"
+//   ticket — a ticket number, matching the sale that holds it
+//   performance_id, payment_method_id, angel_level — exact
+//   confirmed, no_show, cancelled, front_row — "yes" | "no"
+//   sold_from, sold_to — "YYYY-MM-DD", inclusive
+// Empty values are dropped on apply, so a key present = an active filter.
+const criteria = computed({
+  get: () => store.ticketSalesCriteria ?? {},
   set: (val) => {
-    store.ticketSalesSearch = val;
+    store.ticketSalesCriteria = val;
   },
 });
 
-const performanceFilter = computed({
-  get: () => store.ticketSalesPerformanceFilter,
-  set: (val) => {
-    store.ticketSalesPerformanceFilter = val;
-  },
-});
-
-// Payment method id. Unlike performanceFilter it's kept across show
-// changes — methods aren't show-specific, so "all comps" stays meaningful.
-const paymentFilter = computed({
-  get: () => store.ticketSalesPaymentFilter,
-  set: (val) => {
-    store.ticketSalesPaymentFilter = val;
-  },
-});
-
+// The performance belongs to the previous show, so it no longer applies.
+// Everything else (payment method, names, …) still means something.
 watch(show, () => {
-  performanceFilter.value = null;
+  if (criteria.value.performance_id) {
+    const { performance_id: _dropped, ...rest } = criteria.value;
+    criteria.value = rest;
+  }
 });
+
+const searchDialog = ref(false);
+const draft = ref({});
+
+const openSearchDialog = () => {
+  draft.value = { ...criteria.value };
+  searchDialog.value = true;
+};
+
+const applySearch = () => {
+  criteria.value = Object.fromEntries(
+    Object.entries(draft.value).filter(
+      ([, v]) => v !== null && v !== undefined && String(v).trim() !== "",
+    ),
+  );
+  searchDialog.value = false;
+};
+
+const removeCriterion = (key) => {
+  const { [key]: _removed, ...rest } = criteria.value;
+  criteria.value = rest;
+};
+
+const yesNoOptions = [
+  { label: "Yes", value: "yes" },
+  { label: "No", value: "no" },
+];
+
+const CRITERIA_LABELS = {
+  name: "Name",
+  email: "Email",
+  phone: "Phone",
+  ticket: "Ticket #",
+  performance_id: "Performance",
+  payment_method_id: "Payment",
+  angel_level: "Angel",
+  notes: "Seating/Comments",
+  sold_from: "Sold from",
+  sold_to: "Sold to",
+  confirmed: "Paid",
+  no_show: "Has no-shows",
+  cancelled: "Has cancellations",
+  front_row: "Front row",
+};
+
+// The toolbar's Performance Date dropdown — the same performance_id
+// criterion the Search dialog sets, so the two always agree.
+const performanceFilter = computed({
+  get: () => criteria.value.performance_id ?? null,
+  set: (val) => {
+    const { performance_id: _old, ...rest } = criteria.value;
+    criteria.value = val ? { ...rest, performance_id: val } : rest;
+  },
+});
+
+// The performance shows in its dropdown, so it gets no chip.
+const criteriaChips = computed(() =>
+  Object.entries(criteria.value)
+    .filter(([key]) => key !== "performance_id")
+    .map(([key, value]) => {
+      let shown = value;
+      if (key === "performance_id") {
+        shown =
+          performanceOptions.value.find((o) => o.value === value)?.label ??
+          value;
+      } else if (key === "payment_method_id") {
+        shown =
+          paymentMethodOptions.value.find((o) => o.value === value)?.label ??
+          value;
+      } else if (
+        ["confirmed", "no_show", "cancelled", "front_row"].includes(key)
+      ) {
+        shown = value === "yes" ? "Yes" : "No";
+      } else if (key === "sold_from" || key === "sold_to") {
+        shown = format(parseISO(value), "PP");
+      }
+      return { key, label: `${CRITERIA_LABELS[key] ?? key}: ${shown}` };
+    }),
+);
 
 const pagination = ref({ page: 1, rowsPerPage: 12, sortBy: "last", descending: false });
 // Back to page 1 when the result set changes, or a later page may be empty.
-watch([search, performanceFilter, paymentFilter, show], () => {
+watch([criteria, show], () => {
   pagination.value.page = 1;
 });
 
@@ -876,26 +1249,59 @@ const compareNames = (a, b) =>
   a[0].localeCompare(b[0], undefined, { sensitivity: "base" }) ||
   a[1].localeCompare(b[1], undefined, { sensitivity: "base" });
 
+// "2026-10-23 15:00:00" — sorts performances chronologically.
+const performanceKey = (row) =>
+  `${row.performance.date ?? ""} ${row.performance.start_time ?? ""}`;
+
+// Lowest ticket number on a sale; sales without numbers sort last.
+const firstTicketNumber = (row) => {
+  if (row.tickets?.length)
+    return Math.min(...row.tickets.map((t) => Number(t.number)));
+  if (row.number != null) return Number(row.number);
+  return Number.MAX_SAFE_INTEGER;
+};
+
+// Seats a sale still holds — quantity minus cancelled tickets. Legacy rows
+// with no quantity count as one, as before.
+const activeQty = (rec) =>
+  rec.quantity == null
+    ? 1
+    : Math.max(0, Number(rec.quantity) - (Number(rec.cancelled) || 0));
+
+// Seats a sale takes out of the performance's seat count — quantity minus
+// cancelled seats that were resold (TicketSale::held_quantity). A cancelled
+// seat that wasn't resold is still taken.
+const heldQty = (rec) =>
+  rec.quantity == null
+    ? 1
+    : Math.max(0, Number(rec.quantity) - (Number(rec.resold) || 0));
+
+// Holds no seats: every ticket cancelled, or rescheduled to another
+// performance (quantity 0). Kept for the record, shown greyed out.
+const isFullyCancelled = (rec) => activeQty(rec) === 0;
+
 const allTicketsRedeemed = (row) =>
   !!row.tickets?.length && row.tickets.every((t) => !!t.redeemed_at);
 
-// Order requested: Performance Date : Name : Qty : Ticket #s : Confirmed :
-// Date Sold : No Show — Name since split into Last/First. "info"
-// (purchaser/email/phone popup) stays glued to Last/First and
+// Order requested: Performance Date : Name : Qty : Ticket #s : Paid :
+// No Show : Cancelled — Name since split into Last/First. (Date Sold was
+// dropped from the table; it's still searchable and in the export.)
 // "payment_method"/"actions" (both unlabeled icon-only columns) stay
-// trailing at the end, same as before — none of the three were named in
-// that order, so they're left in their least-disruptive spot.
+// trailing at the end.
 const columns = [
   {
     name: "performance",
     label: "Performance",
     field: (row) =>
       `${row.performance.formatted_date} ${row.performance.formatted_time}`,
+    sort: (_a, _b, rowA, rowB) =>
+      performanceKey(rowA).localeCompare(performanceKey(rowB)),
     align: "left",
+    sortable: true,
   },
   // Door Name (not the purchaser) split into Last/First, to match the box
   // office's spreadsheet and the printed door sheet
-  // (AdminTicketSalesPrint.vue) — the purchaser is in the info popup.
+  // (AdminTicketSalesPrint.vue).
   // Each sorts by its own name, then the other as a tiebreaker.
   {
     name: "last",
@@ -922,58 +1328,67 @@ const columns = [
     sortable: true,
   },
   {
-    name: "info",
-    label: "",
-    field: "",
-    align: "center",
-    style: "width: 36px; padding: 0;",
-  },
-  {
     name: "quantity",
     label: "Qty",
-    field: (row) => row.quantity || "?",
+    field: (row) => row.quantity ?? "?",
+    sort: (_a, _b, rowA, rowB) => (rowA.quantity || 0) - (rowB.quantity || 0),
     align: "center",
+    sortable: true,
   },
   {
     name: "tickets",
     label: "Tickets",
     field: ticketNumbersDisplay,
+    sort: (_a, _b, rowA, rowB) =>
+      firstTicketNumber(rowA) - firstTicketNumber(rowB),
     align: "center",
+    sortable: true,
   },
   {
     name: "confirmed",
-    label: "Confirmed",
+    label: "Paid",
     field: "confirmed",
+    sort: (a, b) => Number(!!a) - Number(!!b),
     align: "center",
+    sortable: true,
   },
   {
-    name: "sold_at",
-    label: "Date Sold",
-    field: (row) => format(parseISO(row.sold_at), "PP"),
-    align: "left",
+    name: "cancelled",
+    label: "Cancelled",
+    field: "cancelled",
+    sort: (a, b) => (Number(a) || 0) - (Number(b) || 0),
+    align: "center",
+    sortable: true,
+  },
+  {
+    name: "resold",
+    label: "Resold",
+    field: "resold",
+    sort: (a, b) => (Number(a) || 0) - (Number(b) || 0),
+    align: "center",
+    sortable: true,
   },
   {
     name: "no_show",
     label: "No Show",
     field: "no_show",
+    sort: (a, b) => (Number(a) || 0) - (Number(b) || 0),
     align: "center",
+    sortable: true,
   },
   {
     name: "front_row",
-    label: "Front Row",
+    label: "FR",
     field: (row) => (row.front_row > 0 ? row.front_row : ""),
+    sort: (_a, _b, rowA, rowB) => (rowA.front_row || 0) - (rowB.front_row || 0),
     align: "center",
-  },
-  {
-    name: "special_seating",
-    label: "Special Seating",
-    field: "special_seating",
-    align: "center",
+    sortable: true,
   },
   {
     name: "payment_method",
     label: "",
-    field: "",
+    field: (row) => row.payment_method?.label ?? "",
+    sortable: true,
     align: "center",
     style: "width: 16px; padding: 0;",
   },
@@ -982,7 +1397,7 @@ const columns = [
     label: "",
     field: "",
     align: "center",
-    style: "width: 70px;",
+    style: "width: 120px;",
   },
 ];
 
@@ -993,46 +1408,129 @@ const recs = computed(() => {
   );
 });
 
+const contains = (haystack, needle) =>
+  String(haystack ?? "")
+    .toLowerCase()
+    .includes(String(needle).trim().toLowerCase());
+
+const yesNoMatches = (value, wanted) => (wanted === "yes" ? !!value : !value);
+
+// Every criterion must match. Ticket numbers are per show, and the whole
+// search runs inside the selected show.
 const filteredRecs = computed(() => {
+  const c = criteria.value;
   let result = recs.value;
 
-  if (performanceFilter.value) {
+  if (c.performance_id) {
+    result = result.filter((rec) => rec.performance.id === c.performance_id);
+  }
+
+  if (c.payment_method_id) {
     result = result.filter(
-      (rec) => rec.performance.id === performanceFilter.value,
+      (rec) => rec.payment_method?.id === c.payment_method_id,
     );
   }
 
-  if (paymentFilter.value) {
-    result = result.filter(
-      (rec) => rec.payment_method?.id === paymentFilter.value,
-    );
-  }
-
-  if (search.value) {
-    const q = search.value.toLowerCase();
-    // A ticket number ("7", "007" or "#007") matches the sale holding that
-    // ticket, including one in the middle of a range like 005–009. Numbers
-    // are per show, so this only searches the selected show.
-    const ticketNum = /^#?\d+$/.test(q.trim())
-      ? Number(q.trim().replace("#", ""))
-      : null;
-    // Otherwise matches either the door name shown in the table or the
-    // purchaser (in the info popup), so a search still finds a sale whose
-    // door name was overridden to someone else.
+  // Door name (shown in the table) or purchaser (in the info popup), so a
+  // search still finds a sale whose door name was overridden to someone else.
+  if (c.name) {
     result = result.filter(
       (rec) =>
-        (ticketNum !== null &&
-          (rec.tickets?.some((t) => Number(t.number) === ticketNum) ||
-            (rec.number != null && Number(rec.number) === ticketNum))) ||
-        doorName(rec).toLowerCase().includes(q) ||
-        `${rec.patron.first_name} ${rec.patron.last_name}`
-          .toLowerCase()
-          .includes(q),
+        contains(doorName(rec), c.name) ||
+        contains(`${rec.patron.first_name} ${rec.patron.last_name}`, c.name),
+    );
+  }
+
+  if (c.email) {
+    result = result.filter((rec) => contains(rec.patron.email, c.email));
+  }
+
+  // Digits only, so "(099) 123-4567" finds "0991234567" and vice versa.
+  if (c.phone) {
+    const digits = String(c.phone).replace(/\D/g, "");
+    result = result.filter((rec) =>
+      digits
+        ? String(rec.patron.phone ?? "")
+            .replace(/\D/g, "")
+            .includes(digits)
+        : contains(rec.patron.phone, c.phone),
+    );
+  }
+
+  // "7", "007" or "#007" matches the sale holding that ticket, including
+  // one in the middle of a range like 005–009.
+  if (c.ticket) {
+    const num = Number(String(c.ticket).trim().replace("#", ""));
+    result = result.filter(
+      (rec) =>
+        rec.tickets?.some((t) => Number(t.number) === num) ||
+        (rec.number != null && Number(rec.number) === num),
+    );
+  }
+
+  if (c.angel_level) {
+    result = result.filter((rec) => rec.patron.angel_level === c.angel_level);
+  }
+
+  if (c.notes) {
+    result = result.filter(
+      (rec) =>
+        contains(rec.special_seating, c.notes) ||
+        contains(rec.comments, c.notes),
+    );
+  }
+
+  if (c.sold_from) {
+    result = result.filter(
+      (rec) =>
+        rec.sold_at &&
+        format(parseISO(rec.sold_at), "yyyy-MM-dd") >= c.sold_from,
+    );
+  }
+
+  if (c.sold_to) {
+    result = result.filter(
+      (rec) =>
+        rec.sold_at && format(parseISO(rec.sold_at), "yyyy-MM-dd") <= c.sold_to,
+    );
+  }
+
+  if (c.confirmed) {
+    result = result.filter((rec) => yesNoMatches(rec.confirmed, c.confirmed));
+  }
+
+  if (c.no_show) {
+    result = result.filter((rec) => yesNoMatches(rec.no_show, c.no_show));
+  }
+
+  if (c.cancelled) {
+    result = result.filter((rec) =>
+      yesNoMatches(rec.cancelled > 0, c.cancelled),
+    );
+  }
+
+  if (c.front_row) {
+    result = result.filter((rec) =>
+      yesNoMatches(rec.front_row > 0, c.front_row),
     );
   }
 
   return result;
 });
+
+// Angel levels held by this show's purchasers this season.
+const angelLevelOptions = computed(() =>
+  sortBy(
+    uniqBy(
+      recs.value.filter((rec) => rec.patron.angel_level),
+      (rec) => rec.patron.angel_level,
+    ).map((rec) => ({
+      label: rec.patron.angel_level,
+      value: rec.patron.angel_level,
+    })),
+    "label",
+  ),
+);
 
 // Distinct performances for the selected show, for the date filter — drawn
 // from recs (not store.admin.shows) so it only offers dates that actually
@@ -1091,6 +1589,19 @@ const confirmedRecs = computed(() =>
   recs.value.filter((rec) => rec.confirmed !== false),
 );
 
+// A sale's revenue multiplier: its show's own rate for the payment method
+// when the show has one (frozen when the show was created or the method was
+// made Per Show — see ShowPaymentRate), otherwise the method's global one.
+// (Each sale's show comes with its payment_rates — TicketSaleController::allSales().)
+const multiplierFor = (rec) => {
+  const own = rec.performance?.show?.payment_rates?.find(
+    (r) => r.payment_method_id === rec.payment_method?.id,
+  )?.revenue_multiplier;
+  if (own != null) return Number(own);
+  const global = rec.payment_method?.revenue_multiplier;
+  return global == null ? 1 : Number(global);
+};
+
 // Projected across every reservation, confirmed or not (as if pending
 // payments all come in) — matches the box office's projected-income
 // spreadsheet and the Projected column in Tickets Sold By Date.
@@ -1098,18 +1609,19 @@ const revenueByMethod = computed(() => {
   const price = ticketPrice.value;
   const groups = {};
   for (const rec of recs.value) {
-    const { label, color, revenue_multiplier } = rec.payment_method;
+    const { label, color } = rec.payment_method;
+    const multiplier = multiplierFor(rec);
     if (!groups[label])
       groups[label] = {
         label,
         color,
-        multiplier: revenue_multiplier ?? 1,
+        multiplier,
         count: 0,
         revenue: 0,
       };
-    const qty = rec.quantity || 1;
+    const qty = activeQty(rec);
     groups[label].count += qty;
-    groups[label].revenue += qty * price * (revenue_multiplier ?? 1);
+    groups[label].revenue += qty * price * multiplier;
   }
   return Object.values(groups);
 });
@@ -1120,7 +1632,7 @@ const totalRevenue = computed(() =>
 
 // Confirmed-only — the Confirmed total in Tickets Sold By Date.
 const confirmedTicketCount = computed(() =>
-  confirmedRecs.value.reduce((sum, rec) => sum + (rec.quantity || 1), 0),
+  confirmedRecs.value.reduce((sum, rec) => sum + activeQty(rec), 0),
 );
 
 // Per-ticket price after a payment method's revenue multiplier (e.g. Fixr's
@@ -1130,21 +1642,34 @@ const effectivePrice = (multiplier) => {
   return Number.isInteger(amount) ? amount : amount.toFixed(2);
 };
 
-// All reservations regardless of confirmation — a pending sale still
-// occupies a seat, so sold-out capacity shouldn't exclude it.
+// Seats taken regardless of confirmation — a pending sale still occupies a
+// seat, and so does a cancelled one until it's resold.
 const totalTickets = computed(() =>
-  recs.value.reduce((sum, rec) => sum + (rec.quantity || 1), 0),
+  recs.value.reduce((sum, rec) => sum + heldQty(rec), 0),
 );
 
-const performanceCount = computed(() => {
+// Each performance's own target when it overrides one, then the show's,
+// otherwise the global Default Sold Out Target — same rule as
+// Performance::effectiveSoldOutTarget() on the backend.
+const soldOutCapacity = computed(() => {
   if (!show.value) return 0;
   const s = store.admin.shows?.find((s) => s.id === show.value.value);
-  return s?.performances?.length ?? 0;
+  const globalTarget =
+    s?.sold_out_target != null
+      ? Number(s.sold_out_target)
+      : Number(store.config?.sold_out_target) || 0;
+  return (s?.performances ?? []).reduce(
+    (sum, p) =>
+      sum +
+      (p.sold_out_target != null ? Number(p.sold_out_target) : globalTarget),
+    0,
+  );
 });
 
-const soldOutCapacity = computed(
-  () => (store.config?.sold_out_target ?? 0) * performanceCount.value,
-);
+// Only fetched on the Site Config page otherwise.
+onMounted(() => {
+  if (!store.config) store.getSiteConfig();
+});
 
 const soldOutPct = computed(() => {
   if (!soldOutCapacity.value) return 0;
@@ -1154,8 +1679,8 @@ const soldOutPct = computed(() => {
 // All reservations grouped by performance date, with the confirmed subset
 // broken out. Revenue is projected across every reservation (as if pending
 // payments all come in), using the same price × multiplier as
-// revenueByMethod. Independent of performanceFilter so the summary always
-// shows every date regardless of which one is filtered to.
+// revenueByMethod. Independent of the search criteria so the summary always
+// shows every date regardless of which one is searched for.
 const ticketsByDate = computed(() => {
   const price = ticketPrice.value;
   const groups = {};
@@ -1171,11 +1696,10 @@ const ticketsByDate = computed(() => {
         revenue: 0,
       };
     }
-    const qty = rec.quantity || 1;
+    const qty = activeQty(rec);
     groups[perf.id].total += qty;
     if (rec.confirmed !== false) groups[perf.id].confirmed += qty;
-    groups[perf.id].revenue +=
-      qty * price * (rec.payment_method.revenue_multiplier ?? 1);
+    groups[perf.id].revenue += qty * price * multiplierFor(rec);
   }
   return sortBy(Object.values(groups), "date");
 });
@@ -1195,6 +1719,7 @@ const unconfirmedRecs = computed(() => {
       (rec) =>
         rec.performance.show.id == show.value.value &&
         !rec.confirmed &&
+        !isFullyCancelled(rec) &&
         PENDING_PAYMENT_METHODS.includes(rec.payment_method?.value),
     ),
     [
@@ -1215,6 +1740,7 @@ const unconfirmedCash = computed(() => {
         (rec) =>
           rec.performance.show.id == show.value.value &&
           !rec.confirmed &&
+          !isFullyCancelled(rec) &&
           CASH_DOOR_METHODS.includes(rec.payment_method?.value),
       )
     : [];
@@ -1231,11 +1757,11 @@ const unconfirmedCash = computed(() => {
       qty: 0,
     };
     byPerformance[perf.id].sales += 1;
-    byPerformance[perf.id].qty += Number(rec.quantity) || 0;
+    byPerformance[perf.id].qty += activeQty(rec);
   }
   return {
     sales: sales.length,
-    qty: sales.reduce((sum, rec) => sum + (Number(rec.quantity) || 0), 0),
+    qty: sales.reduce((sum, rec) => sum + activeQty(rec), 0),
     byPerformance: sortBy(Object.values(byPerformance), ["date", "start_time"]),
   };
 });
@@ -1344,7 +1870,7 @@ const paymentMethodColors = computed(() => {
 const onDelete = async (row) => {
   Dialog.create({
     title: "Delete Ticket Sale",
-    message: `Are you sure you want to delete the ticket sold to ${row.patron.first_name} ${row.patron.last_name} for the ${row.performance.formatted_date} performance at ${row.performance.formatted_time}?`,
+    message: `Delete the sale to ${row.patron.first_name} ${row.patron.last_name} for the ${row.performance.formatted_date} performance at ${row.performance.formatted_time}? Only delete a sale entered by mistake or for testing — if the patron cancelled, set the Cancelled count instead so the record is kept.`,
     ok: "Yes",
     cancel: "No",
   }).onOk(async () => {
@@ -1372,16 +1898,240 @@ const onEditSale = async (row) => {
   });
 };
 
-const updateNoShow = async (row) => {
+// Flex and comp tickets can go back to the patron when cancelled — the
+// admin is asked each time more of them are cancelled.
+const RETURNABLE_METHODS = ["flex", "comp"];
+
+const askReturn = (row, newlyCancelled) =>
+  new Promise((resolve) => {
+    const name = `${row.patron.first_name} ${row.patron.last_name}`.trim();
+    const isComp = row.payment_method?.value === "comp";
+    const tickets = `${newlyCancelled} ticket${newlyCancelled === 1 ? "" : "s"}`;
+
+    Dialog.create({
+      title: isComp ? "Return the comp?" : "Return to Flex balance?",
+      message: isComp
+        ? `Give ${name} their comp back, so they can use it for another performance? If not, the comp stays used.`
+        : `Return the ${tickets} just cancelled to ${name}'s Flex balance? If not, ${newlyCancelled === 1 ? "it stays" : "they stay"} counted as used.`,
+      persistent: true,
+      ok: {
+        label: isComp ? "Return comp" : "Return to balance",
+        color: "primary",
+        flat: true,
+      },
+      cancel: { label: "Don't return", flat: true },
+    })
+      .onOk(() => resolve(true))
+      .onCancel(() => resolve(false));
+  });
+
+// How many of the sale's tickets were cancelled — clamped to 0..quantity,
+// saved at once, and put back if the save fails. The server also caps No
+// Show to the seats left and works out how many cancelled tickets were
+// returned, so those come from the response.
+const updateCancelled = async (row, value) => {
+  const max = Number(row.quantity) || 1;
+  const count = Math.min(max, Math.max(0, Math.floor(Number(value) || 0)));
+  const previous = {
+    cancelled: row.cancelled,
+    cancelled_returned: row.cancelled_returned,
+    resold: row.resold,
+    no_show: row.no_show,
+  };
+  const newlyCancelled = count - (Number(row.cancelled) || 0);
+  if (newlyCancelled === 0) return;
+
+  row.cancelled = count;
+
+  const payload = { cancelled: count };
+  if (
+    newlyCancelled > 0 &&
+    RETURNABLE_METHODS.includes(row.payment_method?.value)
+  ) {
+    payload.return = await askReturn(row, newlyCancelled);
+  }
+
+  const response = await callApi({
+    path: `/ticket-sales/cancelled/${row.id}`,
+    method: "put",
+    payload,
+    useAuth: true,
+    showError: false,
+  }).catch(() => null);
+
+  if (!response || response.status !== "success") {
+    Object.assign(row, previous);
+    Notify.create({
+      type: "negative",
+      message: response?.message || "Couldn't update Cancelled.",
+    });
+    return;
+  }
+
+  row.no_show = response.no_show;
+  row.cancelled_returned = response.cancelled_returned;
+  row.resold = response.resold;
+  row.active_quantity = Math.max(
+    0,
+    (Number(row.quantity) || 0) - response.cancelled,
+  );
+  row.used_quantity = Math.max(
+    0,
+    (Number(row.quantity) || 0) - response.cancelled_returned,
+  );
+};
+
+// How many cancelled seats were put back on sale — clamped to
+// 0..cancelled, saved at once, and put back if the save fails.
+const updateResold = async (row, value) => {
+  const max = Number(row.cancelled) || 0;
+  const count = Math.min(max, Math.max(0, Math.floor(Number(value) || 0)));
+  const previous = row.resold;
+  if (count === (Number(previous) || 0)) return;
+  row.resold = count;
+
+  const response = await callApi({
+    path: `/ticket-sales/resold/${row.id}`,
+    method: "put",
+    payload: { resold: count },
+    useAuth: true,
+    showError: false,
+  }).catch(() => null);
+
+  if (!response || response.status !== "success") {
+    row.resold = previous;
+    Notify.create({
+      type: "negative",
+      message: response?.message || "Couldn't update Resold.",
+    });
+  }
+};
+
+// How many of the party didn't show — clamped to 0..quantity, saved at
+// once, and put back if the save fails.
+const updateNoShow = async (row, value) => {
+  const max = activeQty(row);
+  const count = Math.min(max, Math.max(0, Math.floor(Number(value) || 0)));
+  const previous = row.no_show;
+  row.no_show = count;
+
+  const response = await callApi({
+    path: `/ticket-sales/no-show/${row.id}`,
+    method: "put",
+    payload: { no_show: count },
+    useAuth: true,
+  });
+
+  if (!response || response.status !== "success") {
+    row.no_show = previous;
+    Notify.create({
+      type: "negative",
+      message: response?.message || "Couldn't update No Show.",
+    });
+  }
+};
+
+// Optimistic: flips the row at once (so totals and the Pending list
+// update), and flips it back if the save fails.
+const updatePaid = async (row, value) => {
+  const previous = row.confirmed;
+  row.confirmed = value;
+
+  const response = await callApi({
+    path: `/ticket-sales/paid/${row.id}`,
+    method: "put",
+    payload: { confirmed: value },
+    useAuth: true,
+  });
+
+  if (!response || response.status !== "success") {
+    row.confirmed = previous;
+    Notify.create({
+      type: "negative",
+      message: response?.message || "Couldn't update Paid.",
+    });
+  }
+};
+
+// Reschedule: moves a purchase to another performance of the same show.
+// The server copies it there (with its ticket numbers) and keeps the
+// original at quantity 0 — see TicketSaleController::reschedule().
+const rescheduleDialog = ref(false);
+const rescheduleRow = ref(null);
+const rescheduleTo = ref(null);
+const rescheduleNote = ref("");
+const rescheduleLoading = ref(false);
+const rescheduleSaving = ref(false);
+const reschedulePerformances = ref([]);
+
+const rescheduleOptions = computed(() => {
+  const today = format(new Date(), "yyyy-MM-dd");
+  return reschedulePerformances.value.map((p) => {
+    const isCurrent = p.id === rescheduleRow.value?.performance.id;
+    const isPast = String(p.date).slice(0, 10) < today;
+    const notes = [
+      isCurrent && "current",
+      isPast && "past",
+      p.sold_out && "sold out",
+    ]
+      .filter(Boolean)
+      .join(", ");
+    return {
+      label: `${p.formatted_date} ${p.formatted_time}${notes ? ` (${notes})` : ""}`,
+      value: p.id,
+      disable: isCurrent,
+    };
+  });
+});
+
+const openReschedule = async (row) => {
+  rescheduleRow.value = row;
+  rescheduleTo.value = null;
+  rescheduleNote.value = "";
+  rescheduleDialog.value = true;
+
+  rescheduleLoading.value = true;
   try {
-    await callApi({
-      path: `/ticket-sales/no-show/${row.id}`,
-      method: "put",
-      payload: row,
+    const showData = await callApi({
+      path: `/shows/${row.performance.show.id}`,
+      method: "get",
       useAuth: true,
     });
-  } catch (e) {
-    console.error({ error: e });
+    reschedulePerformances.value = sortBy(showData?.performances ?? [], [
+      "date",
+      "start_time",
+    ]);
+  } finally {
+    rescheduleLoading.value = false;
+  }
+};
+
+const saveReschedule = async () => {
+  rescheduleSaving.value = true;
+  try {
+    const response = await callApi({
+      path: `/ticket-sales/${rescheduleRow.value.id}/reschedule`,
+      method: "post",
+      payload: {
+        performance_id: rescheduleTo.value,
+        note: rescheduleNote.value || null,
+      },
+      useAuth: true,
+    }).catch(() => null);
+
+    // false = the server refused with a message, which callApi already
+    // showed; null = the request itself failed.
+    if (response === false) return;
+    if (!response || response.status !== "success") {
+      Notify.create({ type: "negative", message: "Couldn't reschedule." });
+      return;
+    }
+
+    store.admin.ticket_sales = response.sales;
+    rescheduleDialog.value = false;
+    Notify.create({ type: "positive", message: "Rescheduled." });
+  } finally {
+    rescheduleSaving.value = false;
   }
 };
 
@@ -1427,6 +2177,14 @@ const saveTicketRedemptions = async () => {
 .tsbd-col {
   min-width: 70px;
   align-items: flex-end;
+}
+/* Every ticket on the sale cancelled — kept for the record, greyed out. */
+:deep(tr.row-cancelled td) {
+  color: #9e9e9e;
+}
+:deep(tr.row-cancelled td:nth-child(2)),
+:deep(tr.row-cancelled td:nth-child(3)) {
+  text-decoration: line-through;
 }
 .tsbd-rev {
   min-width: 90px;

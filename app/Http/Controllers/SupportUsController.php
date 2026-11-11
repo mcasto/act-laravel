@@ -14,7 +14,7 @@ class SupportUsController extends Controller
             ->get('support-us.config.json'));
 
         $price = $config->price;
-        $config->buttons = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
+        $config->buttons = StandardButton::forPatrons()
             ->whereIn('key', ['paypal', 'transfer'])
             ->map(function ($rec) use ($price) {
                 $rec->popupText = Cache::remember(

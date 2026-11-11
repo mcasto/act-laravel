@@ -86,7 +86,8 @@ import { POSTER_BASE_URL } from "src/assets/constants";
 import PosterWithBanner from "src/components/PosterWithBanner.vue";
 import { format, parseISO } from "date-fns";
 import { useStore } from "src/stores/store";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { Dialog } from "quasar";
 import { useRoute } from "vue-router";
 import PurchaseOptions from "src/components/PurchaseOptions.vue";
 import { sortBy } from "lodash-es";
@@ -132,7 +133,9 @@ const performances = computed(() => {
         parseISO(`${performance.date} ${performance.start_time}`),
         "PPp",
       );
-      const soldOut = performance.sold_out == 1;
+      // No seats left counts as sold out even before an admin marks it.
+      const soldOut =
+        performance.sold_out == 1 || performance.seats_remaining === 0;
       const isPast = new Date(`${performance.date}T${performance.start_time}`) < now;
 
       if (isPast && soldOut) {
@@ -152,6 +155,21 @@ const performances = computed(() => {
     }),
     "date",
   );
+});
+
+// Picking a performance with few seats left (at or below the Site Config
+// Nearly Sold Out Threshold) warns the patron. Quantity fields are capped
+// at the seats left too (src/assets/seat-limit.js).
+watch(performance, (perf) => {
+  const left = perf?.seats_remaining;
+  const threshold = Number(show.value?.nearly_sold_out_threshold) || 0;
+  if (left == null || perf.soldOut || perf.isPast || left > threshold) return;
+
+  Dialog.create({
+    title: "Nearly sold out",
+    message: `Only ${left} ${left === 1 ? "seat" : "seats"} remaining for ${perf.displayDate}.`,
+    ok: { label: "OK", color: "primary", flat: true },
+  });
 });
 
 const hasAvailablePerformance = computed(() =>

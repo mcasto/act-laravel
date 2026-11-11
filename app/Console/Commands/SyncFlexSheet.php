@@ -206,7 +206,7 @@ class SyncFlexSheet extends Command
         $warnings   = 0;
 
         foreach ($sheetUsage as $email => $showUsage) {
-            $patron = Patron::where('email', $email)->first();
+            $patron = Patron::findByEmail($email);
 
             if (!$patron) {
                 $this->warn("  [SKIP] No patron found for: {$email}");

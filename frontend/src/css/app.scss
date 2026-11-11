@@ -17,6 +17,15 @@
     }
 }
 
+// Admin header — same colour and type as .banner, toolbar height.
+.admin-toolbar {
+    background-color: #7e79b8;
+}
+
+.admin-toolbar-title {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .admin-nav {
     background-color: #c4c9e5;
     height: 100vh;

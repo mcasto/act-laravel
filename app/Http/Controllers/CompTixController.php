@@ -108,7 +108,7 @@ class CompTixController extends Controller
         // too — a separate CompTicket count here would double-count them.
         $ticketSaleTotals = TicketSale::whereIn('performance_id', $performanceIds)
             ->groupBy('performance_id')
-            ->select('performance_id', DB::raw('SUM(quantity) as total'))
+            ->select('performance_id', DB::raw('SUM(' . TicketSale::HELD_QUANTITY_SQL . ') as total'))
             ->pluck('total', 'performance_id');
 
         $today = LocalTime::todayString();
@@ -116,13 +116,19 @@ class CompTixController extends Controller
         $compTicket->show->performances->each(function ($performance) use ($ticketSaleTotals, $today) {
             $sold = $ticketSaleTotals[$performance->id] ?? 0;
             $performance->past     = Carbon::parse($performance->date)->toDateString() < $today;
-            $performance->sold_out = $sold >= $performance->sold_out_target;
+            $performance->sold_out = $sold >= $performance->effectiveSoldOutTarget();
         });
 
         return response()->json($compTicket);
     }
 
-    public function redeemComp(string $uid, int $performanceId, string $pickupName, bool $sendMail = true): CompTicket
+    /**
+     * $doorName — optional ['door_first' => …, 'door_last' => …] typed on
+     * the admin New Ticket Sale form, stored on the mirrored TicketSale.
+     * Without it the sale has no door name and the admin table and door
+     * sheet fall back to the purchaser's name.
+     */
+    public function redeemComp(string $uid, int $performanceId, string $pickupName, bool $sendMail = true, array $doorName = []): CompTicket
     {
         $comp = CompTicket::where('uid', $uid)->firstOrFail();
         $wasAlreadyRedeemed = (bool) $comp->ticket_sale_id;
@@ -139,10 +145,10 @@ class CompTixController extends Controller
             // mirrored TicketSale/Ticket in sync instead of creating a
             // duplicate sale (and a duplicate ticket number).
             $ticketSale = TicketSale::find($comp->ticket_sale_id);
-            $ticketSale?->update(['performance_id' => $performanceId]);
+            $ticketSale?->update(['performance_id' => $performanceId, ...$doorName]);
             $ticketSale?->tickets()->update(['name' => $pickupName]);
         } else {
-            DB::transaction(function () use ($comp, $performanceId, $pickupName) {
+            DB::transaction(function () use ($comp, $performanceId, $pickupName, $doorName) {
                 $patron = $this->resolvePatronForComp($comp);
                 $paymentMethod = PaymentMethod::where('value', 'comp')->first();
 
@@ -156,6 +162,7 @@ class CompTixController extends Controller
                     'quantity'          => 1,
                     'confirmed'         => true,
                     'transaction_id'    => $comp->uid,
+                    ...$doorName,
                 ]);
 
                 // Reuse the ticket number already reserved when this comp
@@ -240,7 +247,7 @@ class CompTixController extends Controller
      */
     private function resolvePatronForComp(CompTicket $comp): Patron
     {
-        $existing = Patron::where('email', $comp->email)->first();
+        $existing = Patron::findByEmail($comp->email);
 
         if ($existing) {
             return $existing;

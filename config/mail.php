@@ -137,6 +137,25 @@ return [
         'name' => env('MAIL_TO_NAME')
     ],
 
+    /*
+    | Where replies to the site's emails go (App\Mail\TemplatedMailable),
+    | whatever address they were sent from. Emails that deliberately reply
+    | to someone specific keep that: class messages reply to the instructor,
+    | and staff notices about a patron's form reply to that patron.
+    | Named default_reply_to, not reply_to — Laravel would otherwise add
+    | mail.reply_to to every message on top of those.
+    */
+    'default_reply_to' => [
+        'address' => env('MAIL_REPLY_TO'),
+        'name' => env('MAIL_REPLY_TO_NAME', 'Azuay Community Theater'),
+    ],
+
+    // The box office admin — gets overdue Box Office Checklist alerts
+    // (checklist:notify-overdue).
+    'box_office' => [
+        'address' => env('MAIL_BOX_OFFICE_ADDRESS', env('MAIL_TO_ADDRESS')),
+    ],
+
     'volunteer_to' => [
         'address' => env('MAIL_TO_ADDRESS'),
         'name' => env('MAIL_TO_NAME')

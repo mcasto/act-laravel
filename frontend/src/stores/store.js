@@ -82,15 +82,12 @@ export const useStore = defineStore(
       skills: ref([]),
       snippets: ref({}),
       supportUsConfig: ref(null),
-      // Performance-date filter, payment-method filter and name/ticket #
-      // search on AdminTicketSales.vue —
+      // Search criteria from the Search dialog on AdminTicketSales.vue —
       // kept here so they survive the round trip to the add/edit ticket
       // form and back, and stay set until the user clears them. Persisted
       // to sessionStorage (see persist below) so they don't outlive the
       // browser tab.
-      ticketSalesPerformanceFilter: ref(null),
-      ticketSalesPaymentFilter: ref(null),
-      ticketSalesSearch: ref(""),
+      ticketSalesCriteria: ref({}),
       users: ref(null),
     };
     const getters = { adminRoute: computed(adminRoute) };
@@ -151,27 +148,20 @@ export const useStore = defineStore(
         // the router's close-on-navigate guard wrongly skip itself on the next
         // real navigation, thinking it's mid-redirect from opening the dialog.
         //
-        // ticketSalesPerformanceFilter/ticketSalesPaymentFilter/
-        // ticketSalesSearch are persisted by the
-        // sessionStorage config below instead.
+        // ticketSalesCriteria is persisted by the sessionStorage config
+        // below instead.
         omit: [
           "patron",
           "showDetailsDialog",
           "showDetailsIsFlexAccess",
           "justOpenedShowDetails",
-          "ticketSalesPerformanceFilter",
-          "ticketSalesPaymentFilter",
-          "ticketSalesSearch",
+          "ticketSalesCriteria",
         ],
       },
       {
         key: "azuay-community-theater-session",
         storage: sessionStorage,
-        pick: [
-          "ticketSalesPerformanceFilter",
-          "ticketSalesPaymentFilter",
-          "ticketSalesSearch",
-        ],
+        pick: ["ticketSalesCriteria"],
       },
     ],
   },

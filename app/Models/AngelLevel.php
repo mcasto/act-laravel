@@ -50,7 +50,7 @@ class AngelLevel extends Model
         $price   = $this->min_amount_formatted;
         $levelId = $this->id;
 
-        $buttons = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
+        $buttons = StandardButton::forPatrons()
             ->map(function ($rec) use ($price, $levelId) {
                 $rec->popupText = Cache::remember(
                     "standard-button-{$rec->key}-angel-{$levelId}",

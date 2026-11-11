@@ -18,7 +18,7 @@ use Illuminate\Queue\SerializesModels;
  * (CourseInquiryMailer), since the instructor may not have admin access to
  * verify payments and shouldn't have to track who's still pending.
  */
-class CourseEnrollmentConfirmedMailer extends Mailable
+class CourseEnrollmentConfirmedMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 

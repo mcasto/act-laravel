@@ -29,6 +29,13 @@
             Sold Out
           </q-th>
           <q-th>
+            Target
+            <q-tooltip>
+              Seats this performance counts as full at. Blank uses the
+              show's Sold Out Target, or the Site Config default.
+            </q-tooltip>
+          </q-th>
+          <q-th>
             Fixr
           </q-th>
           <q-th>
@@ -94,6 +101,46 @@
                   dense
                 ></q-input>
               </q-popup-edit> -->
+            </div>
+          </q-td>
+          <q-td class="text-center">
+            <div class="cursor-pointer">
+              <span v-if="performance.sold_out_target != null" class="text-weight-medium">
+                {{ performance.sold_out_target }}
+              </span>
+              <span v-else class="text-grey-6">
+                {{ globalTarget ?? "Default" }}
+              </span>
+              <q-tooltip>
+                {{
+                  performance.sold_out_target != null
+                    ? "Overrides the default for this performance"
+                    : store.admin.show?.sold_out_target != null
+                      ? "Using the show's Sold Out Target"
+                      : "Using the Default Sold Out Target from Site Config"
+                }}
+              </q-tooltip>
+              <q-popup-edit
+                v-if="!isReadOnly"
+                :model-value="performance.sold_out_target"
+                v-slot="scope"
+                buttons
+                @save="(value) => setTarget(performance, value)"
+              >
+                <q-input
+                  v-model="scope.value"
+                  type="number"
+                  min="1"
+                  label="Sold Out Target"
+                  :placeholder="globalTarget != null ? `Default: ${globalTarget}` : 'Default'"
+                  hint="Leave blank to use the default"
+                  stack-label
+                  clearable
+                  dense
+                  autofocus
+                  @keyup.enter="scope.set"
+                />
+              </q-popup-edit>
             </div>
           </q-td>
           <q-td class="text-center">
@@ -166,7 +213,7 @@ import { useStore } from "src/stores/store";
 import { add, format, formatISO9075, parseISO, sub } from "date-fns";
 import { clone } from "lodash-es";
 import TimeSelect from "src/components/TimeSelect.vue";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const store = useStore();
 
@@ -175,6 +222,23 @@ const isReadOnly = computed(
 );
 
 const emits = defineEmits(["close", "update"]);
+
+// What a performance with no override of its own counts as full at: the
+// show's Sold Out Target, else the global default (Site Config).
+const globalTarget = computed(
+  () => store.admin.show?.sold_out_target ?? store.config?.sold_out_target ?? null,
+);
+
+// Only fetched on the Site Config page otherwise.
+onMounted(() => {
+  if (!store.config) store.getSiteConfig();
+});
+
+// Blank (or cleared) = no override; otherwise a whole number of seats.
+const setTarget = (performance, value) => {
+  const n = Math.floor(Number(value));
+  performance.sold_out_target = value === null || value === "" || !(n >= 1) ? null : n;
+};
 
 const openLink = (link) => {
   window.open(link);

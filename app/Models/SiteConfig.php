@@ -23,6 +23,7 @@ class SiteConfig extends Model
   'contact_email',
   'dev_email',
   'sold_out_target',
+  'nearly_sold_out_threshold',
  ];
 
  public static function validate($data)
@@ -33,6 +34,7 @@ class SiteConfig extends Model
    'contact_email'   => ['required', 'email'],
    'dev_email'       => ['required', 'email'],
    'sold_out_target' => ['required', 'integer', 'min:0'],
+   'nearly_sold_out_threshold' => ['required', 'integer', 'min:0'],
   ]);
 
   if ($validator->fails()) {

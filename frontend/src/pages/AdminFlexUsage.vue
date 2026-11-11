@@ -3,16 +3,9 @@
     <div class="text-h6 q-mb-md">Flex Usage</div>
 
     <div class="flex no-wrap items-center q-gutter-x-sm q-mb-md">
-      <q-select
-        :options="usage.seasons ?? []"
-        :model-value="usage.season"
-        label="Season"
-        dense
-        outlined
-        stack-label
-        style="min-width: 8rem;"
-        @update:model-value="loadSeason"
-      />
+      <q-select :options="usage.seasons ?? []" :model-value="usage.season"
+      label="Season" dense outlined stack-label style="min-width: 8rem;"
+      @update:model-value="loadSeason" /
       <q-space />
       <q-input
         v-model="search"
@@ -45,7 +38,11 @@
     </div>
 
     <div v-if="filteredPatrons.length === 0" class="text-grey-6 q-pa-md">
-      {{ search ? "No patrons match your search." : "No flex packages or flex usage this season." }}
+      {{
+        search
+          ? "No patrons match your search."
+          : "No flex packages or flex usage this season."
+      }}
     </div>
 
     <q-table
@@ -63,20 +60,35 @@
         <q-tr
           :props="props"
           class="cursor-pointer"
-          @click="expanded[props.row.patron_id] = !expanded[props.row.patron_id]"
+          @click="
+            expanded[props.row.patron_id] = !expanded[props.row.patron_id]
+          "
         >
           <q-td auto-width>
             <q-icon
               v-if="props.row.usage.length"
-              :name="expanded[props.row.patron_id] ? matExpandLess : matExpandMore"
+              :name="
+                expanded[props.row.patron_id] ? matExpandLess : matExpandMore
+              "
             />
           </q-td>
-          <q-td key="name" :props="props">{{ props.row.last_name }}, {{ props.row.first_name }}</q-td>
+          <q-td key="name" :props="props"
+            >{{ props.row.last_name }}, {{ props.row.first_name }}</q-td
+          >
           <q-td key="email" :props="props">{{ props.row.email }}</q-td>
-          <q-td key="tickets_purchased" :props="props">{{ props.row.tickets_purchased }}</q-td>
-          <q-td key="tickets_used" :props="props">{{ props.row.tickets_used }}</q-td>
+          <q-td key="tickets_purchased" :props="props">{{
+            props.row.tickets_purchased
+          }}</q-td>
+          <q-td key="tickets_used" :props="props">{{
+            props.row.tickets_used
+          }}</q-td>
           <q-td key="tickets_remaining" :props="props">
-            <span :class="{ 'text-negative text-weight-bold': props.row.tickets_remaining < 0 }">
+            <span
+              :class="{
+                'text-negative text-weight-bold':
+                  props.row.tickets_remaining < 0,
+              }"
+            >
               {{ props.row.tickets_remaining }}
             </span>
             <q-tooltip v-if="props.row.tickets_purchased === 0">
@@ -84,7 +96,10 @@
             </q-tooltip>
           </q-td>
         </q-tr>
-        <q-tr v-if="expanded[props.row.patron_id] && props.row.usage.length" :props="props">
+        <q-tr
+          v-if="expanded[props.row.patron_id] && props.row.usage.length"
+          :props="props"
+        >
           <q-td colspan="100%" class="bg-grey-1">
             <q-markup-table flat dense class="bg-transparent q-ml-lg">
               <thead>
@@ -162,10 +177,34 @@ const columns = [
     sortable: true,
     sort: (a, b) => a.localeCompare(b),
   },
-  { name: "email", label: "Email", field: "email", align: "left", sortable: true },
-  { name: "tickets_purchased", label: "Purchased", field: "tickets_purchased", align: "center", sortable: true },
-  { name: "tickets_used", label: "Used", field: "tickets_used", align: "center", sortable: true },
-  { name: "tickets_remaining", label: "Remaining", field: "tickets_remaining", align: "center", sortable: true },
+  {
+    name: "email",
+    label: "Email",
+    field: "email",
+    align: "left",
+    sortable: true,
+  },
+  {
+    name: "tickets_purchased",
+    label: "Purchased",
+    field: "tickets_purchased",
+    align: "center",
+    sortable: true,
+  },
+  {
+    name: "tickets_used",
+    label: "Used",
+    field: "tickets_used",
+    align: "center",
+    sortable: true,
+  },
+  {
+    name: "tickets_remaining",
+    label: "Remaining",
+    field: "tickets_remaining",
+    align: "center",
+    sortable: true,
+  },
 ];
 
 const setAllExpanded = (open) => {
@@ -185,7 +224,15 @@ const wrapCsvValue = (val) => {
 // One row per patron, with where they used their tickets in a single
 // column so the sheet stays one-line-per-patron for box office.
 const exportCsv = () => {
-  const header = ["Last Name", "First Name", "Email", "Purchased", "Used", "Remaining", "Used At"];
+  const header = [
+    "Last Name",
+    "First Name",
+    "Email",
+    "Purchased",
+    "Used",
+    "Remaining",
+    "Used At",
+  ];
   const lines = [header.map(wrapCsvValue).join(",")];
 
   filteredPatrons.value.forEach((row) =>
@@ -197,18 +244,25 @@ const exportCsv = () => {
         row.tickets_purchased,
         row.tickets_used,
         row.tickets_remaining,
-        row.usage.map((use) => `${use.show} ${use.formatted_date} (${use.quantity})`).join("; "),
+        row.usage
+          .map((use) => `${use.show} ${use.formatted_date} (${use.quantity})`)
+          .join("; "),
       ]
         .map(wrapCsvValue)
         .join(","),
     ),
   );
 
-  const status = exportFile(`flex-usage-${usage.value.season}.csv`, lines.join("\r\n"), "text/csv");
+  const status = exportFile(
+    `flex-usage-${usage.value.season}.csv`,
+    lines.join("\r\n"),
+    "text/csv",
+  );
 
   if (status !== true) {
     Notify.create({
-      message: "Browser denied file download — please allow popups/downloads for this site",
+      message:
+        "Browser denied file download — please allow popups/downloads for this site",
       color: "negative",
     });
   }

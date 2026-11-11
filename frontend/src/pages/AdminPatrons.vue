@@ -38,7 +38,17 @@
 
       <template #body-cell-email="props">
         <q-td :props="props">
-          <a :href="`mailto:${props.value}`">{{ props.value }}</a>
+          <q-btn
+            v-if="otherEmails(props.row).length"
+            :icon="matEmail"
+            :label="`${otherEmails(props.row).length + 1} emails`"
+            flat
+            dense
+            no-caps
+            color="primary"
+            @click="openEmailsDialog(props.row)"
+          />
+          <a v-else :href="`mailto:${props.value}`">{{ props.value }}</a>
         </q-td>
       </template>
 
@@ -163,6 +173,7 @@
             class="q-mb-md"
           />
           <q-input
+            v-if="!form.id"
             v-model="form.email"
             type="email"
             label="Email"
@@ -170,6 +181,77 @@
             dense
             class="q-mb-md"
           />
+          <div v-else class="q-mb-md">
+            <div class="text-caption text-grey-7 q-mb-xs">
+              Email addresses — purchases under any of them belong to this
+              patron; email goes to the main one.
+            </div>
+            <q-list dense bordered separator class="rounded-borders">
+              <q-item v-for="e in form.emails" :key="e.id">
+                <q-item-section>{{ e.email }}</q-item-section>
+                <q-item-section side>
+                  <q-badge v-if="isMain(e)" color="primary">Main</q-badge>
+                  <div v-else class="row no-wrap items-center">
+                    <q-btn
+                      flat
+                      dense
+                      no-caps
+                      size="sm"
+                      color="primary"
+                      label="Make main"
+                      :disable="isReadOnly || emailBusy"
+                      @click="makeMain(e)"
+                    />
+                    <q-btn
+                      :icon="matDelete"
+                      flat
+                      round
+                      dense
+                      size="sm"
+                      color="negative"
+                      :disable="isReadOnly || emailBusy"
+                      @click="removeEmail(e)"
+                    />
+                  </div>
+                </q-item-section>
+              </q-item>
+              <q-item v-if="!form.emails.length">
+                <q-item-section class="text-grey-7">No email addresses yet.</q-item-section>
+              </q-item>
+            </q-list>
+            <div class="row no-wrap items-center q-gutter-x-sm q-mt-sm">
+              <q-input
+                v-model="newEmail"
+                type="email"
+                placeholder="Add another address"
+                outlined
+                dense
+                class="col"
+                :disable="isReadOnly"
+                @keyup.enter="addEmail"
+              />
+              <q-btn
+                :icon="matAdd"
+                round
+                dense
+                color="primary"
+                :loading="emailBusy"
+                :disable="isReadOnly || !newEmail.trim()"
+                @click="addEmail"
+              />
+            </div>
+            <q-btn
+              flat
+              dense
+              no-caps
+              color="primary"
+              :icon="matMergeType"
+              label="Merge a duplicate patron into this one…"
+              class="q-mt-sm"
+              :disable="isReadOnly"
+              @click="openMerge()"
+            />
+          </div>
           <q-input
             v-model="form.phone"
             label="Phone (optional)"
@@ -189,6 +271,99 @@
             :loading="saving"
             :disable="!canSave"
             @click="saveDialog"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="emailsDialog.visible">
+      <q-card style="min-width: 320px; max-width: 95vw;">
+        <q-card-section>
+          <div class="text-h6">Email Addresses</div>
+          <div class="text-caption text-grey-7">{{ emailsDialog.name }}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-list dense separator>
+            <q-item v-for="email in emailsDialog.emails" :key="email">
+              <q-item-section>
+                <a :href="`mailto:${email}`">{{ email }}</a>
+              </q-item-section>
+              <q-item-section side>
+                <q-badge v-if="email === emailsDialog.main" color="primary">Main</q-badge>
+              </q-item-section>
+            </q-item>
+          </q-list>
+          <div class="text-caption text-grey-7 q-mt-sm">
+            Email goes to the main address. Edit the patron to add, remove or
+            change the main one.
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Close" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="merge.visible" persistent>
+      <q-card style="width: 480px; max-width: 95vw;">
+        <q-card-section>
+          <div class="text-h6">Merge Patrons</div>
+          <div class="text-caption text-grey-7">
+            Into {{ form.first_name }} {{ form.last_name }} (#{{ form.id }})
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none q-gutter-y-md">
+          <q-select
+            v-model="merge.fromId"
+            :options="mergeOptions"
+            label="Duplicate patron to merge in"
+            use-input
+            input-debounce="0"
+            emit-value
+            map-options
+            dense
+            outlined
+            :disable="merge.locked"
+            @filter="filterMergeOptions"
+            @update:model-value="loadMergePreview"
+          />
+
+          <div v-if="merge.preview" class="text-body2">
+            <div>
+              <span class="text-weight-medium">
+                {{ merge.preview.first_name }} {{ merge.preview.last_name }}
+              </span>
+              (#{{ merge.preview.id }})
+              <span v-if="merge.preview.email" class="text-grey-7">— {{ merge.preview.email }}</span>
+            </div>
+            <ul class="q-my-sm q-pl-md">
+              <li v-for="(count, table) in merge.preview.counts" :key="table">
+                {{ count }} {{ tableLabel(table, count) }}
+              </li>
+              <li v-if="!Object.keys(merge.preview.counts ?? {}).length" class="text-grey-7">
+                No purchases or other records
+              </li>
+            </ul>
+            <div class="text-caption text-grey-7">
+              Everything above moves to {{ form.first_name }} {{ form.last_name }},
+              its email addresses become extra addresses here, any missing phone
+              or comments are copied over, and the duplicate record is removed.
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" :disable="merge.saving" v-close-popup />
+          <q-btn
+            flat
+            label="Merge"
+            color="primary"
+            :loading="merge.saving"
+            :disable="!merge.preview"
+            @click="confirmMerge"
           />
         </q-card-actions>
       </q-card>
@@ -226,7 +401,14 @@
               <q-item v-for="(u, i) in season.usage" :key="i">
                 <q-item-section>{{ u.show }}</q-item-section>
                 <q-item-section side>{{ u.date }}</q-item-section>
-                <q-item-section side>x{{ u.quantity }}</q-item-section>
+                <q-item-section side>
+                  x{{ u.used_quantity ?? u.quantity }}
+                  <span v-if="u.cancelled" class="text-caption text-grey-7">
+                    ({{ u.cancelled }} cancelled{{
+                      u.cancelled_returned ? `, ${u.cancelled_returned} returned` : ""
+                    }})
+                  </span>
+                </q-item-section>
               </q-item>
             </q-list>
             <div v-else class="text-grey text-caption">No tickets used yet this season.</div>
@@ -300,6 +482,9 @@
                   </td>
                   <td class="text-center">
                     {{ sale.quantity }}
+                    <q-badge v-if="sale.cancelled" color="grey-7" class="q-ml-xs">
+                      {{ sale.cancelled }} cancelled
+                    </q-badge>
                     <q-badge v-if="sale.no_show" color="negative" class="q-ml-xs">
                       {{ sale.no_show }} no-show
                     </q-badge>
@@ -419,6 +604,8 @@ import {
   matComment,
   matDelete,
   matEdit,
+  matEmail,
+  matMergeType,
   matReceiptLong,
   matSearch,
   matStar,
@@ -502,7 +689,8 @@ const filteredRows = computed(() => {
   return rows.filter(
     (row) =>
       `${row.first_name} ${row.last_name}`.toLowerCase().includes(q) ||
-      row.email?.toLowerCase().includes(q),
+      row.email?.toLowerCase().includes(q) ||
+      (row.emails ?? []).some((e) => e.email.includes(q)),
   );
 });
 
@@ -600,6 +788,8 @@ const saleDetailFields = computed(() => {
 
   return [
     { label: "Quantity", value: s.quantity },
+    { label: "Cancelled", value: s.cancelled || null },
+    { label: "Returned to Patron", value: s.cancelled_returned || null },
     { label: "Payment Method", value: s.payment_method },
     { label: "Purchased", value: formatSoldAt(s.sold_at) },
     { label: "Payment Confirmed", value: s.confirmed ? "Yes" : "No" },
@@ -698,8 +888,13 @@ const form = ref({
   founding_angel: false,
 });
 
+// The main address is chosen from the list when editing, so only a new
+// patron needs one typed in.
 const canSave = computed(
-  () => !!form.value.first_name && !!form.value.last_name && !!form.value.email,
+  () =>
+    !!form.value.first_name &&
+    !!form.value.last_name &&
+    (!!form.value.id || !!form.value.email),
 );
 
 const openDialog = (row = null) => {
@@ -709,6 +904,7 @@ const openDialog = (row = null) => {
         first_name: row.first_name,
         last_name: row.last_name,
         email: row.email,
+        emails: [...(row.emails ?? [])],
         phone: row.phone ?? "",
         founding_angel: !!row.founding_angel,
       }
@@ -754,10 +950,10 @@ const saveDialog = async () => {
   const payload = {
     first_name: form.value.first_name,
     last_name: form.value.last_name,
-    email: form.value.email,
     phone: form.value.phone || null,
     founding_angel: form.value.founding_angel,
   };
+  if (!isEdit) payload.email = form.value.email;
 
   try {
     const response = await callApi({
@@ -811,5 +1007,173 @@ const deletePatron = (row) => {
       },
     ],
   });
+};
+// ---- Email addresses (patron_emails) and merging duplicates ----
+
+const normalize = (email) => (email ?? "").trim().toLowerCase();
+
+// A patron's addresses other than the main one, for the table's +N badge.
+const otherEmails = (row) =>
+  (row.emails ?? []).map((e) => e.email).filter((e) => e !== normalize(row.email));
+
+const isMain = (e) => e.email === normalize(form.value.email);
+
+// The table's "N emails" button — every address, main first.
+const emailsDialog = ref({ visible: false, name: "", main: "", emails: [] });
+const openEmailsDialog = (row) => {
+  const main = normalize(row.email);
+  emailsDialog.value = {
+    visible: true,
+    name: `${row.first_name} ${row.last_name}`,
+    main,
+    emails: [main, ...otherEmails(row)].filter(Boolean),
+  };
+};
+
+const newEmail = ref("");
+const emailBusy = ref(false);
+
+const emailCall = async (opts) => {
+  emailBusy.value = true;
+  try {
+    return await callApi({ useAuth: true, showError: false, ...opts }).catch((e) => {
+      Notify.create({ type: "negative", message: parseApiErrorMessage(e) || "Something went wrong." });
+      return null;
+    });
+  } finally {
+    emailBusy.value = false;
+  }
+};
+
+const afterEmailChange = async (response) => {
+  if (response?.emails) form.value.emails = response.emails;
+  if (response?.patron?.email) form.value.email = response.patron.email;
+  await reload();
+};
+
+const addEmail = async () => {
+  const email = newEmail.value.trim();
+  if (!email) return;
+
+  const response = await emailCall({
+    path: `/admin/patrons/${form.value.id}/emails`,
+    method: "post",
+    payload: { email },
+  });
+  if (!response) return;
+
+  if (response.status === "conflict") {
+    // Belongs to another patron — offer to merge that record in.
+    openMerge(response.other);
+    return;
+  }
+  if (response.status !== "success") {
+    Notify.create({ type: "negative", message: response.message || "Couldn't add that address." });
+    return;
+  }
+
+  newEmail.value = "";
+  await afterEmailChange(response);
+};
+
+const makeMain = async (e) => {
+  const response = await emailCall({
+    path: `/admin/patrons/${form.value.id}/emails/${e.id}/primary`,
+    method: "put",
+  });
+  if (response?.status === "success") await afterEmailChange(response);
+};
+
+const removeEmail = async (e) => {
+  const response = await emailCall({
+    path: `/admin/patrons/${form.value.id}/emails/${e.id}`,
+    method: "delete",
+  });
+  if (!response) return;
+  if (response.status !== "success") {
+    Notify.create({ type: "negative", message: response.message || "Couldn't remove that address." });
+    return;
+  }
+  await afterEmailChange(response);
+};
+
+const merge = ref({ visible: false, fromId: null, preview: null, saving: false, locked: false });
+const mergeFilter = ref("");
+
+const mergeOptions = computed(() => {
+  const q = mergeFilter.value.toLowerCase();
+  return (store.admin.patrons ?? [])
+    .filter((p) => p.id !== form.value.id)
+    .filter(
+      (p) =>
+        !q ||
+        `${p.first_name} ${p.last_name}`.toLowerCase().includes(q) ||
+        (p.email ?? "").toLowerCase().includes(q),
+    )
+    .slice(0, 50)
+    .map((p) => ({
+      label: `${p.first_name} ${p.last_name} (#${p.id})${p.email ? ` — ${p.email}` : ""}`,
+      value: p.id,
+    }));
+});
+
+const filterMergeOptions = (val, update) => update(() => (mergeFilter.value = val));
+
+// `other` = the patron already holding an address being added (from the
+// add-email conflict) — preselected; otherwise the admin picks one.
+const openMerge = (other = null) => {
+  mergeFilter.value = "";
+  merge.value = {
+    visible: true,
+    fromId: other?.id ?? null,
+    preview: other,
+    saving: false,
+    locked: !!other,
+  };
+};
+
+const loadMergePreview = async (id) => {
+  merge.value.preview = null;
+  if (!id) return;
+  const response = await emailCall({ path: `/admin/patrons/${id}/merge-preview`, method: "get" });
+  if (response && merge.value.fromId === id) merge.value.preview = response;
+};
+
+const TABLE_LABELS = {
+  ticket_sales: ["ticket sale", "ticket sales"],
+  angels: ["Angel record", "Angel records"],
+  patron_flex_packages: ["Flex package", "Flex packages"],
+  pending_flex_redemptions: ["pending Flex request", "pending Flex requests"],
+  donations: ["donation", "donations"],
+  course_contacts: ["class enrollment", "class enrollments"],
+  fixr_webhook_responses: ["Fixr record", "Fixr records"],
+  reservation_reminders: ["reminder record", "reminder records"],
+  patron_payment_ids: ["payment record", "payment records"],
+};
+const tableLabel = (table, count) => {
+  const [one, many] = TABLE_LABELS[table] ?? [table.replace(/_/g, " "), table.replace(/_/g, " ")];
+  return count === 1 ? one : many;
+};
+
+const confirmMerge = async () => {
+  merge.value.saving = true;
+  try {
+    const response = await emailCall({
+      path: `/admin/patrons/${form.value.id}/merge`,
+      method: "post",
+      payload: { from_id: merge.value.fromId },
+    });
+    if (!response || response.status !== "success") {
+      if (response) Notify.create({ type: "negative", message: response.message || "Couldn't merge." });
+      return;
+    }
+
+    Notify.create({ type: "positive", message: "Patrons merged." });
+    merge.value.visible = false;
+    newEmail.value = "";
+    await afterEmailChange(response);
+  } finally {
+    merge.value.saving = false;
+  }
 };
 </script>

@@ -38,8 +38,8 @@ class AngelController extends Controller
         $level = AngelLevel::findOrFail($validated['angel_level_id']);
         $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             ['first_name' => $validated['first_name'], 'last_name' => $validated['last_name']]
         );
         $validated['patron_id'] = $patron->id;
@@ -104,8 +104,8 @@ class AngelController extends Controller
         $level = AngelLevel::findOrFail($validated['angel_level_id']);
         $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             ['first_name' => $validated['first_name'], 'last_name' => $validated['last_name']]
         );
         $validated['patron_id'] = $patron->id;

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PurchaseConfirmationMailer extends Mailable
+class PurchaseConfirmationMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 
@@ -41,6 +41,12 @@ class PurchaseConfirmationMailer extends Mailable
         return empty($referenceNumber)
             ? $subject
             : "{$subject} (Reference: {$referenceNumber})";
+    }
+
+    /** The email itself, plus the payment method's details section when it has one. */
+    public function templateKeys(): array
+    {
+        return array_values(array_filter([$this->data['view'], $this->data['section_view'] ?? null]));
     }
 
     public function content(): Content

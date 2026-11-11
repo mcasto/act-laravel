@@ -11,6 +11,7 @@ export default async () => {
     payload: {
       ticket_price: store.config.ticket_price,
       sold_out_target: store.config.sold_out_target,
+      nearly_sold_out_threshold: store.config.nearly_sold_out_threshold ?? 0,
       ticket_email: store.config.ticket_email,
       contact_email: store.config.contact_email,
     },

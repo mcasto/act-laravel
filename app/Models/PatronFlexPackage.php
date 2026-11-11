@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Helpers\TheaterSeason;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -62,7 +64,9 @@ class PatronFlexPackage extends Model
         $used = TicketSale::where('patron_id', $this->patron_id)
             ->whereHas('paymentMethod', fn ($q) => $q->where('value', 'flex'))
             ->whereHas('performance', fn ($q) => $q->whereBetween('date', [$dates['start'], $dates['end']]))
-            ->sum('quantity');
+            // Cancelled Flex tickets count as used unless they were returned
+            // to the balance when cancelled.
+            ->sum(DB::raw(TicketSale::USED_QUANTITY_SQL));
 
         return $totalPurchased - $used;
     }

@@ -7,10 +7,13 @@ use App\Helpers\ActiveSeason;
 use App\Helpers\TheaterSeason;
 use App\Models\Angel;
 use App\Models\Patron;
+use App\Models\PatronEmail;
 use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
 use App\Models\TicketSale;
 use Illuminate\Http\JsonResponse;
+use App\Services\ChangeLogger;
+use App\Services\PatronMerger;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -34,7 +37,7 @@ class PatronController extends Controller
         $season = ActiveSeason::get();
         $seasonDates = TheaterSeason::datesForSeason($season);
 
-        $patrons = Patron::orderBy('last_name')->orderBy('first_name')->get();
+        $patrons = Patron::with('emails')->orderBy('last_name')->orderBy('first_name')->get();
 
         $latestAngelByPatron = Angel::whereNotNull('patron_id')
             ->with('angelLevel')
@@ -52,7 +55,7 @@ class PatronController extends Controller
             ->whereHas('performance', fn ($q) => $q->whereBetween('date', [$seasonDates['start'], $seasonDates['end']]))
             ->get()
             ->groupBy('patron_id')
-            ->map(fn ($sales) => $sales->sum('quantity'));
+            ->map(fn ($sales) => $sales->sum('used_quantity'));
 
         $result = $patrons->map(function (Patron $patron) use ($latestAngelByPatron, $flexPurchased, $flexUsed) {
             $latestAngel = $latestAngelByPatron->get($patron->id);
@@ -63,6 +66,8 @@ class PatronController extends Controller
                 'first_name' => $patron->first_name,
                 'last_name' => $patron->last_name,
                 'email' => $patron->email,
+                // Every address, main included — see patron_emails.
+                'emails' => $patron->emails->map(fn ($e) => ['id' => $e->id, 'email' => $e->email])->values(),
                 'phone' => $patron->phone,
                 'founding_angel' => $patron->founding_angel,
                 'is_angel' => (bool) $latestAngel,
@@ -92,7 +97,11 @@ class PatronController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:patrons,email',
+            'email' => ['required', 'email', 'max:255', 'unique:patrons,email', function ($attr, $value, $fail) {
+                if (Patron::findByEmail($value)) {
+                    $fail('That email already belongs to another patron.');
+                }
+            }],
             'phone' => 'nullable|string|max:255',
             'founding_angel' => 'sometimes|boolean',
             'front_row' => 'sometimes|integer|min:0|max:3',
@@ -117,7 +126,12 @@ class PatronController extends Controller
         $validated = $request->validate([
             'first_name' => 'sometimes|required|string|max:255',
             'last_name' => 'sometimes|required|string|max:255',
-            'email' => ['sometimes', 'required', 'email', 'max:255', Rule::unique('patrons', 'email')->ignore($patron->id)],
+            'email' => ['sometimes', 'required', 'email', 'max:255', Rule::unique('patrons', 'email')->ignore($patron->id), function ($attr, $value, $fail) use ($patron) {
+                $owner = Patron::findByEmail($value);
+                if ($owner && $owner->id !== $patron->id) {
+                    $fail('That email belongs to another patron — add it as an address and merge them instead.');
+                }
+            }],
             'phone' => 'sometimes|nullable|string|max:255',
             'founding_angel' => 'sometimes|boolean',
             'front_row' => 'sometimes|required|integer|min:0|max:3',
@@ -134,6 +148,108 @@ class PatronController extends Controller
             'front_row' => $patron->front_row,
             'comments' => $patron->comments,
         ]);
+    }
+
+    /**
+     * Adds another address to a patron. An address that already belongs to
+     * a different patron isn't moved — the response says who has it
+     * (status "conflict"), so the admin can choose to merge the two.
+     */
+    public function addEmail(Request $request, int $id): JsonResponse
+    {
+        $patron = Patron::findOrFail($id);
+        $validated = $request->validate(['email' => 'required|email|max:255']);
+        $email = Patron::normalizeEmail($validated['email']);
+
+        $owner = Patron::findByEmail($email);
+
+        if ($owner && $owner->id === $patron->id) {
+            // Their main address not yet listed (e.g. added before this
+            // table) — list it; otherwise it's already there.
+            if (! $patron->emails()->where('email', $email)->exists()) {
+                $patron->emails()->create(['email' => $email]);
+            } else {
+                return response()->json(['status' => 'error', 'message' => 'That address is already listed for this patron.']);
+            }
+        } elseif ($owner) {
+            return response()->json([
+                'status' => 'conflict',
+                'message' => "That address belongs to {$owner->first_name} {$owner->last_name}.",
+                'other'  => $this->mergeSummary($owner),
+            ]);
+        } else {
+            $patron->emails()->create(['email' => $email]);
+        }
+
+        ChangeLogger::record("Added email {$email} to patron {$patron->first_name} {$patron->last_name}");
+
+        return response()->json(['status' => 'success', 'emails' => $this->emailList($patron)]);
+    }
+
+    /** Removes one of a patron's addresses — never their main one. */
+    public function removeEmail(int $id, int $emailId): JsonResponse
+    {
+        $patron = Patron::findOrFail($id);
+        $row = $patron->emails()->whereKey($emailId)->firstOrFail();
+
+        if ($row->email === Patron::normalizeEmail($patron->email)) {
+            return response()->json(['status' => 'error', 'message' => "That's the main address — make another one main first."]);
+        }
+
+        $row->delete();
+        ChangeLogger::record("Removed email {$row->email} from patron {$patron->first_name} {$patron->last_name}");
+
+        return response()->json(['status' => 'success', 'emails' => $this->emailList($patron)]);
+    }
+
+    /** Makes one of a patron's addresses the main one (where email goes). */
+    public function makePrimaryEmail(int $id, int $emailId): JsonResponse
+    {
+        $patron = Patron::findOrFail($id);
+        $row = $patron->emails()->whereKey($emailId)->firstOrFail();
+
+        $patron->update(['email' => $row->email]);
+
+        return response()->json(['status' => 'success', 'patron' => $patron, 'emails' => $this->emailList($patron)]);
+    }
+
+    /** What merging would bring over from a patron — shown before confirming. */
+    public function mergePreview(int $id): JsonResponse
+    {
+        return response()->json($this->mergeSummary(Patron::findOrFail($id)));
+    }
+
+    /**
+     * Merges patron `from_id` into this one: every record pointing at the
+     * other patron (ticket sales, Angel records, Flex packages and pending
+     * Flex requests, donations, class enrollments, Fixr records, reminders,
+     * …) moves here, its addresses become this patron's extra addresses,
+     * blank details here are filled from it, and the other record is
+     * removed (soft-deleted, so it can still be looked up).
+     */
+    public function merge(Request $request, int $id): JsonResponse
+    {
+        $into = Patron::findOrFail($id);
+        $validated = $request->validate(['from_id' => 'required|integer']);
+        $from = Patron::findOrFail($validated['from_id']);
+
+        if ($from->id === $into->id) {
+            return response()->json(['status' => 'error', 'message' => "Can't merge a patron into itself."]);
+        }
+
+        app(PatronMerger::class)->merge($into, $from);
+
+        return response()->json(['status' => 'success', 'emails' => $this->emailList($into->fresh())]);
+    }
+
+    private function mergeSummary(Patron $patron): array
+    {
+        return app(PatronMerger::class)->summary($patron);
+    }
+
+    private function emailList(Patron $patron)
+    {
+        return $patron->emails()->get()->map(fn ($e) => ['id' => $e->id, 'email' => $e->email])->values();
     }
 
     /**
@@ -203,14 +319,18 @@ class PatronController extends Controller
                         'show' => $sale->performance?->show?->name,
                         'date' => $sale->performance?->date,
                         'quantity' => $sale->quantity,
+                        'cancelled' => $sale->cancelled,
+                        'active_quantity' => $sale->active_quantity,
+                        'cancelled_returned' => $sale->cancelled_returned,
+                        'used_quantity' => $sale->used_quantity,
                     ])
                     ->values();
 
                 return [
                     'season' => $season,
                     'tickets_purchased' => $purchased,
-                    'tickets_used' => $usage->sum('quantity'),
-                    'tickets_remaining' => $purchased - $usage->sum('quantity'),
+                    'tickets_used' => $usage->sum('used_quantity'),
+                    'tickets_remaining' => $purchased - $usage->sum('used_quantity'),
                     'usage' => $usage,
                 ];
             })
@@ -254,13 +374,17 @@ class PatronController extends Controller
                 : 'Unknown')
             ->map(fn ($seasonSales, $season) => [
                 'season' => $season,
-                'tickets' => $seasonSales->sum('quantity'),
+                'tickets' => $seasonSales->sum('active_quantity'),
                 'sales' => $seasonSales->map(fn (TicketSale $sale) => [
                     'id' => $sale->id,
                     'show' => $sale->performance?->show?->name,
                     'formatted_date' => $sale->performance?->formatted_date,
                     'formatted_time' => $sale->performance?->formatted_time,
                     'quantity' => $sale->quantity,
+                    'cancelled' => $sale->cancelled,
+                    'active_quantity' => $sale->active_quantity,
+                    'cancelled_returned' => $sale->cancelled_returned,
+                    'used_quantity' => $sale->used_quantity,
                     'payment_method' => $sale->paymentMethod?->label,
                     'sold_at' => $sale->sold_at,
                     'no_show' => $sale->no_show,
@@ -294,7 +418,7 @@ class PatronController extends Controller
                 'email' => $patron->email,
             ],
             'total_sales' => $sales->count(),
-            'total_tickets' => $sales->sum('quantity'),
+            'total_tickets' => $sales->sum('active_quantity'),
             'seasons' => $seasons,
         ]);
     }
@@ -342,7 +466,7 @@ class PatronController extends Controller
                 $patronSales = $salesByPatron->get($patronId, collect());
                 $patron = $packages->first()?->patron ?? $patronSales->first()?->patron;
                 $purchased = $packages->sum('tickets_purchased');
-                $used = $patronSales->sum('quantity');
+                $used = $patronSales->sum('used_quantity');
 
                 return [
                     'patron_id'         => $patronId,
@@ -360,6 +484,10 @@ class PatronController extends Controller
                             'formatted_date' => $sale->performance?->formatted_date,
                             'formatted_time' => $sale->performance?->formatted_time,
                             'quantity'       => $sale->quantity,
+                            'cancelled'      => $sale->cancelled,
+                            'active_quantity' => $sale->active_quantity,
+                            'cancelled_returned' => $sale->cancelled_returned,
+                            'used_quantity' => $sale->used_quantity,
                             'no_show'        => $sale->no_show,
                         ])
                         ->values(),
@@ -428,8 +556,8 @@ class PatronController extends Controller
 
         $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             [
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
@@ -520,6 +648,7 @@ class PatronController extends Controller
         $patrons = Patron::where('first_name', 'like', "%{$q}%")
             ->orWhere('last_name', 'like', "%{$q}%")
             ->orWhere('email', 'like', "%{$q}%")
+            ->orWhereHas('emails', fn ($e) => $e->where('email', 'like', '%' . strtolower($q) . '%'))
             ->orWhereRaw("CONCAT(first_name, ' ', last_name) like ?", ["%{$q}%"])
             ->orderBy('last_name')
             ->orderBy('first_name')
@@ -541,7 +670,7 @@ class PatronController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        $patron = Patron::where('email', $request->email)->first();
+        $patron = Patron::findByEmail($request->email);
 
         if (! $patron) {
             return response()->json(null, 404);
@@ -570,7 +699,7 @@ class PatronController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        $patron = Patron::where('email', $request->email)->first();
+        $patron = Patron::findByEmail($request->email);
 
         if (! $patron) {
             return response()->json(null, 404);
@@ -617,6 +746,10 @@ class PatronController extends Controller
                 'show'      => $sale->performance?->show?->name,
                 'date'      => $sale->performance?->date,
                 'quantity'  => $sale->quantity,
+                'cancelled' => $sale->cancelled,
+                'active_quantity' => $sale->active_quantity,
+                'cancelled_returned' => $sale->cancelled_returned,
+                'used_quantity' => $sale->used_quantity,
             ]);
 
         return $patron->flexPackages()

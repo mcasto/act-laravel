@@ -21,10 +21,14 @@ class TicketSale extends Model
         'sold_at',
         'quantity',
         'no_show',
+        'cancelled',
+        'cancelled_returned',
+        'resold',
         'confirmed',
         'reason_changed',
         'special_seating',
         'front_row',
+        'allow_angel_benefits',
         'door_last',
         'door_first',
         'comments',
@@ -32,9 +36,61 @@ class TicketSale extends Model
 
     protected $casts = [
         'no_show' => 'integer',
+        'cancelled' => 'integer',
+        'cancelled_returned' => 'integer',
+        'resold' => 'integer',
         'confirmed' => 'boolean',
         'front_row' => 'integer',
+        'allow_angel_benefits' => 'boolean',
     ];
+
+    protected $appends = ['active_quantity', 'used_quantity', 'held_quantity'];
+
+    /**
+     * Seats this sale takes out of the performance's seat count: quantity
+     * minus cancelled tickets that were resold. A cancelled ticket that
+     * wasn't resold still holds its seat. Use this for seats remaining and
+     * sold out; use active_quantity for who's coming (confirmed). SQL sums
+     * use self::HELD_QUANTITY_SQL.
+     */
+    public const HELD_QUANTITY_SQL = 'CASE WHEN quantity > resold THEN quantity - resold ELSE 0 END';
+
+    public function getHeldQuantityAttribute(): int
+    {
+        return max(0, (int) $this->quantity - (int) $this->resold);
+    }
+
+    /**
+     * Tickets still coming: quantity minus cancelled tickets ("confirmed").
+     * Use this for attendance, revenue and reminders; seat counts use
+     * held_quantity, Flex usage used_quantity. SQL sums use
+     * self::ACTIVE_QUANTITY_SQL.
+     */
+    public const ACTIVE_QUANTITY_SQL = 'CASE WHEN quantity > cancelled THEN quantity - cancelled ELSE 0 END';
+
+    public function getActiveQuantityAttribute(): int
+    {
+        return max(0, (int) $this->quantity - (int) $this->cancelled);
+    }
+
+    /**
+     * Tickets counted against a Flex balance (or a patron's comp): every
+     * ticket except cancelled ones that were returned. A cancelled ticket
+     * that wasn't returned still counts as used. SQL sums use
+     * self::USED_QUANTITY_SQL.
+     */
+    public const USED_QUANTITY_SQL = 'CASE WHEN quantity > cancelled_returned THEN quantity - cancelled_returned ELSE 0 END';
+
+    public function getUsedQuantityAttribute(): int
+    {
+        return max(0, (int) $this->quantity - (int) $this->cancelled_returned);
+    }
+
+    /** Sales that still hold at least one seat. */
+    public function scopeNotFullyCancelled($query)
+    {
+        return $query->whereColumn('cancelled', '<', 'quantity');
+    }
 
     /**
      * Ticket rows have no soft-delete column (reconcileTicketCount() below

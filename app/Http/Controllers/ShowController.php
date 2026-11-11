@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\LocalTime;
 use App\Helpers\TheaterSeason;
+use App\Models\Performance;
 use App\Models\Show;
 use App\Models\SiteConfig;
 use App\Models\StandardButton;
@@ -165,7 +166,17 @@ class ShowController extends Controller
 
         $price = $currentShow['ticket_price'] == 0 ? $price : $currentShow['ticket_price'];
         $currentShow['fixrLabel'] = 'Pay with Credit / Debit';
-        $currentShow['buttons'] = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
+
+        // Seats left per performance, for the purchase page's nearly-sold-out
+        // warning and quantity cap (Performance::seatsRemaining()).
+        $currentShow['nearly_sold_out_threshold'] = (int) ($siteConfig?->nearly_sold_out_threshold ?? 0);
+        $seatsLeft = Performance::whereIn('id', collect($currentShow['performances'])->pluck('id'))
+            ->get()
+            ->mapWithKeys(fn (Performance $p) => [$p->id => $p->seatsRemaining()]);
+        $currentShow['performances'] = collect($currentShow['performances'])
+            ->map(fn ($p) => $p + ['seats_remaining' => $seatsLeft[$p['id']] ?? null])
+            ->all();
+        $currentShow['buttons'] = StandardButton::forPatrons()
             ->map(function ($rec) use ($price) {
                 $price = "$" . $price;
 

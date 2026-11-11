@@ -31,7 +31,7 @@ class SiteConfigController extends Controller
     public function show(): JsonResponse
     {
         $config = Cache::remember('site-config', 3600, fn() => SiteConfig::latest()->first());
-        $buttons = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get());
+        $buttons = StandardButton::forPatrons();
 
         return response()->json(['config' => $config, 'buttons' => $buttons]);
     }
@@ -50,6 +50,7 @@ class SiteConfigController extends Controller
             'ticket_email'    => ['required', 'email'],
             'contact_email'   => ['required', 'email'],
             'sold_out_target' => ['required', 'integer', 'min:0'],
+            'nearly_sold_out_threshold' => ['required', 'integer', 'min:0'],
         ]);
 
         $old = SiteConfig::latest()->first();
@@ -62,37 +63,18 @@ class SiteConfigController extends Controller
         return response()->json(['status' => 'success', 'config' => $config]);
     }
 
-    public function updateButtons(Request $request)
+    /**
+     * The editable content sections of the admin Site Config page:
+     * Support Us, Angels and the active season. (Patron purchase buttons
+     * live on the Payment Methods page — see StandardButtonsController.)
+     */
+    public function content(): JsonResponse
     {
-        $validated = $request->validate([
-            'id'                     => 'required|integer|exists:standard_buttons,id',
-            'label'                  => 'required|string',
-            'key'                    => 'required|string',
-            'sort_order'             => 'required|integer',
-            'template'               => 'required|string',
-            'confirmation_template'  => 'sometimes|nullable|string',
+        return response()->json([
+            'support' => json_decode(Storage::disk('local')->get('support-us.config.json')),
+            'angels'  => json_decode(Storage::disk('local')->get('angels.config.json')),
+            'season'  => ActiveSeason::get(),
         ]);
-
-        StandardButton::find($validated['id'])->update([
-            'label'      => $validated['label'],
-            'key'        => $validated['key'],
-            'sort_order' => $validated['sort_order'],
-        ]);
-
-        $templatePath = resource_path("views/standard-buttons/{$validated['key']}.blade.php");
-        $confirmationPath = resource_path("views/standard-buttons/{$validated['key']}-confirmation.blade.php");
-        $oldTemplate = file_exists($templatePath) ? file_get_contents($templatePath) : null;
-        $oldConfirmation = file_exists($confirmationPath) ? file_get_contents($confirmationPath) : null;
-
-        file_put_contents($templatePath, $validated['template']);
-        file_put_contents($confirmationPath, $validated['confirmation_template'] ?? '');
-
-        ChangeLogger::record("Updated \"{$validated['label']}\" payment button template", [
-            'template' => ['old' => $oldTemplate, 'new' => $validated['template']],
-            'confirmation_template' => ['old' => $oldConfirmation, 'new' => $validated['confirmation_template'] ?? ''],
-        ]);
-
-        return response()->json(['status' => 'success']);
     }
 
     public function updateSupport(Request $request)

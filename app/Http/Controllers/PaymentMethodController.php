@@ -6,6 +6,7 @@ use App\Models\Angel;
 use App\Models\CourseContact;
 use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
+use App\Models\ShowPaymentRate;
 use App\Models\TicketSale;
 use Illuminate\Http\Request;
 
@@ -24,11 +25,13 @@ class PaymentMethodController extends Controller
             'value'              => 'required|string|max:255|unique:payment_methods,value',
             'color'              => 'nullable|string|max:20',
             'revenue_multiplier' => 'nullable|numeric|min:0|max:2',
+            'per_show'           => 'sometimes|boolean',
         ]);
 
         $method = PaymentMethod::create($validated);
+        $added = $method->per_show ? ShowPaymentRate::addMissing(null, [$method->id]) : 0;
 
-        return response()->json(['status' => 'success', 'data' => $method]);
+        return response()->json(['status' => 'success', 'data' => $method, 'shows_added' => $added]);
     }
 
     public function update(Request $request, $id)
@@ -43,11 +46,30 @@ class PaymentMethodController extends Controller
             'value'              => 'required|string|max:255|unique:payment_methods,value,' . $method->id,
             'color'              => 'nullable|string|max:20',
             'revenue_multiplier' => 'nullable|numeric|min:0|max:2',
+            'per_show'           => 'sometimes|boolean',
         ]);
 
         $method->update($validated);
+        $added = $method->per_show ? ShowPaymentRate::addMissing(null, [$method->id]) : 0;
 
-        return response()->json(['status' => 'success', 'data' => $method]);
+        return response()->json(['status' => 'success', 'data' => $method, 'shows_added' => $added]);
+    }
+
+    /**
+     * The table's Per Show toggle. Turning it on gives every show that
+     * doesn't have one its own copy of the current multiplier; turning it
+     * off stops new shows getting one. Either way, rates shows already have
+     * are kept as they are (see ShowPaymentRate::addMissing()).
+     */
+    public function updatePerShow(Request $request, $id)
+    {
+        $method = PaymentMethod::findOrFail($id);
+        $validated = $request->validate(['per_show' => 'required|boolean']);
+
+        $method->update(['per_show' => $validated['per_show']]);
+        $added = $method->per_show ? ShowPaymentRate::addMissing(null, [$method->id]) : 0;
+
+        return response()->json(['status' => 'success', 'per_show' => $method->per_show, 'shows_added' => $added]);
     }
 
     public function destroy($id)

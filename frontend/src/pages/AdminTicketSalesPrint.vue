@@ -1,11 +1,11 @@
 <template>
   <q-btn :icon="matPrint" size="md" color="grey-7" flat round @click="open = true">
-    <q-tooltip>Print sheet for door</q-tooltip>
+    <q-tooltip>Door sheet</q-tooltip>
   </q-btn>
 
   <q-dialog v-model="open" maximized>
     <q-card class="column no-wrap">
-      <q-card-section class="row items-center q-gutter-x-sm no-print bg-grey-2">
+      <q-card-section class="row items-center q-gutter-x-sm bg-grey-2">
         <q-select
           v-model="selectedPerf"
           :options="perfOptions"
@@ -15,11 +15,18 @@
           style="min-width: 200px;"
         />
         <q-space />
-        <q-btn label="Print" :icon="matPrint" color="primary" @click="doPrint" />
+        <q-btn
+          label="Export .xlsx"
+          :icon="mdiFileExcel"
+          color="positive"
+          :loading="exporting"
+          :disable="!selectedPerf"
+          @click="exportXlsx"
+        />
         <q-btn :icon="matClose" flat round @click="open = false" />
       </q-card-section>
 
-      <q-card-section class="col overflow-auto print-area">
+      <q-card-section class="col overflow-auto">
         <div class="print-header q-mb-sm">
           <strong>{{ showName }}</strong>
           <span v-if="selectedPerf"> &mdash; {{ selectedPerf.label }}</span>
@@ -48,7 +55,7 @@
             >
               <td>{{ doorLastName(rec) }}</td>
               <td>{{ doorFirstName(rec) }}</td>
-              <td class="col-narrow text-center">{{ rec.quantity || 1 }}</td>
+              <td class="col-narrow text-center">{{ activeQty(rec) }}</td>
               <td>{{ rec.payment_method.label }}</td>
               <td class="col-narrow text-right">
                 {{ isComp(rec) ? "" : "$" + amountDue(rec) }}
@@ -85,6 +92,8 @@
 
 <script setup>
 import { matClose, matPrint } from "@quasar/extras/material-icons";
+import { mdiFileExcel } from "@quasar/extras/mdi-v7";
+import { Notify } from "quasar";
 import { uniqBy, sortBy } from "lodash-es";
 import { computed, ref, watch } from "vue";
 
@@ -113,9 +122,18 @@ watch(
   { immediate: true },
 );
 
+// Seats a sale still holds — quantity minus cancelled tickets (legacy rows
+// with no quantity count as one). Fully cancelled sales don't print: nobody
+// from them is coming.
+const activeQty = (rec) =>
+  rec.quantity == null
+    ? 1
+    : Math.max(0, Number(rec.quantity) - (Number(rec.cancelled) || 0));
+
 const perfRecs = computed(() => {
-  if (!selectedPerf.value) return props.recs;
-  return props.recs.filter(
+  const active = props.recs.filter((r) => activeQty(r) > 0);
+  if (!selectedPerf.value) return active;
+  return active.filter(
     (r) => r.performance.id === selectedPerf.value.value,
   );
 });
@@ -136,7 +154,7 @@ const sortedRecs = computed(() =>
 const isComp = (rec) => rec.payment_method.value === "comp";
 const isFlex = (rec) => rec.payment_method.value === "flex";
 
-const amountDue = (rec) => ((rec.quantity || 1) * props.ticketPrice).toFixed(2);
+const amountDue = (rec) => (activeQty(rec) * props.ticketPrice).toFixed(2);
 
 // A comp ticket is confirmed at redemption time (see
 // CompTixController::redeemComp()) and never editable back to
@@ -161,27 +179,12 @@ const guestList = (rec) => {
     .join(", ");
 };
 
-// Angel benefits belong to the Angel themselves, not whoever they bought
-// tickets for — so they're only printed when the purchaser's own name is
-// on one of this sale's tickets (case/whitespace-insensitive, since ticket
-// names are free-text "First Last").
-const normalizeName = (name) =>
-  (name ?? "").trim().replace(/\s+/g, " ").toLowerCase();
-
-const purchaserHoldsTicket = (rec) => {
-  const purchaser = normalizeName(
-    `${rec.patron?.first_name ?? ""} ${rec.patron?.last_name ?? ""}`,
-  );
-  return (
-    purchaser !== "" &&
-    (rec.tickets ?? []).some((ticket) => normalizeName(ticket.name) === purchaser)
-  );
-};
-
+// The purchaser's Angel concession benefits, unless the box office turned
+// "Allow Angel benefits" off on this sale (on by default).
 const angelBenefits = (rec) =>
-  purchaserHoldsTicket(rec)
-    ? (rec.patron?.angel_concession_benefits ?? []).join(", ")
-    : "";
+  rec.allow_angel_benefits === false
+    ? ""
+    : (rec.patron?.angel_concession_benefits ?? []).join(", ");
 
 // Two distinct sources feed this one column: the patron's own standing
 // accessibility need (front_row) and this sale's own reserved front-row
@@ -197,31 +200,136 @@ const frontRowCount = (rec) =>
 // Falls back to the patron's own notes for older sales saved before
 // ticket_sales.comments existed (there's no backfill for this one, unlike
 // door_last/door_first) — same reasoning as doorLastName/doorFirstName.
-const comments = (rec) => rec.comments || rec.patron?.comments || "";
+// Only null falls back: '' means an admin cleared it on purpose.
+const comments = (rec) => rec.comments ?? rec.patron?.comments ?? "";
 
-const doPrint = () => window.print();
+// ---- Excel export of the door sheet ----
+// Same rows and columns as the preview above (sortedRecs + the helpers),
+// so the file can't drift from what's on screen. exceljs is loaded only
+// when exporting, keeping it out of the page's normal bundle.
+
+const HEADERS = [
+  "Last Name", "First Name", "# Tickets", "Payment Method", "Amt Due",
+  "Amt Collected", "FR", "Guest List", "Angel Benefits", "Comments",
+];
+const WIDTHS = [16, 14, 9, 18, 10, 13, 5, 30, 30, 36];
+const MONEY_COLUMNS = [5, 6];
+const CENTER_COLUMNS = [3, 7];
+// Same dark fills as the on-screen .row-comp / .row-flex, with white text.
+const ROW_FILLS = { comp: "FF7A4A00", flex: "FF101452" };
+const WALK_IN_ROWS = walkInRows;
+
+const exporting = ref(false);
+
+const sheetRow = (rec) => {
+  const comp = isComp(rec);
+  const due = Number(amountDue(rec));
+  return [
+    doorLastName(rec),
+    doorFirstName(rec),
+    activeQty(rec),
+    rec.payment_method.label,
+    comp ? null : due,
+    !comp && amountCollected(rec) ? due : null,
+    frontRowCount(rec) > 0 ? frontRowCount(rec) : null,
+    guestList(rec),
+    angelBenefits(rec),
+    comments(rec),
+  ];
+};
+
+const fileName = () => {
+  const name = `${props.showName} - ${selectedPerf.value?.label ?? ""} - Door Sheet`
+    .replace(/[\\/:*?"<>|]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return `${name}.xlsx`;
+};
+
+const exportXlsx = async () => {
+  exporting.value = true;
+  try {
+    const { default: ExcelJS } = await import("exceljs");
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("Door Sheet", {
+      pageSetup: {
+        orientation: "landscape",
+        fitToPage: true,
+        fitToWidth: 1,
+        fitToHeight: 0,
+        printTitlesRow: "2:2",
+        margins: { left: 0.3, right: 0.3, top: 0.4, bottom: 0.4, header: 0.2, footer: 0.2 },
+      },
+      views: [{ state: "frozen", ySplit: 2 }],
+    });
+
+    sheet.columns = WIDTHS.map((width) => ({ width }));
+
+    const title = sheet.addRow([`${props.showName} — ${selectedPerf.value?.label ?? ""}`]);
+    title.font = { bold: true, size: 14 };
+    sheet.mergeCells(1, 1, 1, HEADERS.length);
+
+    const header = sheet.addRow(HEADERS);
+    header.font = { bold: true };
+    header.eachCell((cell) => {
+      cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFE8E8E8" } };
+    });
+
+    for (const rec of sortedRecs.value) {
+      const row = sheet.addRow(sheetRow(rec));
+      const kind = isComp(rec) ? "comp" : isFlex(rec) ? "flex" : null;
+      if (kind) {
+        row.eachCell({ includeEmpty: true }, (cell) => {
+          cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: ROW_FILLS[kind] } };
+          cell.font = { color: { argb: "FFFFFFFF" } };
+        });
+      }
+    }
+
+    // Blank rows for walk-ins, as on the printed sheet.
+    for (let i = 0; i < WALK_IN_ROWS; i++) {
+      sheet.addRow(HEADERS.map(() => null)).height = 20;
+    }
+
+    const lastRow = sheet.rowCount;
+    for (let r = 2; r <= lastRow; r++) {
+      const row = sheet.getRow(r);
+      for (let c = 1; c <= HEADERS.length; c++) {
+        const cell = row.getCell(c);
+        cell.border = {
+          top: { style: "thin", color: { argb: "FFBBBBBB" } },
+          left: { style: "thin", color: { argb: "FFBBBBBB" } },
+          bottom: { style: "thin", color: { argb: "FFBBBBBB" } },
+          right: { style: "thin", color: { argb: "FFBBBBBB" } },
+        };
+        cell.alignment = {
+          vertical: "top",
+          wrapText: c >= 8,
+          horizontal: CENTER_COLUMNS.includes(c) ? "center" : undefined,
+        };
+        if (r > 2 && MONEY_COLUMNS.includes(c)) cell.numFmt = '"$"#,##0.00';
+      }
+    }
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const url = URL.createObjectURL(
+      new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      }),
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName();
+    link.click();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error(error);
+    Notify.create({ type: "negative", message: "Couldn't export the door sheet." });
+  } finally {
+    exporting.value = false;
+  }
+};
 </script>
-
-<style>
-@media print {
-  body > * {
-    visibility: hidden;
-  }
-  .print-area,
-  .print-area * {
-    visibility: visible;
-  }
-  .print-area {
-    position: fixed;
-    inset: 0;
-    overflow: visible;
-    padding: 12px;
-  }
-  .no-print {
-    display: none !important;
-  }
-}
-</style>
 
 <style scoped>
 .box-office-table {

@@ -14,6 +14,8 @@ use App\Models\Patron;
 use App\Models\PatronFlexPackage;
 use App\Models\PaymentMethod;
 use App\Models\Performance;
+use App\Support\EmailTemplates;
+use Illuminate\Validation\ValidationException;
 use App\Models\CompTicket;
 use App\Models\StandardButton;
 use App\Models\Ticket;
@@ -52,7 +54,7 @@ class TicketSaleController extends Controller
             ->keyBy('patron_id');
 
         $ticketSales = TicketSale::with([
-                'performance.show',
+                'performance.show.paymentRates',
                 'patron',
                 'paymentMethod',
                 'tickets' => fn ($query) => $query->orderBy('number'),
@@ -102,6 +104,20 @@ class TicketSaleController extends Controller
             'quantity' => 'required|integer|min:1',
         ]);
 
+        // Patrons type a ticket count for these methods, so it's capped at
+        // the seats left (the purchase page warns them first).
+        $performance = Performance::find($request->input('performance_id'));
+        if ($performance) {
+            $left = $performance->seatsRemaining();
+            if ((int) $validated['quantity'] > $left) {
+                throw ValidationException::withMessages([
+                    'quantity' => $left > 0
+                        ? "Sorry, only {$left} " . ($left === 1 ? 'seat is' : 'seats are') . ' left for that performance.'
+                        : 'Sorry, that performance has no seats left.',
+                ]);
+            }
+        }
+
         $request->replace($request->only([
             'type',
             'performance_id',
@@ -141,6 +157,7 @@ class TicketSaleController extends Controller
             'extra_comp' => 'sometimes|boolean',
             'confirmed' => 'sometimes|boolean',
             'front_row' => 'sometimes|integer|min:0|max:20',
+            'allow_angel_benefits' => 'sometimes|boolean',
             'special_seating' => 'sometimes|nullable|string|max:1000',
             'door_last' => 'sometimes|nullable|string|max:255',
             'door_first' => 'sometimes|nullable|string|max:255',
@@ -149,8 +166,8 @@ class TicketSaleController extends Controller
             'tickets.*' => 'nullable|string|max:255',
         ]);
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             [
                 'first_name' => $validated['first_name'],
                 'last_name'  => $validated['last_name'],
@@ -195,8 +212,9 @@ class TicketSaleController extends Controller
             // admin explicitly ticks "Issue additional comps" — otherwise
             // it's refused, since that's how duplicate comps were getting
             // created by mistake.
+            // Comps are keyed by email, so match any of the patron's addresses.
             $existingComps = CompTicket::with('performance')
-                ->where('email', $patron->email)
+                ->whereIn(DB::raw('LOWER(email)'), $patron->allEmails())
                 ->where('show_id', $performance?->show_id)
                 ->get();
 
@@ -235,11 +253,22 @@ class TicketSaleController extends Controller
                     $comp->save();
                 }
 
+                // The form's Door Name belongs to the first seat (it's what
+                // Ticket 1's name defaults to); the other seats keep the
+                // purchaser as their door name, as before.
+                $formDoorName = $i === 0
+                    ? array_filter([
+                        'door_first' => trim($validated['door_first'] ?? '') ?: null,
+                        'door_last'  => trim($validated['door_last'] ?? '') ?: null,
+                    ])
+                    : [];
+
                 app(CompTixController::class)->redeemComp(
                     $comp->uid,
                     $validated['performance_id'],
                     $doorNameFor($i),
-                    $validated['send_mail']
+                    $validated['send_mail'],
+                    $formDoorName
                 );
             }
 
@@ -260,10 +289,17 @@ class TicketSaleController extends Controller
             'payment_method_id' => $paymentMethod->id,
             'confirmed'         => $validated['confirmed'] ?? false,
             'front_row'         => $validated['front_row'] ?? 0,
+            'allow_angel_benefits' => $validated['allow_angel_benefits'] ?? true,
             'special_seating'   => $validated['special_seating'] ?? null,
             'door_last'         => $validated['door_last'] ?? $patron->last_name,
             'door_first'        => $validated['door_first'] ?? $patron->first_name,
-            'comments'          => $validated['comments'] ?? $patron->comments,
+            // The admin form always sends comments (pre-filled from the
+            // patron's notes); empty means cleared, stored as '' — see
+            // update(). Public purchases don't send it, so they get the
+            // patron's notes.
+            'comments'          => array_key_exists('comments', $validated)
+                ? ($validated['comments'] ?? '')
+                : $patron->comments,
         ];
 
         $ticketSale = TicketSale::create($rec);
@@ -317,15 +353,18 @@ class TicketSaleController extends Controller
             } else {
                 $confirmationData['view'] = 'purchase-confirmation';
 
+                // The payment method's details section (Admin → Email
+                // Templates), e.g. PayPal or Bank Transfer instructions.
                 $standardButton = StandardButton::where('key', $validated['type'])->first();
-                $confirmationPath = $standardButton
-                    ? resource_path("views/standard-buttons/{$standardButton->key}-confirmation.blade.php")
-                    : null;
+                $sectionView = $standardButton ? "standard-buttons.{$standardButton->key}-confirmation" : null;
 
-                $rawConfirmationBody = ($confirmationPath && file_exists($confirmationPath))
-                    ? file_get_contents($confirmationPath)
+                $rawConfirmationBody = $sectionView && EmailTemplates::exists($sectionView)
+                    ? EmailTemplates::source($sectionView)
                     : null;
-                $confirmationData['confirmation_body'] = $rawConfirmationBody
+                if ($rawConfirmationBody !== null) {
+                    $confirmationData['section_view'] = $sectionView;
+                }
+                $confirmationData['confirmation_body'] = filled($rawConfirmationBody)
                     ? Blade::render($rawConfirmationBody, $confirmationData, true)
                     : null;
             }
@@ -344,13 +383,215 @@ class TicketSaleController extends Controller
         return response()->json(['transaction_id' => $ticketSale->transaction_id]);
     }
 
+    /**
+     * The table's No Show count — how many of the party didn't show,
+     * 0 up to the seats the sale still holds (quantity - cancelled).
+     */
     public function updateNoShow(Request $request, string $id)
     {
         $rec = TicketSale::findOrFail($id);
-        $rec->no_show = $request->input('no_show');
+
+        $validated = $request->validate([
+            'no_show' => 'required|integer|min:0|max:' . $rec->active_quantity,
+        ]);
+
+        $rec->no_show = $validated['no_show'];
         $rec->save();
 
-        return response()->json(['rec' => $rec, 'id' => $id]);
+        return response()->json(['status' => 'success', 'no_show' => $rec->no_show]);
+    }
+
+    /**
+     * The table's Cancelled count — how many of the sale's tickets were
+     * cancelled, 0 up to its quantity. The record is kept either way;
+     * deleting a sale is only for a mistaken or test entry. No Show is
+     * capped to the seats left.
+     *
+     * Flex and comp sales: `return` says whether the tickets newly
+     * cancelled by this change go back to the patron (the admin is asked).
+     * Returned Flex tickets go back to the Flex balance (see
+     * TicketSale::used_quantity); a returned comp goes back to being an
+     * unused comp on the Comp Tickets list. Lowering the count un-returns
+     * from the most recent first.
+     */
+    public function updateCancelled(Request $request, string $id)
+    {
+        $rec = TicketSale::with('paymentMethod')->findOrFail($id);
+
+        $validated = $request->validate([
+            'cancelled' => 'required|integer|min:0|max:' . (int) $rec->quantity,
+            'return'    => 'sometimes|boolean',
+        ]);
+
+        $method = $rec->paymentMethod?->value;
+        $returnable = in_array($method, ['flex', 'comp'], true);
+
+        $old = (int) $rec->cancelled;
+        $new = (int) $validated['cancelled'];
+        $returned = (int) $rec->cancelled_returned;
+
+        if ($returnable && $new > $old && ($validated['return'] ?? false)) {
+            $returned += $new - $old;
+        }
+        $returned = min($returned, $new);
+
+        // A comp sale is one ticket, mirrored from a CompTicket whose uid is
+        // the sale's transaction_id (CompTixController::redeemComp()).
+        // Returning it frees the comp the same way deleting the sale does
+        // (destroy()), but the sale itself is kept for the record.
+        if ($method === 'comp') {
+            $comp = CompTicket::where('uid', $rec->transaction_id)->first();
+            $wasReturned = (int) $rec->cancelled_returned > 0;
+
+            if ($comp && $returned > 0 && ! $wasReturned) {
+                $comp->update([
+                    'ticket_sale_id' => null,
+                    'redeemed_at'    => null,
+                    'performance_id' => null,
+                    'pickup_name'    => null,
+                    'number'         => null,
+                ]);
+            } elseif ($comp && $returned === 0 && $wasReturned) {
+                // Un-cancelling a returned comp re-links it — unless the
+                // patron has already used it again for another performance.
+                if ($comp->ticket_sale_id && $comp->ticket_sale_id !== $rec->id) {
+                    return response()->json([
+                        'status'  => 'error',
+                        'message' => 'This comp was returned and has since been used for another performance, so this sale can\'t be un-cancelled. Issue a new comp instead.',
+                    ]);
+                }
+
+                $ticket = $rec->tickets()->orderBy('number')->first();
+                $comp->update([
+                    'ticket_sale_id' => $rec->id,
+                    'redeemed_at'    => now(),
+                    'performance_id' => $rec->performance_id,
+                    'pickup_name'    => $ticket?->name ?? $comp->pickup_name,
+                    'number'         => $ticket?->number,
+                ]);
+            }
+        }
+
+        $rec->cancelled = $new;
+        $rec->cancelled_returned = $returned;
+        $rec->resold = min((int) $rec->resold, $new);
+        $rec->no_show = min((int) $rec->no_show, $rec->active_quantity);
+        $rec->save();
+
+        return response()->json([
+            'status'             => 'success',
+            'cancelled'          => $rec->cancelled,
+            'cancelled_returned' => $rec->cancelled_returned,
+            'resold'             => $rec->resold,
+            'no_show'            => $rec->no_show,
+        ]);
+    }
+
+    /**
+     * The table's Resold count — how many of the sale's cancelled tickets
+     * were put back on sale. Only resold seats come off the performance's
+     * seats taken; never more than were cancelled.
+     */
+    public function updateResold(Request $request, string $id)
+    {
+        $rec = TicketSale::findOrFail($id);
+
+        $validated = $request->validate([
+            'resold' => 'required|integer|min:0|max:' . (int) $rec->cancelled,
+        ]);
+
+        $rec->update(['resold' => $validated['resold']]);
+
+        return response()->json(['status' => 'success', 'resold' => $rec->resold]);
+    }
+
+    /**
+     * Moves a purchase to another performance of the same show while
+     * keeping the original for the record:
+     *  - a copy goes onto the new performance with every detail of the
+     *    original (payment, paid, seating, door name, comments, …) and
+     *    reason_changed "Rescheduled from <old performance>";
+     *  - its numbered tickets move with it, so ticket numbers, names and
+     *    redemptions carry over (numbers are per show, hence same show only);
+     *  - a comp's CompTicket follows the new sale;
+     *  - the original drops to quantity 0 (no seats, no reminder, no Flex
+     *    use) with reason_changed "Rescheduled to <new performance>".
+     * An optional note is added to both reasons.
+     */
+    public function reschedule(Request $request, string $id)
+    {
+        $sale = TicketSale::with(['performance', 'paymentMethod'])->findOrFail($id);
+
+        $validated = $request->validate([
+            'performance_id' => 'required|integer|exists:performances,id',
+            'note'           => 'sometimes|nullable|string|max:500',
+        ]);
+
+        $from = $sale->performance;
+        $to = Performance::findOrFail($validated['performance_id']);
+
+        if ((int) $sale->quantity === 0) {
+            return response()->json(['status' => 'error', 'message' => 'This purchase was already rescheduled — reschedule the new one instead.']);
+        }
+        if ($to->id === $from?->id) {
+            return response()->json(['status' => 'error', 'message' => 'Pick a different performance.']);
+        }
+        if ($to->show_id !== $from?->show_id) {
+            return response()->json(['status' => 'error', 'message' => 'A purchase can only be moved to another performance of the same show.']);
+        }
+
+        $label = fn (Performance $p) => "{$p->formatted_date} {$p->formatted_time}";
+        $note = trim($validated['note'] ?? '');
+        $withNote = fn (string $reason) => $note !== '' ? "{$reason} — {$note}" : $reason;
+
+        $newSale = DB::transaction(function () use ($sale, $from, $to, $label, $withNote) {
+            $copy = $sale->replicate(['active_quantity', 'used_quantity', 'held_quantity']);
+            $copy->performance_id = $to->id;
+            $copy->no_show = 0;
+            $copy->reason_changed = $withNote('Rescheduled from ' . $label($from));
+            $copy->save();
+
+            $sale->tickets()->update(['ticket_sale_id' => $copy->id]);
+
+            CompTicket::where('ticket_sale_id', $sale->id)->update([
+                'ticket_sale_id' => $copy->id,
+                'performance_id' => $to->id,
+            ]);
+
+            $sale->update([
+                'quantity'           => 0,
+                'cancelled'          => 0,
+                'cancelled_returned' => 0,
+                'resold'             => 0,
+                'no_show'            => 0,
+                'reason_changed'     => $withNote('Rescheduled to ' . $label($to)),
+            ]);
+
+            return $copy;
+        });
+
+        return response()->json([
+            'status'   => 'success',
+            'new_id'   => $newSale->id,
+            'sales'    => $this->allSales(),
+        ]);
+    }
+
+    /**
+     * The table's Paid toggle — marks a sale paid/unpaid without opening
+     * the full edit form.
+     */
+    public function updatePaid(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'confirmed' => 'required|boolean',
+        ]);
+
+        $rec = TicketSale::findOrFail($id);
+        $rec->confirmed = $validated['confirmed'];
+        $rec->save();
+
+        return response()->json(['status' => 'success', 'confirmed' => $rec->confirmed]);
     }
 
     /**
@@ -406,12 +647,13 @@ class TicketSaleController extends Controller
             'last_name'     => 'required|string',
             'email'         => 'required|email',
             'phone'         => 'nullable|string',
-            'quantity'      => 'required|integer|min:1',
+            'quantity'      => 'required|integer|min:0', // 0 = rescheduled away (see reschedule())
             'transfer_date' => 'sometimes|nullable|date',
-            'no_show'       => 'sometimes|boolean',
+            'no_show'       => 'sometimes|integer|min:0',
             'confirmed'     => 'sometimes|boolean',
             'reason_changed' => 'nullable|string',
             'front_row'       => 'sometimes|integer|min:0|max:20',
+            'allow_angel_benefits' => 'sometimes|boolean',
             'special_seating' => 'sometimes|nullable|string|max:1000',
             'door_last'       => 'sometimes|nullable|string|max:255',
             'door_first'      => 'sometimes|nullable|string|max:255',
@@ -421,8 +663,8 @@ class TicketSaleController extends Controller
             'tickets.*.name'  => 'required_with:tickets|string|max:255',
         ]);
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             [
                 'first_name' => $validated['first_name'],
                 'last_name'  => $validated['last_name'],
@@ -488,15 +730,34 @@ class TicketSaleController extends Controller
             'performance_id'    => $validated['performance_id'],
             'quantity'          => $validated['quantity'],
             'payment_method_id' => $paymentMethod->id,
-            'transfer_date'     => $validated['transfer_date'] ?? null,
-            'no_show'           => $validated['no_show'] ?? false,
+            // Neither is on the edit form — no_show is set from the table's
+            // No Show count (updateNoShow()), transfer_date by the patron's
+            // own bank-transfer purchase — so keep what's stored unless sent.
+            // A party can't have more no-shows than people, so a lowered
+            // quantity caps it.
+            'transfer_date'     => $validated['transfer_date'] ?? $ticketSale->transfer_date,
+            // Cancelled isn't on the edit form either (it's the table's
+            // Cancelled count). Both counts are capped to the new quantity.
+            'cancelled'         => min((int) $ticketSale->cancelled, (int) $validated['quantity']),
+            'cancelled_returned' => min((int) $ticketSale->cancelled_returned, (int) $ticketSale->cancelled, (int) $validated['quantity']),
+            'resold'            => min((int) $ticketSale->resold, (int) $ticketSale->cancelled, (int) $validated['quantity']),
+            'no_show'           => min(
+                (int) ($validated['no_show'] ?? $ticketSale->no_show),
+                max(0, (int) $validated['quantity'] - min((int) $ticketSale->cancelled, (int) $validated['quantity'])),
+            ),
             'confirmed'         => $validated['confirmed'] ?? false,
             'reason_changed'    => $validated['reason_changed'] ?? null,
             'front_row'         => $validated['front_row'] ?? 0,
+            'allow_angel_benefits' => $validated['allow_angel_benefits'] ?? $ticketSale->allow_angel_benefits,
             'special_seating'   => $validated['special_seating'] ?? null,
             'door_last'         => $validated['door_last'] ?? $ticketSale->door_last ?? $patron->last_name,
             'door_first'        => $validated['door_first'] ?? $ticketSale->door_first ?? $patron->first_name,
-            'comments'          => $validated['comments'] ?? $ticketSale->comments ?? $patron->comments,
+            // Sent = what the admin left in the box. Empty means cleared, so
+            // store '' (not null): null would make the form re-show the
+            // patron's default notes on the next open.
+            'comments'          => array_key_exists('comments', $validated)
+                ? ($validated['comments'] ?? '')
+                : ($ticketSale->comments ?? $patron->comments),
         ]);
 
         foreach ($validated['tickets'] ?? [] as $ticket) {
@@ -561,6 +822,7 @@ class TicketSaleController extends Controller
             ])
             ->whereIn('id', $validated['ticket_sale_ids'])
             ->where('confirmed', false)
+            ->notFullyCancelled()
             ->whereHas('paymentMethod', fn ($query) => $query->whereIn('value', ['paypal', 'transfer']))
             ->get()
             ->filter(fn ($sale) => $sale->patron?->email);
@@ -577,7 +839,7 @@ class TicketSaleController extends Controller
                     'show_name'        => $sale->performance?->show?->name,
                     'performance_date' => $sale->performance ? Carbon::parse($sale->performance->date)->format('F j, Y') : null,
                     'performance_time' => $sale->performance ? Carbon::parse($sale->performance->start_time)->format('g:i A') : null,
-                    'num_tickets'      => $sale->quantity,
+                    'num_tickets'      => $sale->active_quantity,
                     'payment_method'   => $sale->paymentMethod?->label,
                     'reference_number' => $sale->tickets->pluck('formatted_number')->implode(', '),
                 ])
@@ -632,6 +894,7 @@ class TicketSaleController extends Controller
         return response()->json([
             'front_row_total' => $summary['front_row_total'],
             'reservations_total' => $summary['reserved'],
+            'seats_taken' => $summary['held'],
             'sold_out_target' => $summary['sold_out_target'],
         ]);
     }

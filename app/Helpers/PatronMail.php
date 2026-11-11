@@ -6,27 +6,48 @@ use Illuminate\Mail\PendingMail;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Mail::to() for the patron-facing confirmation emails (purchase, comp,
- * flex, angel donation, course enrollment) — CCs config('mail.cc_patrons')
- * when enabled, so someone can watch what patrons themselves are actually
- * receiving. Deliberately not used for admin/box-office-only notifications
- * (those already go to mail.admin_to, a separate concern) or the sold-out
- * notification list (a separate opt-in subscriber list, not patrons).
+ * Mail::to() for every email sent to a patron (confirmations, reminders,
+ * comp/Flex/Angel/class emails). CCs:
+ *  - the admin address (config mail.admin_to, MAIL_TO_ADDRESS), so the
+ *    box office has a copy of what each patron was sent — except where
+ *    $ccAdmin is false (class messages to enrollees);
+ *  - config('mail.cc_patrons') (CC_EMAIL) too, when CC is on.
+ * Not used for staff notifications (those go to mail.admin_to directly) or
+ * the sold-out notification list.
  */
 class PatronMail
 {
-    public static function to(string $email): PendingMail
+    public static function to(string $email, bool $ccAdmin = true): PendingMail
     {
-        $mail = Mail::to($email);
-        $cc = config('mail.cc_patrons.address');
+        return Mail::to($email)->cc(self::ccFor($email, $ccAdmin));
+    }
 
-        // Skipped when the patron IS the CC address (e.g. staff buying
-        // their own tickets, or testing with your own email) — MailerSend
-        // rejects the whole send if an address is both To and CC.
-        if (config('mail.cc_patrons.enabled') && $cc && strcasecmp(trim($cc), trim($email)) !== 0) {
-            $mail->cc($cc);
+    /**
+     * The CC addresses for an email to $email. Never the patron's own
+     * address (e.g. staff buying their own tickets) — MailerSend rejects
+     * the whole send if an address is both To and CC — and no duplicates.
+     *
+     * @return array<int, string>
+     */
+    public static function ccFor(?string $email, bool $ccAdmin = true): array
+    {
+        $candidates = [];
+
+        if ($ccAdmin) {
+            $candidates[] = config('mail.admin_to.address');
+        }
+        if (config('mail.cc_patrons.enabled')) {
+            $candidates[] = config('mail.cc_patrons.address');
         }
 
-        return $mail;
+        $to = strtolower(trim((string) $email));
+
+        return collect($candidates)
+            ->map(fn ($a) => trim((string) $a))
+            ->filter()
+            ->unique(fn ($a) => strtolower($a))
+            ->reject(fn ($a) => strtolower($a) === $to)
+            ->values()
+            ->all();
     }
 }

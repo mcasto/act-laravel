@@ -82,8 +82,8 @@ class FixrWebhooksController extends Controller
         $performance = $this->findByFixrLink(Performance::whereNotNull('fixr_link')->get(), $eventId);
 
         if ($performance) {
-            $patron = Patron::firstOrCreate(
-                ['email' => $holder['email']],
+            $patron = Patron::firstOrCreateByEmail(
+                $holder['email'],
                 [
                     'first_name' => $holder['first_name'],
                     'last_name' => $holder['last_name'],
@@ -141,8 +141,8 @@ class FixrWebhooksController extends Controller
         $angelLevel = $this->findByFixrLink(AngelLevel::whereNotNull('fixr_link')->get(), $eventId);
 
         if ($angelLevel) {
-            $patron = Patron::firstOrCreate(
-                ['email' => $holder['email']],
+            $patron = Patron::firstOrCreateByEmail(
+                $holder['email'],
                 [
                     'first_name' => $holder['first_name'],
                     'last_name' => $holder['last_name'],
@@ -204,8 +204,8 @@ class FixrWebhooksController extends Controller
         $flexLink = $flexConfig['fixr']['link'] ?? null;
 
         if ($flexLink && $this->findByFixrLink([(object) ['fixr_link' => $flexLink]], $eventId)) {
-            $patron = Patron::firstOrCreate(
-                ['email' => $holder['email']],
+            $patron = Patron::firstOrCreateByEmail(
+                $holder['email'],
                 [
                     'first_name' => $holder['first_name'],
                     'last_name' => $holder['last_name'],
@@ -253,8 +253,8 @@ class FixrWebhooksController extends Controller
         $course = $this->findByFixrLink(Course::whereNotNull('fixr')->get(), $eventId);
 
         if ($course) {
-            $patron = Patron::firstOrCreate(
-                ['email' => $holder['email']],
+            $patron = Patron::firstOrCreateByEmail(
+                $holder['email'],
                 [
                     'first_name' => $holder['first_name'],
                     'last_name' => $holder['last_name'],

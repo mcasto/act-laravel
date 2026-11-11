@@ -72,8 +72,13 @@ class PerformanceController extends Controller
             ->filter(function ($performance) {
                 return ! isset($performance['deleted']);
             })
+            // sold_out_target is an optional override; left empty, the
+            // performance follows the global Site Config target (see
+            // Performance::effectiveSoldOutTarget()).
             ->map(function ($performance) {
-                $performance['sold_out_target'] = $performance['sold_out_target'] ?? 50;
+                if (array_key_exists('sold_out_target', $performance) && $performance['sold_out_target'] === '') {
+                    $performance['sold_out_target'] = null;
+                }
 
                 return $performance;
             });

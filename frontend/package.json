@@ -22,6 +22,7 @@
     "@shelf/is-valid-email-address": "^1.0.0",
     "cheerio": "^1.0.0",
     "date-fns": "^4.1.0",
+    "exceljs": "4.4.0",
     "lodash-es": "^4.17.21",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",

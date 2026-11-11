@@ -99,6 +99,18 @@
                           : "No concession benefits at this level"
                       }}
                     </div>
+                    <q-toggle
+                      v-model="form.allow_angel_benefits"
+                      label="Allow Angel benefits"
+                      dense
+                      class="q-mt-xs"
+                    >
+                      <q-tooltip>
+                        Prints this Angel's benefits on the door sheet for this
+                        sale. Turn off when the Angel isn't attending (e.g.
+                        tickets bought for someone else).
+                      </q-tooltip>
+                    </q-toggle>
                   </div>
                   <div v-else class="text-caption text-grey-7">
                     Not an Angel this season (under this email)
@@ -284,9 +296,9 @@
                 </div>
                 <div>
                   <div class="text-h3 text-weight-bold">
-                    {{ seatingSummary.reservations_total }}<span class="text-h5 text-grey-6">/{{ seatingSummary.sold_out_target }}</span>
+                    {{ seatingSummary.seats_taken ?? seatingSummary.reservations_total }}<span class="text-h5 text-grey-6">/{{ seatingSummary.sold_out_target }}</span>
                   </div>
-                  <div class="text-caption text-grey-7">Reservations</div>
+                  <div class="text-caption text-grey-7">Seats Taken</div>
                 </div>
               </div>
             </q-card-section>
@@ -437,6 +449,7 @@ const form = ref(
         reason_changed: existingSale.reason_changed,
         front_row: existingSale.front_row || 0,
         special_seating: existingSale.special_seating || "",
+        allow_angel_benefits: existingSale.allow_angel_benefits ?? true,
         // Fallback covers a record saved before this field existed and
         // not yet caught by the one-time backfill command.
         door_last: existingSale.door_last ?? existingSale.patron.last_name,
@@ -458,6 +471,7 @@ const form = ref(
         confirmed: false,
         front_row: 0,
         special_seating: "",
+        allow_angel_benefits: true,
         door_last: "",
         door_first: "",
         comments: "",
@@ -666,6 +680,7 @@ const onSubmit = async () => {
     confirmed: form.value.confirmed,
     front_row: form.value.front_row,
     special_seating: form.value.special_seating || null,
+    allow_angel_benefits: form.value.allow_angel_benefits,
     door_last: form.value.door_last || null,
     door_first: form.value.door_first || null,
     comments: form.value.comments || null,

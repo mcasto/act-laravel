@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MessageUsMailer extends Mailable
+class MessageUsMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 
@@ -17,6 +17,12 @@ class MessageUsMailer extends Mailable
         public string $email,
         public string $body,
     ) {}
+
+    /** Replies go to the person who submitted it (see TemplatedMailable::submitter()). */
+    protected function submitter(): ?array
+    {
+        return [$this->email, null];
+    }
 
     public function envelope(): Envelope
     {

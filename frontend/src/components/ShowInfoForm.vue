@@ -46,6 +46,26 @@
             :disable="isReadOnly"
           ></q-input>
         </div>
+        <div class="col-6 q-px-xs q-mt-sm">
+          <q-input
+            type="number"
+            min="1"
+            :model-value="props.show.sold_out_target"
+            @update:model-value="setSoldOutTarget"
+            label="Sold Out Target"
+            stack-label
+            :placeholder="
+              store.config?.sold_out_target != null
+                ? `Default: ${store.config.sold_out_target}`
+                : 'Default'
+            "
+            hint="Seats each performance counts as full at. Blank uses the Site Config default; a performance can still set its own."
+            clearable
+            dense
+            outlined
+            :disable="isReadOnly"
+          ></q-input>
+        </div>
         <div class="col-12 q-px-xs text-right">
           <div class="q-my-md cursor-pointer">
             Ticket Sales Start:
@@ -86,7 +106,7 @@ import { matCalendarMonth } from "@quasar/extras/material-icons";
 import { format, parseISO } from "date-fns";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const props = defineProps(["show"]);
 
@@ -95,6 +115,18 @@ const store = useStore();
 const isReadOnly = computed(
   () => getPermissionLevel(store.admin.user, "shows") === "read-only",
 );
+
+// For the Sold Out Target placeholder; only fetched on the Site Config page otherwise.
+onMounted(() => {
+  if (!store.config) store.getSiteConfig();
+});
+
+// Blank (or cleared) = no override; otherwise a whole number of seats.
+const setSoldOutTarget = (value) => {
+  const n = Math.floor(Number(value));
+  props.show.sold_out_target =
+    value === null || value === "" || !(n >= 1) ? null : n;
+};
 
 const btnLabel = computed(() => {
   return store.router.currentRoute.value.params.id ? "udpate" : "create";

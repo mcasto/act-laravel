@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SoldOutNotificationMailer extends Mailable
+class SoldOutNotificationMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 

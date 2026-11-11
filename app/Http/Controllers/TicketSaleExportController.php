@@ -70,7 +70,7 @@ class TicketSaleExportController extends Controller
         $this->fill($salesSheet, [
             'Sale ID', 'Performance Date', 'Performance Time', 'Door Last', 'Door First',
             'Purchaser Last', 'Purchaser First', 'Email', 'Phone', 'Payment Method',
-            'Qty', 'Ticket Numbers', 'Confirmed', 'Date Sold', 'No Show',
+            'Qty', 'Cancelled', 'Returned', 'Resold', 'Ticket Numbers', 'Confirmed', 'Date Sold', 'No Shows',
             'Front Row', 'Special Seating', 'Comments',
         ], $sales->map(fn (TicketSale $sale) => [
             $sale->id,
@@ -84,10 +84,13 @@ class TicketSaleExportController extends Controller
             $sale->patron?->phone,
             $sale->paymentMethod?->label,
             $sale->quantity,
+            $sale->cancelled > 0 ? $sale->cancelled : '',
+            $sale->cancelled_returned > 0 ? $sale->cancelled_returned : '',
+            $sale->resold > 0 ? $sale->resold : '',
             $sale->tickets->pluck('formatted_number')->implode(', '),
             $this->yesNo($sale->confirmed),
             $sale->sold_at ? Carbon::parse($sale->sold_at)->format('Y-m-d g:i A') : '',
-            $this->yesNo($sale->no_show),
+            $sale->no_show > 0 ? $sale->no_show : '',
             $sale->front_row > 0 ? $sale->front_row : '',
             $sale->special_seating,
             $sale->comments,
@@ -99,7 +102,9 @@ class TicketSaleExportController extends Controller
             'Ticket #', 'Ticket Name', 'Redeemed', 'Redeemed At', 'Sale ID',
             'Performance Date', 'Performance Time', 'Door Last', 'Door First',
             'Purchaser Last', 'Purchaser First', 'Email', 'Payment Method',
-            'Confirmed', 'No Show',
+            // A ticket doesn't record which seat was the no-show, so each
+            // ticket row carries its sale's count.
+            'Confirmed', 'No Shows (Sale)',
         ], $sales->flatMap(fn (TicketSale $sale) => $sale->tickets->map(fn ($ticket) => [
             $ticket->formatted_number,
             $ticket->name,
@@ -117,7 +122,7 @@ class TicketSaleExportController extends Controller
             $sale->patron?->email,
             $sale->paymentMethod?->label,
             $this->yesNo($sale->confirmed),
-            $this->yesNo($sale->no_show),
+            $sale->no_show > 0 ? $sale->no_show : '',
         ])));
 
         // One row per unique purchaser email, column names matching

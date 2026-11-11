@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AngelDonationConfirmationMailer extends Mailable
+class AngelDonationConfirmationMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 

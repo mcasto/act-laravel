@@ -2,8 +2,17 @@
   <q-layout view="hHh lpR fFf">
     <q-page-container>
       <q-header>
-        <header-partial></header-partial>
-        <nav-partial v-if="!store.adminRoute"></nav-partial>
+        <!-- Admin gets a plain toolbar instead of the 200px logo banner, so
+             the work area starts near the top of the screen. -->
+        <q-toolbar v-if="store.adminRoute" class="admin-toolbar text-white">
+          <q-toolbar-title class="admin-toolbar-title">
+            Azuay Community Theater
+          </q-toolbar-title>
+        </q-toolbar>
+        <template v-else>
+          <header-partial></header-partial>
+          <nav-partial></nav-partial>
+        </template>
       </q-header>
       <q-page>
         <router-view />

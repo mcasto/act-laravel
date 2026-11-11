@@ -26,6 +26,10 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\ProjectCharterController;
 use App\Http\Controllers\ShowAccessGrantController;
+use App\Http\Controllers\ShowPaymentRateController;
+use App\Http\Controllers\BoardReportController;
+use App\Http\Controllers\EmailTemplateController;
+use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SiteConfigController;
 use App\Http\Controllers\SkillController;
@@ -87,6 +91,12 @@ Route::middleware(['auth:sanctum', 'permission:shows,auditions,volunteer-needs']
 Route::middleware(['auth:sanctum', 'permission:shows'])->delete('shows/{id}', [ShowController::class, 'destroy']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->get('new-show-template', [ShowController::class, 'newShow']);
 Route::middleware(['auth:sanctum', 'permission:shows'])->put('update-tentative/{id}', [ShowController::class, 'updateTentative']);
+
+// A show's own revenue multipliers — see ShowPaymentRateController
+Route::middleware(['auth:sanctum', 'permission:shows'])->prefix('shows/{showId}/payment-rates')->group(function () {
+    Route::get('/', [ShowPaymentRateController::class, 'index']);
+    Route::put('/{methodId}', [ShowPaymentRateController::class, 'update']);
+});
 
 // Production-team access (director page) — see ShowAccessGrantController
 Route::middleware(['auth:sanctum', 'permission:shows'])->prefix('shows/{showId}/access-grants')->group(function () {
@@ -177,7 +187,7 @@ Route::middleware(['auth:sanctum', 'permission:sold-out-notifications'])->delete
  */
 Route::get('/site-config', [SiteConfigController::class, 'show']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config', [SiteConfigController::class, 'update']);
-Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/standard-buttons', [SiteConfigController::class, 'updateButtons']);
+Route::middleware(['auth:sanctum', 'permission:site-config'])->get('/site-config/content', [SiteConfigController::class, 'content']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/support', [SiteConfigController::class, 'updateSupport']);
 Route::middleware(['auth:sanctum', 'permission:site-config'])->put('/site-config/season', [SiteConfigController::class, 'updateSeason']);
 Route::middleware(['auth:sanctum', 'admin-token'])->get('/active-season', [SiteConfigController::class, 'activeSeason']);
@@ -219,7 +229,7 @@ Route::middleware(['auth:sanctum', 'director-show'])->prefix('/director/shows/{s
 /**
  * Change Log Routes
  */
-Route::middleware(['auth:sanctum', 'permission:change-log'])->get('/change-logs', [ChangeLogController::class, 'index']);
+Route::middleware(['auth:sanctum', 'permission:changelog'])->get('/change-logs', [ChangeLogController::class, 'index']);
 Route::middleware(['auth:sanctum', 'permission:mail-log'])->get('/mail-logs', [MailLogController::class, 'index']);
 
 /**
@@ -332,9 +342,14 @@ Route::delete('/message-us/{id}', [MessageUsController::class, 'destroy'])
     ->middleware(['auth:sanctum', 'permission:quick-messages']);
 
 /**
- * Standard Button Routes
+ * Standard Button Routes — the patron purchase options, managed on the
+ * admin Payment Methods page.
  */
-Route::middleware(['auth:sanctum', 'permission:site-config'])->get('/standard-buttons', [StandardButtonsController::class, 'index']);
+Route::middleware(['auth:sanctum', 'permission:payment-methods'])->group(function () {
+    Route::get('/standard-buttons', [StandardButtonsController::class, 'index']);
+    Route::put('/standard-buttons/{id}', [StandardButtonsController::class, 'update']);
+    Route::put('/standard-buttons/{id}/display', [StandardButtonsController::class, 'updateDisplay']);
+});
 
 /**
  * Angel Routes - Add these to your existing api.php
@@ -372,6 +387,10 @@ Route::controller(TicketSaleController::class)
         Route::put('/ticket-sales', 'update');
         Route::delete('/ticket-sales', 'destroy');
         Route::put('/ticket-sales/no-show/{id}', 'updateNoShow');
+        Route::put('/ticket-sales/paid/{id}', 'updatePaid');
+        Route::put('/ticket-sales/cancelled/{id}', 'updateCancelled');
+        Route::put('/ticket-sales/resold/{id}', 'updateResold');
+        Route::post('/ticket-sales/{id}/reschedule', 'reschedule');
         Route::put('/ticket-sales/{id}/tickets', 'redeemTickets');
         Route::post('/ticket-sales/payment-reminders', 'sendPaymentReminders');
         Route::post('/admin/ticket-sales', 'store');
@@ -379,6 +398,32 @@ Route::controller(TicketSaleController::class)
     });
 
 Route::get('/ticket-sales/export', [TicketSaleExportController::class, 'export'])
+    ->middleware(['auth:sanctum', 'permission:ticket-sales']);
+
+// Box office checklist — see ChecklistController.
+Route::middleware(['auth:sanctum', 'permission:box-office-checklist'])->prefix('checklist')->group(function () {
+    Route::get('/shows', [ChecklistController::class, 'shows']);
+    Route::get('/shows/{showId}', [ChecklistController::class, 'show']);
+    Route::put('/shows/{showId}/check', [ChecklistController::class, 'check']);
+    Route::get('/items', [ChecklistController::class, 'items']);
+    Route::post('/items', [ChecklistController::class, 'storeItem']);
+    Route::put('/items/reorder', [ChecklistController::class, 'reorder']);
+    Route::put('/items/{id}', [ChecklistController::class, 'updateItem']);
+    Route::delete('/items/{id}', [ChecklistController::class, 'destroyItem']);
+});
+
+// Email Templates page — see EmailTemplateController.
+Route::middleware(['auth:sanctum', 'permission:email-templates'])->prefix('email-templates')->group(function () {
+    Route::get('/', [EmailTemplateController::class, 'index']);
+    Route::get('/{key}', [EmailTemplateController::class, 'show']);
+    Route::post('/{key}/preview', [EmailTemplateController::class, 'preview']);
+    Route::put('/{key}', [EmailTemplateController::class, 'update']);
+    Route::delete('/{key}', [EmailTemplateController::class, 'reset']);
+    Route::put('/{key}/enabled', [EmailTemplateController::class, 'updateEnabled']);
+});
+
+// Board reports (.xlsx) — Shows → gear menu → Export Board Reports.
+Route::get('/shows/{showId}/board-reports', [BoardReportController::class, 'export'])
     ->middleware(['auth:sanctum', 'permission:ticket-sales']);
 
 /**
@@ -402,6 +447,11 @@ Route::middleware(['auth:sanctum', 'permission:patrons'])->group(function () {
     Route::post('/admin/patrons', [PatronController::class, 'store']);
     Route::put('/admin/patrons/{id}', [PatronController::class, 'update']);
     Route::delete('/admin/patrons/{id}', [PatronController::class, 'destroy']);
+    Route::post('/admin/patrons/{id}/emails', [PatronController::class, 'addEmail']);
+    Route::delete('/admin/patrons/{id}/emails/{emailId}', [PatronController::class, 'removeEmail']);
+    Route::put('/admin/patrons/{id}/emails/{emailId}/primary', [PatronController::class, 'makePrimaryEmail']);
+    Route::get('/admin/patrons/{id}/merge-preview', [PatronController::class, 'mergePreview']);
+    Route::post('/admin/patrons/{id}/merge', [PatronController::class, 'merge']);
 });
 
 // Public self-service purchase (PayPal/transfer/flex forms). Admin manual
@@ -448,6 +498,7 @@ Route::middleware(['auth:sanctum', 'admin-token'])->get('/payment-methods', [Pay
 Route::middleware(['auth:sanctum', 'permission:payment-methods'])->group(function () {
     Route::post('/payment-methods', [PaymentMethodController::class, 'store']);
     Route::put('/payment-methods/{id}', [PaymentMethodController::class, 'update']);
+    Route::put('/payment-methods/{id}/per-show', [PaymentMethodController::class, 'updatePerShow']);
     Route::delete('/payment-methods/{id}', [PaymentMethodController::class, 'destroy']);
 });
 

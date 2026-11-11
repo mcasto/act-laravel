@@ -16,7 +16,7 @@ use Illuminate\Queue\SerializesModels;
  * as PaymentReminderMailer. Replies go to the instructor, since these are
  * about the class itself.
  */
-class CourseMessageMailer extends Mailable
+class CourseMessageMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 

@@ -59,7 +59,7 @@ class DirectorController extends Controller
     /**
      * Per-performance seat counts for one show (aggregates only)
      *
-     * @return JsonResponse {show_id, performances: [{id, date, start_time, reserved, comps, sold_out_target, remaining, sold_out}]}
+     * @return JsonResponse {show_id, performances: [{id, date, start_time, reserved, seats_taken, sold_out_target, remaining, sold_out}]}
      *
      * @source Database Models: Performance (reads), TicketSale/CompTicket (counts via Performance::salesSummary)
      */
@@ -80,7 +80,7 @@ class DirectorController extends Controller
                     'date'            => $performance->date,
                     'start_time'      => $performance->start_time,
                     'reserved'        => $summary['reserved'],
-                    'comps'           => $summary['comps'],
+                    'seats_taken'     => $summary['held'],
                     'sold_out_target' => $summary['sold_out_target'],
                     'remaining'       => $summary['remaining'],
                     'sold_out'        => (bool) $performance->sold_out,

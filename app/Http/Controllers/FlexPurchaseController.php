@@ -37,7 +37,7 @@ class FlexPurchaseController extends Controller
             ->get('flex-purchase-config.json'), true);
 
         $price = $config['price'];
-        $config['buttons'] = Cache::remember('standard-buttons', 3600, fn() => StandardButton::orderBy('sort_order')->get())
+        $config['buttons'] = StandardButton::forPatrons()
             ->whereNotIn('key', ['questions', 'flex'])
             ->map(function ($rec) use ($price) {
                 $rec->popupText = Cache::remember(
@@ -150,8 +150,8 @@ class FlexPurchaseController extends Controller
 
         $paymentMethod = PaymentMethod::where('value', $validated['payment_method_value'])->first();
 
-        $patron = Patron::firstOrCreate(
-            ['email' => $validated['email']],
+        $patron = Patron::firstOrCreateByEmail(
+            $validated['email'],
             [
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],

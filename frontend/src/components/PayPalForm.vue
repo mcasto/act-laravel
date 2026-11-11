@@ -21,7 +21,8 @@
               outlined
               v-model.number="form.quantity"
               min="1"
-              :rules="[(val) => val >= 1 || 'Must be at least 1']"
+              :max="seatLimit(performance)"
+              :rules="quantityRules(performance)"
             ></q-input>
             <q-input
               type="email"
@@ -87,6 +88,7 @@ import callApi from "src/assets/call-api";
 import notifySubmitError from "src/assets/notify-submit-error";
 import { ref } from "vue";
 import { useStore } from "src/stores/store";
+import { quantityRules, seatLimit } from "src/assets/seat-limit";
 
 const props = defineProps(["performance"]);
 const store = useStore();

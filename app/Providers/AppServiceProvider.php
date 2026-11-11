@@ -3,9 +3,11 @@ namespace App\Providers;
 
 use App\Services\ChangeLogger;
 use App\Services\MailLogger;
+use App\Support\EmailTemplates;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
   */
  public function boot(): void
  {
+  // Email templates edited on the admin Email Templates page are saved
+  // here and take precedence over resources/views (see
+  // App\Support\EmailTemplates).
+  View::getFinder()->prependLocation(EmailTemplates::overrideRoot());
+
   // Change log: catches every model's create/update/delete admin-wide, with
   // no per-model wiring needed. See App\Services\ChangeLogger.
   Event::listen('eloquent.created: *', function ($event, $data) {

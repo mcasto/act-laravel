@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class FlexPurchaseConfirmationMailer extends Mailable
+class FlexPurchaseConfirmationMailer extends TemplatedMailable
 {
     use Queueable, SerializesModels;
 

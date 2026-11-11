@@ -108,6 +108,28 @@
                       </q-item-label>
                     </q-item-section>
                   </q-item>
+                  <q-item
+                    v-if="store.admin.show.id"
+                    clickable
+                    @click="paymentRatesDialog = true"
+                  >
+                    <q-item-section>
+                      <q-item-label>
+                        Revenue Multipliers
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item
+                    v-if="store.admin.show.id && canSeeTicketSales"
+                    clickable
+                    @click="exportBoardReports"
+                  >
+                    <q-item-section>
+                      <q-item-label>
+                        Export Board Reports
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
                 </q-list>
               </q-menu>
             </q-btn>
@@ -177,6 +199,11 @@
       :show="store.admin.show"
     ></production-team-dialog>
 
+    <show-payment-rates-dialog
+      v-model="paymentRatesDialog"
+      :show="store.admin.show"
+    ></show-payment-rates-dialog>
+
     <q-dialog
       v-model="performancesDrawer"
       :maximized="false"
@@ -200,6 +227,7 @@ import PerformancesDrawer from "src/components/PerformancesDrawer.vue";
 import ShowPoster from "src/components/ShowPoster.vue";
 import ShowInfoForm from "src/components/ShowInfoForm.vue";
 import ProductionTeamDialog from "src/components/ProductionTeamDialog.vue";
+import ShowPaymentRatesDialog from "src/components/ShowPaymentRatesDialog.vue";
 import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 
@@ -260,6 +288,48 @@ const onPerformancesDrawerHide = () => {
 };
 
 const productionTeamDialog = ref(false);
+const paymentRatesDialog = ref(false);
+
+// Board reports hold ticket sales figures, so they follow that permission.
+const canSeeTicketSales = computed(
+  () => getPermissionLevel(store.admin.user, "ticket-sales") !== "none",
+);
+
+// Downloads the Aggregate + Detail board reports (.xlsx) for this show —
+// see BoardReportController.
+const exportBoardReports = async () => {
+  const notif = Notify.create({
+    type: "ongoing",
+    message: "Building board reports…",
+  });
+  try {
+    const response = await fetch(
+      `/api/shows/${store.admin.show.id}/board-reports`,
+      {
+        headers: {
+          Authorization: `Bearer ${store.admin.user?.token}`,
+          Accept: "application/json",
+        },
+      },
+    );
+    if (!response.ok) throw new Error(`Export failed (${response.status})`);
+
+    const filename =
+      response.headers
+        .get("Content-Disposition")
+        ?.match(/filename="?([^";]+)"?/)?.[1] ?? "board-reports.xlsx";
+    const url = URL.createObjectURL(await response.blob());
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+    notif();
+  } catch (error) {
+    console.error(error);
+    notif({ type: "negative", message: "Couldn't export the board reports.", timeout: 4000 });
+  }
+};
 
 const flexDialog  = ref(false);
 const flexLoading = ref(false);
