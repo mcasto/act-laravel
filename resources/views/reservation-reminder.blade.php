@@ -1,8 +1,9 @@
+@php($day = $day ?? 'tomorrow')
 <div>
     <p>Hello {{ $name }},</p>
 
     <p>
-        This is a reminder that you have a reservation for our performance of {{ $show_name }} tomorrow
+        This is a reminder that you have a reservation for our performance of {{ $show_name }} {{ $day }}
         at {{ $performance_time }}. ACT does not allow pets at our performances.
     </p>
 
@@ -17,6 +18,6 @@
     </p>
 
     <p>
-        Thank you for making reservations for our show, we look forward to seeing you tomorrow!
+        Thank you for making reservations for our show, we look forward to seeing you {{ $day }}!
     </p>
 </div>

@@ -8,15 +8,18 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// Verification mode — reminders:send currently logs to
-// storage/app/private/reservation-reminder-log.csv instead of actually
-// emailing anyone (see SendReservationReminders::logWouldSend()), after an
-// earlier erroneous send caused problems. Re-enabled here so that log can
-// build up real data to verify against before flipping it back to
-// Mail::send().
+// Reservation reminders — log-only until RESERVATION_REMINDERS_SEND=true
+// (see SendReservationReminders). Day-before batch at 10:00 local for
+// tomorrow's performances; same-day batch checked every five minutes and
+// fired once per performance, 4 hours before curtain, for anyone not
+// already reminded (late purchases / reschedules).
 Schedule::command('reminders:send')
     ->dailyAt('10:00')
     ->timezone(config('app.local_timezone'));
+
+Schedule::command('reminders:send --same-day')
+    ->everyFiveMinutes()
+    ->withoutOverlapping();
 
 Schedule::command('storage:cleanup-orphans')
     ->dailyAt('03:00')

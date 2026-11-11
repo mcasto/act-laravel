@@ -24,7 +24,7 @@ class ReservationReminderMailer extends Mailable
                 config('mail.ticket_sale_from.address'),
                 config('mail.ticket_sale_from.name')
             ),
-            subject: 'Reminder: Your Performance Tomorrow - ' . $this->data['show_name'],
+            subject: 'Reminder: Your Performance ' . ucfirst($this->data['day'] ?? 'tomorrow') . ' - ' . $this->data['show_name'],
         );
     }
 

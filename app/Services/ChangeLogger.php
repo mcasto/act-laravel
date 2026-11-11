@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\ChangeLog;
 use App\Models\MailLog;
+use App\Models\ReservationReminder;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -35,11 +36,13 @@ class ChangeLogger
      * than a user taking an action — e.g. Sanctum bumps a token's
      * last_used_at on every authenticated request, which isn't a change
      * anyone made on purpose. MailLog is written for every email an admin
-     * action happens to send, and is its own log already.
+     * action happens to send, and is its own log already. ReservationReminder
+     * is written by the scheduled reminders:send and is likewise its own log.
      */
     private const IGNORED_MODELS = [
         PersonalAccessToken::class,
         MailLog::class,
+        ReservationReminder::class,
     ];
 
     public static function recordModelEvent(string $action, Model $model): void

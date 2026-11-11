@@ -63,8 +63,9 @@ export const auditionFonts = {
  */
 export const posterFor = (poster) => {
   if (!poster) return { path: "", url: "" };
-  const url = poster.startsWith("http")
-    ? new URL(poster)
+  // Full URL, root-relative path (director API), or a bare filename (admin).
+  const url = /^(https?:)?\//.test(poster)
+    ? new URL(poster, window.location.origin)
     : new URL(`/api/storage/posters/${poster}`, window.location.origin);
   url.search = "";
   return { path: url.pathname, url: url.toString() };

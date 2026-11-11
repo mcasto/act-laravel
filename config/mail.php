@@ -159,4 +159,19 @@ return [
         'enabled' => env('CC', false),
         'address' => env('CC_EMAIL'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Reservation reminders
+    |--------------------------------------------------------------------------
+    |
+    | Off by default: reminders:send only logs who it would email (to
+    | reservation_reminders and the CSV logs in storage/app/private). Set
+    | RESERVATION_REMINDERS_SEND=true to actually send the emails.
+    |
+    */
+
+    'reservation_reminders' => [
+        'send' => (bool) env('RESERVATION_REMINDERS_SEND', false),
+    ],
 ];

@@ -111,8 +111,11 @@ self.addEventListener("fetch", (event) => {
       try {
         const response = await fetch(request);
         if (response.ok) {
-          await cache.put(request, response.clone());
-          trim(cache);
+          // A failed cache write must never cost the page the file itself.
+          cache
+            .put(request, response.clone())
+            .then(() => trim(cache))
+            .catch(() => {});
         }
         return response;
       } catch (error) {
