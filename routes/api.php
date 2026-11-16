@@ -297,7 +297,7 @@ Route::post('/message-us', [MessageUsController::class, 'store']);
  * Audition Routes
  */
 Route::get('/current-audition', [AuditionController::class, 'current']);
-Route::get('/audition-preview', [AuditionController::class, 'preview']);
+Route::get('/audition-preview/{uid}', [AuditionController::class, 'preview']);
 Route::get('/audition/{id}', [AuditionController::class, 'show'])
     ->middleware(['auth:sanctum', 'permission:auditions']);
 Route::post('/audition', [AuditionController::class, 'store'])

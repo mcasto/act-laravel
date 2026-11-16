@@ -22,8 +22,10 @@ use Random\Randomizer;
  * stand-ins stay stand-ins. Show credits (writer/director) are left alone, as
  * are free-text fields like comments and messages.
  *
- * Admin users get a fake name and an email of user{id}@example.com (their
- * password is unchanged) unless listed with --keep-user.
+ * Some things are always kept exactly as they are, everywhere they appear:
+ * admin users' names and emails (so everyone can still log in — passwords
+ * are never touched), the theater's own addresses from Site Config (the box
+ * office email etc.), MAIL_TO_ADDRESS and OWNER_EMAIL.
  *
  * Everything runs in one transaction; --dry-run rolls it back.
  */
@@ -32,8 +34,7 @@ class AnonymizeDatabase extends Command
     protected $signature = 'db:anonymize
         {--dry-run : Show what would change, then roll everything back}
         {--force : Skip the confirmation prompt (not allowed in production)}
-        {--seed= : Random seed, for repeatable output}
-        {--keep-user=* : An admin user\'s email to leave unchanged so they can still log in (repeatable)}';
+        {--seed= : Random seed, for repeatable output}';
 
     protected $description = 'Replace all names, email addresses and phone numbers with fake ones (for non-production copies of the database)';
 
@@ -117,6 +118,9 @@ class AnonymizeDatabase extends Command
     /** normalized original email => fake */
     private array $emails = [];
 
+    /** normalized emails that are never replaced (admin users, admin/owner addresses) => true */
+    private array $keptEmails = [];
+
     /** every email address in the database before we start, plus fakes handed out */
     private array $takenEmails = [];
 
@@ -148,18 +152,15 @@ class AnonymizeDatabase extends Command
             return self::FAILURE;
         }
 
-        $keepUsers = collect($this->option('keep-user'))->map(fn ($e) => Patron::normalizeEmail($e))->all();
-        $userLogins = [];
-
         DB::beginTransaction();
 
         try {
             $this->collectExistingEmails();
+            $this->collectKeptEmails();
+            $this->collectKeptNames();
             $this->collectNameDictionary();
-            $this->registerSiteEmails();
 
             $this->patrons();
-            $userLogins = $this->users($keepUsers);
             $this->simpleTables();
             $this->ticketSalesAndTickets();
             $this->angels();
@@ -189,13 +190,8 @@ class AnonymizeDatabase extends Command
         DB::commit();
         Cache::flush(); // cached lists hold the old names
 
-        if ($userLogins) {
-            $this->newLine();
-            $this->info('Admin logins are now (passwords unchanged):');
-            $this->table(['User', 'Email'], $userLogins);
-        }
-
         $this->info('Done. Names, emails and phone numbers have been replaced.');
+        $this->info('Kept unchanged: '.implode(', ', array_keys($this->keptEmails)).' (admin logins and passwords still work).');
         return self::SUCCESS;
     }
 
@@ -208,7 +204,7 @@ class AnonymizeDatabase extends Command
         $extra = [];
         foreach (DB::table('patron_emails')->orderBy('id')->get() as $row) {
             $orig = Patron::normalizeEmail($row->email);
-            if (! isset($this->emails[$orig])) {
+            if (! isset($this->emails[$orig]) && ! isset($this->keptEmails[$orig])) {
                 $n = $extra[$row->patron_id] = ($extra[$row->patron_id] ?? 0) + 1;
                 $this->patronEmailFor($row->patron_id, $orig, $n);
             }
@@ -218,12 +214,12 @@ class AnonymizeDatabase extends Command
             [$first, $last] = $this->fakeName($p->first_name, $p->last_name);
 
             $email = $p->email;
-            if ($this->isEmailish($email)) {
+            if ($this->isEmailish($email) && ! isset($this->keptEmails[Patron::normalizeEmail($email)])) {
                 $orig = Patron::normalizeEmail($email);
                 $email = $this->emails[$orig] ?? $this->patronEmailFor(
                     $p->id, $orig, $extra[$p->id] = ($extra[$p->id] ?? 0) + 1, $first, $last
                 );
-            } elseif (! blank($email)) {
+            } elseif (! blank($email) && ! $this->isEmailish($email)) {
                 $email = $this->fakeFull($email); // a name typed into the email field
             }
 
@@ -244,30 +240,6 @@ class AnonymizeDatabase extends Command
         foreach ($rows as $row) {
             $this->update('patron_emails', $row->id, ['email' => $this->fakeEmail($row->email)]);
         }
-    }
-
-    private function users(array $keep): array
-    {
-        $logins = [];
-        $rows = DB::table('users')->get();
-
-        foreach ($rows as $u) {
-            if (! in_array(Patron::normalizeEmail($u->email), $keep, true)) {
-                DB::table('users')->where('id', $u->id)->update(['email' => "tmp-{$u->id}@anonymize.invalid"]);
-            }
-        }
-
-        foreach ($rows as $u) {
-            if (in_array(Patron::normalizeEmail($u->email), $keep, true)) {
-                continue;
-            }
-            $name = $this->fakeFull($u->name);
-            $email = "user{$u->id}@example.com";
-            $this->update('users', $u->id, ['name' => $name, 'email' => $email]);
-            $logins[] = [$name, $email];
-        }
-
-        return $logins;
     }
 
     /** Tables with a name, email and/or phone and no special handling. */
@@ -774,6 +746,10 @@ class AnonymizeDatabase extends Command
 
         $orig = Patron::normalizeEmail($email);
 
+        if (isset($this->keptEmails[$orig])) {
+            return $email; // exactly as it was
+        }
+
         if (! isset($this->emails[$orig])) {
             if (str_starts_with($orig, 'no-email+')) {
                 return $this->emails[$orig] = $this->uniqueEmail('no-email+'.$this->slug(implode(' ', $this->newName())), 'address.com');
@@ -849,22 +825,49 @@ class AnonymizeDatabase extends Command
         }
     }
 
-    /** The theater's own addresses get recognizable fakes (and stay consistent in mail logs). */
-    private function registerSiteEmails(): void
+    /**
+     * Never replaced anywhere: admin users' logins, the theater's own
+     * addresses from Site Config (box office / contact / dev), and the
+     * admin/owner addresses from config.
+     */
+    private function collectKeptEmails(): void
     {
-        $fakes = ['ticket_email' => 'tickets', 'contact_email' => 'contact', 'dev_email' => 'dev'];
+        $emails = DB::table('users')->whereNotNull('email')->pluck('email')->all();
+        foreach (DB::table('site_configs')->get(['ticket_email', 'contact_email', 'dev_email']) as $row) {
+            array_push($emails, $row->ticket_email, $row->contact_email, $row->dev_email);
+        }
+        $emails[] = config('mail.admin_to.address');
+        $emails[] = config('auth.owner_email');
 
-        foreach (DB::table('site_configs')->get() as $row) {
-            $update = [];
-            foreach ($fakes as $col => $local) {
-                if (blank($row->$col)) {
-                    continue;
-                }
-                $orig = Patron::normalizeEmail($row->$col);
-                $this->emails[$orig] ??= $this->uniqueEmail($local);
-                $update[$col] = $this->emails[$orig];
+        foreach ($emails as $email) {
+            if (! blank($email)) {
+                $this->keptEmails[Patron::normalizeEmail($email)] = true;
             }
-            $this->update('site_configs', $row->id, $update);
+        }
+    }
+
+    /**
+     * Admin users' names stay real everywhere they appear (users table,
+     * patrons, door names, change logs, free text …) by mapping each name —
+     * and its first/last halves — to itself. Split the same way fakeFull()
+     * does: last word is the surname.
+     */
+    private function collectKeptNames(): void
+    {
+        foreach (DB::table('users')->whereNotNull('name')->pluck('name') as $name) {
+            $parts = preg_split('/\s+/', trim($name), -1, PREG_SPLIT_NO_EMPTY);
+            if (! $parts) {
+                continue;
+            }
+            $last = count($parts) > 1 ? array_pop($parts) : '';
+            $first = implode(' ', $parts);
+
+            $this->names[$this->nameKey($name)] = [$first, $last];
+            $this->usedNames[strtolower(trim("$first $last"))] = true;
+            $this->firsts[$this->nameKey($first)] ??= $first;
+            if ($last !== '') {
+                $this->lasts[$this->nameKey($last)] ??= $last;
+            }
         }
     }
 

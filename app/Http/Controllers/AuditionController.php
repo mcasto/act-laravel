@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\LocalTime;
 use App\Models\Audition;
+use App\Models\AuditionPreview;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -25,7 +26,11 @@ class AuditionController extends Controller
         $audition = Audition::where('show_id', $id)
             ->first();
 
-        return ['status' => 'success', 'audition' => $audition];
+        return [
+            'status' => 'success',
+            'audition' => $audition,
+            'preview_uid' => AuditionPreview::forShow($id)->uid,
+        ];
     }
 
     /**
@@ -47,7 +52,6 @@ class AuditionController extends Controller
             'end_display_date' => 'required|date',
             'html' => 'nullable|string',
             'show_id' => 'required|integer',
-            'preview' => 'sometimes|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -57,7 +61,6 @@ class AuditionController extends Controller
         try {
             // Use the custom createWithHtml method
             $audition = Audition::createWithHtml($validator->validated());
-            $this->clearOtherPreviews($audition);
             return ['status' => 'success', 'audition' => $audition];
         } catch (Exception $e) {
             logger()->error($e->getMessage());
@@ -85,7 +88,6 @@ class AuditionController extends Controller
             'end_display_date' => 'required|date',
             'html' => 'nullable|string',
             'show_id' => 'required|integer',
-            'preview' => 'sometimes|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -101,7 +103,6 @@ class AuditionController extends Controller
 
             // Use the custom updateWithHtml method
             $audition->updateWithHtml($validator->validated());
-            $this->clearOtherPreviews($audition);
 
             return ['status' => 'success', 'audition' => $audition];
         } catch (Exception $e) {
@@ -131,31 +132,21 @@ class AuditionController extends Controller
     }
 
     /**
-     * Get the audition that has preview turned on, ignoring its display
-     * dates — backs the public /audition/preview page.
+     * A show's saved audition, by its preview link's uid, ignoring the
+     * display dates — backs the public /audition/preview/{uid} page.
      *
-     * @return JsonResponse The previewed audition with show relationship or null
+     * @return JsonResponse The audition with show relationship, or null for
+     *                      an unknown uid or a show with no audition saved yet
      *
-     * @source Database Model: Audition (reads with Show relationship)
+     * @source Database Models: AuditionPreview, Audition (reads with Show relationship)
      */
-    public function preview(): JsonResponse
+    public function preview(string $uid): JsonResponse
     {
-        return response()->json(
-            Audition::with(['show'])->where('preview', true)->latest('updated_at')->first()
-        );
-    }
+        $preview = AuditionPreview::where('uid', $uid)->first();
 
-    /**
-     * Only one audition is previewed at a time — turning it on for one
-     * turns it off everywhere else.
-     *
-     * @source Database Model: Audition (updates)
-     */
-    private function clearOtherPreviews(Audition $audition): void
-    {
-        if ($audition->preview) {
-            Audition::where('id', '!=', $audition->id)->where('preview', true)->update(['preview' => false]);
-        }
+        return response()->json(
+            $preview ? Audition::with(['show'])->where('show_id', $preview->show_id)->first() : null
+        );
     }
 
     /**

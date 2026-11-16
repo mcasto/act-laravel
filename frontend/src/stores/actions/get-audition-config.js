@@ -21,11 +21,13 @@ export default async () => {
     return;
   }
 
+  // Kept apart from store.admin.audition, which a save replaces wholesale.
+  store.admin.auditionPreviewUid = response.preview_uid;
+
   store.admin.audition = response.audition || {
     show_id: store.admin.show.id,
     display_date: formatISO9075(new Date(), { representation: "date" }),
     end_display_date: formatISO9075(new Date(), { representation: "date" }),
     html: "",
-    preview: false,
   };
 };

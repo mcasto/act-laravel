@@ -52,14 +52,14 @@ const routes = [
         meta: { nav: true, label: "Season" },
       },
       {
-        // The audition with "Preview" turned on in the admin, shown
-        // regardless of its display dates. Not in the nav; the page loads
-        // its own data so store.audition (which drives the nav item) is
-        // left alone.
+        // A show's saved audition, by its preview link (the uid comes from
+        // "Copy preview link" in the admin), shown regardless of its display
+        // dates. Not in the nav; the page loads its own data so
+        // store.audition (which drives the nav item) is left alone.
         name: "audition-preview",
-        path: "audition/preview",
+        path: "audition/preview/:uid",
         component: () => import("pages/AuditionPage.vue"),
-        props: { preview: true },
+        props: (route) => ({ preview: true, uid: route.params.uid }),
         meta: { nav: false },
       },
       {

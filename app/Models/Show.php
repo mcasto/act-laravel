@@ -72,6 +72,9 @@ class Show extends Model
         // payment method (see ShowPaymentRate).
         static::created(fn (Show $show) => ShowPaymentRate::addMissing([$show->id]));
 
+        // Every show gets its own audition preview link.
+        static::created(fn (Show $show) => AuditionPreview::forShow($show->id));
+
         static::deleting(function (Show $show) {
             $show->performances()->get()->each->delete();
             Audition::where('show_id', $show->id)->get()->each->delete();

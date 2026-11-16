@@ -28,29 +28,27 @@
         </div>
 
         <div class="col-12 q-px-md row items-center q-gutter-x-md">
-          <q-toggle
-            v-model="store.admin.audition.preview"
-            label="Preview"
-            :disable="isReadOnly"
-          />
           <q-btn
-            v-if="store.admin.audition.preview"
-            :icon="matOpenInNew"
-            label="Open preview"
-            href="/audition/preview"
-            target="_blank"
-            flat
+            :icon="matContentCopy"
+            label="Copy preview link"
+            color="primary"
+            outline
             dense
             no-caps
-            color="primary"
+            :disable="!previewUrl"
+            @click="copyPreviewLink"
           />
           <div class="col text-caption text-grey-7">
-            When on (and saved), the saved page can be viewed at
-            {{ previewUrl }} regardless of the display dates. Only one show's
-            audition can be previewed at a time.
+            <a v-if="previewUrl" :href="previewUrl" target="_blank">{{
+              previewUrl
+            }}</a>
+            <div>
+              Shows this show's saved audition page, whatever the display
+              dates. Anyone with the link can see it.
+            </div>
           </div>
           <!-- Same as the buttons below the editor, so a quick change
-               (e.g. the Preview toggle) doesn't need a scroll to save. -->
+               doesn't need a scroll to save. -->
           <div class="no-wrap">
             <q-btn
               label="Reset"
@@ -120,7 +118,7 @@
 </template>
 
 <script setup>
-import { matContentCopy, matOpenInNew } from "@quasar/extras/material-icons";
+import { matContentCopy } from "@quasar/extras/material-icons";
 import { Notify } from "quasar";
 import {
   auditionFonts,
@@ -140,7 +138,20 @@ const isReadOnly = computed(
 
 const formRef = ref(null);
 
-const previewUrl = `${window.location.host}/audition/preview`;
+const previewUrl = computed(() =>
+  store.admin.auditionPreviewUid
+    ? `${window.location.origin}/audition/preview/${store.admin.auditionPreviewUid}`
+    : "",
+);
+
+const copyPreviewLink = async () => {
+  try {
+    await navigator.clipboard.writeText(previewUrl.value);
+    Notify.create({ type: "positive", message: "Preview link copied" });
+  } catch {
+    Notify.create({ type: "negative", message: "Couldn't copy to the clipboard in this browser." });
+  }
+};
 
 const copyPrompt = async () => {
   try {

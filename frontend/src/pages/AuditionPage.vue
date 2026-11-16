@@ -14,9 +14,11 @@
   </div>
 
   <div v-else-if="preview" class="q-pa-xl">
-    <div class="text-h5">No audition preview is turned on.</div>
+    <div class="text-h5">Nothing to preview.</div>
     <p class="q-mt-md">
-      Turn on <b>Preview</b> in the admin Auditions page and save to see it here.
+      Either this preview link isn't right, or the show's audition page hasn't
+      been saved yet. Copy the link again from <b>Copy preview link</b> on the
+      admin Auditions page.
     </p>
   </div>
 
@@ -76,13 +78,17 @@ import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 import { computed, onBeforeMount, ref } from "vue";
 
-const props = defineProps({ preview: { type: Boolean, default: false } });
+const props = defineProps({
+  preview: { type: Boolean, default: false },
+  uid: { type: String, default: "" },
+});
 
 const store = useStore();
 
 // The API sends {} (not null) when there's no audition, so templates test
 // audition?.id rather than truthiness.
-// In preview mode the page fetches its own audition (ignoring display dates)
+// In preview mode the page fetches its own audition by the link's uid
+// (ignoring display dates)
 // rather than using store.audition, which drives the public nav item.
 const previewAudition = ref(null);
 const loading = ref(props.preview);
@@ -90,7 +96,10 @@ const loading = ref(props.preview);
 onBeforeMount(async () => {
   if (!props.preview) return;
   try {
-    previewAudition.value = await callApi({ path: "/audition-preview", method: "get" });
+    previewAudition.value = await callApi({
+      path: `/audition-preview/${encodeURIComponent(props.uid)}`,
+      method: "get",
+    });
   } finally {
     loading.value = false;
   }
