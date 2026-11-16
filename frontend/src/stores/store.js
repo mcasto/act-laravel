@@ -88,6 +88,11 @@ export const useStore = defineStore(
       // to sessionStorage (see persist below) so they don't outlive the
       // browser tab.
       ticketSalesCriteria: ref({}),
+      // The view picked on AdminTicketSales.vue ("summary" | "details") for
+      // this browser tab; null = the user's saved default
+      // (admin.user.preferences.ticket_sales_view). sessionStorage, like
+      // ticketSalesCriteria.
+      ticketSalesView: ref(null),
       users: ref(null),
     };
     const getters = { adminRoute: computed(adminRoute) };
@@ -156,12 +161,13 @@ export const useStore = defineStore(
           "showDetailsIsFlexAccess",
           "justOpenedShowDetails",
           "ticketSalesCriteria",
+          "ticketSalesView",
         ],
       },
       {
         key: "azuay-community-theater-session",
         storage: sessionStorage,
-        pick: ["ticketSalesCriteria"],
+        pick: ["ticketSalesCriteria", "ticketSalesView"],
       },
     ],
   },

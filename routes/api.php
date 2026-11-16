@@ -59,6 +59,7 @@ Route::get('/refresh-permissions', [AuthController::class, 'refreshPermissions']
 
 // Protected route (requires auth)
 Route::middleware(['auth:sanctum', 'admin-token'])->get('/user', [AuthController::class, 'getUser']);
+Route::middleware(['auth:sanctum', 'admin-token'])->put('/user/preferences', [AuthController::class, 'updatePreferences']);
 Route::middleware(['auth:sanctum', 'admin-token'])->post('/logout', [AuthController::class, 'logout']);
 
 /**
@@ -214,16 +215,13 @@ Route::middleware('throttle:10,1')->post('/app/pair', [AppPairingController::cla
 Route::middleware('auth:sanctum')->post('/app/unpair', [AppPairingController::class, 'unpair']);
 
 /**
- * Director API — director-page tokens only; read-only except the show's
- * own audition notice. /director/shows lists
+ * Director API — director-page tokens only, read-only. /director/shows lists
  * the caller's active grants; per-show routes need an active grant for
  * {show} (EnsureDirectorShowAccess).
  */
 Route::middleware('auth:sanctum')->get('/director/shows', [DirectorController::class, 'shows']);
 Route::middleware(['auth:sanctum', 'director-show'])->prefix('/director/shows/{show}')->group(function () {
     Route::get('/sales', [DirectorController::class, 'sales']);
-    Route::get('/auditions', [DirectorController::class, 'auditions']);
-    Route::put('/auditions', [DirectorController::class, 'updateAuditions']);
 });
 
 /**
@@ -384,6 +382,7 @@ Route::controller(TicketSaleController::class)
     ->middleware(['auth:sanctum', 'permission:ticket-sales'])
     ->group(function () {
         Route::get('/ticket-sales', 'index');
+        Route::get('/ticket-sales/summary', 'summary');
         Route::put('/ticket-sales', 'update');
         Route::delete('/ticket-sales', 'destroy');
         Route::put('/ticket-sales/no-show/{id}', 'updateNoShow');

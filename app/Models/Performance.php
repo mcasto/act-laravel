@@ -155,6 +155,36 @@ class Performance extends Model
         ];
     }
 
+    /**
+     * Per-performance seat counts for a show, in date/time order —
+     * aggregates only (no patron data). Shared by the director page and the
+     * admin Ticket Sales summary so both always show the same numbers.
+     *
+     * @return array<int, array{id: int, date: string, start_time: string, reserved: int, seats_taken: int, sold_out_target: int, remaining: int, sold_out: bool}>
+     */
+    public static function seatSummariesForShow(int $showId): array
+    {
+        return static::where('show_id', $showId)
+            ->orderBy('date')
+            ->orderBy('start_time')
+            ->get()
+            ->map(function (Performance $performance) {
+                $summary = $performance->salesSummary();
+
+                return [
+                    'id'              => $performance->id,
+                    'date'            => $performance->date,
+                    'start_time'      => $performance->start_time,
+                    'reserved'        => $summary['reserved'],
+                    'seats_taken'     => $summary['held'],
+                    'sold_out_target' => $summary['sold_out_target'],
+                    'remaining'       => $summary['remaining'],
+                    'sold_out'        => (bool) $performance->sold_out,
+                ];
+            })
+            ->all();
+    }
+
     /** Seats taken: sold minus resold (see TicketSale::held_quantity). */
     public function seatsHeld(): int
     {

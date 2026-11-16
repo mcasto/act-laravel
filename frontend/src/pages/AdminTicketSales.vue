@@ -4,269 +4,591 @@
       No ticket sales on record.
     </div>
 
-    <q-table
-      v-else
-      :rows="filteredRecs"
-      :columns="columns"
-      row-key="id"
-      dense
-      v-model:pagination="pagination"
-      :table-row-class-fn="
-        (row) => (isFullyCancelled(row) ? 'row-cancelled' : '')
-      "
-    >
-      <template #top>
-        <div class="full-width">
-          <div class="flex no-wrap items-center q-gutter-x-sm q-mb-sm">
-            <q-select
-              :options="shows"
-              v-model="show"
-              :label="show ? 'Show' : 'Select Show'"
-              dense
-              outlined
-              stack-label
-              style="min-width: 8rem;"
-            />
-            <q-space />
-            <template v-if="show">
-              <q-toggle
-                label="Send Emails"
-                v-model="store.send_mail"
-                :false-value="0"
-                :true-value="1"
-                :disable="isReadOnly"
-              >
-                <q-tooltip>
-                  Default for the "Send Emails" toggle on the New Ticket Sale
-                  form — doesn't send anything by itself. Turn off if you're
-                  catching up on bulk data entry.
-                </q-tooltip>
-              </q-toggle>
-              <q-btn
-                :icon="matInfo"
+    <template v-else>
+      <!-- Shared by both views: show picker, view switch, actions -->
+      <div class="flex no-wrap items-center q-gutter-x-sm q-pa-sm">
+        <q-select
+          :options="shows"
+          v-model="show"
+          :label="show ? 'Show' : 'Select Show'"
+          dense
+          outlined
+          stack-label
+          style="min-width: 8rem;"
+        />
+        <q-btn-toggle
+          v-model="view"
+          :options="viewOptions"
+          no-caps
+          unelevated
+          dense
+          toggle-color="primary"
+          color="grey-3"
+          text-color="grey-9"
+          class="view-toggle"
+        />
+        <q-btn
+          :icon="view === defaultView ? matStar : matStarBorder"
+          :color="view === defaultView ? 'amber-8' : 'grey-6'"
+          flat
+          round
+          dense
+          size="sm"
+          :loading="savingDefaultView"
+          @click="saveDefaultView"
+        >
+          <q-tooltip>
+            {{
+              view === defaultView
+                ? `${viewLabel(view)} is your default view`
+                : `Make ${viewLabel(view)} your default view`
+            }}
+          </q-tooltip>
+        </q-btn>
+        <q-space />
+        <template v-if="show">
+          <q-toggle
+            label="Send Emails"
+            v-model="store.send_mail"
+            :false-value="0"
+            :true-value="1"
+            :disable="isReadOnly"
+          >
+            <q-tooltip>
+              Default for the "Send Emails" toggle on the New Ticket Sale
+              form — doesn't send anything by itself. Turn off if you're
+              catching up on bulk data entry.
+            </q-tooltip>
+          </q-toggle>
+          <q-btn
+            :icon="matInfo"
+            flat
+            round
+            dense
+            size="sm"
+            @click="sendMailInfoDialog = true"
+          ></q-btn>
+          <q-btn
+            :icon="matAdd"
+            size="sm"
+            color="primary"
+            round
+            :disable="isReadOnly"
+            @click="onNewTicket"
+          />
+          <AdminTicketSalesPrint
+            :recs="recs"
+            :ticket-price="ticketPrice"
+            :show-name="show.label"
+          />
+          <q-btn
+            :icon="mdiFileExcel"
+            color="positive"
+            flat
+            :loading="exporting"
+            @click="exportSales"
+          >
+            <q-tooltip>
+              Export to Excel (Sales, Tickets and Mailchimp sheets) — honors
+              the Performance and Payment Method search criteria, not the
+              others
+            </q-tooltip>
+          </q-btn>
+          <q-btn
+            :icon="mdiCashClock"
+            color="warning"
+            flat
+            @click="unconfirmedDialog = true"
+          >
+            <q-badge v-if="unconfirmedRecs.length" color="negative" floating>
+              {{ unconfirmedRecs.length }}
+            </q-badge>
+            <q-tooltip>Pending PayPal / Bank Transfer Payments</q-tooltip>
+          </q-btn>
+          <q-btn :icon="matEvent" color="info" flat>
+            <q-tooltip>Tickets Sold By Date</q-tooltip>
+            <q-menu>
+              <q-list dense style="min-width: 380px;">
+                <q-item-label header class="text-weight-bold"
+                  >Tickets Sold By Date</q-item-label
+                >
+                <q-item v-if="ticketsByDate.length">
+                  <q-item-section />
+                  <q-item-section
+                    side
+                    class="text-caption text-grey-7 tsbd-col"
+                    >Confirmed</q-item-section
+                  >
+                  <q-item-section
+                    side
+                    class="text-caption text-grey-7 tsbd-col"
+                    >Reserved</q-item-section
+                  >
+                  <q-item-section
+                    side
+                    class="text-caption text-grey-7 tsbd-rev"
+                    >Projected</q-item-section
+                  >
+                </q-item>
+                <q-item v-for="row in ticketsByDate" :key="row.id">
+                  <q-item-section>{{ row.label }}</q-item-section>
+                  <q-item-section side class="tsbd-col">
+                    {{ row.confirmed }}
+                  </q-item-section>
+                  <q-item-section side class="text-weight-medium tsbd-col">
+                    {{ row.total }}
+                  </q-item-section>
+                  <q-item-section side class="text-positive tsbd-rev">
+                    ${{ row.revenue.toFixed(2) }}
+                  </q-item-section>
+                </q-item>
+                <div
+                  v-if="ticketsByDate.length === 0"
+                  class="text-caption text-grey-7 q-pa-sm"
+                >
+                  No reservations yet.
+                </div>
+                <q-separator v-if="ticketsByDate.length" />
+                <q-item v-if="ticketsByDate.length">
+                  <q-item-section class="text-weight-bold"
+                    >Total</q-item-section
+                  >
+                  <q-item-section side class="text-weight-bold tsbd-col">
+                    {{ confirmedTicketCount }}
+                  </q-item-section>
+                  <q-item-section side class="text-weight-bold tsbd-col">
+                    {{ totalTickets }}
+                  </q-item-section>
+                  <q-item-section
+                    side
+                    class="text-positive text-weight-bold tsbd-rev"
+                  >
+                    ${{ projectedRevenueAll.toFixed(2) }}
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+          <q-btn :icon="mdiCashMultiple" color="positive" flat>
+            <q-tooltip>Projected Revenue</q-tooltip>
+            <q-menu>
+              <q-list dense style="min-width: 260px;">
+                <q-item-label header class="text-weight-bold"
+                  >Projected Revenue</q-item-label
+                >
+                <q-item v-for="row in revenueByMethod" :key="row.label">
+                  <q-item-section side>
+                    <div
+                      :style="`width: 10px; height: 10px; border-radius: 50%; background: ${row.color};`"
+                    ></div>
+                  </q-item-section>
+                  <q-item-section>{{ row.label }}</q-item-section>
+                  <q-item-section side
+                    >{{ row.count }} × ${{
+                      effectivePrice(row.multiplier)
+                    }}</q-item-section
+                  >
+                  <q-item-section
+                    side
+                    class="text-positive text-weight-medium"
+                  >
+                    ${{ row.revenue.toFixed(2) }}
+                  </q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item>
+                  <q-item-section class="text-weight-bold"
+                    >Total</q-item-section
+                  >
+                  <q-item-section side class="text-weight-bold">
+                    {{ totalTickets }} tickets
+                  </q-item-section>
+                  <q-item-section
+                    side
+                    class="text-positive text-weight-bold"
+                  >
+                    ${{ totalRevenue.toFixed(2) }}
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section class="text-caption text-grey-7">
+                    % Sold Out
+                  </q-item-section>
+                  <q-item-section side class="text-caption text-grey-7">
+                    {{ totalTickets }} / {{ soldOutCapacity }} ({{
+                      soldOutPct
+                    }}%)
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </template>
+      </div>
+
+      <!-- Summary: per-performance seat cards (same as the director page) -->
+      <div v-if="view === 'summary'" class="q-pa-sm">
+        <div v-if="!show" class="text-grey-7 q-pa-md">Select a show.</div>
+        <div v-else-if="!currentSummary" class="text-center q-pa-xl">
+          <q-spinner size="2.5em" color="primary" />
+        </div>
+        <template v-else>
+          <div class="row q-col-gutter-md q-mb-md">
+            <div class="col-12 col-sm-4">
+              <q-card flat bordered class="full-height">
+                <q-card-section>
+                  <div class="text-caption text-grey-7">Seats taken</div>
+                  <div class="text-h5 text-weight-bold">
+                    {{ summaryTotals.taken }}
+                    <span class="text-body1 text-grey-7">
+                      / {{ summaryTotals.capacity }} ({{ summaryTotals.pct }}%)
+                    </span>
+                  </div>
+                  <div class="text-caption text-grey-7">
+                    {{ summaryTotals.soldOut }} of {{ summaryTotals.count }}
+                    performance{{ summaryTotals.count === 1 ? "" : "s" }} sold out
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-12 col-sm-4">
+              <q-card flat bordered class="full-height">
+                <q-card-section>
+                  <div class="text-caption text-grey-7">Projected revenue</div>
+                  <div class="text-h5 text-weight-bold text-positive">
+                    ${{ projectedRevenueAll.toFixed(2) }}
+                  </div>
+                  <div class="text-caption text-grey-7">
+                    {{ confirmedTicketCount }} of {{ totalActiveTickets }} tickets paid
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-12 col-sm-4">
+              <q-card
                 flat
-                round
-                dense
-                size="sm"
-                @click="sendMailInfoDialog = true"
-              ></q-btn>
-              <q-btn
-                :icon="matAdd"
-                size="sm"
-                color="primary"
-                round
-                :disable="isReadOnly"
-                @click="onNewTicket"
-              />
-              <AdminTicketSalesPrint
-                :recs="recs"
-                :ticket-price="ticketPrice"
-                :show-name="show.label"
-              />
-              <q-btn
-                :icon="mdiFileExcel"
-                color="positive"
-                flat
-                :loading="exporting"
-                @click="exportSales"
-              >
-                <q-tooltip>
-                  Export to Excel (Sales, Tickets and Mailchimp sheets) — honors
-                  the Performance and Payment Method search criteria, not the
-                  others
-                </q-tooltip>
-              </q-btn>
-              <q-btn
-                :icon="mdiCashClock"
-                color="warning"
-                flat
+                bordered
+                class="full-height cursor-pointer"
                 @click="unconfirmedDialog = true"
               >
-                <q-badge v-if="unconfirmedRecs.length" color="negative" floating>
-                  {{ unconfirmedRecs.length }}
-                </q-badge>
-                <q-tooltip>Pending PayPal / Bank Transfer Payments</q-tooltip>
-              </q-btn>
-              <q-btn :icon="matEvent" color="info" flat>
-                <q-tooltip>Tickets Sold By Date</q-tooltip>
-                <q-menu>
-                  <q-list dense style="min-width: 380px;">
-                    <q-item-label header class="text-weight-bold"
-                      >Tickets Sold By Date</q-item-label
-                    >
-                    <q-item v-if="ticketsByDate.length">
-                      <q-item-section />
-                      <q-item-section
-                        side
-                        class="text-caption text-grey-7 tsbd-col"
-                        >Confirmed</q-item-section
-                      >
-                      <q-item-section
-                        side
-                        class="text-caption text-grey-7 tsbd-col"
-                        >Reserved</q-item-section
-                      >
-                      <q-item-section
-                        side
-                        class="text-caption text-grey-7 tsbd-rev"
-                        >Projected</q-item-section
-                      >
-                    </q-item>
-                    <q-item v-for="row in ticketsByDate" :key="row.id">
-                      <q-item-section>{{ row.label }}</q-item-section>
-                      <q-item-section side class="tsbd-col">
-                        {{ row.confirmed }}
-                      </q-item-section>
-                      <q-item-section side class="text-weight-medium tsbd-col">
-                        {{ row.total }}
-                      </q-item-section>
-                      <q-item-section side class="text-positive tsbd-rev">
-                        ${{ row.revenue.toFixed(2) }}
-                      </q-item-section>
-                    </q-item>
-                    <div
-                      v-if="ticketsByDate.length === 0"
-                      class="text-caption text-grey-7 q-pa-sm"
-                    >
-                      No reservations yet.
-                    </div>
-                    <q-separator v-if="ticketsByDate.length" />
-                    <q-item v-if="ticketsByDate.length">
-                      <q-item-section class="text-weight-bold"
-                        >Total</q-item-section
-                      >
-                      <q-item-section side class="text-weight-bold tsbd-col">
-                        {{ confirmedTicketCount }}
-                      </q-item-section>
-                      <q-item-section side class="text-weight-bold tsbd-col">
-                        {{ totalTickets }}
-                      </q-item-section>
-                      <q-item-section
-                        side
-                        class="text-positive text-weight-bold tsbd-rev"
-                      >
-                        ${{ projectedRevenueAll.toFixed(2) }}
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
-              <q-btn :icon="mdiCashMultiple" color="positive" flat>
-                <q-tooltip>Projected Revenue</q-tooltip>
-                <q-menu>
-                  <q-list dense style="min-width: 260px;">
-                    <q-item-label header class="text-weight-bold"
-                      >Projected Revenue</q-item-label
-                    >
-                    <q-item v-for="row in revenueByMethod" :key="row.label">
-                      <q-item-section side>
-                        <div
-                          :style="`width: 10px; height: 10px; border-radius: 50%; background: ${row.color};`"
-                        ></div>
-                      </q-item-section>
-                      <q-item-section>{{ row.label }}</q-item-section>
-                      <q-item-section side
-                        >{{ row.count }} × ${{
-                          effectivePrice(row.multiplier)
-                        }}</q-item-section
-                      >
-                      <q-item-section
-                        side
-                        class="text-positive text-weight-medium"
-                      >
-                        ${{ row.revenue.toFixed(2) }}
-                      </q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item>
-                      <q-item-section class="text-weight-bold"
-                        >Total</q-item-section
-                      >
-                      <q-item-section side class="text-weight-bold">
-                        {{ totalTickets }} tickets
-                      </q-item-section>
-                      <q-item-section
-                        side
-                        class="text-positive text-weight-bold"
-                      >
-                        ${{ totalRevenue.toFixed(2) }}
-                      </q-item-section>
-                    </q-item>
-                    <q-item>
-                      <q-item-section class="text-caption text-grey-7">
-                        % Sold Out
-                      </q-item-section>
-                      <q-item-section side class="text-caption text-grey-7">
-                        {{ totalTickets }} / {{ soldOutCapacity }} ({{
-                          soldOutPct
-                        }}%)
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
-            </template>
-          </div>
-          <div class="flex no-wrap items-center q-gutter-x-md">
-            <q-select
-              v-if="show"
-              :options="performanceOptions"
-              v-model="performanceFilter"
-              label="Performance Date"
-              dense
-              outlined
-              clearable
-              emit-value
-              map-options
-              style="min-width: 220px;"
-            />
-            <q-btn
-              :icon="matSearch"
-              label="Search"
-              color="primary"
-              outline
-              no-caps
-              :disable="!show"
-              @click="openSearchDialog"
-            />
-            <div class="flex items-center q-gutter-xs">
-              <q-chip
-                v-for="chip in criteriaChips"
-                :key="chip.key"
-                dense
-                removable
-                color="primary"
-                text-color="white"
-                @remove="removeCriterion(chip.key)"
-              >
-                {{ chip.label }}
-              </q-chip>
-              <q-btn
-                v-if="criteriaChips.length > 1"
-                label="Clear all"
-                flat
-                dense
-                no-caps
-                size="sm"
-                color="primary"
-                @click="criteria = {}"
-              />
+                <q-card-section>
+                  <div class="text-caption text-grey-7">Pending payments</div>
+                  <div
+                    class="text-h5 text-weight-bold"
+                    :class="pendingPaymentCount ? 'text-warning' : ''"
+                  >
+                    {{ pendingPaymentCount }}
+                  </div>
+                  <div class="text-caption text-grey-7">
+                    PayPal, Bank Transfer and Cash/Door — click for the list
+                  </div>
+                </q-card-section>
+              </q-card>
             </div>
-            <q-space />
-            <template v-if="show">
+          </div>
+
+          <performance-sales-cards :performances="currentSummary.performances">
+            <template #extra="{ performance }">
               <div
-                v-for="(color, label) in paymentMethodColors"
-                :key="label"
-                class="flex items-center q-gutter-x-xs"
+                v-if="ticketsByDateById[performance.id]"
+                class="text-caption text-grey-7 q-mt-xs"
               >
-                <div
-                  :style="`width: 10px; height: 10px; border-radius: 50%; background: ${color};`"
-                ></div>
-                <span class="text-caption">{{ label }}</span>
+                {{ ticketsByDateById[performance.id].confirmed }} paid ·
+                <span class="text-positive">
+                  ${{ ticketsByDateById[performance.id].revenue.toFixed(2) }}
+                  projected
+                </span>
               </div>
             </template>
+          </performance-sales-cards>
+        </template>
+      </div>
+
+      <q-table
+        v-else
+        :rows="filteredRecs"
+        :columns="columns"
+        row-key="id"
+        dense
+        v-model:pagination="pagination"
+        :table-row-class-fn="
+          (row) => (isFullyCancelled(row) ? 'row-cancelled' : '')
+        "
+      >
+        <template #top>
+          <div class="full-width">
+            <div class="flex no-wrap items-center q-gutter-x-md">
+              <q-select
+                v-if="show"
+                :options="performanceOptions"
+                v-model="performanceFilter"
+                label="Performance Date"
+                dense
+                outlined
+                clearable
+                emit-value
+                map-options
+                style="min-width: 220px;"
+              />
+              <q-btn
+                :icon="matSearch"
+                label="Search"
+                color="primary"
+                outline
+                no-caps
+                :disable="!show"
+                @click="openSearchDialog"
+              />
+              <div class="flex items-center q-gutter-xs">
+                <q-chip
+                  v-for="chip in criteriaChips"
+                  :key="chip.key"
+                  dense
+                  removable
+                  color="primary"
+                  text-color="white"
+                  @remove="removeCriterion(chip.key)"
+                >
+                  {{ chip.label }}
+                </q-chip>
+                <q-btn
+                  v-if="criteriaChips.length > 1"
+                  label="Clear all"
+                  flat
+                  dense
+                  no-caps
+                  size="sm"
+                  color="primary"
+                  @click="criteria = {}"
+                />
+              </div>
+              <q-space />
+              <template v-if="show">
+                <div
+                  v-for="(color, label) in paymentMethodColors"
+                  :key="label"
+                  class="flex items-center q-gutter-x-xs"
+                >
+                  <div
+                    :style="`width: 10px; height: 10px; border-radius: 50%; background: ${color};`"
+                  ></div>
+                  <span class="text-caption">{{ label }}</span>
+                </div>
+              </template>
+            </div>
+            <div class="flex justify-end">
+              <q-pagination
+                v-if="pagesNumber > 1"
+                v-model="pagination.page"
+                :max="pagesNumber"
+                :max-pages="6"
+                boundary-links
+                direction-links
+                size="sm"
+                class="q-mt-sm"
+              />
+            </div>
           </div>
-          <div class="flex justify-end">
+        </template>
+
+        <template #header-cell-payment_method="props">
+          <q-th :props="props">
+            <q-icon :name="mdiCurrencyUsd" />
+          </q-th>
+        </template>
+
+        <template #header-cell-front_row="props">
+          <q-th :props="props">
+            FR
+            <q-tooltip>Front Row</q-tooltip>
+          </q-th>
+        </template>
+
+        <template #header-cell-actions="props">
+          <q-th :props="props">
+            <q-icon :name="mdiCog" />
+          </q-th>
+        </template>
+
+        <template #body-cell-no_show="props">
+          <q-td :props="props" class="text-center">
+            <q-input
+              :model-value="props.row.no_show || 0"
+              type="number"
+              min="0"
+              :max="activeQty(props.row)"
+              dense
+              borderless
+              input-class="text-center"
+              style="width: 56px; display: inline-block"
+              :class="{ 'text-negative text-weight-bold': props.row.no_show > 0 }"
+              :disable="isReadOnly"
+              debounce="500"
+              @update:model-value="(value) => updateNoShow(props.row, value)"
+            >
+              <q-tooltip>
+                How many of this party of {{ activeQty(props.row) }} didn't show
+              </q-tooltip>
+            </q-input>
+          </q-td>
+        </template>
+
+        <template #body-cell-cancelled="props">
+          <q-td :props="props" class="text-center">
+            <q-input
+              :model-value="props.row.cancelled || 0"
+              type="number"
+              min="0"
+              :max="props.row.quantity || 1"
+              dense
+              borderless
+              input-class="text-center"
+              style="width: 56px; display: inline-block"
+              :class="{
+                'text-negative text-weight-bold': props.row.cancelled > 0,
+              }"
+              :disable="isReadOnly"
+              debounce="500"
+              @update:model-value="(value) => updateCancelled(props.row, value)"
+            >
+              <q-tooltip>
+                How many of this sale's {{ props.row.quantity || 1 }} tickets were
+                cancelled. The sale is kept either way — only delete a sale
+                entered by mistake.
+              </q-tooltip>
+            </q-input>
+            <q-icon
+              v-if="props.row.cancelled_returned > 0"
+              :name="mdiUndoVariant"
+              color="positive"
+              size="xs"
+            >
+              <q-tooltip>
+                {{
+                  props.row.payment_method?.value === "comp"
+                    ? "Comp returned to the patron"
+                    : `${props.row.cancelled_returned} returned to the Flex balance`
+                }}
+              </q-tooltip>
+            </q-icon>
+          </q-td>
+        </template>
+
+        <template #body-cell-resold="props">
+          <q-td :props="props" class="text-center">
+            <q-input
+              v-if="props.row.cancelled > 0"
+              :model-value="props.row.resold || 0"
+              type="number"
+              min="0"
+              :max="props.row.cancelled"
+              dense
+              borderless
+              input-class="text-center"
+              style="width: 56px; display: inline-block"
+              :class="{ 'text-positive text-weight-bold': props.row.resold > 0 }"
+              :disable="isReadOnly"
+              debounce="500"
+              @update:model-value="(value) => updateResold(props.row, value)"
+            >
+              <q-tooltip>
+                How many of the {{ props.row.cancelled }} cancelled seats were put
+                back on sale. Cancelled seats that aren't resold still count as
+                taken.
+              </q-tooltip>
+            </q-input>
+          </q-td>
+        </template>
+
+        <template #body-cell-confirmed="props">
+          <q-td :props="props" class="text-center">
+            <q-toggle
+              :model-value="!!props.row.confirmed"
+              color="positive"
+              dense
+              :disable="isReadOnly"
+              @update:model-value="(value) => updatePaid(props.row, value)"
+            />
+          </q-td>
+        </template>
+
+        <template #body-cell-tickets="props">
+          <q-td :props="props" class="text-center" :class="{ 'bg-green-2': allTicketsRedeemed(props.row) }">
+            <span
+              v-if="props.row.tickets?.length"
+              class="text-primary cursor-pointer text-weight-medium"
+              @click="openTicketsDialog(props.row)"
+            >
+              {{ ticketNumbersDisplay(props.row) }}
+            </span>
+            <span v-else>{{ ticketNumbersDisplay(props.row) }}</span>
+          </q-td>
+        </template>
+
+        <template #body-cell-payment_method="props">
+          <q-td :props="props" class="text-center">
+            <q-icon
+              :name="mdiCircle"
+              :style="`color: ${
+                paymentMethodColors[props.row.payment_method.label]
+              };`"
+            >
+              <q-tooltip>{{ props.row.payment_method.label }}</q-tooltip>
+            </q-icon>
+          </q-td>
+        </template>
+
+        <template #body-cell-actions="props">
+          <q-td :props="props">
+            <q-icon
+              v-if="props.row.reason_changed"
+              :name="matHistory"
+              color="grey-7"
+              size="xs"
+              class="q-mr-xs"
+            >
+              <q-tooltip>{{ props.row.reason_changed }}</q-tooltip>
+            </q-icon>
+            <q-btn
+              :icon="matEdit"
+              flat
+              round
+              color="primary"
+              size="sm"
+              :disable="isReadOnly"
+              @click="onEditSale(props.row)"
+            />
+            <q-btn
+              :icon="mdiCalendarSync"
+              flat
+              round
+              color="primary"
+              size="sm"
+              :disable="isReadOnly || !Number(props.row.quantity)"
+              @click="openReschedule(props.row)"
+            >
+              <q-tooltip>
+                {{
+                  Number(props.row.quantity)
+                    ? "Reschedule to another performance"
+                    : "Already rescheduled"
+                }}
+              </q-tooltip>
+            </q-btn>
+            <q-btn
+              :icon="matDelete"
+              flat
+              round
+              color="negative"
+              size="sm"
+              :disable="isReadOnly"
+              @click="onDelete(props.row)"
+            />
+          </q-td>
+        </template>
+
+        <template #bottom>
+          <div class="flex justify-end full-width">
             <q-pagination
               v-if="pagesNumber > 1"
               v-model="pagination.page"
@@ -275,222 +597,11 @@
               boundary-links
               direction-links
               size="sm"
-              class="q-mt-sm"
             />
           </div>
-        </div>
-      </template>
-
-      <template #header-cell-payment_method="props">
-        <q-th :props="props">
-          <q-icon :name="mdiCurrencyUsd" />
-        </q-th>
-      </template>
-
-      <template #header-cell-front_row="props">
-        <q-th :props="props">
-          FR
-          <q-tooltip>Front Row</q-tooltip>
-        </q-th>
-      </template>
-
-      <template #header-cell-actions="props">
-        <q-th :props="props">
-          <q-icon :name="mdiCog" />
-        </q-th>
-      </template>
-
-      <template #body-cell-no_show="props">
-        <q-td :props="props" class="text-center">
-          <q-input
-            :model-value="props.row.no_show || 0"
-            type="number"
-            min="0"
-            :max="activeQty(props.row)"
-            dense
-            borderless
-            input-class="text-center"
-            style="width: 56px; display: inline-block"
-            :class="{ 'text-negative text-weight-bold': props.row.no_show > 0 }"
-            :disable="isReadOnly"
-            debounce="500"
-            @update:model-value="(value) => updateNoShow(props.row, value)"
-          >
-            <q-tooltip>
-              How many of this party of {{ activeQty(props.row) }} didn't show
-            </q-tooltip>
-          </q-input>
-        </q-td>
-      </template>
-
-      <template #body-cell-cancelled="props">
-        <q-td :props="props" class="text-center">
-          <q-input
-            :model-value="props.row.cancelled || 0"
-            type="number"
-            min="0"
-            :max="props.row.quantity || 1"
-            dense
-            borderless
-            input-class="text-center"
-            style="width: 56px; display: inline-block"
-            :class="{
-              'text-negative text-weight-bold': props.row.cancelled > 0,
-            }"
-            :disable="isReadOnly"
-            debounce="500"
-            @update:model-value="(value) => updateCancelled(props.row, value)"
-          >
-            <q-tooltip>
-              How many of this sale's {{ props.row.quantity || 1 }} tickets were
-              cancelled. The sale is kept either way — only delete a sale
-              entered by mistake.
-            </q-tooltip>
-          </q-input>
-          <q-icon
-            v-if="props.row.cancelled_returned > 0"
-            :name="mdiUndoVariant"
-            color="positive"
-            size="xs"
-          >
-            <q-tooltip>
-              {{
-                props.row.payment_method?.value === "comp"
-                  ? "Comp returned to the patron"
-                  : `${props.row.cancelled_returned} returned to the Flex balance`
-              }}
-            </q-tooltip>
-          </q-icon>
-        </q-td>
-      </template>
-
-      <template #body-cell-resold="props">
-        <q-td :props="props" class="text-center">
-          <q-input
-            v-if="props.row.cancelled > 0"
-            :model-value="props.row.resold || 0"
-            type="number"
-            min="0"
-            :max="props.row.cancelled"
-            dense
-            borderless
-            input-class="text-center"
-            style="width: 56px; display: inline-block"
-            :class="{ 'text-positive text-weight-bold': props.row.resold > 0 }"
-            :disable="isReadOnly"
-            debounce="500"
-            @update:model-value="(value) => updateResold(props.row, value)"
-          >
-            <q-tooltip>
-              How many of the {{ props.row.cancelled }} cancelled seats were put
-              back on sale. Cancelled seats that aren't resold still count as
-              taken.
-            </q-tooltip>
-          </q-input>
-        </q-td>
-      </template>
-
-      <template #body-cell-confirmed="props">
-        <q-td :props="props" class="text-center">
-          <q-toggle
-            :model-value="!!props.row.confirmed"
-            color="positive"
-            dense
-            :disable="isReadOnly"
-            @update:model-value="(value) => updatePaid(props.row, value)"
-          />
-        </q-td>
-      </template>
-
-      <template #body-cell-tickets="props">
-        <q-td :props="props" class="text-center" :class="{ 'bg-green-2': allTicketsRedeemed(props.row) }">
-          <span
-            v-if="props.row.tickets?.length"
-            class="text-primary cursor-pointer text-weight-medium"
-            @click="openTicketsDialog(props.row)"
-          >
-            {{ ticketNumbersDisplay(props.row) }}
-          </span>
-          <span v-else>{{ ticketNumbersDisplay(props.row) }}</span>
-        </q-td>
-      </template>
-
-      <template #body-cell-payment_method="props">
-        <q-td :props="props" class="text-center">
-          <q-icon
-            :name="mdiCircle"
-            :style="`color: ${
-              paymentMethodColors[props.row.payment_method.label]
-            };`"
-          >
-            <q-tooltip>{{ props.row.payment_method.label }}</q-tooltip>
-          </q-icon>
-        </q-td>
-      </template>
-
-      <template #body-cell-actions="props">
-        <q-td :props="props">
-          <q-icon
-            v-if="props.row.reason_changed"
-            :name="matHistory"
-            color="grey-7"
-            size="xs"
-            class="q-mr-xs"
-          >
-            <q-tooltip>{{ props.row.reason_changed }}</q-tooltip>
-          </q-icon>
-          <q-btn
-            :icon="matEdit"
-            flat
-            round
-            color="primary"
-            size="sm"
-            :disable="isReadOnly"
-            @click="onEditSale(props.row)"
-          />
-          <q-btn
-            :icon="mdiCalendarSync"
-            flat
-            round
-            color="primary"
-            size="sm"
-            :disable="isReadOnly || !Number(props.row.quantity)"
-            @click="openReschedule(props.row)"
-          >
-            <q-tooltip>
-              {{
-                Number(props.row.quantity)
-                  ? "Reschedule to another performance"
-                  : "Already rescheduled"
-              }}
-            </q-tooltip>
-          </q-btn>
-          <q-btn
-            :icon="matDelete"
-            flat
-            round
-            color="negative"
-            size="sm"
-            :disable="isReadOnly"
-            @click="onDelete(props.row)"
-          />
-        </q-td>
-      </template>
-
-      <template #bottom>
-        <div class="flex justify-end full-width">
-          <q-pagination
-            v-if="pagesNumber > 1"
-            v-model="pagination.page"
-            :max="pagesNumber"
-            :max-pages="6"
-            boundary-links
-            direction-links
-            size="sm"
-          />
-        </div>
-      </template>
-    </q-table>
+        </template>
+      </q-table>
+    </template>
 
     <q-dialog v-model="searchDialog">
       <q-card style="width: 640px; max-width: 95vw">
@@ -1031,6 +1142,8 @@ import {
   matHistory,
   matListAlt,
   matSearch,
+  matStar,
+  matStarBorder,
 } from "@quasar/extras/material-icons";
 import {
   mdiCashClock,
@@ -1050,6 +1163,7 @@ import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { computed, onMounted, ref, watch } from "vue";
 import AdminTicketSalesPrint from "./AdminTicketSalesPrint.vue";
+import PerformanceSalesCards from "src/components/PerformanceSalesCards.vue";
 
 const store = useStore();
 
@@ -1107,6 +1221,100 @@ const show = ref(
 
 watch(show, (val) => {
   store.admin.selectedShow = val;
+});
+
+// Summary (per-performance seat cards, same as the director page) or
+// Details (the sales table). Each user's default is saved to their profile
+// (users.preferences.ticket_sales_view); a switch made on the page sticks
+// for the browser tab (sessionStorage), so a trip to the add/edit form and
+// back keeps the view they were in.
+const viewOptions = [
+  { label: "Summary", value: "summary" },
+  { label: "Details", value: "details" },
+];
+const viewLabel = (v) => viewOptions.find((o) => o.value === v)?.label ?? v;
+
+const defaultView = computed(
+  () => store.admin.user?.preferences?.ticket_sales_view ?? "summary",
+);
+const view = computed({
+  get: () => store.ticketSalesView ?? defaultView.value,
+  set: (val) => {
+    store.ticketSalesView = val;
+  },
+});
+
+const savingDefaultView = ref(false);
+const saveDefaultView = async () => {
+  if (view.value === defaultView.value) return;
+  savingDefaultView.value = true;
+  try {
+    const response = await callApi({
+      path: "/user/preferences",
+      method: "put",
+      payload: { ticket_sales_view: view.value },
+      useAuth: true,
+    });
+    if (!response?.preferences) throw new Error("No preferences returned");
+    store.admin.user.preferences = response.preferences;
+    Notify.create({
+      type: "positive",
+      message: `${viewLabel(view.value)} is now your default view.`,
+    });
+  } catch (error) {
+    console.error(error);
+    Notify.create({ type: "negative", message: "Couldn't save your default view." });
+  } finally {
+    savingDefaultView.value = false;
+  }
+};
+
+// Seat counts per performance from the server (Performance::seatSummariesForShow),
+// reloaded whenever the Summary view is opened or the show changes, so edits
+// made in Details are reflected.
+const summary = ref(null);
+const loadSummary = async () => {
+  const showId = show.value?.value;
+  if (!showId) return;
+  try {
+    const response = await callApi({
+      path: `/ticket-sales/summary?show_id=${showId}`,
+      method: "get",
+      useAuth: true,
+    });
+    if (response?.performances) summary.value = response;
+  } catch (error) {
+    console.error(error);
+    Notify.create({ type: "negative", message: "Couldn't load the sales summary." });
+  }
+};
+watch(
+  [view, () => show.value?.value],
+  ([v]) => {
+    if (v === "summary") loadSummary();
+  },
+  { immediate: true },
+);
+
+// Only the selected show's summary — a previous show's stays hidden while
+// the new one loads.
+const currentSummary = computed(() =>
+  summary.value && summary.value.show_id === show.value?.value
+    ? summary.value
+    : null,
+);
+
+const summaryTotals = computed(() => {
+  const perfs = currentSummary.value?.performances ?? [];
+  const taken = perfs.reduce((sum, p) => sum + p.seats_taken, 0);
+  const capacity = perfs.reduce((sum, p) => sum + p.sold_out_target, 0);
+  return {
+    taken,
+    capacity,
+    pct: capacity ? Math.round((taken / capacity) * 100) : 0,
+    soldOut: perfs.filter((p) => p.sold_out).length,
+    count: perfs.length,
+  };
 });
 
 // Search criteria from the Search dialog live in the store
@@ -1767,6 +1975,17 @@ const unconfirmedCash = computed(() => {
 });
 const cashDoorDialog = ref(false);
 
+// Summary view tiles/cards.
+const pendingPaymentCount = computed(
+  () => unconfirmedRecs.value.length + unconfirmedCash.value.sales,
+);
+const totalActiveTickets = computed(() =>
+  recs.value.reduce((sum, rec) => sum + activeQty(rec), 0),
+);
+const ticketsByDateById = computed(() =>
+  Object.fromEntries(ticketsByDate.value.map((row) => [row.id, row])),
+);
+
 // Checked rows to remind — everyone by default each time the list opens.
 const reminderSelected = ref([]);
 watch(unconfirmedDialog, (open) => {
@@ -2185,6 +2404,9 @@ const saveTicketRedemptions = async () => {
 :deep(tr.row-cancelled td:nth-child(2)),
 :deep(tr.row-cancelled td:nth-child(3)) {
   text-decoration: line-through;
+}
+.view-toggle {
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 .tsbd-rev {
   min-width: 90px;

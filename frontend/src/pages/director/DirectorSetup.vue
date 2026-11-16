@@ -3,7 +3,7 @@
     <div class="col-12" style="max-width: 460px">
       <div class="text-h5 q-mt-md q-mb-xs">Welcome</div>
       <div class="text-body2 text-grey-8 q-mb-lg">
-        See ticket sales and audition details for the show you're working on.
+        See ticket sales for the show you're working on.
         Enter the setup code the theater gave you to connect this device.
       </div>
 

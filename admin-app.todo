@@ -64,6 +64,8 @@ Phase 4 – Director web page + PWA (replaces the Go/Wails app — director turn
     - cached data cleared on disconnect/revoke; manifest renamed to director-manifest.json (same as Quasar's PWA manifest.json, known to work on the LiteSpeed host)
   ✔ 4.14 Director Auditions tab: edit the show's audition notice (display dates + q-editor), PUT /api/director/shows/{show}/auditions (HTML saved as submitted, same as admin) @done(26-11-08 20:20)
     - "Copy AI prompt" (show name + poster URL filled in) to turn the director's .docx into scoped HTML for the editor's < > view; same button on the admin Auditions page
+  ✔ 4.15 Auditions tab removed from the director page (ticket sales only); GET/PUT /director/shows/{show}/auditions + DirectorAuditionEditor.vue deleted — restore from git if L.3 needs them @done(26-11-15)
+    - sales cards now a shared component (PerformanceSalesCards.vue), also the default Summary view on admin Ticket Sales (per-user default in users.preferences)
 
 Later (not this pass):
   ☐ L.1 General-admin mode: same app opens locked webview on actseats.com/admin (no navigation outside /admin, persistent login)

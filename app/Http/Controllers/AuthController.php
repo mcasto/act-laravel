@@ -97,4 +97,27 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
+
+    /**
+     * Save the signed-in user's own admin UI preferences
+     *
+     * Merges the given keys into users.preferences (other keys are kept).
+     * Only whitelisted keys are accepted.
+     *
+     * @return JsonResponse {preferences: object}
+     *
+     * @source Database Model: User (updates preferences)
+     */
+    public function updatePreferences(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'ticket_sales_view' => ['sometimes', 'in:summary,details'],
+        ]);
+
+        $user = $request->user();
+        $user->preferences = array_merge($user->preferences ?? [], $validated);
+        $user->save();
+
+        return response()->json(['preferences' => $user->preferences]);
+    }
 }

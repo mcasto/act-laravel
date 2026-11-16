@@ -877,6 +877,27 @@ class TicketSaleController extends Controller
     }
 
     /**
+     * Per-performance seat counts for one show — the Summary view on the
+     * admin Ticket Sales page. Same numbers as the director page
+     * (Performance::seatSummariesForShow).
+     *
+     * @return JsonResponse {show_id, performances: [{id, date, start_time, reserved, seats_taken, sold_out_target, remaining, sold_out}]}
+     *
+     * @source Database Models: Performance (reads), TicketSale/CompTicket (counts)
+     */
+    public function summary(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'show_id' => ['required', 'integer', 'exists:shows,id'],
+        ]);
+
+        return response()->json([
+            'show_id'      => (int) $validated['show_id'],
+            'performances' => Performance::seatSummariesForShow((int) $validated['show_id']),
+        ]);
+    }
+
+    /**
      * Seating summary for a performance — shown on the New/Edit Ticket
      * Sale form once a performance is picked, so the admin can see how
      * many front-row seats are already committed and how full the show
