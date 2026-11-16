@@ -38,4 +38,13 @@ return [
     'payment_processor' => [
         'webhook_token' => env('PAYMENT_PROCESSOR_WEBHOOK_TOKEN'),
     ],
+
+    // Audition page HTML generation (App\Services\GeminiAuditionGenerator).
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY'),
+        'model' => env('GEMINI_MODEL', 'gemini-3.8-flash'),
+        // Tried once when the main model is still overloaded after retries.
+        'fallback_model' => env('GEMINI_FALLBACK_MODEL', 'gemini-3.5-flash'),
+        'timeout' => (int) env('GEMINI_TIMEOUT', 150),
+    ],
 ];

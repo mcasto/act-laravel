@@ -1,0 +1,53 @@
+Structured Audition Form:
+  Goal: replace the freeform audition editor with a structured form. Every audition still ends up as freeform HTML (old auditions keep theirs untouched); the form becomes the input that generates it.
+  "Build without AI" = Blade template; "Build with AI" = Google Gemini restyles that same page from the poster.
+
+  ✔ REMINDER: set up a Google Gemini API account (key → .env, never committed) and wire it into Phase 5 @done(26-11-16 14:27)
+    - GEMINI_API_KEY is in local .env; add it to the production .env too (then `php artisan config:clear` if config is cached)
+    - optional .env overrides: GEMINI_MODEL (default gemini-3.8-flash), GEMINI_FALLBACK_MODEL (default gemini-3.5-flash), GEMINI_TIMEOUT (default 150s)
+  ☐ Keep testing "Build with AI" until gemini-3.8-flash itself answers (so far its 503s fell back to gemini-3.5-flash, which worked)
+
+Phase 1 – Schema:
+  ✔ 1.1 Migration 2026_11_16_000000: add to auditions @done(26-11-16 14:27)
+    - what_to_expect, location (null = ACT's address), registration_url (blank for now), registration_note (null = default note), script_url
+    - rehearsal_start (dateTime) + rehearsal_schedule (free text)
+    - contacts (json): ordered [{name, title, phone, email}]; null = the show's director (replaces the planned contacts_overridden flag)
+  ✔ 1.2 audition_sessions: end_time, note, is_callback; `session` datetime stays as the start @done(26-11-16 14:27)
+  ✔ 1.3 audition_roles: gender_age, sort_order; notes (= description) now nullable @done(26-11-16 14:27)
+  ✔ 1.4 config/act.php: ACT's address + default registration note @done(26-11-16 14:27)
+  ✔ 1.5 Models: fillable/casts; Audition sessions(), callbacks(), roles() @done(26-11-16 14:27)
+
+Phase 2 – Derived defaults (pre-fill only, never re-derived over a saved value) — app/Support/AuditionNotice.php:
+  ✔ 2.1 defaultContacts(): Director grant(s) only, in the order added; name + email from the user; phone via Patron::findByEmail (patrons.email + patron_emails); legacy shows: shows.director name only @done(26-11-16 14:27)
+  ✔ 2.2 performanceDatesText(): from show->performances, "February 19, 20, 21, 26, 27, 28" (month named once per month) @done(26-11-16 14:27)
+  ✔ 2.3 Title / playwright / director (blank = TBA) / poster / synopsis (shows.info) read from the show @done(26-11-16 14:27)
+  ✔ 2.4 Roles heading ("Four Roles") from the role count @done(26-11-16 14:27)
+
+Phase 3 – API (AuditionController):
+  ✔ 3.1 GET /audition/{showId} returns the audition (sessions split into date/start/end), defaults, ai_available; store/update sync sessions, callbacks, roles by id @done(26-11-16 14:27)
+  ✔ 3.2 Location / registration note equal to the default are stored as null @done(26-11-16 14:27)
+  ✔ 3.3 Validation: end after start, URLs, emails, readable field names. Sessions not required (so a page can be built mid-edit) @done(26-11-16 14:27)
+  ✔ 3.4 POST /audition/generate-html (engine ai|plain) + GET /audition/generate-html/{token}; both in admin-section-route-map.json @done(26-11-16 14:27)
+
+Phase 4 – Admin form (AdminAuditionConfig.vue, components/AuditionSessionList.vue, assets/audition-form.js):
+  ✔ 4.1 Show card (read-only from the show) + "What to expect" @done(26-11-16 14:27)
+  ✔ 4.2 Sessions + callbacks: date, start, end, note; weekday shown under each date @done(26-11-16 14:27)
+  ✔ 4.3 Registration URL, script URL, registration note (pre-filled with the default) @done(26-11-16 14:27)
+  ✔ 4.4 Location pre-filled with ACT's address, "Use ACT's address" to reset @done(26-11-16 14:27)
+  ✔ 4.5 Roles: name, gender & age, description; reorder up/down; remove @done(26-11-16 14:27)
+  ✔ 4.6 Rehearsal start date/time + free-text schedule; performance dates read-only from the show @done(26-11-16 14:27)
+  ✔ 4.7 Contact: shows the director's details; "Edit" copies them for this audition; "Reset to show's director" goes back @done(26-11-16 14:27)
+  ✔ 4.8 "Build with AI" / "Build without AI" fill the editor (confirm before replacing); nothing saved until Save; the old "Copy AI prompt" (.docx) flow removed — Gemini's rules live only in GeminiAuditionGenerator @done(26-11-16 14:27)
+
+Phase 5 – HTML generation:
+  ✔ 5.1 resources/views/auditions/notice.blade.php: plain page modeled on the Love… or Best Offer flyer (the ACT logo is already in the site header, so not repeated) @done(26-11-16 14:27)
+  ✔ 5.1a App\Support\PosterPalette: plain page colored from the poster (GD thumbnail → color buckets → dark / accent / banner highlight / tint, each forced to WCAG contrast); yellow never the accent (turns olive), accent re-picked if it matches the dark color; default black/red when the poster has no vivid color. Checked against all 33 posters (~14 ms each) @done(26-11-16 15:10)
+  ✔ 5.2 App\Services\GeminiAuditionGenerator: plain page + facts JSON + poster (base64) → themed HTML @done(26-11-16 14:27)
+    - 429/500/502/503/504 or timeout: retry once after 5s, then the fallback model, then "busy" (Notify offers "Build without AI")
+    - runs after the POST's response (litespeed_finish_request on the host) so slow 503s can't time the request out; page polls every 4s, result cached 30 min
+    - output cleaned: code fences, scripts, on… attributes, iframes/forms, @import, indentation removed
+  ✔ 5.3 Verified locally: save/upsert/delete of child rows, defaults stored as null, plain + AI generation end-to-end over HTTP (AI via fallback model) @done(26-11-16 14:27)
+  ☐ 5.4 Verify on production: "Build with AI" returns at once and finishes via polling (proves LiteSpeed early finish); run the migration
+
+Later (not now):
+  ☐ audition_registrations table + on-site registration form to replace the Google Form; registration_url then defaults to it

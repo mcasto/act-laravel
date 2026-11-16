@@ -16,6 +16,20 @@ class Audition extends Model
         'show_id',
         'display_date',
         'end_display_date',
+        'what_to_expect',
+        'location',
+        'registration_url',
+        'registration_note',
+        'script_url',
+        'rehearsal_start',
+        'rehearsal_schedule',
+        'contacts',
+    ];
+
+    protected $casts = [
+        'rehearsal_start' => 'datetime:Y-m-d H:i:s',
+        // Ordered [{name, title, phone, email}]; null = the show's director.
+        'contacts' => 'array',
     ];
 
     protected $appends = ['html'];
@@ -23,6 +37,24 @@ class Audition extends Model
     public function show()
     {
         return $this->belongsTo(Show::class);
+    }
+
+    /** Audition sessions (not callbacks), in date order. */
+    public function sessions()
+    {
+        return $this->hasMany(AuditionSession::class)->where('is_callback', false)->orderBy('session');
+    }
+
+    /** Callback sessions, in date order. */
+    public function callbacks()
+    {
+        return $this->hasMany(AuditionSession::class)->where('is_callback', true)->orderBy('session');
+    }
+
+    /** Roles, in the order entered. */
+    public function roles()
+    {
+        return $this->hasMany(AuditionRole::class)->orderBy('sort_order')->orderBy('id');
     }
 
     /**

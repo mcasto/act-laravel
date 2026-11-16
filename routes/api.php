@@ -302,6 +302,10 @@ Route::post('/audition', [AuditionController::class, 'store'])
     ->middleware(['auth:sanctum', 'permission:auditions']);
 Route::put('/audition/{id}', [AuditionController::class, 'update'])
     ->middleware(['auth:sanctum', 'permission:auditions']);
+Route::post('/audition/generate-html', [AuditionController::class, 'generateHtml'])
+    ->middleware(['auth:sanctum', 'permission:auditions']);
+Route::get('/audition/generate-html/{token}', [AuditionController::class, 'generationStatus'])
+    ->middleware(['auth:sanctum', 'permission:auditions']);
 Route::post('/audition-contact', [AuditionContactController::class, 'create']);
 
 /**

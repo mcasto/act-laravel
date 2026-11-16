@@ -1,7 +1,7 @@
 import callApi from "src/assets/call-api";
+import { withDefaults } from "src/assets/audition-form";
 import { useStore } from "../store";
 import { Notify } from "quasar";
-import { formatISO9075 } from "date-fns";
 
 export default async () => {
   const store = useStore();
@@ -23,11 +23,9 @@ export default async () => {
 
   // Kept apart from store.admin.audition, which a save replaces wholesale.
   store.admin.auditionPreviewUid = response.preview_uid;
+  // { contacts, location, registration_note, performance_dates } from the show / ACT
+  store.admin.auditionDefaults = response.defaults;
+  store.admin.auditionAiAvailable = response.ai_available;
 
-  store.admin.audition = response.audition || {
-    show_id: store.admin.show.id,
-    display_date: formatISO9075(new Date(), { representation: "date" }),
-    end_display_date: formatISO9075(new Date(), { representation: "date" }),
-    html: "",
-  };
+  store.admin.audition = withDefaults(response.audition, response.defaults, store.admin.show.id);
 };
