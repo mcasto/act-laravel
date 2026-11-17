@@ -21,6 +21,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // });
 
         $middleware->group('api', [
+            // Outermost, so it compresses the final response body.
+            \App\Http\Middleware\CompressResponse::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             // 'throttle:api',  // ← REMOVE THIS
             \Illuminate\Routing\Middleware\SubstituteBindings::class,

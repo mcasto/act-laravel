@@ -55,7 +55,7 @@ export const auditionFonts = {
  * cache-buster the admin adds after a re-upload. `poster` is either a full
  * URL (director API) or the bare filename stored on the show (admin).
  *
- * - path: root-relative ("/api/storage/posters/…").
+ * - path: root-relative ("/storage/posters/…").
  * - url: the same file as a full address.
  */
 export const posterFor = (poster) => {
@@ -63,7 +63,7 @@ export const posterFor = (poster) => {
   // Full URL, root-relative path (director API), or a bare filename (admin).
   const url = /^(https?:)?\//.test(poster)
     ? new URL(poster, window.location.origin)
-    : new URL(`/api/storage/posters/${poster}`, window.location.origin);
+    : new URL(`/storage/posters/${poster}`, window.location.origin);
   url.search = "";
   return { path: url.pathname, url: url.toString() };
 };

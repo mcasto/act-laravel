@@ -78,6 +78,6 @@ class DirectorController extends Controller
         // Relative, like the rest of the site (POSTER_BASE_URL): url() takes the
         // scheme/host from the request, which can come out as http:// behind
         // the host's TLS and get blocked as mixed content on iOS.
-        return $show->poster ? '/api/storage/posters/' . $show->poster : null;
+        return $show->poster ? '/storage/posters/' . $show->poster : null;
     }
 }

@@ -155,7 +155,7 @@ class AuditionNotice
     {
         $file = self::posterFilename($show);
 
-        return $file ? '/api/storage/posters/' . $file : null;
+        return $file ? '/storage/posters/' . $file : null;
     }
 
     /** The poster on disk, or null when the show has none (or it's missing). */

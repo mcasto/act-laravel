@@ -145,7 +145,7 @@
           </q-td>
           <q-td class="text-center">
             <q-btn
-              icon="img:/api/storage/fixr-icon"
+              icon="img:/storage/fixr.png"
               :class="performance.fixr_link ? 'fixr-icon-active' : 'fixr-icon-inactive'"
               size="sm"
               flat

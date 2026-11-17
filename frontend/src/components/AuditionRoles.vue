@@ -109,7 +109,7 @@ const roleColumns = [
 function downloadSide(filename) {
   filename = filename.replace("/", "");
 
-  wretch(`/api/storage/sides/${filename}`)
+  wretch(`/storage/sides/${filename}`)
     .get()
     .error(400, 404, 500, (error) => {
       error.json().then((json) => {
@@ -130,6 +130,13 @@ function downloadSide(filename) {
             message: json.error || "Invalid file request",
           });
         });
+        return;
+      }
+
+      // Served directly from /storage now: a missing file falls through to
+      // the SPA's index.html (200, text/html) instead of a 404.
+      if (contentType && contentType.includes("text/html")) {
+        Notify.create({ type: "negative", message: "File not found" });
         return;
       }
 

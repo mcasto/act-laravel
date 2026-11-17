@@ -42,7 +42,7 @@
                   <q-item>
                     <q-item-section avatar>
                       <q-img
-                        :src="`/api/storage/${item.image}`"
+                        :src="`/storage/${item.image}`"
                         class="cursor-pointer"
                         @click="photo = { ...item, idx }"
                         height="10vh"
@@ -92,7 +92,7 @@
             ></q-btn>
           </q-toolbar>
           <q-img
-            :src="`/api/storage/${photo.image}`"
+            :src="`/storage/${photo.image}`"
             height="60vh"
             fit="contain"
             v-if="photo"

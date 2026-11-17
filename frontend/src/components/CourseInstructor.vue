@@ -8,7 +8,7 @@
     <div class="row q-col-gutter-md q-pa-md items-center">
       <div class="col-12 col-sm-4 text-center">
         <q-img
-          :src="`/api/storage/images/${course.instructor_photo}`"
+          :src="`/storage/images/${course.instructor_photo}`"
           ratio="1"
           fit="cover"
           class="instructor-photo rounded-borders shadow-2"

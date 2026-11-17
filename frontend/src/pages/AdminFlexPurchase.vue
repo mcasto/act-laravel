@@ -185,7 +185,7 @@ const onUploaded = ({ files, xhr }) => {
   }
 
   form.value.uploadedImage = response.path;
-  imagePath.value = `/api/storage/${response.path}`;
+  imagePath.value = `/storage/${response.path}`;
 
   uploaderMenu.value = false;
 };

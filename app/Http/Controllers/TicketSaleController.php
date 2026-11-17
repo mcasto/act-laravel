@@ -53,8 +53,13 @@ class TicketSaleController extends Controller
             ->get()
             ->keyBy('patron_id');
 
+        // Only the show fields AdminTicketSales.vue reads (filtering, price,
+        // revenue multipliers) — each sale carries its own copy, so the full
+        // show record (info text etc.) repeated per sale bloated this
+        // response to well over a megabyte.
         $ticketSales = TicketSale::with([
-                'performance.show.paymentRates',
+                'performance.show:id,name,ticket_price',
+                'performance.show.paymentRates:id,show_id,payment_method_id,revenue_multiplier',
                 'patron',
                 'paymentMethod',
                 'tickets' => fn ($query) => $query->orderBy('number'),

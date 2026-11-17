@@ -27,7 +27,7 @@
           :name="image.id"
         >
           <q-img
-            :src="`/api/storage/${image.image}`"
+            :src="`/storage/${image.image}`"
             fit="contain"
             height="65vh"
           ></q-img>

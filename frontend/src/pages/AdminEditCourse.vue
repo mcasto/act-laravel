@@ -141,7 +141,7 @@
                 <div class="col-12" v-if="originalInstructorPhoto">
                   <div class="text-caption text-grey-7 q-mb-xs">Current Image</div>
                   <q-img
-                    :src="`/api/storage/images/${originalInstructorPhoto}`"
+                    :src="`/storage/images/${originalInstructorPhoto}`"
                     style="max-width: 200px; max-height: 200px;"
                     class="rounded-borders"
                   />
