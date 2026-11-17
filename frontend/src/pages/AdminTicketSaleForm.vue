@@ -168,6 +168,10 @@
               </div>
 
               <div class="q-gutter-y-sm">
+                <div v-if="purchasedAt" class="text-body2 q-mb-sm">
+                  <span class="text-grey-7">Purchased:</span> {{ purchasedAt }}
+                </div>
+
                 <div class="row q-col-gutter-sm">
                   <q-select
                     class="col-7"
@@ -374,7 +378,7 @@ import callApi from "src/assets/call-api";
 import getPermissionLevel from "src/assets/get-permission-level";
 import { useStore } from "src/stores/store";
 import { useRoute } from "vue-router";
-import { formatISO } from "date-fns";
+import { format, formatISO, parseISO } from "date-fns";
 
 const store = useStore();
 const route = useRoute();
@@ -405,6 +409,13 @@ const angel = ref({
   level: existingSale?.patron?.angel_level ?? null,
   benefits: existingSale?.patron?.angel_concession_benefits ?? [],
 });
+
+// Read-only. sold_at, not created_at: it's Fixr's own sale time for card
+// sales (and the backfilled date for imported Flex history), stored as
+// Cuenca wall-clock time with no zone — so parseISO shows it as-is.
+const purchasedAt = existingSale?.sold_at
+  ? format(parseISO(existingSale.sold_at), "PP p")
+  : null;
 
 const performanceOptions = computed(() => {
   const now = new Date();

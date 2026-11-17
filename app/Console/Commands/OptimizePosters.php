@@ -75,7 +75,12 @@ class OptimizePosters extends Command
             $smallPath = "posters-sm/{$file}";
 
             if (! $disk->exists($fullPath)) {
-                $this->warn("[MISSING] {$file} (used by " . $this->describe($models) . ')');
+                // Only worth flagging when a live show/course uses it — a
+                // soft-deleted one missing its poster affects nothing.
+                $live = array_filter($models, fn (Model $m) => ! $m->trashed());
+                if ($live) {
+                    $this->warn("[MISSING] {$file} (used by " . $this->describe($live) . ')');
+                }
                 continue;
             }
 
