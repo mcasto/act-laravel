@@ -193,4 +193,19 @@ return [
     'reservation_reminders' => [
         'send' => (bool) env('RESERVATION_REMINDERS_SEND', false),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Error notifications
+    |--------------------------------------------------------------------------
+    |
+    | Every error-level log entry (unhandled exceptions, failed DB writes,
+    | logger()->error() calls) is emailed here — see
+    | App\Services\ErrorNotifier. Leave unset to disable.
+    |
+    */
+
+    'error_notification' => [
+        'address' => env('ERROR_NOTIFICATION_EMAIL'),
+    ],
 ];

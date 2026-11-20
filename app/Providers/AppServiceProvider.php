@@ -2,6 +2,8 @@
 namespace App\Providers;
 
 use App\Services\ChangeLogger;
+use App\Services\ErrorNotifier;
+use Illuminate\Log\Events\MessageLogged;
 use App\Services\MailLogger;
 use App\Support\EmailTemplates;
 use Illuminate\Mail\Events\MessageSending;
@@ -48,5 +50,9 @@ class AppServiceProvider extends ServiceProvider
   // App\Services\MailLogger.
   Event::listen(MessageSending::class, [MailLogger::class, 'handleSending']);
   Event::listen(MessageSent::class, [MailLogger::class, 'handleSent']);
+
+  // Emails ERROR_NOTIFICATION_EMAIL about every error-level log entry
+  // (unhandled exceptions included). See App\Services\ErrorNotifier.
+  Event::listen(MessageLogged::class, [ErrorNotifier::class, 'handle']);
  }
 }

@@ -366,7 +366,8 @@ class CourseController extends Controller
      */
     public function courseDetails(string $slug): JsonResponse
     {
-        $courseModel = Course::with(['sessions'])->where('slug', '=', $slug)->first();
+        // Unknown slug (stale link, typo, bot) → 404 rather than a 500.
+        $courseModel = Course::with(['sessions'])->where('slug', '=', $slug)->firstOrFail();
         $course = $courseModel->toArray();
         $course['is_full'] = $courseModel->isFull();
         $course['enrollment_open'] = $courseModel->enrollmentOpen();
