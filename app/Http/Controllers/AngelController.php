@@ -53,7 +53,8 @@ class AngelController extends Controller
         // Founding-angel status is a permanent, patron-level fact granted
         // only by an admin — never self-declared on this public form, only
         // inherited if this patron already has it.
-        $validated['founding_angel'] = $patron->founding_angel;
+        // Cast: a just-created patron reads null here (DB default not loaded).
+        $validated['founding_angel'] = (bool) $patron->founding_angel;
 
         $angel = Angel::create($validated);
 

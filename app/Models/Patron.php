@@ -21,6 +21,17 @@ class Patron extends Model
         'comments',
     ];
 
+    /**
+     * Mirror the columns' DB defaults in memory, so a just-created patron
+     * reads false/0 instead of null (Eloquent doesn't reload DB defaults
+     * after insert). A null founding_angel copied into angels — NOT NULL —
+     * silently lost three Fixr Angel donations in Oct/Nov 2026.
+     */
+    protected $attributes = [
+        'founding_angel' => false,
+        'front_row' => 0,
+    ];
+
     protected $casts = [
         'founding_angel' => 'boolean',
         'front_row' => 'integer',

@@ -166,8 +166,11 @@ class FixrWebhooksController extends Controller
                 'season' => ActiveSeason::get(),
                 // Founding-angel status is a permanent, patron-level fact
                 // granted only by an admin — only inherited here if this
-                // patron already has it, never set fresh.
-                'founding_angel' => $patron->founding_angel,
+                // patron already has it, never set fresh. Cast because a
+                // patron firstOrCreateByEmail() just created doesn't have
+                // the column's DB default (false) loaded — it reads as null,
+                // which angels.founding_angel (NOT NULL) rejects.
+                'founding_angel' => (bool) $patron->founding_angel,
             ]);
 
             // Box-office notification only — Fixr sends its own confirmation
